@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckedTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/categoryTv"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="category"
+    android:gravity="center"
+    android:textAlignment="center"
+    android:textSize="22sp"
+    android:textColor="#ffffff"
+    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+    android:checkMarkTint="#ffffff"
+    android:paddingRight="30dp">
+
+</CheckedTextView>

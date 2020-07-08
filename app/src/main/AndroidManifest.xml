@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.skiplab.theselproject">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:name=".Utils.App"
+        android:allowBackup="true"
+        android:hardwareAccelerated="false"
+        android:icon="@mipmap/ic_launcher2"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Questionnaire.QuestionnaireActivity"></activity>
+        <activity android:name=".PaymentActivity" />
+        <activity android:name=".Profile.RequestsActivity" />
+        <activity android:name=".SupportActivity" />
+        <activity android:name=".LatenessReportActivity" />
+        <activity android:name=".Profile.GalleryActivity" />
+        <activity android:name=".Profile.MyPostsActivity" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4813843298673497~9934761507" />
+        <meta-data
+            android:name="co.paystack.android.PublicKey"
+            android:value="pk_live_b52f8dfdae10acd0d8844ac2a135306ac4026c98" />
+
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".Authentication.StaffRegisterActivity" />
+        <activity android:name=".Authentication.AdminRegisterActivity" />
+        <activity android:name=".TermsOfService" />
+        <activity android:name=".PrivacyPolicy" />
+        <activity android:name=".PostDetailActivity" />
+        <activity android:name=".AddPost.CategoryActivity" />
+        <activity android:name=".AddPost.NewPostActivity" />
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".Profile.AccountSettingsActivity" />
+        <activity android:name=".Authentication.LoginActivity" />
+        <activity android:name=".Authentication.RegisterActivity" />
+        <activity android:name=".Main2Activity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".notifications.MyFirebaseInstanceIdService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_SERVICE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".notifications.FirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

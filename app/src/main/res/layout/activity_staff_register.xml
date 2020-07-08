@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/main_background"
+    android:backgroundTint="@color/colorPrimary"
+    android:backgroundTintMode="multiply"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    tools:context=".Authentication.StaffRegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/loginTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already Have an Account? Login"
+            android:textColor="#fff"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <ImageView
+                android:src="@drawable/thesel_logo"
+                android:layout_marginTop="20dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/uname_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="15dp"
+                android:textColorHint="#aaa"
+                android:textColorHighlight="#aaa"
+                android:padding="10dp"
+                android:background="@drawable/customedittextstyle"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/uNameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#fff"
+                    android:textSize="20sp"
+                    android:hint="@string/staffNameEt"
+                    android:background="@android:color/transparent"
+                    android:singleLine="true"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="15dp"
+                android:textColorHint="#aaa"
+                android:textColorHighlight="#aaa"
+                android:padding="10dp"
+                android:background="@drawable/customedittextstyle"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#fff"
+                    android:textSize="20sp"
+                    android:hint="Phone Number"
+                    android:background="@android:color/transparent"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="15dp"
+                android:textColorHint="#aaa"
+                android:textColorHighlight="#aaa"
+                android:padding="10dp"
+                android:background="@drawable/customedittextstyle"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#fff"
+                    android:hint="Email"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
+                    android:singleLine="true"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="15dp"
+                android:textColorHint="#aaa"
+                android:textColorHighlight="#aaa"
+                android:padding="10dp"
+                android:background="@drawable/customedittextstyle"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#aaa"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#fff"
+                    android:hint="HearMe Staff Password"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
+                    android:singleLine="true"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/address_layout"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="15dp"
+                android:textColorHint="#aaa"
+                android:textColorHighlight="#aaa"
+                android:padding="10dp"
+                android:background="@drawable/customedittextstyle"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addressEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#fff"
+                    android:hint="Country"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
+                    android:singleLine="true"
+                    android:inputType="textPostalAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/accountNum_layout"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="15dp"
+                android:textColorHint="#aaa"
+                android:textColorHighlight="#aaa"
+                android:padding="10dp"
+                android:background="@drawable/customedittextstyle"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/accNumEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#fff"
+                    android:hint="Account Number"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bank_layout"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="15dp"
+                android:textColorHint="#aaa"
+                android:textColorHighlight="#aaa"
+                android:padding="10dp"
+                android:background="@drawable/customedittextstyle"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bankEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#fff"
+                    android:hint="Name of Bank"
+                    android:textSize="20sp"
+                    android:background="@android:color/transparent"
+                    android:singleLine="true"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/categoryTv"
+                android:layout_below="@id/address_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Your Category"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#00A7E5"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/categoryEt"
+                android:layout_below="@id/categoryTv"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#ffff"
+                android:layout_marginTop="4dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:visibility="gone"
+                android:tooltipText="tap none if category doesn't exist"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Put in your convenient conselling hours during the day and night. Ensure you are available during your counselling hours."
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"/>
+
+            <HorizontalScrollView
+                android:id="@+id/hs1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/workText1"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:text="Day"
+                        android:textStyle="bold"
+                        android:textColor="#fff"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"/>
+
+                    <EditText
+                        android:id="@+id/startTimeEt1"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:hint="00:00"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:background="#fff"
+                        android:layout_toRightOf="@id/workText1"
+                        android:layout_marginLeft="5dp"
+                        android:layout_alignParentBottom="true" />
+
+                    <TextView
+                        android:id="@+id/toText1"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/startTimeEt1"
+                        android:layout_alignParentBottom="true"
+                        android:text="to"
+                        android:paddingLeft="5dp"
+                        android:textColor="#fff"/>
+
+                    <EditText
+                        android:id="@+id/endTimeEt1"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:hint="00:00"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:background="#fff"
+                        android:layout_toRightOf="@id/toText1"
+                        android:layout_marginLeft="5dp"
+                        android:layout_alignParentBottom="true" />
+
+                </RelativeLayout>
+
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:id="@+id/hs2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/workText2"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:text="Night"
+                        android:textStyle="bold"
+                        android:textColor="#fff"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentBottom="true"/>
+
+                    <EditText
+                        android:id="@+id/startTimeEt2"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:hint="00:00"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:background="#fff"
+                        android:layout_toRightOf="@id/workText2"
+                        android:layout_marginLeft="5dp"
+                        android:layout_alignParentBottom="true" />
+
+                    <TextView
+                        android:id="@+id/toText2"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/startTimeEt2"
+                        android:layout_alignParentBottom="true"
+                        android:text="to"
+                        android:paddingLeft="5dp"
+                        android:textColor="#fff"/>
+
+                    <EditText
+                        android:id="@+id/endTimeEt2"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:hint="00:00"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:background="#fff"
+                        android:layout_toRightOf="@id/toText2"
+                        android:layout_marginLeft="5dp"
+                        android:layout_alignParentBottom="true" />
+
+                </RelativeLayout>
+
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/signUpBtn"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:background="@drawable/customregisterbtnstyle"
+                android:text="Sign Up"
+                android:textSize="22sp"
+                android:textColor="#ffffff"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                android:textAllCaps="false"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:id="@+id/reg_agreementTv"
+                android:textAlignment="center"
+                android:text=""
+                android:textColor="#aaa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

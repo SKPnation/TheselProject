@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/main_background"
+    android:backgroundTint="#598975"
+    android:backgroundTintMode="multiply"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main2Activity">
+
+    <ImageButton
+        android:id="@+id/switchBtn"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@null" />
+
+    <ImageView
+        android:id="@+id/appNameIv"
+        android:src="@drawable/thesel_logo"
+        android:layout_marginTop="80dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appNameIv"
+        android:layout_centerHorizontal="true"
+        android:text="Thesel"
+        android:textColor="#fff"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="80sp" />
+
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:layout_marginBottom="150dp"
+       android:layout_centerInParent="true">
+
+       <Button
+           android:id="@+id/user_btn"
+           android:layout_width="200dp"
+           android:layout_height="wrap_content"
+           android:text="User"
+           android:textSize="18sp"
+           android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+           android:padding="10dp"
+           android:textColor="#fff"
+           android:textAllCaps="false"
+           android:background="@drawable/customregisterbtnstyle"/>
+
+       <Button
+           android:id="@+id/counsellor_btn"
+           android:layout_width="200dp"
+           android:layout_height="wrap_content"
+           android:text="Counsellor"
+           android:textSize="18sp"
+           android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+           android:layout_marginTop="20dp"
+           android:padding="10dp"
+           android:textColor="#fff"
+           android:textAllCaps="false"
+           android:background="@drawable/customrequestbtnstyle"/>
+
+   </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/main_backTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="25dp"
+            android:text="Back"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+
+        <TextView
+            android:id="@+id/main2_loginTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:text="Login"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

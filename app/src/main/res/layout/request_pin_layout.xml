@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/pinEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:layout_margin="10dp"
+        android:hint="0000"
+        android:inputType="number"
+        android:singleLine="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/createBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:layout_margin="5dp"
+            android:padding="2dp"
+            android:text="Create"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/requestBtn"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/customrequestbtnstyle"
+            android:layout_margin="5dp"
+            android:padding="2dp"
+            android:text="Request"
+            android:textColor="#fff"/>
+
+    </LinearLayout>
+
+</LinearLayout>

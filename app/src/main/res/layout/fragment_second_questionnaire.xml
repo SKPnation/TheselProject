@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_fragment"
+    tools:context=".Questionnaire.SecondQuestionnaire">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="What is your relationship status?"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/single_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="Single"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/relationship_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="In a relationship"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/married_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="Married"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/divorced_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="Divorced"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/widowed_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="Widowed"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/other_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="Other"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="30dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

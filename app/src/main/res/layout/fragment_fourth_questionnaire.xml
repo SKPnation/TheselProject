@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp"
+    android:id="@+id/main_fragment"
+    tools:context=".Questionnaire.FourthQuestionnaire">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Which religion do you identify with?"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/christianity_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/customquestionnairebtnstyle"
+        android:text="Christianity"
+        android:textSize="20sp"
+        android:textAlignment="textStart"
+        android:paddingLeft="30dp"
+        android:textColor="#ffffff"
+        android:textAllCaps="false"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/islam_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/customquestionnairebtnstyle"
+        android:text="Islam"
+        android:textAlignment="textStart"
+        android:paddingLeft="30dp"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/judaism_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/customquestionnairebtnstyle"
+        android:text="Judaism"
+        android:textAlignment="textStart"
+        android:paddingLeft="30dp"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/other_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/customquestionnairebtnstyle"
+        android:text="Other"
+        android:textAlignment="textStart"
+        android:paddingLeft="30dp"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="30dp"/>
+
+</LinearLayout>
