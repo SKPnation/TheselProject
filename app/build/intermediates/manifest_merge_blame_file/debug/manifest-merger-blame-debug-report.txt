@@ -1,0 +1,476 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.skiplab.theselproject"
+4    android:versionCode="22"
+5    android:versionName="1.8.9.2" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:5:5-67
+11-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:5:22-64
+12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+12-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:6:5-79
+12-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+13-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:7:5-71
+13-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:7:22-68
+14    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+14-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:8:5-75
+14-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:8:22-72
+15    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+15-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:9:5-80
+15-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:9:22-77
+16    <uses-permission android:name="android.permission.CAMERA" />
+16-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:10:5-65
+16-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:10:22-62
+17    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+17-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:11:5-80
+17-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:11:22-77
+18    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+18-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:12:5-81
+18-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:12:22-78
+19    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+19-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:13:5-81
+19-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:13:22-78
+20    <uses-permission android:name="android.permission.CALL_PHONE" />
+20-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:14:5-69
+20-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:14:22-66
+21    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+21-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:11:5-76
+21-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:11:22-73
+22    <uses-permission android:name="android.permission.VIBRATE" />
+22-->[com.wdullaer:materialdatetimepicker:4.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/AndroidManifest.xml:26:5-66
+22-->[com.wdullaer:materialdatetimepicker:4.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/AndroidManifest.xml:26:22-63
+23    <uses-permission android:name="android.permission.WAKE_LOCK" />
+23-->[com.google.firebase:firebase-measurement-connector-impl:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0197c4797f05f03f39b35745f2d33408/jetified-firebase-measurement-connector-impl-16.0.0/AndroidManifest.xml:24:5-68
+23-->[com.google.firebase:firebase-measurement-connector-impl:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0197c4797f05f03f39b35745f2d33408/jetified-firebase-measurement-connector-impl-16.0.0/AndroidManifest.xml:24:22-65
+24    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+24-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:26:5-110
+24-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:26:22-107
+25    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+25-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:26:5-82
+25-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:26:22-79
+26
+27    <permission
+27-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:28:5-30:47
+28        android:name="com.skiplab.theselproject.permission.C2D_MESSAGE"
+28-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:29:9-63
+29        android:protectionLevel="signature" />
+29-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:30:9-44
+30
+31    <uses-permission android:name="com.skiplab.theselproject.permission.C2D_MESSAGE" />
+31-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:32:5-79
+31-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:32:22-76
+32
+33    <application
+33-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:16:5-77:19
+34        android:name="com.skiplab.theselproject.Utils.App"
+34-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:17:9-34
+35        android:allowBackup="true"
+35-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:18:9-35
+36        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+36-->[androidx.core:core:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e91594602c73eba9f0c6fb1745d43dba/core-1.1.0/AndroidManifest.xml:24:18-86
+37        android:debuggable="true"
+38        android:hardwareAccelerated="false"
+38-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:19:9-44
+39        android:icon="@mipmap/ic_launcher2"
+39-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:20:9-44
+40        android:label="@string/app_name"
+40-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:21:9-41
+41        android:largeHeap="true"
+41-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:22:9-33
+42        android:supportsRtl="true"
+42-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:23:9-35
+43        android:theme="@style/AppTheme" >
+43-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:24:9-40
+44        <activity android:name="com.skiplab.theselproject.Questionnaire.QuestionnaireActivity" />
+44-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:25:9-82
+44-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:25:19-70
+45        <activity android:name="com.skiplab.theselproject.PaymentActivity" />
+45-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:26:9-53
+45-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:26:19-50
+46        <activity android:name="com.skiplab.theselproject.Profile.RequestsActivity" />
+46-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:27:9-62
+46-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:27:19-59
+47        <activity android:name="com.skiplab.theselproject.SupportActivity" />
+47-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:9-53
+47-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:19-50
+48        <activity android:name="com.skiplab.theselproject.LatenessReportActivity" />
+48-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:29:9-60
+48-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:29:19-57
+49        <activity android:name="com.skiplab.theselproject.Profile.GalleryActivity" />
+49-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:30:9-61
+49-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:30:19-58
+50        <activity android:name="com.skiplab.theselproject.Profile.MyPostsActivity" />
+50-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:31:9-61
+50-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:31:19-58
+51
+52        <meta-data
+52-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:33:9-35:70
+53            android:name="com.google.android.gms.ads.APPLICATION_ID"
+53-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:34:13-69
+54            android:value="ca-app-pub-4813843298673497~9934761507" />
+54-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:35:13-67
+55        <meta-data
+55-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:36:9-38:80
+56            android:name="co.paystack.android.PublicKey"
+56-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:37:13-57
+57            android:value="pk_live_b52f8dfdae10acd0d8844ac2a135306ac4026c98" />
+57-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:38:13-77
+58
+59        <activity android:name="com.skiplab.theselproject.ChatActivity" />
+59-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:40:9-50
+59-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:40:19-47
+60        <activity android:name="com.skiplab.theselproject.Authentication.StaffRegisterActivity" />
+60-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:41:9-74
+60-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:41:19-71
+61        <activity android:name="com.skiplab.theselproject.Authentication.AdminRegisterActivity" />
+61-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:42:9-74
+61-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:42:19-71
+62        <activity android:name="com.skiplab.theselproject.TermsOfService" />
+62-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:43:9-52
+62-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:43:19-49
+63        <activity android:name="com.skiplab.theselproject.PrivacyPolicy" />
+63-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:44:9-51
+63-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:44:19-48
+64        <activity android:name="com.skiplab.theselproject.PostDetailActivity" />
+64-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:45:9-56
+64-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:45:19-53
+65        <activity android:name="com.skiplab.theselproject.AddPost.CategoryActivity" />
+65-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:46:9-62
+65-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:46:19-59
+66        <activity android:name="com.skiplab.theselproject.AddPost.NewPostActivity" />
+66-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:47:9-61
+66-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:47:19-58
+67        <activity android:name="com.skiplab.theselproject.DashboardActivity" />
+67-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:48:9-55
+67-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:48:19-52
+68        <activity android:name="com.skiplab.theselproject.Profile.AccountSettingsActivity" />
+68-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:49:9-69
+68-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:49:19-66
+69        <activity android:name="com.skiplab.theselproject.Authentication.LoginActivity" />
+69-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:50:9-66
+69-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:50:19-63
+70        <activity android:name="com.skiplab.theselproject.Authentication.RegisterActivity" />
+70-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:51:9-69
+70-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:51:19-66
+71        <activity android:name="com.skiplab.theselproject.Main2Activity" />
+71-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:52:9-51
+71-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:52:19-48
+72        <activity android:name="com.skiplab.theselproject.MainActivity" >
+72-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:53:9-59:20
+72-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:53:19-47
+73            <intent-filter>
+73-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:54:13-58:29
+74                <action android:name="android.intent.action.MAIN" />
+74-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:55:17-69
+74-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:55:25-66
+75
+76                <category android:name="android.intent.category.LAUNCHER" />
+76-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:57:17-77
+76-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:57:27-74
+77            </intent-filter>
+78        </activity>
+79
+80        <service
+80-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:61:9-68:19
+81            android:name="com.skiplab.theselproject.notifications.MyFirebaseInstanceIdService"
+81-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:62:13-70
+82            android:enabled="true"
+82-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:63:13-35
+83            android:exported="true" >
+83-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:64:13-36
+84            <intent-filter>
+84-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:65:13-67:29
+85                <action android:name="com.google.firebase.INSTANCE_ID_SERVICE" />
+85-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:66:17-82
+85-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:66:25-79
+86            </intent-filter>
+87        </service>
+88        <service
+88-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:69:9-76:19
+89            android:name="com.skiplab.theselproject.notifications.FirebaseMessaging"
+89-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:70:13-60
+90            android:enabled="true"
+90-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:71:13-35
+91            android:exported="true" >
+91-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:72:13-36
+92            <intent-filter>
+92-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:73:13-75:29
+93                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+93-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:74:17-78
+93-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:74:25-75
+94            </intent-filter>
+95        </service>
+96
+97        <activity
+97-->[pub.devrel:easypermissions:0.4.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f77b0e599521ca96c6a8203c8191bce1/jetified-easypermissions-0.4.0/AndroidManifest.xml:12:9-16:66
+98            android:name="pub.devrel.easypermissions.AppSettingsDialogHolderActivity"
+98-->[pub.devrel:easypermissions:0.4.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f77b0e599521ca96c6a8203c8191bce1/jetified-easypermissions-0.4.0/AndroidManifest.xml:13:13-86
+99            android:exported="false"
+99-->[pub.devrel:easypermissions:0.4.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f77b0e599521ca96c6a8203c8191bce1/jetified-easypermissions-0.4.0/AndroidManifest.xml:14:13-37
+100            android:label=""
+100-->[pub.devrel:easypermissions:0.4.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f77b0e599521ca96c6a8203c8191bce1/jetified-easypermissions-0.4.0/AndroidManifest.xml:15:13-29
+101            android:theme="@style/EasyPermissions.Transparent" />
+101-->[pub.devrel:easypermissions:0.4.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f77b0e599521ca96c6a8203c8191bce1/jetified-easypermissions-0.4.0/AndroidManifest.xml:16:13-63
+102
+103        <receiver
+103-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:14:9-17:39
+104            android:name="com.allyants.notifyme.BootNotifyMe"
+104-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:15:13-62
+105            android:enabled="true"
+105-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:16:13-35
+106            android:exported="true" />
+106-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:17:13-36
+107        <receiver
+107-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:18:9-21:39
+108            android:name="com.allyants.notifyme.ActionReceiver"
+108-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:19:13-64
+109            android:enabled="true"
+109-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:20:13-35
+110            android:exported="true" />
+110-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:21:13-36
+111        <receiver
+111-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:22:9-25:39
+112            android:name="com.allyants.notifyme.DeletePendingIntent"
+112-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:23:13-69
+113            android:enabled="true"
+113-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:24:13-35
+114            android:exported="true" />
+114-->[com.github.jakebonk:NotifyMe:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/AndroidManifest.xml:25:13-36
+115
+116        <activity
+116-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:12:9-14:63
+117            android:name="co.paystack.android.ui.PinActivity"
+117-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:13:13-62
+118            android:theme="@style/Paystack.Dialog.PinEntry" />
+118-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:14:13-60
+119        <activity
+119-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:15:9-17:63
+120            android:name="co.paystack.android.ui.OtpActivity"
+120-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:16:13-62
+121            android:theme="@style/Paystack.Dialog.OtpEntry" />
+121-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:17:13-60
+122        <activity
+122-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:18:9-20:63
+123            android:name="co.paystack.android.ui.AuthActivity"
+123-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:19:13-63
+124            android:theme="@style/Paystack.Dialog.OtpEntry" />
+124-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:20:13-60
+125        <activity
+125-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:21:9-23:64
+126            android:name="co.paystack.android.ui.CardActivity"
+126-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:22:13-63
+127            android:theme="@style/Paystack.Dialog.CardEntry" />
+127-->[co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/AndroidManifest.xml:23:13-61
+128        <activity
+128-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:23:9-29:75
+129            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+129-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:24:13-85
+130            android:excludeFromRecents="true"
+130-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:25:13-46
+131            android:exported="true"
+131-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:26:13-36
+132            android:launchMode="singleInstance"
+132-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:27:13-48
+133            android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN"
+133-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:28:13-102
+134            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+134-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:29:13-72
+135
+136        <service android:name="com.google.firebase.components.ComponentDiscoveryService" >
+136-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:31:9-35:19
+136-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:31:18-89
+137            <meta-data
+137-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:32:13-34:85
+138                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+138-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:33:17-109
+139                android:value="com.google.firebase.components.ComponentRegistrar" />
+139-->[com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/572847561767e0ca8649612ed2b8351d/jetified-firebase-auth-16.0.1/AndroidManifest.xml:34:17-82
+140            <meta-data
+140-->[com.google.firebase:firebase-measurement-connector-impl:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0197c4797f05f03f39b35745f2d33408/jetified-firebase-measurement-connector-impl-16.0.0/AndroidManifest.xml:28:13-30:85
+141                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+141-->[com.google.firebase:firebase-measurement-connector-impl:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0197c4797f05f03f39b35745f2d33408/jetified-firebase-measurement-connector-impl-16.0.0/AndroidManifest.xml:29:17-139
+142                android:value="com.google.firebase.components.ComponentRegistrar" />
+142-->[com.google.firebase:firebase-measurement-connector-impl:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0197c4797f05f03f39b35745f2d33408/jetified-firebase-measurement-connector-impl-16.0.0/AndroidManifest.xml:30:17-82
+143            <meta-data
+143-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:36:13-38:85
+144                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+144-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:37:17-96
+145                android:value="com.google.firebase.components.ComponentRegistrar" />
+145-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:38:17-82
+146        </service>
+147        <!--
+148             FirebaseMessagingService performs security checks at runtime,
+149             no need for explicit permissions despite exported="true"
+150        -->
+151        <service
+151-->[com.google.firebase:firebase-messaging:17.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0b1014f85cf96bd0c2b6d777e25c7ae8/jetified-firebase-messaging-17.0.0/AndroidManifest.xml:28:9-34:19
+152            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+152-->[com.google.firebase:firebase-messaging:17.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0b1014f85cf96bd0c2b6d777e25c7ae8/jetified-firebase-messaging-17.0.0/AndroidManifest.xml:29:13-82
+153            android:exported="true" >
+153-->[com.google.firebase:firebase-messaging:17.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0b1014f85cf96bd0c2b6d777e25c7ae8/jetified-firebase-messaging-17.0.0/AndroidManifest.xml:30:13-36
+154            <intent-filter android:priority="-500" >
+154-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:73:13-75:29
+155                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+155-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:74:17-78
+155-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:74:25-75
+156            </intent-filter>
+157        </service>
+158
+159        <receiver
+159-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:29:9-33:20
+160            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+160-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:30:13-85
+161            android:enabled="true"
+161-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:31:13-35
+162            android:exported="false" >
+162-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:32:13-37
+163        </receiver>
+164        <receiver
+164-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:34:9-42:20
+165            android:name="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver"
+165-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:35:13-100
+166            android:enabled="true"
+166-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:36:13-35
+167            android:exported="true"
+167-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:37:13-36
+168            android:permission="android.permission.INSTALL_PACKAGES" >
+168-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:38:13-69
+169            <intent-filter>
+169-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:39:13-41:29
+170                <action android:name="com.android.vending.INSTALL_REFERRER" />
+170-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:40:17-79
+170-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:40:25-76
+171            </intent-filter>
+172        </receiver>
+173
+174        <service
+174-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:44:9-47:40
+175            android:name="com.google.android.gms.measurement.AppMeasurementService"
+175-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:45:13-84
+176            android:enabled="true"
+176-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:46:13-35
+177            android:exported="false" />
+177-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:47:13-37
+178        <service
+178-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:48:9-52:72
+179            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+179-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:49:13-87
+180            android:enabled="true"
+180-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:50:13-35
+181            android:exported="false"
+181-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:51:13-37
+182            android:permission="android.permission.BIND_JOB_SERVICE" />
+182-->[com.google.firebase:firebase-analytics:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8380b2bc1f96b44ddb398c9ef5b2f453/jetified-firebase-analytics-16.0.0/AndroidManifest.xml:52:13-69
+183
+184        <receiver
+184-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:41:9-50:20
+185            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+185-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:42:13-78
+186            android:exported="true"
+186-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:43:13-36
+187            android:permission="com.google.android.c2dm.permission.SEND" >
+187-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:44:13-73
+188            <intent-filter>
+188-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:45:13-49:29
+189                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+189-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:46:17-81
+189-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:46:25-78
+190
+191                <category android:name="com.skiplab.theselproject" />
+191-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:48:17-61
+191-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:48:27-58
+192            </intent-filter>
+193        </receiver>
+194        <!--
+195             FirebaseInstanceIdService performs security checks at runtime,
+196             no need for explicit permissions despite exported="true"
+197        -->
+198        <service
+198-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:56:9-62:19
+199            android:name="com.google.firebase.iid.FirebaseInstanceIdService"
+199-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:57:13-77
+200            android:exported="true" >
+200-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:58:13-36
+201            <intent-filter android:priority="-500" >
+201-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:59:13-61:29
+201-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:59:28-51
+202                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+202-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:60:17-80
+202-->[com.google.firebase:firebase-iid:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53f72560eb4c0910c380fa116754c8ae/jetified-firebase-iid-16.0.0/AndroidManifest.xml:60:25-77
+203            </intent-filter>
+204        </service>
+205
+206        <activity
+206-->[com.google.android.gms:play-services-base:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/4716b9fb69e71cdb7fa7cd019a209bf6/jetified-play-services-base-15.0.1/AndroidManifest.xml:23:9-26:75
+207            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+207-->[com.google.android.gms:play-services-base:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/4716b9fb69e71cdb7fa7cd019a209bf6/jetified-play-services-base-15.0.1/AndroidManifest.xml:24:13-79
+208            android:exported="false"
+208-->[com.google.android.gms:play-services-base:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/4716b9fb69e71cdb7fa7cd019a209bf6/jetified-play-services-base-15.0.1/AndroidManifest.xml:25:13-37
+209            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+209-->[com.google.android.gms:play-services-base:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/4716b9fb69e71cdb7fa7cd019a209bf6/jetified-play-services-base-15.0.1/AndroidManifest.xml:26:13-72
+210
+211        <provider
+211-->[com.google.firebase:firebase-common:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1441db18250c337c030943dd7c59167b/jetified-firebase-common-16.0.0/AndroidManifest.xml:9:9-13:39
+212            android:name="com.google.firebase.provider.FirebaseInitProvider"
+212-->[com.google.firebase:firebase-common:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1441db18250c337c030943dd7c59167b/jetified-firebase-common-16.0.0/AndroidManifest.xml:10:13-77
+213            android:authorities="com.skiplab.theselproject.firebaseinitprovider"
+213-->[com.google.firebase:firebase-common:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1441db18250c337c030943dd7c59167b/jetified-firebase-common-16.0.0/AndroidManifest.xml:11:13-72
+214            android:exported="false"
+214-->[com.google.firebase:firebase-common:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1441db18250c337c030943dd7c59167b/jetified-firebase-common-16.0.0/AndroidManifest.xml:12:13-37
+215            android:initOrder="100" /> <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
+215-->[com.google.firebase:firebase-common:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1441db18250c337c030943dd7c59167b/jetified-firebase-common-16.0.0/AndroidManifest.xml:13:13-36
+216        <activity
+216-->[com.google.android.gms:play-services-ads-lite:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e2a0559ea88e41a891f333df93d176bf/jetified-play-services-ads-lite-15.0.1/AndroidManifest.xml:29:9-33:64
+217            android:name="com.google.android.gms.ads.AdActivity"
+217-->[com.google.android.gms:play-services-ads-lite:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e2a0559ea88e41a891f333df93d176bf/jetified-play-services-ads-lite-15.0.1/AndroidManifest.xml:30:13-65
+218            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+218-->[com.google.android.gms:play-services-ads-lite:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e2a0559ea88e41a891f333df93d176bf/jetified-play-services-ads-lite-15.0.1/AndroidManifest.xml:31:13-122
+219            android:exported="false"
+219-->[com.google.android.gms:play-services-ads-lite:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e2a0559ea88e41a891f333df93d176bf/jetified-play-services-ads-lite-15.0.1/AndroidManifest.xml:32:13-37
+220            android:theme="@android:style/Theme.Translucent" />
+220-->[com.google.android.gms:play-services-ads-lite:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e2a0559ea88e41a891f333df93d176bf/jetified-play-services-ads-lite-15.0.1/AndroidManifest.xml:33:13-61
+221
+222        <meta-data
+222-->[com.google.android.gms:play-services-basement:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8327605ede1beb0e5d146e0cfac560c1/jetified-play-services-basement-15.0.1/AndroidManifest.xml:23:9-25:69
+223            android:name="com.google.android.gms.version"
+223-->[com.google.android.gms:play-services-basement:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8327605ede1beb0e5d146e0cfac560c1/jetified-play-services-basement-15.0.1/AndroidManifest.xml:24:13-58
+224            android:value="@integer/google_play_services_version" />
+224-->[com.google.android.gms:play-services-basement:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8327605ede1beb0e5d146e0cfac560c1/jetified-play-services-basement-15.0.1/AndroidManifest.xml:25:13-66
+225
+226        <provider
+226-->[com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7ffc3d521e7310446fc0ad9c75f91616/jetified-silicompressor-2.2.3/AndroidManifest.xml:18:9-26:20
+227            android:name="com.iceteck.silicompressorr.provider.GenericFileProvider"
+227-->[com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7ffc3d521e7310446fc0ad9c75f91616/jetified-silicompressor-2.2.3/AndroidManifest.xml:19:13-84
+228            android:authorities="com.skiplab.theselproject.iceteck.silicompressor.provider"
+228-->[com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7ffc3d521e7310446fc0ad9c75f91616/jetified-silicompressor-2.2.3/AndroidManifest.xml:20:13-83
+229            android:exported="false"
+229-->[com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7ffc3d521e7310446fc0ad9c75f91616/jetified-silicompressor-2.2.3/AndroidManifest.xml:21:13-37
+230            android:grantUriPermissions="true" >
+230-->[com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7ffc3d521e7310446fc0ad9c75f91616/jetified-silicompressor-2.2.3/AndroidManifest.xml:22:13-47
+231            <meta-data
+231-->[com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7ffc3d521e7310446fc0ad9c75f91616/jetified-silicompressor-2.2.3/AndroidManifest.xml:23:13-25:58
+232                android:name="android.support.FILE_PROVIDER_PATHS"
+232-->[com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7ffc3d521e7310446fc0ad9c75f91616/jetified-silicompressor-2.2.3/AndroidManifest.xml:24:17-67
+233                android:resource="@xml/provider_paths" />
+233-->[com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7ffc3d521e7310446fc0ad9c75f91616/jetified-silicompressor-2.2.3/AndroidManifest.xml:25:17-55
+234        </provider>
+235        <provider
+235-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0af15b4380a8429fdc5ee80ba1c4d93c/lifecycle-process-2.2.0/AndroidManifest.xml:25:9-29:43
+236            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+236-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0af15b4380a8429fdc5ee80ba1c4d93c/lifecycle-process-2.2.0/AndroidManifest.xml:26:13-79
+237            android:authorities="com.skiplab.theselproject.lifecycle-process"
+237-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0af15b4380a8429fdc5ee80ba1c4d93c/lifecycle-process-2.2.0/AndroidManifest.xml:27:13-69
+238            android:exported="false"
+238-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0af15b4380a8429fdc5ee80ba1c4d93c/lifecycle-process-2.2.0/AndroidManifest.xml:28:13-37
+239            android:multiprocess="true" />
+239-->[androidx.lifecycle:lifecycle-process:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0af15b4380a8429fdc5ee80ba1c4d93c/lifecycle-process-2.2.0/AndroidManifest.xml:29:13-40
+240    </application>
+241
+242</manifest>

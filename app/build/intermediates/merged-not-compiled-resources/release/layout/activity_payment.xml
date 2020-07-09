@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorTransparentWhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PaymentActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appBarLayout">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/optionsToolbar">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/backArrow"
+                    android:src="@drawable/ic_back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_toRightOf="@id/backArrow"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Select Payment Method"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"/>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_below="@id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Read the 7 rules before payment"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimary"
+                android:paddingLeft="10dp"
+                android:layout_centerHorizontal="true"/>
+
+            <LinearLayout
+                android:layout_below="@id/titleTv"
+                android:id="@+id/rulesLayout"
+                android:orientation="vertical"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/firstRule"
+                    android:textColor="#B70000"
+                    android:paddingRight="5dp"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"/>
+
+                <TextView
+                    android:layout_below="@id/titleTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/secondRule"
+                    android:textColor="#B70000"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"/>
+
+                <TextView
+                    android:layout_below="@id/titleTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/thirdRule"
+                    android:textColor="#B70000"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"/>
+
+                <TextView
+                    android:layout_below="@id/titleTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fourthRule"
+                    android:textColor="#B70000"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"/>
+
+                <TextView
+                    android:layout_below="@id/titleTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fifthRule"
+                    android:textColor="#B70000"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardsLayout"
+                android:layout_below="@id/rulesLayout"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:weightSum="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custommastercardedittext">
+
+                        <ImageView
+                            android:id="@+id/mastercard"
+                            android:src="@drawable/mastercard"
+                            android:scaleType="fitCenter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/customverveedittext">
+
+                        <ImageView
+                            android:id="@+id/verve"
+                            android:src="@drawable/verve"
+                            android:scaleType="fitCenter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/customvisaedittext">
+
+                        <ImageView
+                            android:id="@+id/visa"
+                            android:src="@drawable/visa"
+                            android:scaleType="fitCenter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_main_email"
+                android:layout_below="@id/cardsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Email Address"
+                android:textAllCaps="true"
+                android:inputType="textEmailAddress" />
+
+            <RelativeLayout
+                android:id="@+id/et_cards_layout"
+                android:layout_below="@id/et_main_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_mastercard_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/custommastercardedittext"
+                    android:hint="Card Name"
+                    android:textAllCaps="true"
+                    android:inputType="text"
+                    android:visibility="gone"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_mastercard_card"
+                    android:layout_below="@id/et_mastercard_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/custommastercardedittext"
+                    android:hint="Card Number"
+                    android:inputType="number"
+                    android:visibility="gone"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_verve_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/customverveedittext"
+                    android:hint="Card Name"
+                    android:textAllCaps="true"
+                    android:inputType="text"
+                    android:visibility="gone"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_verve_card"
+                    android:layout_below="@id/et_verve_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/customverveedittext"
+                    android:hint="Card Number"
+                    android:inputType="number"
+                    android:visibility="gone"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_visa_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/customvisaedittext"
+                    android:hint="Card Name"
+                    android:textAllCaps="true"
+                    android:inputType="text"
+                    android:visibility="gone"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_visa_card"
+                    android:layout_below="@id/et_visa_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/customvisaedittext"
+                    android:hint="Card Number"
+                    android:inputType="number"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_main_cvv"
+                android:layout_below="@id/et_cards_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Card CVV"
+                android:visibility="gone"
+                android:inputType="number" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/sp_container"
+                android:layout_below="@id/et_main_cvv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:animateLayoutChanges="true"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/sp_main_month"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/months"
+                    android:spinnerMode="dropdown" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/sp_main_year"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <LinearLayout
+                android:id="@+id/rmb_container"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@id/sp_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/cbRemember"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="8dp"
+                    android:buttonTint="@color/colorPrimaryDark"
+                    android:text="Remember this card"
+                    android:textColor="@color/colorPrimaryDark"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_main_proceed"
+                android:layout_below="@id/rmb_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text=""
+                android:textColor="#ffffff"
+                app:backgroundTint="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sp_container" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

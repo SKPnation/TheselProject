@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/main_background"
+    android:backgroundTint="#38715B"
+    android:backgroundTintMode="multiply"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Authentication.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|bottom"
+        android:padding="20dp">
+
+        <ImageView
+            android:src="@drawable/thesel_logo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_layout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="35dp"
+            android:textColorHint="#aaa"
+            android:textColorHighlight="#aaa"
+            android:padding="10dp"
+            android:background="@drawable/customedittextstyle"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#fff"
+                android:hint="Email Address"
+                android:background="@android:color/transparent"
+                android:singleLine="true"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_layout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="35dp"
+            android:textColorHint="#aaa"
+            android:textColorHighlight="#aaa"
+            android:padding="10dp"
+            android:background="@drawable/customedittextstyle"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="#aaa">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#fff"
+                android:hint="Password"
+                android:background="@android:color/transparent"
+                android:singleLine="true"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/loginBtn"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:background="@drawable/customregisterbtnstyle"
+            android:layout_marginTop="40dp"
+            android:text="Log In"
+            android:textSize="22sp"
+            android:textColor="#fff"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/forgotPwdTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:buttonTint="#fff"
+            android:text="Forgot Password"
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginTop="30dp"/>
+
+        <TextView
+            android:id="@+id/tvVerification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="Resend Verification Email"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:layout_marginBottom="60dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

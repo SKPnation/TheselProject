@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_fragment"
+    tools:context=".Questionnaire.SeventhQuestionnaire">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="When was the last time you had a plan to commit suicide?"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/never_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="Never"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/over_a_year_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="Over a year ago"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/over_three_months_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="Over 3 months ago"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/over_a_month_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="Over a month ago"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/over_a_week_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="Over a week ago"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/this_week_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/customquestionnairebtnstyle"
+            android:text="This week"
+            android:textAlignment="textStart"
+            android:paddingLeft="30dp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

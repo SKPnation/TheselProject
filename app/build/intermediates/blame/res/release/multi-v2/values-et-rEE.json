@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-et-rEE/values-et-rEE.xml",
+            "map": [
+                {
+                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/values-et-rEE/values-et-rEE.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,138,199,266,375,493,574,687,808,924,1017,1110,1206,1294",
+                        "endColumns": "32,60,66,108,117,80,112,120,115,92,92,95,87,100",
+                        "endOffsets": "133,194,261,370,488,569,682,803,919,1012,1105,1201,1289,1390"
+                    }
+                }
+            ]
+        }
+    ]
+}

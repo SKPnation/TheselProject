@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/newpost_background"
+    android:backgroundTint="#818181"
+    android:backgroundTintMode="multiply"
+    tools:context=".AddPost.CategoryActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Select Category"
+                    android:textSize="24sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:id="@+id/selectedCategoryTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"/>
+
+                <ImageView
+                    android:id="@+id/sendPost"
+                    android:src="@drawable/ic_send_post"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/list_item"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="50.0sp">
+
+        </ListView>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
