@@ -292,7 +292,6 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/default_img"/>
 
-
             <TextView
                 android:id="@+id/to"
                 android:layout_toEndOf="@id/cAvatarIv"
