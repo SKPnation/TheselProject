@@ -292,29 +292,11 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/default_img"/>
 
-            <TextView
-                android:id="@+id/to"
-                android:layout_toEndOf="@id/cAvatarIv"
-                android:layout_gravity="center_vertical"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="To: "
-                android:textColor="#000"/>
-
-            <Spinner
-                android:id="@+id/select_user_sp"
-                android:layout_gravity="center_vertical"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/to"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"/>
-
             <EditText
                 android:id="@+id/commentEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/select_user_sp"
+                android:layout_toEndOf="@id/cAvatarIv"
                 android:layout_toStartOf="@id/sendBtn"
                 android:background="#fff"
                 android:hint="Enter comment..."
