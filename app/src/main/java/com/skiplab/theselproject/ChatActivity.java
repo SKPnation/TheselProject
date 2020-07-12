@@ -924,7 +924,6 @@ public class ChatActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(Call<Response> call, Throwable t) {
                                     //Toast.makeText(ChatActivity.this, "failed", Toast.LENGTH_SHORT).show();
-
                                 }
                             });
                 }

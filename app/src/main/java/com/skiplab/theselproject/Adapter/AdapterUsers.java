@@ -252,7 +252,6 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
                                                         public void onClick(View v) {
                                                             final String[] list = context.getResources().getStringArray(R.array.costs);
 
-
                                                             AlertDialog ad = new AlertDialog.Builder(context)
                                                                     .setCancelable(false)
                                                                     .setTitle(userList.get(position).getUsername() +"'s Cost")
@@ -263,6 +262,87 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
                                                                             ListView lw = ((AlertDialog)dialog).getListView();
                                                                             Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
                                                                             costTv.setText(checkedItem.toString());
+                                                                            dialog.dismiss();
+                                                                        }
+                                                                    })
+                                                                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            dialog.dismiss();
+                                                                        }
+                                                                    }).show();
+                                                        }
+                                                    });
+
+                                                    categoryTv1.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            final String[] list = context.getResources().getStringArray(R.array.categories);
+
+                                                            AlertDialog ad = new AlertDialog.Builder(context)
+                                                                    .setCancelable(false)
+                                                                    .setTitle(userList.get(position).getUsername() +"'s 1st category")
+                                                                    .setSingleChoiceItems(list, position,null)
+                                                                    .setPositiveButton( "SELECT", new DialogInterface.OnClickListener() {
+                                                                        public void onClick( DialogInterface dialog, int i)
+                                                                        {
+                                                                            ListView lw = ((AlertDialog)dialog).getListView();
+                                                                            Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
+                                                                            categoryTv1.setText(checkedItem.toString());
+                                                                            dialog.dismiss();
+                                                                        }
+                                                                    })
+                                                                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            dialog.dismiss();
+                                                                        }
+                                                                    }).show();
+                                                        }
+                                                    });
+
+                                                    categoryTv2.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            final String[] list = context.getResources().getStringArray(R.array.categories);
+
+                                                            AlertDialog ad = new AlertDialog.Builder(context)
+                                                                    .setCancelable(false)
+                                                                    .setTitle(userList.get(position).getUsername() +"'s 2nd category")
+                                                                    .setSingleChoiceItems(list, position,null)
+                                                                    .setPositiveButton( "SELECT", new DialogInterface.OnClickListener() {
+                                                                        public void onClick( DialogInterface dialog, int i)
+                                                                        {
+                                                                            ListView lw = ((AlertDialog)dialog).getListView();
+                                                                            Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
+                                                                            categoryTv2.setText(checkedItem.toString());
+                                                                            dialog.dismiss();
+                                                                        }
+                                                                    })
+                                                                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            dialog.dismiss();
+                                                                        }
+                                                                    }).show();
+                                                        }
+                                                    });
+
+                                                    categoryTv3.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            final String[] list = context.getResources().getStringArray(R.array.categories);
+
+                                                            AlertDialog ad = new AlertDialog.Builder(context)
+                                                                    .setCancelable(false)
+                                                                    .setTitle(userList.get(position).getUsername() +"'s 3rd category")
+                                                                    .setSingleChoiceItems(list, position,null)
+                                                                    .setPositiveButton( "SELECT", new DialogInterface.OnClickListener() {
+                                                                        public void onClick( DialogInterface dialog, int i)
+                                                                        {
+                                                                            ListView lw = ((AlertDialog)dialog).getListView();
+                                                                            Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
+                                                                            categoryTv3.setText(checkedItem.toString());
                                                                             dialog.dismiss();
                                                                         }
                                                                     })

@@ -201,9 +201,6 @@ public class HomeFragment extends Fragment {
             builder.show();
         }
 
-        View listHeaderView = getLayoutInflater().inflate(R.layout.nav_header, null, false);
-        listView.addHeaderView(listHeaderView);
-
         drawerIconIv.setOnClickListener(v -> mDrawerLayout.openDrawer(GravityCompat.START));
         //addDrawersItem();
         setupDrawer();

@@ -101,6 +101,22 @@ This policy is effective as of 2020-05-24</string>
         <item>7000000</item>
     </string-array>
 
+    <string-array name="categories">
+        <item>Relationship</item>
+        <item>Addiction</item>
+        <item>Depression</item>
+        <item>Parenting</item>
+        <item>Speaking Skills</item>
+        <item>Child Abuse</item>
+        <item>Low self-esteem</item>
+        <item>Family</item>
+        <item>Anxiety</item>
+        <item>Pregnancy</item>
+        <item>Business</item>
+        <item>Weight Loss</item>
+        <item>Fitness</item>
+    </string-array>
+
     <string name="open">Open</string>
     <string name="close">Close</string>
 </resources>
