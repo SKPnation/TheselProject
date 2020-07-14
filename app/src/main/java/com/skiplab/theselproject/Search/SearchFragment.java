@@ -7,10 +7,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,8 @@ import com.skiplab.theselproject.ChatActivity;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.Utils.UniversalImageLoader;
+import com.skiplab.theselproject.models.Sessions;
 import com.skiplab.theselproject.models.User;
 
 import java.util.ArrayList;
@@ -42,20 +46,7 @@ import java.util.List;
  */
 public class SearchFragment extends Fragment {
 
-    private SwipeRefreshLayout swipeRefreshLayout;
-
-    RecyclerView recyclerView;
-    AdapterUsers adapterUsers;
-    List<User> userList = new ArrayList<>();
-
-    //firebase auth
-    FirebaseAuth firebaseAuth;
-
-    FirebaseDatabase db;
     DatabaseReference usersRef;
-
-    private TextView usersFrgamentTitle;
-    private ProgressBar mProgressBar;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -68,157 +59,41 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        //init
-        firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
-        usersRef = db.getReference("users");
+        usersRef = FirebaseDatabase.getInstance().getReference("users");
 
-        usersFrgamentTitle = view.findViewById(R.id.users_fragment_title);
+        Query query1 = usersRef
+                .orderByKey()
+                .equalTo( FirebaseAuth.getInstance().getCurrentUser().getUid() );
 
-        mProgressBar = view.findViewById(R.id.progressBar);
-        mProgressBar.setVisibility(View.VISIBLE);
+        //orderByKey method will look for the key encapsulating the values of the object
 
-        recyclerView = view.findViewById(R.id.users_recyclerView);
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        swipeRefreshLayout = view.findViewById( R.id.swipe_layout );
-        swipeRefreshLayout.setColorSchemeResources( R.color.colorPrimary,
-                android.R.color.holo_blue_dark,
-                android.R.color.holo_orange_dark,
-                android.R.color.holo_green_dark);
-
-        swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if(Common.isConnectedToTheInternet(getContext()))
-                {
-                    getAllUsers();
-                }
-                else
-                {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("Please check your internet connection");
-                    builder.show();
-
-                    return;
-                }
-            }
-        } );
-
-        //Default, when loading for first time
-        swipeRefreshLayout.post( new Runnable() {
-            @Override
-            public void run() {
-                if(Common.isConnectedToTheInternet(getContext()))
-                {
-                    getAllUsers();
-                }
-                else
-                {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("Please check your internet connection");
-                    builder.show();
-
-                    return;
-                }
-            }
-        } );
-
-        return view;
-    }
-
-    private void getAllUsers() {
-
-        final FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        Query query = usersRef.orderByKey().equalTo(fUser.getUid());
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        query1.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds:dataSnapshot.getChildren()){
-                    User user = ds.getValue(User.class);
-                    String isStaff = user.getIsStaff();
-                    if (isStaff.equals("false"))
+                for (DataSnapshot singleSnapshot: dataSnapshot.getChildren() ){
+                    User user = singleSnapshot.getValue(User.class);
+                    if (user.getIsStaff().equals("false"))
                     {
-                        usersFrgamentTitle.setText("Thesel Consultants");
-                        Query queryUsers = usersRef.orderByChild("isStaff").equalTo("true");
-                        queryUsers.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                userList.clear();
-                                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                    User user = ds.getValue(User.class);
+                        SelectPlanFragment spf = new SelectPlanFragment();
+                        FragmentManager fm = getFragmentManager();
 
-                                    mProgressBar.setVisibility(View.GONE);
-
-                                    userList.add(user);
-                                }
-                                adapterUsers = new AdapterUsers(getActivity(), userList);
-                                recyclerView.setAdapter(adapterUsers);
-                                swipeRefreshLayout.setRefreshing( false );
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //..
-                            }
-                        });
+                        fm.beginTransaction().add(R.id.content, spf).commit();
                     }
-                    else if (isStaff.equals("admin")){
-                        usersFrgamentTitle.setText("Thesel Consultants");
-                        Query queryUsers = usersRef.orderByChild("isStaff").equalTo("true");
-                        queryUsers.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                userList.clear();
-                                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                    User user = ds.getValue(User.class);
+                    else if (user.getIsStaff().equals("true"))
+                    {
+                        UsersFragment usersFragment = new UsersFragment();
+                        FragmentManager fm = getFragmentManager();
 
-                                    mProgressBar.setVisibility(View.GONE);
-
-                                    userList.add(user);
-                                }
-                                adapterUsers = new AdapterUsers(getActivity(), userList);
-                                recyclerView.setAdapter(adapterUsers);
-                                swipeRefreshLayout.setRefreshing( false );
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //..
-                            }
-                        });
+                        fm.beginTransaction().add(R.id.content, usersFragment).commit();
                     }
                     else
                     {
-                        usersFrgamentTitle.setText("Users");
+                        UsersFragment usersFragment = new UsersFragment();
+                        FragmentManager fm = getFragmentManager();
 
-                        Query queryUsers = usersRef.orderByChild("isStaff").equalTo("false");
-                        queryUsers.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                userList.clear();
-                                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                    User user = ds.getValue(User.class);
-
-                                    mProgressBar.setVisibility(View.GONE);
-
-                                    userList.add(user);
-                                }
-                                adapterUsers = new AdapterUsers(getActivity(), userList);
-                                recyclerView.setAdapter(adapterUsers);
-                                swipeRefreshLayout.setRefreshing( false );
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //..
-                            }
-                        });
+                        fm.beginTransaction().add(R.id.content, usersFragment).commit();
                     }
+
                 }
             }
 
@@ -226,30 +101,10 @@ public class SearchFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //..
             }
-        });
+        } );
+
+        return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if(getView() == null){
-            return;
-        }
-
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-                    startActivity(new Intent(getActivity(), DashboardActivity.class));
-                    getActivity().finish();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
 }
+

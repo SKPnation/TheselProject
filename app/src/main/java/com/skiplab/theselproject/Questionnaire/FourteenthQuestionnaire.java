@@ -63,8 +63,6 @@ public class FourteenthQuestionnaire extends Fragment {
         Bundle b = this.getArguments();
         if(b != null){
             String s =b.getString("referred");
-
-            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
         }
 
         selectBtn.setOnClickListener(new View.OnClickListener() {

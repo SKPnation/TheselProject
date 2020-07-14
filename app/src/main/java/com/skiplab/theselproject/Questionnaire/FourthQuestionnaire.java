@@ -1,11 +1,13 @@
 package com.skiplab.theselproject.Questionnaire;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,7 @@ import com.skiplab.theselproject.R;
 public class FourthQuestionnaire extends Fragment {
 
     Button christianityBtn, islamBtn, judaismBtn, otherBtn;
-
+    int i = 0;
 
     public FourthQuestionnaire() {
         // Required empty public constructor
@@ -41,8 +43,6 @@ public class FourthQuestionnaire extends Fragment {
         Bundle b = this.getArguments();
         if(b != null){
             String s =b.getString("religious");
-
-            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
         }
 
         christianityBtn.setOnClickListener(new View.OnClickListener() {
@@ -51,11 +51,21 @@ public class FourthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("religion", christianityBtn.getText().toString());
 
-                FifthQuestionnaire fifthQuestionnaire = new FifthQuestionnaire();
-                fifthQuestionnaire.setArguments(b);
-                FragmentTransaction ft5 = getFragmentManager().beginTransaction();
-                ft5.replace(R.id.content, fifthQuestionnaire);
-                ft5.commit();
+                christianityBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FifthQuestionnaire fifthQuestionnaire = new FifthQuestionnaire();
+                        fifthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft5 = getFragmentManager().beginTransaction();
+                        ft5.replace(R.id.content, fifthQuestionnaire);
+                        ft5.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -65,11 +75,21 @@ public class FourthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("religion", islamBtn.getText().toString());
 
-                FifthQuestionnaire fifthQuestionnaire = new FifthQuestionnaire();
-                fifthQuestionnaire.setArguments(b);
-                FragmentTransaction ft5 = getFragmentManager().beginTransaction();
-                ft5.replace(R.id.content, fifthQuestionnaire);
-                ft5.commit();
+                islamBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FifthQuestionnaire fifthQuestionnaire = new FifthQuestionnaire();
+                        fifthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft5 = getFragmentManager().beginTransaction();
+                        ft5.replace(R.id.content, fifthQuestionnaire);
+                        ft5.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -79,11 +99,21 @@ public class FourthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("religion", judaismBtn.getText().toString());
 
-                FifthQuestionnaire fifthQuestionnaire = new FifthQuestionnaire();
-                fifthQuestionnaire.setArguments(b);
-                FragmentTransaction ft5 = getFragmentManager().beginTransaction();
-                ft5.replace(R.id.content, fifthQuestionnaire);
-                ft5.commit();
+                judaismBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FifthQuestionnaire fifthQuestionnaire = new FifthQuestionnaire();
+                        fifthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft5 = getFragmentManager().beginTransaction();
+                        ft5.replace(R.id.content, fifthQuestionnaire);
+                        ft5.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -93,11 +123,21 @@ public class FourthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("religion", otherBtn.getText().toString());
 
-                FifthQuestionnaire fifthQuestionnaire = new FifthQuestionnaire();
-                fifthQuestionnaire.setArguments(b);
-                FragmentTransaction ft5 = getFragmentManager().beginTransaction();
-                ft5.replace(R.id.content, fifthQuestionnaire);
-                ft5.commit();
+                otherBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FifthQuestionnaire fifthQuestionnaire = new FifthQuestionnaire();
+                        fifthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft5 = getFragmentManager().beginTransaction();
+                        ft5.replace(R.id.content, fifthQuestionnaire);
+                        ft5.commit();
+                    }
+                }, 700);
             }
         });
 

@@ -1,11 +1,13 @@
 package com.skiplab.theselproject.Questionnaire;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.skiplab.theselproject.R;
 public class ThirteenthQuestionnaire extends Fragment {
 
     Button radio_btn, friend_family_member_btn, poster_billboard_btn, snapchat_btn, TV_ad_btn, social_btn, youtube_btn, podcast_btn, other_btn;
+    int i = 0;
 
     public ThirteenthQuestionnaire() {
         // Required empty public constructor
@@ -45,8 +48,6 @@ public class ThirteenthQuestionnaire extends Fragment {
         Bundle b = this.getArguments();
         if(b != null){
             String s =b.getString("finance");
-
-            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
         }
 
         radio_btn.setOnClickListener(new View.OnClickListener() {
@@ -55,11 +56,21 @@ public class ThirteenthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("referred", radio_btn.getText().toString());
 
-                FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
-                fourteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft14 = getFragmentManager().beginTransaction();
-                ft14.replace(R.id.content, fourteenthQuestionnaire);
-                ft14.commit();
+                radio_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
+                        fourteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft14 = getFragmentManager().beginTransaction();
+                        ft14.replace(R.id.content, fourteenthQuestionnaire);
+                        ft14.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -69,11 +80,21 @@ public class ThirteenthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("referred", friend_family_member_btn.getText().toString());
 
-                FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
-                fourteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft14 = getFragmentManager().beginTransaction();
-                ft14.replace(R.id.content, fourteenthQuestionnaire);
-                ft14.commit();
+                friend_family_member_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
+                        fourteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft14 = getFragmentManager().beginTransaction();
+                        ft14.replace(R.id.content, fourteenthQuestionnaire);
+                        ft14.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -83,11 +104,21 @@ public class ThirteenthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("referred", poster_billboard_btn.getText().toString());
 
-                FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
-                fourteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft14 = getFragmentManager().beginTransaction();
-                ft14.replace(R.id.content, fourteenthQuestionnaire);
-                ft14.commit();
+                poster_billboard_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
+                        fourteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft14 = getFragmentManager().beginTransaction();
+                        ft14.replace(R.id.content, fourteenthQuestionnaire);
+                        ft14.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -97,11 +128,21 @@ public class ThirteenthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("referred", snapchat_btn.getText().toString());
 
-                FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
-                fourteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft14 = getFragmentManager().beginTransaction();
-                ft14.replace(R.id.content, fourteenthQuestionnaire);
-                ft14.commit();
+                snapchat_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
+                        fourteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft14 = getFragmentManager().beginTransaction();
+                        ft14.replace(R.id.content, fourteenthQuestionnaire);
+                        ft14.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -111,11 +152,21 @@ public class ThirteenthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("referred", TV_ad_btn.getText().toString());
 
-                FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
-                fourteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft14 = getFragmentManager().beginTransaction();
-                ft14.replace(R.id.content, fourteenthQuestionnaire);
-                ft14.commit();
+                TV_ad_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
+                        fourteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft14 = getFragmentManager().beginTransaction();
+                        ft14.replace(R.id.content, fourteenthQuestionnaire);
+                        ft14.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -125,11 +176,21 @@ public class ThirteenthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("referred", social_btn.getText().toString());
 
-                FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
-                fourteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft14 = getFragmentManager().beginTransaction();
-                ft14.replace(R.id.content, fourteenthQuestionnaire);
-                ft14.commit();
+                social_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
+                        fourteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft14 = getFragmentManager().beginTransaction();
+                        ft14.replace(R.id.content, fourteenthQuestionnaire);
+                        ft14.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -139,11 +200,21 @@ public class ThirteenthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("referred", youtube_btn.getText().toString());
 
-                FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
-                fourteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft14 = getFragmentManager().beginTransaction();
-                ft14.replace(R.id.content, fourteenthQuestionnaire);
-                ft14.commit();
+                youtube_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
+                        fourteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft14 = getFragmentManager().beginTransaction();
+                        ft14.replace(R.id.content, fourteenthQuestionnaire);
+                        ft14.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -153,11 +224,21 @@ public class ThirteenthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("referred", podcast_btn.getText().toString());
 
-                FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
-                fourteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft14 = getFragmentManager().beginTransaction();
-                ft14.replace(R.id.content, fourteenthQuestionnaire);
-                ft14.commit();
+                podcast_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
+                        fourteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft14 = getFragmentManager().beginTransaction();
+                        ft14.replace(R.id.content, fourteenthQuestionnaire);
+                        ft14.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -167,11 +248,21 @@ public class ThirteenthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("referred", other_btn.getText().toString());
 
-                FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
-                fourteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft14 = getFragmentManager().beginTransaction();
-                ft14.replace(R.id.content, fourteenthQuestionnaire);
-                ft14.commit();
+                other_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FourteenthQuestionnaire fourteenthQuestionnaire = new FourteenthQuestionnaire();
+                        fourteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft14 = getFragmentManager().beginTransaction();
+                        ft14.replace(R.id.content, fourteenthQuestionnaire);
+                        ft14.commit();
+                    }
+                }, 700);
             }
         });
 

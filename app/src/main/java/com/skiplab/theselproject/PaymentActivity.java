@@ -258,7 +258,11 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String cardName1 = etMastercardName.getText().toString().trim();
+                Intent intent = new Intent(PaymentActivity.this, ChatActivity.class);
+                intent.putExtra("hisUid", counsellor_id);
+                startActivity(intent);
+
+                /*String cardName1 = etMastercardName.getText().toString().trim();
                 String cardNumber1 = etMastercardCard.getText().toString().trim();
                 String cardName2 = etVerveName.getText().toString().trim();
                 String cardNumber2 = etVerveCard.getText().toString().trim();
@@ -368,7 +372,7 @@ public class PaymentActivity extends AppCompatActivity {
                             public void onCancelled(@NonNull DatabaseError databaseError) {
                                 //...
                             }
-                        });
+                        });*/
 
             }
         });

@@ -1,5 +1,6 @@
 package com.skiplab.theselproject;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,8 +39,11 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
 
     private static final String TAG = "DashboardActivity";
 
+    Context mContext = DashboardActivity.this;
+
     //Firebase
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference usersRef;
 
     public static boolean isActivityRunning;
 
@@ -51,6 +54,8 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        usersRef = FirebaseDatabase.getInstance().getReference("users");
 
         setupFirebaseAuth();
         initFCM();
@@ -185,6 +190,7 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
                                         FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                                         ft2.replace(R.id.content, fragment2, "");
                                         ft2.commit();
+
 
                                     } else if (i == 2){
                                         Log.d(TAG, "IconDoubleClick: Double tap");

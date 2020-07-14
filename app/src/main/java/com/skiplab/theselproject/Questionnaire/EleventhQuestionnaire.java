@@ -1,11 +1,13 @@
 package com.skiplab.theselproject.Questionnaire;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.skiplab.theselproject.R;
 public class EleventhQuestionnaire extends Fragment {
 
     Button goodBtn, fairBtn, poorBtn;
+    int i = 0;
 
     public EleventhQuestionnaire() {
         // Required empty public constructor
@@ -39,8 +42,6 @@ public class EleventhQuestionnaire extends Fragment {
         Bundle b = this.getArguments();
         if(b != null){
             String s =b.getString("pain");
-
-            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
         }
 
         goodBtn.setOnClickListener(new View.OnClickListener() {
@@ -49,11 +50,21 @@ public class EleventhQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("finance", goodBtn.getText().toString());
 
-                ThirteenthQuestionnaire thirteenthQuestionnaire = new ThirteenthQuestionnaire();
-                thirteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft13 = getFragmentManager().beginTransaction();
-                ft13.replace(R.id.content, thirteenthQuestionnaire);
-                ft13.commit();
+                goodBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ThirteenthQuestionnaire thirteenthQuestionnaire = new ThirteenthQuestionnaire();
+                        thirteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft13 = getFragmentManager().beginTransaction();
+                        ft13.replace(R.id.content, thirteenthQuestionnaire);
+                        ft13.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -63,11 +74,21 @@ public class EleventhQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("finance", fairBtn.getText().toString());
 
-                ThirteenthQuestionnaire thirteenthQuestionnaire = new ThirteenthQuestionnaire();
-                thirteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft13 = getFragmentManager().beginTransaction();
-                ft13.replace(R.id.content, thirteenthQuestionnaire);
-                ft13.commit();
+                fairBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ThirteenthQuestionnaire thirteenthQuestionnaire = new ThirteenthQuestionnaire();
+                        thirteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft13 = getFragmentManager().beginTransaction();
+                        ft13.replace(R.id.content, thirteenthQuestionnaire);
+                        ft13.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -77,11 +98,21 @@ public class EleventhQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("finance", poorBtn.getText().toString());
 
-                ThirteenthQuestionnaire thirteenthQuestionnaire = new ThirteenthQuestionnaire();
-                thirteenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft13 = getFragmentManager().beginTransaction();
-                ft13.replace(R.id.content, thirteenthQuestionnaire);
-                ft13.commit();
+                poorBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ThirteenthQuestionnaire thirteenthQuestionnaire = new ThirteenthQuestionnaire();
+                        thirteenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft13 = getFragmentManager().beginTransaction();
+                        ft13.replace(R.id.content, thirteenthQuestionnaire);
+                        ft13.commit();
+                    }
+                }, 700);
             }
         });
 

@@ -410,51 +410,52 @@ public class ChatActivity extends AppCompatActivity {
             }
         } );
 
-        if (checkPermissionFromDevice())
-        {
-            recordBtn.setOnClickListener(new View.OnClickListener() {
+        recordBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    if (mTimerRunning)
+                    if (checkPermissionFromDevice())
                     {
-                        pathSave = Environment.getExternalStorageDirectory()
-                                .getAbsolutePath()+"/"
-                                + UUID.randomUUID().toString()+"_audio_record.3gp";
-                        setupMediaRecorder();
-                        try {
-                            mediaRecorder.prepare();
-                            mediaRecorder.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                        builder.setMessage("Recording...");
-                        builder.setCancelable(false);
-                        builder.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                stopRecording();
+                        if (mTimerRunning)
+                        {
+                            pathSave = Environment.getExternalStorageDirectory()
+                                    .getAbsolutePath()+"/"
+                                    + UUID.randomUUID().toString()+"_audio_record.3gp";
+                            setupMediaRecorder();
+                            try {
+                                mediaRecorder.prepare();
+                                mediaRecorder.start();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        });
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                            builder.setMessage("Recording...");
+                            builder.setCancelable(false);
+                            builder.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    stopRecording();
+                                }
+                            });
 
-                        builder.show();
-                    }
-                    else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                        builder.setMessage("Double tap the start button.");
+                            builder.show();
+                        }
+                        else{
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                            builder.setMessage("Double tap the start button.");
 
-                        builder.show();
+                            builder.show();
+                        }
                     }
+                    else
+                    {
+                        requestPermission();
+                    }
+
 
                 }
             });
-        }
-        else
-        {
-            requestPermission();
-        }
     }
 
     private void setupMediaRecorder() {

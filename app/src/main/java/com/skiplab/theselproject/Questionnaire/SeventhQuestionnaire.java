@@ -1,11 +1,13 @@
 package com.skiplab.theselproject.Questionnaire;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.skiplab.theselproject.R;
 public class SeventhQuestionnaire extends Fragment {
 
     Button never_btn, over_a_year_btn, over_three_months_btn, over_a_month_btn, over_a_week_btn, this_week_btn;
+    int i = 0;
 
     public SeventhQuestionnaire() {
         // Required empty public constructor
@@ -42,8 +45,6 @@ public class SeventhQuestionnaire extends Fragment {
         Bundle b = this.getArguments();
         if(b != null){
             String s =b.getString("corona");
-
-            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
         }
 
         never_btn.setOnClickListener(new View.OnClickListener() {
@@ -52,11 +53,21 @@ public class SeventhQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("suicide", never_btn.getText().toString());
 
-                EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
-                eighthQuestionnaire.setArguments(b);
-                FragmentTransaction ft8 = getFragmentManager().beginTransaction();
-                ft8.replace(R.id.content, eighthQuestionnaire);
-                ft8.commit();
+                never_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
+                        eighthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft8 = getFragmentManager().beginTransaction();
+                        ft8.replace(R.id.content, eighthQuestionnaire);
+                        ft8.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -66,11 +77,21 @@ public class SeventhQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("suicide", over_a_year_btn.getText().toString());
 
-                EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
-                eighthQuestionnaire.setArguments(b);
-                FragmentTransaction ft8 = getFragmentManager().beginTransaction();
-                ft8.replace(R.id.content, eighthQuestionnaire);
-                ft8.commit();
+                over_a_year_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
+                        eighthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft8 = getFragmentManager().beginTransaction();
+                        ft8.replace(R.id.content, eighthQuestionnaire);
+                        ft8.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -80,11 +101,21 @@ public class SeventhQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("suicide", over_three_months_btn.getText().toString());
 
-                EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
-                eighthQuestionnaire.setArguments(b);
-                FragmentTransaction ft8 = getFragmentManager().beginTransaction();
-                ft8.replace(R.id.content, eighthQuestionnaire);
-                ft8.commit();
+                over_three_months_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
+                        eighthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft8 = getFragmentManager().beginTransaction();
+                        ft8.replace(R.id.content, eighthQuestionnaire);
+                        ft8.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -94,11 +125,21 @@ public class SeventhQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("suicide", over_a_month_btn.getText().toString());
 
-                EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
-                eighthQuestionnaire.setArguments(b);
-                FragmentTransaction ft8 = getFragmentManager().beginTransaction();
-                ft8.replace(R.id.content, eighthQuestionnaire);
-                ft8.commit();
+                over_a_month_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
+                        eighthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft8 = getFragmentManager().beginTransaction();
+                        ft8.replace(R.id.content, eighthQuestionnaire);
+                        ft8.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -108,11 +149,21 @@ public class SeventhQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("suicide", over_a_week_btn.getText().toString());
 
-                EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
-                eighthQuestionnaire.setArguments(b);
-                FragmentTransaction ft8 = getFragmentManager().beginTransaction();
-                ft8.replace(R.id.content, eighthQuestionnaire);
-                ft8.commit();
+                over_a_week_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
+                        eighthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft8 = getFragmentManager().beginTransaction();
+                        ft8.replace(R.id.content, eighthQuestionnaire);
+                        ft8.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -122,11 +173,21 @@ public class SeventhQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("suicide", this_week_btn.getText().toString());
 
-                EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
-                eighthQuestionnaire.setArguments(b);
-                FragmentTransaction ft8 = getFragmentManager().beginTransaction();
-                ft8.replace(R.id.content, eighthQuestionnaire);
-                ft8.commit();
+                this_week_btn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        EighthQuestionnaire eighthQuestionnaire = new EighthQuestionnaire();
+                        eighthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft8 = getFragmentManager().beginTransaction();
+                        ft8.replace(R.id.content, eighthQuestionnaire);
+                        ft8.commit();
+                    }
+                }, 700);
             }
         });
 

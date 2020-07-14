@@ -1,11 +1,13 @@
 package com.skiplab.theselproject.Questionnaire;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.skiplab.theselproject.R;
 public class NinethQuestionnaire extends Fragment {
 
     Button noBtn, yesBtn;
+    int i = 0;
 
     public NinethQuestionnaire() {
         // Required empty public constructor
@@ -38,8 +41,6 @@ public class NinethQuestionnaire extends Fragment {
         Bundle b = this.getArguments();
         if(b != null){
             String s =b.getString("phobias");
-
-            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
         }
 
         noBtn.setOnClickListener(new View.OnClickListener() {
@@ -48,11 +49,21 @@ public class NinethQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("medication", noBtn.getText().toString());
 
-                TenthQuestionnaire tenthQuestionnaire = new TenthQuestionnaire();
-                tenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft10 = getFragmentManager().beginTransaction();
-                ft10.replace(R.id.content, tenthQuestionnaire);
-                ft10.commit();
+                noBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        TenthQuestionnaire tenthQuestionnaire = new TenthQuestionnaire();
+                        tenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft10 = getFragmentManager().beginTransaction();
+                        ft10.replace(R.id.content, tenthQuestionnaire);
+                        ft10.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -62,11 +73,21 @@ public class NinethQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("medication", yesBtn.getText().toString());
 
-                TenthQuestionnaire tenthQuestionnaire = new TenthQuestionnaire();
-                tenthQuestionnaire.setArguments(b);
-                FragmentTransaction ft10 = getFragmentManager().beginTransaction();
-                ft10.replace(R.id.content, tenthQuestionnaire);
-                ft10.commit();
+                yesBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        TenthQuestionnaire tenthQuestionnaire = new TenthQuestionnaire();
+                        tenthQuestionnaire.setArguments(b);
+                        FragmentTransaction ft10 = getFragmentManager().beginTransaction();
+                        ft10.replace(R.id.content, tenthQuestionnaire);
+                        ft10.commit();
+                    }
+                }, 700);
             }
         });
 

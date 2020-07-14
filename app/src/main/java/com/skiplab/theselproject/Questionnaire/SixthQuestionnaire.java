@@ -1,11 +1,13 @@
 package com.skiplab.theselproject.Questionnaire;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.skiplab.theselproject.R;
 public class SixthQuestionnaire extends Fragment {
 
     Button noBtn, yesBtn, maybeBtn;
+    int i = 0;
 
     public SixthQuestionnaire() {
         // Required empty public constructor
@@ -39,8 +42,6 @@ public class SixthQuestionnaire extends Fragment {
         Bundle b = this.getArguments();
         if(b != null){
             String s =b.getString("therapy");
-
-            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
         }
 
         noBtn.setOnClickListener(new View.OnClickListener() {
@@ -49,11 +50,21 @@ public class SixthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("corona", noBtn.getText().toString());
 
-                SeventhQuestionnaire seventhQuestionnaire = new SeventhQuestionnaire();
-                seventhQuestionnaire.setArguments(b);
-                FragmentTransaction ft7 = getFragmentManager().beginTransaction();
-                ft7.replace(R.id.content, seventhQuestionnaire);
-                ft7.commit();
+                noBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        SeventhQuestionnaire seventhQuestionnaire = new SeventhQuestionnaire();
+                        seventhQuestionnaire.setArguments(b);
+                        FragmentTransaction ft7 = getFragmentManager().beginTransaction();
+                        ft7.replace(R.id.content, seventhQuestionnaire);
+                        ft7.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -63,11 +74,21 @@ public class SixthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("corona", yesBtn.getText().toString());
 
-                SeventhQuestionnaire seventhQuestionnaire = new SeventhQuestionnaire();
-                seventhQuestionnaire.setArguments(b);
-                FragmentTransaction ft7 = getFragmentManager().beginTransaction();
-                ft7.replace(R.id.content, seventhQuestionnaire);
-                ft7.commit();
+                yesBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        SeventhQuestionnaire seventhQuestionnaire = new SeventhQuestionnaire();
+                        seventhQuestionnaire.setArguments(b);
+                        FragmentTransaction ft7 = getFragmentManager().beginTransaction();
+                        ft7.replace(R.id.content, seventhQuestionnaire);
+                        ft7.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -77,11 +98,21 @@ public class SixthQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("corona", maybeBtn.getText().toString());
 
-                SeventhQuestionnaire seventhQuestionnaire = new SeventhQuestionnaire();
-                seventhQuestionnaire.setArguments(b);
-                FragmentTransaction ft7 = getFragmentManager().beginTransaction();
-                ft7.replace(R.id.content, seventhQuestionnaire);
-                ft7.commit();
+                maybeBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        SeventhQuestionnaire seventhQuestionnaire = new SeventhQuestionnaire();
+                        seventhQuestionnaire.setArguments(b);
+                        FragmentTransaction ft7 = getFragmentManager().beginTransaction();
+                        ft7.replace(R.id.content, seventhQuestionnaire);
+                        ft7.commit();
+                    }
+                }, 700);
             }
         });
 

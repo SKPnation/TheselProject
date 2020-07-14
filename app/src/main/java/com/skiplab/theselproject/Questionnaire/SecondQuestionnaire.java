@@ -1,17 +1,22 @@
 package com.skiplab.theselproject.Questionnaire;
 
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.skiplab.theselproject.ChatActivity;
+import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
 
 /**
@@ -20,6 +25,7 @@ import com.skiplab.theselproject.R;
 public class SecondQuestionnaire extends Fragment {
 
     Button singleBtn, relationshipBtn, marriedBtn, divorcedBtn, widowedBtn, otherBtn;
+    int i = 0;
 
     public SecondQuestionnaire() {
         // Required empty public constructor
@@ -42,8 +48,6 @@ public class SecondQuestionnaire extends Fragment {
         Bundle b = this.getArguments();
         if(b != null){
             String s =b.getString("gender");
-
-            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
         }
 
         singleBtn.setOnClickListener(new View.OnClickListener() {
@@ -52,11 +56,21 @@ public class SecondQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("relationship_status", singleBtn.getText().toString());
 
-                ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
-                thirdQuestionnaire.setArguments(b);
-                FragmentTransaction ft3 = getFragmentManager().beginTransaction();
-                ft3.replace(R.id.content, thirdQuestionnaire);
-                ft3.commit();
+                singleBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
+                        thirdQuestionnaire.setArguments(b);
+                        FragmentTransaction ft3 = getFragmentManager().beginTransaction();
+                        ft3.replace(R.id.content, thirdQuestionnaire);
+                        ft3.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -66,11 +80,21 @@ public class SecondQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("relationship_status", relationshipBtn.getText().toString());
 
-                ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
-                thirdQuestionnaire.setArguments(b);
-                FragmentTransaction ft3 = getFragmentManager().beginTransaction();
-                ft3.replace(R.id.content, thirdQuestionnaire);
-                ft3.commit();
+                relationshipBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
+                        thirdQuestionnaire.setArguments(b);
+                        FragmentTransaction ft3 = getFragmentManager().beginTransaction();
+                        ft3.replace(R.id.content, thirdQuestionnaire);
+                        ft3.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -80,11 +104,21 @@ public class SecondQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("relationship_status", marriedBtn.getText().toString());
 
-                ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
-                thirdQuestionnaire.setArguments(b);
-                FragmentTransaction ft3 = getFragmentManager().beginTransaction();
-                ft3.replace(R.id.content, thirdQuestionnaire);
-                ft3.commit();
+                marriedBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
+                        thirdQuestionnaire.setArguments(b);
+                        FragmentTransaction ft3 = getFragmentManager().beginTransaction();
+                        ft3.replace(R.id.content, thirdQuestionnaire);
+                        ft3.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -94,11 +128,21 @@ public class SecondQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("relationship_status", divorcedBtn.getText().toString());
 
-                ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
-                thirdQuestionnaire.setArguments(b);
-                FragmentTransaction ft3 = getFragmentManager().beginTransaction();
-                ft3.replace(R.id.content, thirdQuestionnaire);
-                ft3.commit();
+                divorcedBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
+                        thirdQuestionnaire.setArguments(b);
+                        FragmentTransaction ft3 = getFragmentManager().beginTransaction();
+                        ft3.replace(R.id.content, thirdQuestionnaire);
+                        ft3.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -108,11 +152,21 @@ public class SecondQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("relationship_status", widowedBtn.getText().toString());
 
-                ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
-                thirdQuestionnaire.setArguments(b);
-                FragmentTransaction ft3 = getFragmentManager().beginTransaction();
-                ft3.replace(R.id.content, thirdQuestionnaire);
-                ft3.commit();
+                widowedBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
+                        thirdQuestionnaire.setArguments(b);
+                        FragmentTransaction ft3 = getFragmentManager().beginTransaction();
+                        ft3.replace(R.id.content, thirdQuestionnaire);
+                        ft3.commit();
+                    }
+                }, 700);
             }
         });
 
@@ -122,11 +176,21 @@ public class SecondQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("relationship_status", otherBtn.getText().toString());
 
-                ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
-                thirdQuestionnaire.setArguments(b);
-                FragmentTransaction ft3 = getFragmentManager().beginTransaction();
-                ft3.replace(R.id.content, thirdQuestionnaire);
-                ft3.commit();
+                otherBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ThirdQuestionnaire thirdQuestionnaire = new ThirdQuestionnaire();
+                        thirdQuestionnaire.setArguments(b);
+                        FragmentTransaction ft3 = getFragmentManager().beginTransaction();
+                        ft3.replace(R.id.content, thirdQuestionnaire);
+                        ft3.commit();
+                    }
+                }, 700);
             }
         });
 

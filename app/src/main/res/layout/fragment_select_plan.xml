@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F2F2F2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Search.SelectPlanFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/users_fragment_title"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Thesel Consultants"
+                    android:textSize="25sp"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+                    android:textColor="#ffffff"/>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_below="@id/appBarLayout"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="15dp"
+                app:cardBackgroundColor="#fff"
+                android:layout_marginRight="6dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/free_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/free_plan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Free Plan"
+                        android:textSize="30sp"
+                        android:textColor="#24815D"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                        android:layout_marginTop="30dp"
+                        android:paddingLeft="20dp"/>
+
+                    <View
+                        android:id="@+id/view_free"
+                        android:layout_below="@id/free_plan"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="270dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#aaa" />
+
+                    <TextView
+                        android:layout_below="@id/view_free"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="40dp"
+                        android:text="10mins session"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                        android:textSize="24sp"
+                        android:textColor="#414141" />
+
+                    <ImageView
+                        android:id="@+id/free_next"
+                        android:src="@drawable/ic_next"
+                        android:background="@null"
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="50dp"/>
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="15dp"
+                app:cardBackgroundColor="#fff"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="6dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/premium_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/premium_plan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Premium Plan"
+                        android:textSize="30sp"
+                        android:textColor="#24815D"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                        android:layout_marginTop="30dp"
+                        android:paddingLeft="20dp"/>
+
+                    <View
+                        android:id="@+id/view_premium"
+                        android:layout_below="@id/premium_plan"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="270dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#aaa" />
+
+                    <TextView
+                        android:id="@+id/hour_text"
+                        android:layout_below="@id/view_premium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="40dp"
+                        android:layout_marginTop="10dp"
+                        android:text="1hour session"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                        android:textSize="24sp"
+                        android:textColor="#414141" />
+
+                    <ImageView
+                        android:id="@+id/premium_next"
+                        android:src="@drawable/ic_next"
+                        android:background="@null"
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="50dp"/>
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+

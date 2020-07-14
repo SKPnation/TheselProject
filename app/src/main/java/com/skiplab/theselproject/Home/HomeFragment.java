@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment {
         mActivityTitle = getActivity().getTitle().toString();
         listView = view.findViewById(R.id.navList);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Speaking Skills", "Child Abuse", "Low self-esteem",
+        items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Career", "Child Abuse", "Low self-esteem",
                 "Family", "Anxiety", "Pregnancy", "Business", "Weight Loss", "Fitness", "Helpful Tips", "#COVID19 NIGERIA"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(), R.layout.list_item, R.id.listItem, items);
@@ -265,12 +265,6 @@ public class HomeFragment extends Fragment {
                     {
                         mProgressBar.setVisibility(View.GONE);
                         selCategoryHint.setVisibility(View.VISIBLE);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("WELCOME TO THESEL");
-                        builder.setMessage("Tap the Thesel icon in the top left corner of the screen to " +
-                                "select a category.");
-
-                        builder.show();
                     }
                     else {
                         Query queryPosts = postDb.orderByChild("pCategory").equalTo(selCategory);

@@ -2,11 +2,13 @@ package com.skiplab.theselproject.Questionnaire;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,7 @@ import com.skiplab.theselproject.R;
 public class FirstQuestionnaire extends Fragment {
 
     Button maleBtn, femaleBtn;
-
+    int i=0;
 
     public FirstQuestionnaire() {
         // Required empty public constructor
@@ -42,11 +44,21 @@ public class FirstQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("gender", maleBtn.getText().toString());
 
-                SecondQuestionnaire secondQuestionnaire = new SecondQuestionnaire();
-                secondQuestionnaire.setArguments(b);
-                FragmentTransaction ft2 = getFragmentManager().beginTransaction();
-                ft2.replace(R.id.content, secondQuestionnaire);
-                ft2.commit();
+                maleBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        SecondQuestionnaire secondQuestionnaire = new SecondQuestionnaire();
+                        secondQuestionnaire.setArguments(b);
+                        FragmentTransaction ft2 = getFragmentManager().beginTransaction();
+                        ft2.replace(R.id.content, secondQuestionnaire);
+                        ft2.commit();
+                    }
+                }, 60000);
             }
         });
 
@@ -56,11 +68,21 @@ public class FirstQuestionnaire extends Fragment {
                 Bundle b = new Bundle();
                 b.putString("gender", femaleBtn.getText().toString());
 
-                SecondQuestionnaire secondQuestionnaire = new SecondQuestionnaire();
-                secondQuestionnaire.setArguments(b);
-                FragmentTransaction ft2 = getFragmentManager().beginTransaction();
-                ft2.replace(R.id.content, secondQuestionnaire);
-                ft2.commit();
+                femaleBtn.setBackgroundColor(Color.parseColor("#C3BD2E"));
+
+                i++;
+
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        SecondQuestionnaire secondQuestionnaire = new SecondQuestionnaire();
+                        secondQuestionnaire.setArguments(b);
+                        FragmentTransaction ft2 = getFragmentManager().beginTransaction();
+                        ft2.replace(R.id.content, secondQuestionnaire);
+                        ft2.commit();
+                    }
+                }, 700);
             }
         });
 

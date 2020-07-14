@@ -482,8 +482,8 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
                             String client_name = user.getUsername();
                             String isStaff = user.getIsStaff();
 
-                            if (user.getIsStaff().equals("false")){
-
+                            if (user.getIsStaff().equals("false"))
+                            {
                                 progressDialog.dismiss();
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
