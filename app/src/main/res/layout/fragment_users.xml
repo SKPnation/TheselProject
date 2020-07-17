@@ -51,7 +51,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/users_recyclerView"
+            android:id="@+id/recyclerView"
             android:layout_below="@id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

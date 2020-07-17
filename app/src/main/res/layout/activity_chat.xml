@@ -50,7 +50,7 @@
                         android:id="@+id/nameTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Username"
+                        android:text=""
                         android:textColor="#fff"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
@@ -69,28 +69,41 @@
 
                 <Button
                     android:id="@+id/button_start_pause"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/customrequestbtnstyle"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
                     android:layout_toRightOf="@id/name_timer_layout"
-                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
                     android:textSize="14sp"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="#fff"
                     android:text="Start" />
 
                 <Button
                     android:id="@+id/reportBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/customrequestbtnstyle"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
                     android:layout_toRightOf="@id/name_timer_layout"
-                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
                     android:textSize="14sp"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="#fff"
                     android:visibility="gone"
                     android:text="Report" />
+
+                <TextView
+                    android:id="@+id/planTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="20dp"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorAccent"/>
 
             </RelativeLayout>
 

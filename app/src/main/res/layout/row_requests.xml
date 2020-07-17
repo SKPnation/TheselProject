@@ -64,6 +64,16 @@
                     android:layout_marginLeft="10dp"
                     android:textStyle="italic" />
 
+                <TextView
+                    android:id="@+id/request_plan"
+                    android:layout_below="@id/request_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#4799E8"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp" />
+
             </RelativeLayout>
 
         </LinearLayout>

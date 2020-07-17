@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="- The moment your request is 15minutes old, do not proceed to payment on that request even if it has been accepted. Just send a new request."
+                android:text="- Do not proceed to payment on a request that is almost 15 minutes old. Just send a new request."
                 android:textColor="#B70000"/>
 
             <TextView
