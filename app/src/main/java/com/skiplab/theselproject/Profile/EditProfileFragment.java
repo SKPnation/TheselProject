@@ -126,7 +126,8 @@ public class EditProfileFragment extends Fragment {
                 /*
                     -------Change Name--------
                 */
-                if (!uNameEt.getText().toString().equals( "" )){
+                if (!uNameEt.getText().toString().equals( "" ))
+                {
                     progressDialog.setMessage( "Loading..." );
                     progressDialog.show();
 
@@ -134,7 +135,9 @@ public class EditProfileFragment extends Fragment {
                             .child( "username" )
                             .setValue( uNameEt.getText().toString() );
 
-                    //if user edits his/her name also update in his/her posts
+                    //commented all these codes below to keep user anonymous on posts & comments
+
+                    /*//if user edits his/her name also update in his/her posts
                     final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
                     Query query1 = ref.orderByChild("uid").equalTo(uid);
                     query1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -183,7 +186,7 @@ public class EditProfileFragment extends Fragment {
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                             //..
                         }
-                    });
+                    });*/
 
 
                     progressDialog.dismiss();
@@ -323,8 +326,12 @@ public class EditProfileFragment extends Fragment {
 
                                         usersRef.child( uid )
                                                 .child( "profile_photo" )
-                                                .setValue(downloadUri)
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                .setValue(downloadUri);
+
+                                        progressDialog.dismiss();
+                                        retrieveUserData();
+
+                                                /*.addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
@@ -390,7 +397,13 @@ public class EditProfileFragment extends Fragment {
                                                             progressDialog.dismiss();
                                                         }
                                                     }
-                                                });
+                                                });*/
+                                    }
+                                    else
+                                    {
+                                        String message = uriTask.getException().getMessage();
+                                        Toast.makeText(getActivity(), "Error Occurred..." + message, Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
                                     }
                                 }
                             });

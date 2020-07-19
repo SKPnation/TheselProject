@@ -194,8 +194,6 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder>{
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("message", "This message was deleted...");
                         ds.getRef().updateChildren(hashMap);
-
-                        Toast.makeText(context,"message deleted...", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {

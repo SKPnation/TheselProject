@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -139,7 +140,21 @@ public class CategoryActivity extends AppCompatActivity {
                 {
                     if(Common.isConnectedToTheInternet(getBaseContext()))
                     {
-                        uploadData(currentMood, pDescription, image_uri, selCatTv);
+                        AlertDialog ad = new AlertDialog.Builder(CategoryActivity.this)
+                                .setCancelable(false)
+                                .setTitle("Do you want to be anonymous?")
+                                .setPositiveButton( "YES", new DialogInterface.OnClickListener() {
+                                    public void onClick( DialogInterface dialog, int i)
+                                    {
+                                        uploadDataAsAnonymous(currentMood, pDescription, image_uri, selCatTv);
+                                    }
+                                })
+                                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        uploadData(currentMood, pDescription, image_uri, selCatTv);
+                                    }
+                                }).show();
                     }
                     else
                     {
@@ -349,6 +364,186 @@ public class CategoryActivity extends AppCompatActivity {
                     });
         }
     }
+
+    private void uploadDataAsAnonymous(final String currentMood, final String pDescription, String image_uri, final String selCatTv) {
+        pd.setMessage("Publishing post...");
+        pd.show();
+
+        //for post- image name, post-id, post-publish-time
+        final String timeStamp = String.valueOf(System.currentTimeMillis());
+
+        String filePathAndName = "posts/" + "post_" + timeStamp;
+
+        if (!image_uri.equals("noImage")){
+            //post Image
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(filePathAndName);
+            storageRef.putFile(Uri.parse(image_uri))
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //image has been uploaded to firebase storage, now get its url
+                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!uriTask.isSuccessful());
+
+                            String downloadUri = uriTask.getResult().toString();
+
+                            if (uriTask.isSuccessful()){
+
+                                Query query1 = userDbRef
+                                        .orderByKey()
+                                        .equalTo( FirebaseAuth.getInstance().getCurrentUser().getUid() );
+
+                                //orderByKey method will look for the key encapsulating the values of the object
+
+                                query1.addListenerForSingleValueEvent( new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot singleSnapshot: dataSnapshot.getChildren() ){
+                                            User user = singleSnapshot.getValue(User.class);
+                                            Log.d( TAG, "onDataChange: (QUERY METHOD 1) found user: " + user.toString());
+
+                                            //url is received upload post to firebase firestore
+
+                                            Post post = new Post();
+                                            post.setUid(uid);
+                                            post.setuName("Anonymous");
+                                            post.setuEmail(firebaseAuth.getCurrentUser().getEmail());
+                                            post.setuDp("");
+                                            post.setpId(timeStamp);
+                                            post.setpLikes("0");
+                                            post.setpComments("0");
+                                            post.setpDescription(pDescription);
+                                            post.setpImage(downloadUri);
+                                            post.setpCategory(selCatTv);
+                                            post.setpTime(timeStamp);
+                                            post.setuMood(currentMood);
+
+                                            //Path to store post data
+                                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
+                                            //put data in this ref
+                                            ref.child(timeStamp).setValue(post)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            //added to firebase
+                                                            pd.dismiss();
+
+                                                            Query query = userDbRef.orderByKey().equalTo(uid);
+                                                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                    for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                                                        User user = ds.getValue(User.class);
+                                                                        Long postCount = user.getPosts();
+
+                                                                        userDbRef.child(uid).child("posts").setValue(postCount+1);
+                                                                    }
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                    //..
+                                                                }
+                                                            });
+
+                                                            Intent intent = new Intent(CategoryActivity.this, DashboardActivity.class);
+                                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            pd.dismiss();
+                                                            Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        //..
+                                    }
+                                } );
+
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            pd.dismiss();
+                            Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            Toast.makeText(CategoryActivity.this, ""+image_uri , Toast.LENGTH_LONG).show();
+        }
+        else {
+            //post without image
+
+            HashMap<Object, String> hashMap = new HashMap<>();
+            //put post info
+            hashMap.put("uid", uid);
+            hashMap.put("uName", "Anonymous");
+            hashMap.put("uEmail", email);
+            hashMap.put("uDp", "");
+            hashMap.put("pId", timeStamp);
+            hashMap.put("pLikes", "0");
+            hashMap.put("pComments", "0");
+            hashMap.put("pDescription", pDescription);
+            hashMap.put("pImage", "noImage");
+            hashMap.put("pCategory", selCatTv);
+            hashMap.put("pTime", timeStamp);
+            hashMap.put("uMood", currentMood);
+
+            //Path to store post data
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
+            ref.child(timeStamp).setValue(hashMap)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            //added to firebase database
+                            pd.dismiss();
+                            Toast.makeText(CategoryActivity.this, "Post Published", Toast.LENGTH_SHORT).show();
+
+                            Query query = userDbRef.orderByKey().equalTo(uid);
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                        User user = ds.getValue(User.class);
+                                        Long postCount = user.getPosts();
+
+                                        userDbRef.child(uid).child("posts").setValue(postCount+1);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    //..
+                                }
+                            });
+
+                            Intent intent = new Intent(CategoryActivity.this, DashboardActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            pd.dismiss();
+                            Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
 
     private void checkUserStatus() {
         //get current user

@@ -213,21 +213,21 @@ public class AdapterLateness extends RecyclerView.Adapter<AdapterLateness.ViewHo
             tvStaffName = itemView.findViewById( R.id.tvStaffName );
             tvTime = itemView.findViewById( R.id.time );
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mClickListener.onItemClick(v, getAdapterPosition());
                 }
-            });
+            });*/
         }
 
-        private AdapterUsers.UsersViewHolder.ClickListener mClickListener;
+        /*private AdapterUsers.UsersViewHolder.ClickListener mClickListener;
         //interface for click listener
         public interface ClickListener{
             void onItemClick(View view, int position);
         }
         public void setOnClickListener(AdapterUsers.UsersViewHolder.ClickListener clickListener){
             mClickListener = clickListener;
-        }
+        }*/
     }
 }

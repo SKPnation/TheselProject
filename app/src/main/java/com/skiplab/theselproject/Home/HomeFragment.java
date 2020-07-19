@@ -74,7 +74,6 @@ public class HomeFragment extends Fragment {
     private AdView adView;
 
     RelativeLayout relLayout1;
-    LinearLayout headerlayout;
 
     RecyclerView recyclerView;
     List<Post> postList;

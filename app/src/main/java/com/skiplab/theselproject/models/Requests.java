@@ -1,12 +1,12 @@
 package com.skiplab.theselproject.models;
 
 public class Requests {
-    String counsellor_name, counsellor_id, client_id, client_name, timestamp, request_time, status, plan;
+    String counsellor_name, counsellor_id, client_id, client_name, timestamp, request_time, status, plan, timer;
 
     public Requests() {
     }
 
-    public Requests(String counsellor_name, String counsellor_id, String client_id, String client_name, String timestamp, String request_time, String status, String plan) {
+    public Requests(String counsellor_name, String counsellor_id, String client_id, String client_name, String timestamp, String request_time, String status, String plan, String timer) {
         this.counsellor_name = counsellor_name;
         this.counsellor_id = counsellor_id;
         this.client_id = client_id;
@@ -15,6 +15,7 @@ public class Requests {
         this.request_time = request_time;
         this.status = status;
         this.plan = plan;
+        this.timer = timer;
     }
 
     public String getCounsellor_name() {
@@ -79,5 +80,13 @@ public class Requests {
 
     public void setPlan(String plan) {
         this.plan = plan;
+    }
+
+    public String getTimer() {
+        return timer;
+    }
+
+    public void setTimer(String timer) {
+        this.timer = timer;
     }
 }

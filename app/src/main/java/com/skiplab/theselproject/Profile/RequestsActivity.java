@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +66,8 @@ public class RequestsActivity extends AppCompatActivity {
     String uid;
     String theselSupportPhone;
 
+    private ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,8 @@ public class RequestsActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         uid = intent.getStringExtra("myUid");
+
+        mProgressBar = findViewById(R.id.progressBar);
 
         //init firebase
         firebaseAuth = FirebaseAuth.getInstance();
@@ -221,6 +226,8 @@ public class RequestsActivity extends AppCompatActivity {
                                             //add to list
 
                                             if (ds.exists()){
+                                                mProgressBar.setVisibility(View.GONE);
+
                                                 requestsList.add(requests);
                                                 hintText.setVisibility(View.GONE);
                                             }
@@ -252,6 +259,8 @@ public class RequestsActivity extends AppCompatActivity {
 
                                             //add to list
                                             if (ds.exists()){
+                                                mProgressBar.setVisibility(View.GONE);
+
                                                 requestsList.add(requests);
                                                 hintText.setVisibility(View.GONE);
                                             }

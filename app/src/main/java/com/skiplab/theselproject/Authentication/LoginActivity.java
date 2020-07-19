@@ -98,7 +98,12 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressDialog.dismiss();
+                                try {
+                                    progressDialog.dismiss();
+                                }
+                                catch (Exception e){
+                                    Toast.makeText(mContext, ""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                                }
                             }
                         } ).addOnFailureListener( new OnFailureListener() {
                     @Override
