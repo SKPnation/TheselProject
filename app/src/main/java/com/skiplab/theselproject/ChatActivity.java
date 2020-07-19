@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -63,6 +64,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.skiplab.theselproject.Adapter.AdapterChat;
 import com.skiplab.theselproject.Common.Common;
+import com.skiplab.theselproject.Questionnaire.SixthQuestionnaire;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Chat;
 import com.skiplab.theselproject.models.LatenessReports;
@@ -112,7 +114,7 @@ public class ChatActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView;
     CircleImageView profileIv;
-    TextView nameTv, countDownTv;
+    TextView nameTv, countDownTv, planTv;
     EditText messageEt;
     Button mButtonStartPause, mReportBtn;
     ImageButton sendBtn, attachBtn, recordBtn;
@@ -139,6 +141,7 @@ public class ChatActivity extends AppCompatActivity {
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
     String hisUid;
+    String requestPlan;
     String myUid;
     String hisImage;
 
@@ -152,10 +155,16 @@ public class ChatActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     String pathSave = "";
 
+    int i = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        final Intent intent = getIntent();
+        hisUid = intent.getStringExtra("hisUid");
+        requestPlan = intent.getStringExtra("plan");
 
         //init views
         toolbar = findViewById(R.id.toolbar);
@@ -176,6 +185,7 @@ public class ChatActivity extends AppCompatActivity {
         mReportBtn = findViewById(R.id.reportBtn);
         messageEt = findViewById(R.id.messageEt);
         sendBtn = findViewById(R.id.sendBtn);
+        planTv = findViewById(R.id.planTv);
         attachBtn = findViewById(R.id.attachBtn);
         recordBtn = findViewById(R.id.recordBtn);
 
@@ -188,9 +198,6 @@ public class ChatActivity extends AppCompatActivity {
 
         //create api service
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
-
-        final Intent intent = getIntent();
-        hisUid = intent.getStringExtra("hisUid");
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -212,14 +219,52 @@ public class ChatActivity extends AppCompatActivity {
                     User user = singleSnapshot.getValue(User.class);
                     Log.d( TAG, "onDataChange: (QUERY METHOD 1) found user: " + user.toString());
 
-                    nameTv.setText(user.getUsername());
-                    hisImage = user.getProfile_photo();
+                    if (user.getIsStaff().equals("true"))
+                    {
+                        nameTv.setText(user.getUsername());
+                        hisImage = user.getProfile_photo();
 
-                    try {
-                        UniversalImageLoader.setImage(user.getProfile_photo(), profileIv, null, "");
+                        try {
+                            UniversalImageLoader.setImage(user.getProfile_photo(), profileIv, null, "");
+                        }
+                        catch (Exception e){
+                            //
+                        }
+
+                        if (requestPlan.equals("Free"))
+                        {
+                            planTv.setText(requestPlan);
+                            planTv.setVisibility(View.VISIBLE);
+
+                            AlertDialog ad = new AlertDialog.Builder(ChatActivity.this)
+                                    .setMessage("Your free session will end after 10 minutes.")
+                                    .show();
+
+                        }
                     }
-                    catch (Exception e){
-                        //
+                    if (user.getIsStaff().equals("false"))
+                    {
+                        nameTv.setText(user.getUsername());
+                        planTv.setText(requestPlan);
+                        hisImage = user.getProfile_photo();
+
+                        try {
+                            UniversalImageLoader.setImage(user.getProfile_photo(), profileIv, null, "");
+                        }
+                        catch (Exception e){
+                            //
+                        }
+
+                        if (requestPlan.equals("Free"))
+                        {
+                            planTv.setText(requestPlan);
+                            planTv.setVisibility(View.VISIBLE);
+
+                            AlertDialog ad = new AlertDialog.Builder(ChatActivity.this)
+                                    .setTitle("10 MINUTES FREE SESSION")
+                                    .setMessage("The 10 minutes starts counting when the client starts his/her timer.")
+                                    .show();
+                        }
                     }
                 }
             }
@@ -249,6 +294,7 @@ public class ChatActivity extends AppCompatActivity {
                                 User user = ds.getValue(User.class);
                                 if (user.getIsStaff().equals("false"))
                                 {
+
                                     Query queryStaff = usersRef.orderByKey().equalTo(hisUid);
                                     queryStaff.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -313,6 +359,10 @@ public class ChatActivity extends AppCompatActivity {
                                         }
                                     });
                                 }
+                                else{
+                                    //Toast.makeText(ChatActivity.this, ""+requestPlan, Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                         }
 
@@ -337,6 +387,51 @@ public class ChatActivity extends AppCompatActivity {
                     //mButtonReset.setVisibility(View.VISIBLE);
                 } else {
                     startTimer();
+
+                    usersRef.orderByKey().equalTo(hisUid)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                        User user = ds.getValue(User.class);
+                                        if (user.getIsStaff().equals("true"))
+                                        {
+                                            if (requestPlan.equals("Free"))
+                                            {
+                                                i++;
+
+                                                Handler handler = new Handler();
+                                                handler.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                                                        builder.setMessage("ENDING SESSION..." );
+                                                        builder.show();
+
+
+                                                        Handler handler1 = new Handler();
+                                                        handler1.postDelayed(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                DatabaseReference sessionsRef = FirebaseDatabase.getInstance().getReference("sessions");
+                                                                sessionsRef.child(hisUid).child("client_id").setValue("no client");
+
+                                                                startActivity(new Intent(ChatActivity.this, DashboardActivity.class));
+                                                                finish();
+                                                            }
+                                                        }, 3000);
+                                                    }
+                                                }, 600000);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                 }
             }
         });
@@ -546,7 +641,6 @@ public class ChatActivity extends AppCompatActivity {
                                 }
                             });
                         }
-                        Toast.makeText(ChatActivity.this, "Uploaded Successfully.", Toast.LENGTH_LONG).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -1112,6 +1206,7 @@ public class ChatActivity extends AppCompatActivity {
                                     handler1.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
+                                            startActivity(new Intent(ChatActivity.this, DashboardActivity.class));
                                             finish();
                                         }
                                     }, 2000);
@@ -1160,4 +1255,23 @@ public class ChatActivity extends AppCompatActivity {
                 .show();
     }
 
+    @Override
+    protected void onResume() {
+
+        DatabaseReference sessionsRef = FirebaseDatabase.getInstance().getReference("sessions");
+        sessionsRef.orderByKey().equalTo(myUid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+        super.onResume();
+    }
 }

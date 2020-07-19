@@ -37,6 +37,7 @@ import com.skiplab.theselproject.models.User;
 
 import java.security.MessageDigest;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.crypto.Cipher;
@@ -67,6 +68,7 @@ public class PaymentActivity extends AppCompatActivity {
     long cost;
     String strCost;
     String counsellor_id;
+    String requestPlan;
 
     String AES = "AES";
 
@@ -87,7 +89,9 @@ public class PaymentActivity extends AppCompatActivity {
         final Intent intent = getIntent();
         cost = intent.getLongExtra("cost",0);
         counsellor_id = intent.getStringExtra("counsellor_id");
+        requestPlan = intent.getStringExtra("plan");
         strCost = String.valueOf(cost);
+
 
         cardsRef = FirebaseDatabase.getInstance().getReference("cards");
         usersRef = FirebaseDatabase.getInstance().getReference("users");
@@ -258,121 +262,133 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(PaymentActivity.this, ChatActivity.class);
-                intent.putExtra("hisUid", counsellor_id);
-                startActivity(intent);
-
-                /*String cardName1 = etMastercardName.getText().toString().trim();
-                String cardNumber1 = etMastercardCard.getText().toString().trim();
-                String cardName2 = etVerveName.getText().toString().trim();
-                String cardNumber2 = etVerveCard.getText().toString().trim();
-                String cardName3 = etVisaName.getText().toString().trim();
-                String cardNumber3 = etVisaCard.getText().toString().trim();
-
-                if (cbRemember.isChecked())
+                if (requestPlan.equals("Free"))
                 {
-                    if (!cardName1.isEmpty() && !cardNumber1.isEmpty()){
-                        cardsRef.child(fUser.getUid()).child("cardName1").setValue(cardName1);
-                        cardsRef.child(fUser.getUid()).child("cardNumber1").setValue(cardNumber1);
-                    }
-                    else if (!cardName2.isEmpty() && !cardNumber2.isEmpty()){
-                        cardsRef.child(fUser.getUid()).child("cardName2").setValue(cardName2);
-                        cardsRef.child(fUser.getUid()).child("cardNumber2").setValue(cardNumber2);
-                    }
-                    else if (!cardName3.isEmpty() && !cardNumber3.isEmpty()){
-                        cardsRef.child(fUser.getUid()).child("cardName3").setValue(cardName3);
-                        cardsRef.child(fUser.getUid()).child("cardNumber3").setValue(cardNumber3);
-                    }
+                    HashMap<String,Object> hashMap = new HashMap<>();
+                    hashMap.put("uid",fUser.getUid());
+
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("trials");
+                    reference.child(fUser.getUid()).setValue(hashMap);
+
+                    Intent intent = new Intent(PaymentActivity.this, ChatActivity.class);
+                    intent.putExtra("hisUid", counsellor_id);
+                    intent.putExtra("plan", requestPlan);
+                    startActivity(intent);
                 }
+                else
+                {
+                    String cardName1 = etMastercardName.getText().toString().trim();
+                    String cardNumber1 = etMastercardCard.getText().toString().trim();
+                    String cardName2 = etVerveName.getText().toString().trim();
+                    String cardNumber2 = etVerveCard.getText().toString().trim();
+                    String cardName3 = etVisaName.getText().toString().trim();
+                    String cardNumber3 = etVisaCard.getText().toString().trim();
 
-                usersRef.orderByKey().equalTo(fUser.getUid())
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                    User user = new User();
-                                    String username  = user.getUsername();
-                                    String uDp = user.getProfile_photo();
+                    if (cbRemember.isChecked())
+                    {
+                        if (!cardName1.isEmpty() && !cardNumber1.isEmpty()){
+                            cardsRef.child(fUser.getUid()).child("cardName1").setValue(cardName1);
+                            cardsRef.child(fUser.getUid()).child("cardNumber1").setValue(cardNumber1);
+                        }
+                        else if (!cardName2.isEmpty() && !cardNumber2.isEmpty()){
+                            cardsRef.child(fUser.getUid()).child("cardName2").setValue(cardName2);
+                            cardsRef.child(fUser.getUid()).child("cardNumber2").setValue(cardNumber2);
+                        }
+                        else if (!cardName3.isEmpty() && !cardNumber3.isEmpty()){
+                            cardsRef.child(fUser.getUid()).child("cardName3").setValue(cardName3);
+                            cardsRef.child(fUser.getUid()).child("cardNumber3").setValue(cardNumber3);
+                        }
+                    }
 
-                                    if (!cardName1.isEmpty() && !cardNumber1.isEmpty())
-                                    {
-                                        if (Common.isConnectedToTheInternet(getBaseContext())) {
-                                            chargeCard(cost, cardName1, cardNumber1, spMonth, spYear, etCvv, username, uDp);
-                                        } else{
-                                            i++;
+                    usersRef.orderByKey().equalTo(fUser.getUid())
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                        User user = new User();
+                                        String username  = user.getUsername();
+                                        String uDp = user.getProfile_photo();
 
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(PaymentActivity.this);
-                                            builder.setMessage("Please check your internet connection");
-                                            builder.show();
-
-                                            Handler handler1 = new Handler();
-                                            handler1.postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Intent intent = new Intent(PaymentActivity.this, DashboardActivity.class);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                    startActivity(intent);
-                                                    finish();
-                                                }
-                                            }, 1000);
-
-                                        }
-                                    }
-                                    else if (!cardName2.isEmpty() && !cardNumber2.isEmpty())
-                                    {
-                                        if (Common.isConnectedToTheInternet(getBaseContext())) {
-                                            chargeCard(cost, cardName2, cardNumber2, spMonth, spYear, etCvv, username, uDp);
-                                        } else{
-                                            i++;
-
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(PaymentActivity.this);
-                                            builder.setMessage("Please check your internet connection");
-                                            builder.show();
-
-                                            Handler handler1 = new Handler();
-                                            handler1.postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Intent intent = new Intent(PaymentActivity.this, DashboardActivity.class);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                    startActivity(intent);
-                                                    finish();
-                                                }
-                                            }, 1000);
-                                        }
-                                    }
-                                    else if (!cardName3.isEmpty() && !cardNumber3.isEmpty())
-                                    {
-                                        if (Common.isConnectedToTheInternet(getBaseContext()))
+                                        if (!cardName1.isEmpty() && !cardNumber1.isEmpty())
                                         {
-                                            chargeCard(cost, cardName3, cardNumber3, spMonth, spYear, etCvv, username, uDp);
-                                        } else{
-                                            i++;
+                                            if (Common.isConnectedToTheInternet(getBaseContext())) {
+                                                chargeCard(cost, cardName1, cardNumber1, spMonth, spYear, etCvv, username, uDp);
+                                            } else{
+                                                i++;
 
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(PaymentActivity.this);
-                                            builder.setMessage("Please check your internet connection");
-                                            builder.show();
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(PaymentActivity.this);
+                                                builder.setMessage("Please check your internet connection");
+                                                builder.show();
 
-                                            Handler handler1 = new Handler();
-                                            handler1.postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Intent intent = new Intent(PaymentActivity.this, DashboardActivity.class);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                    startActivity(intent);
-                                                    finish();
-                                                }
-                                            }, 1000);
+                                                Handler handler1 = new Handler();
+                                                handler1.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Intent intent = new Intent(PaymentActivity.this, DashboardActivity.class);
+                                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }, 1000);
+
+                                            }
+                                        }
+                                        else if (!cardName2.isEmpty() && !cardNumber2.isEmpty())
+                                        {
+                                            if (Common.isConnectedToTheInternet(getBaseContext())) {
+                                                chargeCard(cost, cardName2, cardNumber2, spMonth, spYear, etCvv, username, uDp);
+                                            } else{
+                                                i++;
+
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(PaymentActivity.this);
+                                                builder.setMessage("Please check your internet connection");
+                                                builder.show();
+
+                                                Handler handler1 = new Handler();
+                                                handler1.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Intent intent = new Intent(PaymentActivity.this, DashboardActivity.class);
+                                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }, 1000);
+                                            }
+                                        }
+                                        else if (!cardName3.isEmpty() && !cardNumber3.isEmpty())
+                                        {
+                                            if (Common.isConnectedToTheInternet(getBaseContext()))
+                                            {
+                                                chargeCard(cost, cardName3, cardNumber3, spMonth, spYear, etCvv, username, uDp);
+                                            } else{
+                                                i++;
+
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(PaymentActivity.this);
+                                                builder.setMessage("Please check your internet connection");
+                                                builder.show();
+
+                                                Handler handler1 = new Handler();
+                                                handler1.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Intent intent = new Intent(PaymentActivity.this, DashboardActivity.class);
+                                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }, 1000);
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //...
-                            }
-                        });*/
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    //...
+                                }
+                            });
+                }
 
             }
         });
@@ -450,6 +466,7 @@ public class PaymentActivity extends AppCompatActivity {
 
                                                     Intent intent = new Intent(PaymentActivity.this, ChatActivity.class);
                                                     intent.putExtra("hisUid", counsellor_id);
+                                                    intent.putExtra("plan", requestPlan);
                                                     startActivity(intent);
 
                                                     Long consultations = sessions.getCompleted();
