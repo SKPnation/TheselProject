@@ -67,7 +67,7 @@ public class SeventhQuestionnaire extends Fragment {
                         ft8.replace(R.id.content, eighthQuestionnaire);
                         ft8.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -91,7 +91,7 @@ public class SeventhQuestionnaire extends Fragment {
                         ft8.replace(R.id.content, eighthQuestionnaire);
                         ft8.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -115,7 +115,7 @@ public class SeventhQuestionnaire extends Fragment {
                         ft8.replace(R.id.content, eighthQuestionnaire);
                         ft8.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -139,7 +139,7 @@ public class SeventhQuestionnaire extends Fragment {
                         ft8.replace(R.id.content, eighthQuestionnaire);
                         ft8.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -163,7 +163,7 @@ public class SeventhQuestionnaire extends Fragment {
                         ft8.replace(R.id.content, eighthQuestionnaire);
                         ft8.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -187,7 +187,7 @@ public class SeventhQuestionnaire extends Fragment {
                         ft8.replace(R.id.content, eighthQuestionnaire);
                         ft8.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 

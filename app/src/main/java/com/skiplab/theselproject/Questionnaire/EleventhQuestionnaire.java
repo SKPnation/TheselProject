@@ -64,7 +64,7 @@ public class EleventhQuestionnaire extends Fragment {
                         ft13.replace(R.id.content, thirteenthQuestionnaire);
                         ft13.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -88,7 +88,7 @@ public class EleventhQuestionnaire extends Fragment {
                         ft13.replace(R.id.content, thirteenthQuestionnaire);
                         ft13.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -112,7 +112,7 @@ public class EleventhQuestionnaire extends Fragment {
                         ft13.replace(R.id.content, thirteenthQuestionnaire);
                         ft13.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 

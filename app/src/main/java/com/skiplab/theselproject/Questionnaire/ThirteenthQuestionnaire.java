@@ -70,7 +70,7 @@ public class ThirteenthQuestionnaire extends Fragment {
                         ft14.replace(R.id.content, fourteenthQuestionnaire);
                         ft14.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -94,7 +94,7 @@ public class ThirteenthQuestionnaire extends Fragment {
                         ft14.replace(R.id.content, fourteenthQuestionnaire);
                         ft14.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -118,7 +118,7 @@ public class ThirteenthQuestionnaire extends Fragment {
                         ft14.replace(R.id.content, fourteenthQuestionnaire);
                         ft14.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -142,7 +142,7 @@ public class ThirteenthQuestionnaire extends Fragment {
                         ft14.replace(R.id.content, fourteenthQuestionnaire);
                         ft14.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -166,7 +166,7 @@ public class ThirteenthQuestionnaire extends Fragment {
                         ft14.replace(R.id.content, fourteenthQuestionnaire);
                         ft14.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -190,7 +190,7 @@ public class ThirteenthQuestionnaire extends Fragment {
                         ft14.replace(R.id.content, fourteenthQuestionnaire);
                         ft14.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -214,7 +214,7 @@ public class ThirteenthQuestionnaire extends Fragment {
                         ft14.replace(R.id.content, fourteenthQuestionnaire);
                         ft14.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -238,7 +238,7 @@ public class ThirteenthQuestionnaire extends Fragment {
                         ft14.replace(R.id.content, fourteenthQuestionnaire);
                         ft14.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -262,7 +262,7 @@ public class ThirteenthQuestionnaire extends Fragment {
                         ft14.replace(R.id.content, fourteenthQuestionnaire);
                         ft14.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 

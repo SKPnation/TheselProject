@@ -63,7 +63,7 @@ public class ThirdQuestionnaire extends Fragment {
                         ft4.replace(R.id.content, fourthQuestionnaire);
                         ft4.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -87,7 +87,7 @@ public class ThirdQuestionnaire extends Fragment {
                         ft4.replace(R.id.content, fourthQuestionnaire);
                         ft4.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 

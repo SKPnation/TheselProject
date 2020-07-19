@@ -58,7 +58,7 @@ public class FirstQuestionnaire extends Fragment {
                         ft2.replace(R.id.content, secondQuestionnaire);
                         ft2.commit();
                     }
-                }, 60000);
+                }, 200);
             }
         });
 
@@ -82,7 +82,7 @@ public class FirstQuestionnaire extends Fragment {
                         ft2.replace(R.id.content, secondQuestionnaire);
                         ft2.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 

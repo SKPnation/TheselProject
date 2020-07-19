@@ -65,7 +65,7 @@ public class FourthQuestionnaire extends Fragment {
                         ft5.replace(R.id.content, fifthQuestionnaire);
                         ft5.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -89,7 +89,7 @@ public class FourthQuestionnaire extends Fragment {
                         ft5.replace(R.id.content, fifthQuestionnaire);
                         ft5.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -113,7 +113,7 @@ public class FourthQuestionnaire extends Fragment {
                         ft5.replace(R.id.content, fifthQuestionnaire);
                         ft5.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
@@ -137,7 +137,7 @@ public class FourthQuestionnaire extends Fragment {
                         ft5.replace(R.id.content, fifthQuestionnaire);
                         ft5.commit();
                     }
-                }, 700);
+                }, 200);
             }
         });
 
