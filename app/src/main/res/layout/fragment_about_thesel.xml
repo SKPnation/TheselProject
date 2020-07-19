@@ -102,19 +102,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="#fff"
-                android:text="We have 2 categories of Consultants; the standard rated and the premium rated."/>
+                android:text="Our tariff is rated on hourly basis, varying with consultant."/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="#fff"
-                android:text="Our services are charged for, on hourly basis and the hourly tariff varies, depending on whether the consultant is rated 'standard' or rated 'premium'."/>
+                android:text="As a new user, you will be allowed to enjoy a one time free 10 minutes session with any consultant of your choice."/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="#fff"
-                android:text="The premium rated Consultants are pricier than those rated 'Standard'."/>
+                android:text=""/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,7 +161,7 @@
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="jobs@thesel.com.ng"
+                        android:text="contact@thesel.com.ng"
                         android:textAlignment="center"
                         android:textColor="#fff" />
 

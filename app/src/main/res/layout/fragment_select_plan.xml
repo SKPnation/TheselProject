@@ -28,7 +28,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Do you need a counsellor?"
+                    android:text="Do you need a consultant?"
                     android:textSize="25sp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
                     android:textColor="#ffffff"/>
@@ -69,8 +69,8 @@
                         android:id="@+id/free_plan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="One Time Free Plan"
-                        android:textSize="30sp"
+                        android:text="One Time Free Session"
+                        android:textSize="25sp"
                         android:textColor="#24815D"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                         android:layout_marginTop="30dp"
@@ -93,7 +93,7 @@
                         android:paddingLeft="40dp"
                         android:text="10mins session"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:textColor="#414141" />
 
                     <ImageView
@@ -112,7 +112,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewPremium"
+                android:id="@+id/cardViewPaid"
                 android:layout_width="300dp"
                 android:layout_height="250dp"
                 android:layout_weight="1"
@@ -123,24 +123,24 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/premium_layout"
+                    android:id="@+id/paid_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/premium_plan"
+                        android:id="@+id/paid_plan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Premium Plan"
-                        android:textSize="30sp"
+                        android:text="Paid Session"
+                        android:textSize="25sp"
                         android:textColor="#24815D"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                         android:layout_marginTop="30dp"
                         android:paddingLeft="20dp"/>
 
                     <View
-                        android:id="@+id/view_premium"
-                        android:layout_below="@id/premium_plan"
+                        android:id="@+id/view_paid"
+                        android:layout_below="@id/paid_plan"
                         android:layout_centerHorizontal="true"
                         android:layout_width="270dp"
                         android:layout_height="1dp"
@@ -149,18 +149,18 @@
 
                     <TextView
                         android:id="@+id/hour_text"
-                        android:layout_below="@id/view_premium"
+                        android:layout_below="@id/view_paid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="40dp"
                         android:layout_marginTop="10dp"
                         android:text="1hour session"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                        android:textSize="24sp"
+                        android:textSize="20dp"
                         android:textColor="#414141" />
 
                     <ImageView
-                        android:id="@+id/premium_next"
+                        android:id="@+id/paid_next"
                         android:src="@drawable/ic_next"
                         android:background="@null"
                         android:layout_alignParentBottom="true"

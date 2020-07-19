@@ -5,11 +5,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="staffNameEt"><![CDATA[First & Last name]]></string>
 
-    <string name="firstRule">1. Do not proceed to payment on a request that is almost 15 minutes old, even if the request has been accepted.</string>
-    <string name="secondRule">2. A Session lasts for 1 hour. Therefore, make sure you are in a comfortable position and ensure your PHONE BATTERY LIFE is sufficient enough for an hour session. </string>
-    <string name="thirdRule">3. Make sure you have a GOOD INTERNET CONNECTION for a smooth and successful session. </string>
-    <string name="fourthRule">4. Please do not request for another counsellor immediately after a session has ended. Wait for 30minutes, then, you can send a request. </string>
-    <string name="fifthRule">5. Exchange of phone numbers and emails is NOT ALLOWED on this app. If you do so, your account will be DEACTIVATED.</string>
+    <string name="secondRule">1. A Session lasts for 1 hour. Therefore, make sure you are in a comfortable position and ensure your PHONE BATTERY LIFE is sufficient enough for an hour session. </string>
+    <string name="thirdRule">2. Make sure you have a GOOD INTERNET CONNECTION for a smooth and successful session. </string>
+    <string name="fourthRule">3. Please do not request for another counsellor immediately after a session has ended. Wait for 30minutes, then, you can send a request. </string>
+    <string name="fifthRule">4. Exchange of phone numbers and emails is NOT ALLOWED on this app. If you do so, your account will be DEACTIVATED.</string>
 
     <string name="firstCounsellorRule">1.  A Session lasts for 1 hour. Therefore, make sure you are in a comfortable position and ensure your PHONE BATTERY LIFE is sufficient enough for an hour session.</string>
     <string name="secondCounsellorRule">2.  If your phone goes off during a session, make sure you tap the EMPTY button when your phone comes back on.</string>
