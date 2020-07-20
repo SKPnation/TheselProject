@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.format.DateFormat;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +84,7 @@ public class UsersFragment extends Fragment {
     RecyclerView.LayoutManager layoutManager;
 
     DatabaseReference usersRef, sessionsRef, pinsRef, requestsRef;
-    FirebaseRecyclerAdapter<User, UsersViewHolder> adapter, searchAdapter;
+    FirebaseRecyclerAdapter<User, UsersViewHolder> adapter;
 
     //firebase auth
     FirebaseAuth mAuth;
@@ -1079,6 +1078,9 @@ public class UsersFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onStart() {
 
-
+        super.onStart();
+    }
 }

@@ -51,7 +51,6 @@ public class RequestsActivity extends AppCompatActivity {
 
     private ImageView backBtn, call_request_Btn;
     private TextView hintText;
-    private LinearLayout linearLayout;
 
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -87,7 +86,6 @@ public class RequestsActivity extends AppCompatActivity {
         hintText = findViewById(R.id.hintText);
         backBtn = findViewById(R.id.backArrow);
         call_request_Btn = findViewById(R.id.phone_request_staff_Btn);
-        linearLayout = findViewById(R.id.warning);
 
         getServerSupportPhone();
 
@@ -213,7 +211,6 @@ public class RequestsActivity extends AppCompatActivity {
 
                             if (user.getIsStaff().equals("false"))
                             {
-                                linearLayout.setVisibility(View.VISIBLE);
                                 Query query = requestsRef.orderByChild("client_id").equalTo(uid);
                                 //get all data from this reference
                                 query.addValueEventListener(new ValueEventListener() {
