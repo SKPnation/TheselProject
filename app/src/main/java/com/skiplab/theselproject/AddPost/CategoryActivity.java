@@ -75,7 +75,6 @@ public class CategoryActivity extends AppCompatActivity {
         currentMood = getIntent.getStringExtra("mood");
         pDescription = getIntent.getStringExtra("pDesc");
         image_uri = getIntent.getStringExtra("imageUri");
-
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 

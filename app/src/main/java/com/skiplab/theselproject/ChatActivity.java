@@ -206,13 +206,10 @@ public class ChatActivity extends AppCompatActivity {
         sessionsRef = firebaseDatabase.getReference("sessions");
 
         //search user to get user's info
-        Query query1 = usersRef
-                .orderByKey()
-                .equalTo( hisUid );
 
         //orderByKey method will look for the key encapsulating the values of the object
 
-        query1.addListenerForSingleValueEvent( new ValueEventListener() {
+        usersRef.orderByKey().equalTo(hisUid).addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot singleSnapshot: dataSnapshot.getChildren() ){

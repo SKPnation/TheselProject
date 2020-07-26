@@ -48,8 +48,10 @@ import com.skiplab.theselproject.ChatActivity;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.PaymentActivity;
+import com.skiplab.theselproject.Profile.RequestsActivity;
 import com.skiplab.theselproject.Questionnaire.QuestionnaireActivity;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.Search.ConsultantsActivity;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Cards;
 import com.skiplab.theselproject.models.ReferenceNumber;
@@ -64,6 +66,7 @@ import com.skiplab.theselproject.notifications.Sender;
 import com.skiplab.theselproject.notifications.Token;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -145,7 +148,8 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             User user = ds.getValue(User.class);
-                            if (user.getIsStaff().equals("true")){
+                            if (user.getIsStaff().equals("true"))
+                            {
                                 holder.clientName.setText(requestsList.get(position).getClient_name());
                                 holder.acceptBtn.setVisibility(View.VISIBLE);
 
@@ -161,7 +165,26 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
                                                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                                                             Sessions sessions = ds.getValue(Sessions.class);
                                                             if (!sessions.getClient_id().equals(no_client)){
-                                                                holder.emptyBtn.setVisibility(View.VISIBLE);
+
+                                                                requestsRef.orderByChild("timestamp").equalTo(requestsList.get(position).getTimestamp())
+                                                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                            @Override
+                                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                                                                                    Requests requests = ds.getValue(Requests.class);
+
+                                                                                    if (requests.getStatus().equals("accepted"))
+                                                                                    {
+                                                                                        holder.emptyBtn.setVisibility(View.VISIBLE);
+                                                                                    }
+                                                                                }
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                            }
+                                                                        });
                                                             }
                                                         }
                                                     }
@@ -177,6 +200,8 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
                             {
                                 holder.counsellorName.setText(requestsList.get(position).getCounsellor_name());
                                 holder.requestStatus.setVisibility(View.VISIBLE);
+                                holder.requestPlan.setVisibility(View.VISIBLE);
+                                holder.requestTimer.setVisibility(View.VISIBLE);
                                 holder.requestTimer.setText(requestsList.get(position).getTimer());
 
                                 i++;
@@ -201,7 +226,10 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
                                                                                 handler.postDelayed(new Runnable() {
                                                                                     @Override
                                                                                     public void run() {
-                                                                                        holder.requestTimer.setText(requestsList.get(position).getTimer());
+                                                                                        ((RequestsActivity)context).setExpiry(requestsList.get(position).getTimer(), holder.requestTimer);
+
+                                                                                        /*holder.requestTimer.setText(requestsList.get(position).getTimer());
+                                                                                        holder.requestTimer.setVisibility(View.VISIBLE);*/
                                                                                     }
                                                                                 },5000);
                                                                             }
@@ -376,8 +404,6 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
                                                                                                         intent.putExtra("hisUid", sessions.getClient_id());
                                                                                                         intent.putExtra("plan", requestsList.get(position).getPlan());
                                                                                                         context.startActivity(intent);
-
-                                                                                                        Toast.makeText(context,""+requestsList.get(position).getPlan(),Toast.LENGTH_SHORT).show();
                                                                                                     }
                                                                                                 });
                                                                                                 builder.setView(mView);
@@ -750,61 +776,65 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
 
                                                                                 if (requests.getStatus().equals("accepted"))
                                                                                 {
-                                                                                    String counsellor_id = requests.getCounsellor_id();
-                                                                                    sessionsRef.orderByKey().equalTo(counsellor_id)
+                                                                                    sessionsRef.orderByChild("counsellor_id").equalTo(requests.getCounsellor_id())
                                                                                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                                                                                 @Override
                                                                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                                                                     for (DataSnapshot ds: dataSnapshot.getChildren()){
                                                                                                         Sessions sessions = ds.getValue(Sessions.class);
-                                                                                                        String client_id = sessions.getClient_id();
-                                                                                                        if (client_id.equals(mAuth.getUid()))
+
+                                                                                                        if (sessions.getClient_id().equals(fUser.getUid()))
                                                                                                         {
-                                                                                                            usersRef.orderByKey().equalTo(counsellor_id)
-                                                                                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                                                                        @Override
-                                                                                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                                                                            for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                                                                                                                User userStaff = ds.getValue(User.class);
+                                                                                                            //Toast.makeText(context, ""+sessions.getClient_id(), Toast.LENGTH_SHORT).show();
 
-                                                                                                                                if (requestsList.get(position).getTimer().equals("Expired"))
-                                                                                                                                {
-                                                                                                                                    progressDialog.dismiss();
+                                                                                                            if (requests.getTimer().equals("Expired"))
+                                                                                                            {
+                                                                                                                progressDialog.dismiss();
 
-                                                                                                                                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                                                                                                                    builder.setTitle("THIS REQUEST HAS EXPIRED");
-                                                                                                                                    builder.setMessage("Send a new request");
-                                                                                                                                    builder.show();
-                                                                                                                                }
-                                                                                                                                else
-                                                                                                                                {
-                                                                                                                                    Long cost = userStaff.getCost();
-                                                                                                                                    progressDialog.dismiss();
+                                                                                                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                                                                                                builder.setTitle("THIS REQUEST HAS EXPIRED");
+                                                                                                                builder.setMessage("Send a new request");
+                                                                                                                builder.show();
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                if (requests.getPlan().equals("Paid"))
+                                                                                                                {
+                                                                                                                    progressDialog.dismiss();
 
-                                                                                                                                    Intent intent = new Intent(context, PaymentActivity.class);
-                                                                                                                                    intent.putExtra("cost", cost);
-                                                                                                                                    intent.putExtra("counsellor_id", counsellor_id);
-                                                                                                                                    intent.putExtra("plan", requestsList.get(position).getPlan());
-                                                                                                                                    context.startActivity(intent);
-                                                                                                                                }
-                                                                                                                            }
-                                                                                                                        }
+                                                                                                                    Long cost = userStaff.getCost();
 
-                                                                                                                        @Override
-                                                                                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                                                                                            //..
-                                                                                                                        }
-                                                                                                                    });
+                                                                                                                    Intent intent = new Intent(context, PaymentActivity.class);
+                                                                                                                    intent.putExtra("cost", cost);
+                                                                                                                    intent.putExtra("counsellor_id", requests.getCounsellor_id());
+                                                                                                                    intent.putExtra("plan", requestsList.get(position).getPlan());
+                                                                                                                    context.startActivity(intent);
+                                                                                                                }
+                                                                                                                else
+                                                                                                                {
+                                                                                                                    progressDialog.dismiss();
 
+                                                                                                                    HashMap<String,Object> hashMap = new HashMap<>();
+                                                                                                                    hashMap.put("uid",fUser.getUid());
+
+                                                                                                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("trials");
+                                                                                                                    reference.child(fUser.getUid()).setValue(hashMap);
+
+                                                                                                                    Intent intent = new Intent(context, ChatActivity.class);
+                                                                                                                    intent.putExtra("hisUid", requests.getCounsellor_id());
+                                                                                                                    intent.putExtra("plan", requestsList.get(position).getPlan());
+                                                                                                                    context.startActivity(intent);
+                                                                                                                }
+
+                                                                                                            }
                                                                                                         }
                                                                                                         else{
                                                                                                             progressDialog.dismiss();
+
                                                                                                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
                                                                                                             builder.setMessage("That session has ended");
                                                                                                             builder.show();
                                                                                                         }
-
-
                                                                                                     }
                                                                                                 }
 
@@ -813,13 +843,17 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
                                                                                                     //..
                                                                                                 }
                                                                                             });
+
+
                                                                                 }
-                                                                                else{
+                                                                                else
+                                                                                {
+                                                                                    progressDialog.dismiss();
+
                                                                                     AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                                                                                     builder1.setMessage("The consultant has not accepted this request");
                                                                                     builder1.show();
                                                                                 }
-                                                                                    progressDialog.dismiss();
                                                                             }
                                                                         }
 

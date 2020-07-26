@@ -300,5 +300,11 @@ public class RequestsActivity extends AppCompatActivity {
             finish();
         }
     }
-    
+
+    public void setExpiry(String timer, TextView requestTimer) {
+        requestTimer.setText(timer);
+        requestTimer.setVisibility(View.VISIBLE);
+
+        finish();
+    }
 }

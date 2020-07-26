@@ -23,6 +23,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Search.ConsultantsActivity"></activity>
         <activity android:name=".Questionnaire.QuestionnaireActivity" />
         <activity android:name=".PaymentActivity" />
         <activity android:name=".Profile.RequestsActivity" />

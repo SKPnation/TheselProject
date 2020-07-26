@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Toast.makeText( LoginActivity.this, "Authentication failed", Toast.LENGTH_SHORT ).show();
+                        Toast.makeText( LoginActivity.this, "Login failed, please check your credentials.", Toast.LENGTH_SHORT ).show();
                     }
                 } );
 

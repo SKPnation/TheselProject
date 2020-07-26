@@ -111,6 +111,7 @@ public class HomeFragment extends Fragment {
         db = FirebaseDatabase.getInstance();
         postDb = db.getReference("posts");
         userDb = db.getReference("users");
+        postDb.keepSynced(true);
 
         mProgressBar = view.findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.VISIBLE);
@@ -165,7 +166,8 @@ public class HomeFragment extends Fragment {
 
         });
 
-        if(Common.isConnectedToTheInternet(getContext())){
+        if(Common.isConnectedToTheInternet(getContext()))
+        {
             Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid());
             querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

@@ -146,7 +146,7 @@ public class StaffRegisterActivity extends AppCompatActivity {
                 mEmail.setError("Invalid Email");
                 mEmail.setFocusable(true);
             }
-            else if (!password.equals("jabulani")){
+            else if (!password.equals("jabani")){
                 mPassword.setError("Wrong Password");
                 mPassword.setFocusable(true);
                 Toast.makeText(mContext, "Contact Thesel Admin for the consultant password", Toast.LENGTH_SHORT).show();
