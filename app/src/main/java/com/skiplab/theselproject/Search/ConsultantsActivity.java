@@ -271,7 +271,7 @@ public class ConsultantsActivity extends AppCompatActivity {
                                                                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                                                                     builder.setTitle("READ THE MESSAGE");
                                                                     builder.setMessage("If your PENDING request to "+ cltName + " is not ACCEPTED within 15 minutes, send another request or request for another consultant." +
-                                                                            " This request will expire after 15 minutes.");
+                                                                            " This request will expire in 15 minutes.");
 
                                                                     builder.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
                                                                         @Override

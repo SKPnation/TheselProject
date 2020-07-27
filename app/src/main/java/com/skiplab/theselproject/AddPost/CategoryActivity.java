@@ -6,11 +6,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.skiplab.theselproject.Activity.ActivityFragment;
@@ -42,12 +46,16 @@ import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.Post;
 import com.skiplab.theselproject.models.User;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CategoryActivity extends AppCompatActivity {
 
     private static final String TAG = "CategoryActivity";
+
+    Context mContext = CategoryActivity.this;
 
     private String currentMood, pDescription, image_uri;
     private ImageView sendPost;
@@ -63,6 +71,7 @@ public class CategoryActivity extends AppCompatActivity {
     String name, email, uid, dp;
 
     int i = 0;
+    private double mPhotoUploadProgress = 0;
 
     ListView ch1;
 
@@ -140,17 +149,21 @@ public class CategoryActivity extends AppCompatActivity {
                     if(Common.isConnectedToTheInternet(getBaseContext()))
                     {
                         AlertDialog ad = new AlertDialog.Builder(CategoryActivity.this)
-                                .setCancelable(false)
                                 .setTitle("Do you want to be anonymous?")
                                 .setPositiveButton( "YES", new DialogInterface.OnClickListener() {
                                     public void onClick( DialogInterface dialog, int i)
                                     {
+                                        Toast.makeText(mContext, "Please wait...", Toast.LENGTH_LONG).show();
+
                                         uploadDataAsAnonymous(currentMood, pDescription, image_uri, selCatTv);
                                     }
                                 })
                                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+
+                                        Toast.makeText(mContext, "Please wait...", Toast.LENGTH_LONG).show();
+
                                         uploadData(currentMood, pDescription, image_uri, selCatTv);
                                     }
                                 }).show();
@@ -196,110 +209,134 @@ public class CategoryActivity extends AppCompatActivity {
 
         if (!image_uri.equals("noImage")){
             //post Image
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(filePathAndName);
-            storageRef.putFile(Uri.parse(image_uri))
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //image has been uploaded to firebase storage, now get its url
-                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                            while (!uriTask.isSuccessful());
+            try {
 
-                            String downloadUri = uriTask.getResult().toString();
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), Uri.parse(image_uri));
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] pictureData = baos.toByteArray(); //convert images to bytes
 
-                            if (uriTask.isSuccessful()){
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(filePathAndName);
+                storageRef.putBytes(pictureData)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                //image has been uploaded to firebase storage, now get its url
+                                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                while (!uriTask.isSuccessful());
 
-                                Query query1 = userDbRef
-                                        .orderByKey()
-                                        .equalTo( FirebaseAuth.getInstance().getCurrentUser().getUid() );
+                                String downloadUri = uriTask.getResult().toString();
 
-                                //orderByKey method will look for the key encapsulating the values of the object
+                                if (uriTask.isSuccessful()){
 
-                                query1.addListenerForSingleValueEvent( new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot singleSnapshot: dataSnapshot.getChildren() ){
-                                            User user = singleSnapshot.getValue(User.class);
-                                            Log.d( TAG, "onDataChange: (QUERY METHOD 1) found user: " + user.toString());
+                                    Query query1 = userDbRef
+                                            .orderByKey()
+                                            .equalTo( FirebaseAuth.getInstance().getCurrentUser().getUid() );
 
-                                            //url is received upload post to firebase firestore
+                                    //orderByKey method will look for the key encapsulating the values of the object
 
-                                            Post post = new Post();
-                                            post.setUid(uid);
-                                            post.setuName(user.getUsername());
-                                            post.setuEmail(firebaseAuth.getCurrentUser().getEmail());
-                                            post.setuDp(user.getProfile_photo());
-                                            post.setpId(timeStamp);
-                                            post.setpLikes("0");
-                                            post.setpComments("0");
-                                            post.setpDescription(pDescription);
-                                            post.setpImage(downloadUri);
-                                            post.setpCategory(selCatTv);
-                                            post.setpTime(timeStamp);
-                                            post.setuMood(currentMood);
+                                    query1.addListenerForSingleValueEvent( new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot singleSnapshot: dataSnapshot.getChildren() ){
+                                                User user = singleSnapshot.getValue(User.class);
+                                                Log.d( TAG, "onDataChange: (QUERY METHOD 1) found user: " + user.toString());
 
-                                            //Path to store post data
-                                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
-                                            //put data in this ref
-                                            ref.child(timeStamp).setValue(post)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            //added to firebase
-                                                            pd.dismiss();
+                                                //url is received upload post to firebase firestore
 
-                                                            Query query = userDbRef.orderByKey().equalTo(uid);
-                                                            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                @Override
-                                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                    for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                                                        User user = ds.getValue(User.class);
-                                                                        Long postCount = user.getPosts();
+                                                Post post = new Post();
+                                                post.setUid(uid);
+                                                post.setuName(user.getUsername());
+                                                post.setuEmail(firebaseAuth.getCurrentUser().getEmail());
+                                                post.setuDp(user.getProfile_photo());
+                                                post.setpId(timeStamp);
+                                                post.setpLikes("0");
+                                                post.setpComments("0");
+                                                post.setpDescription(pDescription);
+                                                post.setpImage(downloadUri);
+                                                post.setpCategory(selCatTv);
+                                                post.setpTime(timeStamp);
+                                                post.setuMood(currentMood);
 
-                                                                        userDbRef.child(uid).child("posts").setValue(postCount+1);
+                                                //Path to store post data
+                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
+                                                //put data in this ref
+                                                ref.child(timeStamp).setValue(post)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                //added to firebase
+                                                                pd.dismiss();
+
+                                                                Query query = userDbRef.orderByKey().equalTo(uid);
+                                                                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                                                            User user = ds.getValue(User.class);
+                                                                            Long postCount = user.getPosts();
+
+                                                                            userDbRef.child(uid).child("posts").setValue(postCount+1);
+                                                                        }
                                                                     }
-                                                                }
 
-                                                                @Override
-                                                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                                    //..
-                                                                }
-                                                            });
+                                                                    @Override
+                                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                        //..
+                                                                    }
+                                                                });
 
-                                                            Intent intent = new Intent(CategoryActivity.this, DashboardActivity.class);
-                                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                            startActivity(intent);
-                                                            finish();
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            pd.dismiss();
-                                                            Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
+                                                                Intent intent = new Intent(CategoryActivity.this, DashboardActivity.class);
+                                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                startActivity(intent);
+                                                                finish();
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                pd.dismiss();
+                                                                Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        //..
-                                    }
-                                } );
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            //..
+                                        }
+                                    } );
 
+                                }
                             }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            pd.dismiss();
-                            Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                double progress = (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
 
-            Toast.makeText(CategoryActivity.this, ""+image_uri , Toast.LENGTH_LONG).show();
+                                if (progress - 15 > mPhotoUploadProgress)
+                                {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                    builder.setMessage("photo upload progress: "+ String.format("%.0f", progress)+"%");
+                                    builder.show();
+                                    mPhotoUploadProgress = progress;
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                pd.dismiss();
+                                Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else {
             //post without image
@@ -370,115 +407,138 @@ public class CategoryActivity extends AppCompatActivity {
 
         //for post- image name, post-id, post-publish-time
         final String timeStamp = String.valueOf(System.currentTimeMillis());
+        String uniqueAnonymousId = generateID();
 
         String filePathAndName = "posts/" + "post_" + timeStamp;
 
-        if (!image_uri.equals("noImage")){
+        if (!image_uri.equals("noImage"))
+        {
             //post Image
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(filePathAndName);
-            storageRef.putFile(Uri.parse(image_uri))
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //image has been uploaded to firebase storage, now get its url
-                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                            while (!uriTask.isSuccessful());
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), Uri.parse(image_uri));
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] pictureData = baos.toByteArray(); //convert images to bytes
 
-                            String downloadUri = uriTask.getResult().toString();
+                StorageReference storageRef = FirebaseStorage.getInstance().getReference().child(filePathAndName);
+                storageRef.putBytes(pictureData)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                //image has been uploaded to firebase storage, now get its url
+                                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                while (!uriTask.isSuccessful());
 
-                            if (uriTask.isSuccessful()){
+                                String downloadUri = uriTask.getResult().toString();
 
-                                Query query1 = userDbRef
-                                        .orderByKey()
-                                        .equalTo( FirebaseAuth.getInstance().getCurrentUser().getUid() );
+                                if (uriTask.isSuccessful()){
 
-                                //orderByKey method will look for the key encapsulating the values of the object
+                                    Query query1 = userDbRef
+                                            .orderByKey()
+                                            .equalTo( FirebaseAuth.getInstance().getCurrentUser().getUid() );
 
-                                query1.addListenerForSingleValueEvent( new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot singleSnapshot: dataSnapshot.getChildren() ){
-                                            User user = singleSnapshot.getValue(User.class);
-                                            Log.d( TAG, "onDataChange: (QUERY METHOD 1) found user: " + user.toString());
+                                    //orderByKey method will look for the key encapsulating the values of the object
 
-                                            //url is received upload post to firebase firestore
+                                    query1.addListenerForSingleValueEvent( new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot singleSnapshot: dataSnapshot.getChildren() ){
+                                                User user = singleSnapshot.getValue(User.class);
+                                                Log.d( TAG, "onDataChange: (QUERY METHOD 1) found user: " + user.toString());
 
-                                            Post post = new Post();
-                                            post.setUid(uid);
-                                            post.setuName("Anonymous");
-                                            post.setuEmail(firebaseAuth.getCurrentUser().getEmail());
-                                            post.setuDp("");
-                                            post.setpId(timeStamp);
-                                            post.setpLikes("0");
-                                            post.setpComments("0");
-                                            post.setpDescription(pDescription);
-                                            post.setpImage(downloadUri);
-                                            post.setpCategory(selCatTv);
-                                            post.setpTime(timeStamp);
-                                            post.setuMood(currentMood);
+                                                //url is received upload post to firebase firestore
 
-                                            //Path to store post data
-                                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
-                                            //put data in this ref
-                                            ref.child(timeStamp).setValue(post)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            //added to firebase
-                                                            pd.dismiss();
+                                                Post post = new Post();
+                                                post.setUid(uid);
+                                                post.setuName("Anonymous"+uniqueAnonymousId);
+                                                post.setuEmail(firebaseAuth.getCurrentUser().getEmail());
+                                                post.setuDp("");
+                                                post.setpId(timeStamp);
+                                                post.setpLikes("0");
+                                                post.setpComments("0");
+                                                post.setpDescription(pDescription);
+                                                post.setpImage(downloadUri);
+                                                post.setpCategory(selCatTv);
+                                                post.setpTime(timeStamp);
+                                                post.setuMood(currentMood);
 
-                                                            Query query = userDbRef.orderByKey().equalTo(uid);
-                                                            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                @Override
-                                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                    for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                                                        User user = ds.getValue(User.class);
-                                                                        Long postCount = user.getPosts();
+                                                //Path to store post data
+                                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
+                                                //put data in this ref
+                                                ref.child(timeStamp).setValue(post)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                //added to firebase
+                                                                pd.dismiss();
 
-                                                                        userDbRef.child(uid).child("posts").setValue(postCount+1);
+                                                                Query query = userDbRef.orderByKey().equalTo(uid);
+                                                                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                                                            User user = ds.getValue(User.class);
+                                                                            Long postCount = user.getPosts();
+
+                                                                            userDbRef.child(uid).child("posts").setValue(postCount+1);
+                                                                        }
                                                                     }
-                                                                }
 
-                                                                @Override
-                                                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                                    //..
-                                                                }
-                                                            });
+                                                                    @Override
+                                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                                        //..
+                                                                    }
+                                                                });
 
-                                                            Intent intent = new Intent(CategoryActivity.this, DashboardActivity.class);
-                                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                            startActivity(intent);
-                                                            finish();
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            pd.dismiss();
-                                                            Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
+                                                                Intent intent = new Intent(CategoryActivity.this, DashboardActivity.class);
+                                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                startActivity(intent);
+                                                                finish();
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                pd.dismiss();
+                                                                Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        //..
-                                    }
-                                } );
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            //..
+                                        }
+                                    } );
 
+                                }
                             }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            pd.dismiss();
-                            Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                double progress = (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
 
-            Toast.makeText(CategoryActivity.this, ""+image_uri , Toast.LENGTH_LONG).show();
+                                if (progress - 15 > mPhotoUploadProgress)
+                                {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                    builder.setMessage("uploading picture: "+ String.format("%.0f", progress)+"%");
+                                    builder.show();
+                                    mPhotoUploadProgress = progress;
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                pd.dismiss();
+                                Toast.makeText(CategoryActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else {
             //post without image
@@ -486,7 +546,7 @@ public class CategoryActivity extends AppCompatActivity {
             HashMap<Object, String> hashMap = new HashMap<>();
             //put post info
             hashMap.put("uid", uid);
-            hashMap.put("uName", "Anonymous");
+            hashMap.put("uName", "Anonymous"+uniqueAnonymousId);
             hashMap.put("uEmail", email);
             hashMap.put("uDp", "");
             hashMap.put("pId", timeStamp);
@@ -543,6 +603,19 @@ public class CategoryActivity extends AppCompatActivity {
         }
     }
 
+    private String generateID() {
+        String keys = "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        StringBuilder sb = new StringBuilder(4);
+
+        for (int i = 0; i < 4; i++) {
+            int index = (int)(keys.length() * Math.random());
+            sb.append(keys.charAt(index));
+        }
+
+        return sb.toString();
+    }
 
     private void checkUserStatus() {
         //get current user

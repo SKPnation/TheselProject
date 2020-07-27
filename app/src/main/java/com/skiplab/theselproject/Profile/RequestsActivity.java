@@ -23,6 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +49,8 @@ import java.util.List;
 
 public class RequestsActivity extends AppCompatActivity {
 
+    private static final String TAG = "RequestsActivity";
+
     Context mContext = RequestsActivity.this;
 
     private ImageView backBtn, call_request_Btn;
@@ -67,10 +71,16 @@ public class RequestsActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
 
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    public static boolean isActivityRunning;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
+
+        setupFirebaseAuth();
 
         final Intent intent = getIntent();
         uid = intent.getStringExtra("myUid");
@@ -128,8 +138,6 @@ public class RequestsActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        checkUserStatus();
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -286,25 +294,42 @@ public class RequestsActivity extends AppCompatActivity {
                 });
     }
 
-    private void checkUserStatus(){
-        //get current user
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null){
-            //user is signed in stay here
-            //mProfileTv.setText(user.getEmail());
-            uid = user.getUid();
-        }
-        else {
-            //user not signed in else go to main activity
-            startActivity(new Intent(mContext, MainActivity.class));
-            finish();
-        }
-    }
-
     public void setExpiry(String timer, TextView requestTimer) {
+
         requestTimer.setText(timer);
         requestTimer.setVisibility(View.VISIBLE);
 
-        finish();
+        retrieveRequests();
+    }
+
+    private void setupFirebaseAuth() {
+        mAuthListener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+            if (user != null)
+            {
+                Log.d( TAG, "onAuthStateChanged: signed_in: " + user.getUid());
+
+            } else {
+                Log.d( TAG, "onAuthStateChanged: signed_out");
+            }
+        };
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
+
+        isActivityRunning = true;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
+        }
+        isActivityRunning = false;
     }
 }

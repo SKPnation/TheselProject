@@ -37,6 +37,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.skiplab.theselproject.Home.HomeFragment;
@@ -46,11 +52,22 @@ import com.skiplab.theselproject.Utils.Heart;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Post;
 import com.skiplab.theselproject.models.User;
+import com.skiplab.theselproject.notifications.APIService;
+import com.skiplab.theselproject.notifications.Client;
+import com.skiplab.theselproject.notifications.Data;
+import com.skiplab.theselproject.notifications.Response;
+import com.skiplab.theselproject.notifications.Sender;
+import com.skiplab.theselproject.notifications.Token;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import javax.annotation.Nullable;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHolder>{
 
@@ -60,9 +77,9 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
     boolean mProcessLike=false;
 
     String myUid;
+    APIService apiService;
 
-    private DatabaseReference likesRef;
-    private DatabaseReference postsRef;
+    private DatabaseReference likesRef, postsRef, usersRef;
 
     public AdapterPosts(Context context, List<Post> postList) {
         this.context = context;
@@ -70,6 +87,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
         myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         likesRef = FirebaseDatabase.getInstance().getReference().child("likes");
         postsRef = FirebaseDatabase.getInstance().getReference().child("posts");
+        usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+        apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
         //mRecyclerViewItems = recyclerViewItems;
     }
 
@@ -183,6 +202,23 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
                                 mProcessLike=false;
 
                                 addToHisNotifications(""+uid,""+pId," liked your post");
+
+                                usersRef.orderByKey().equalTo(myUid)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                                    User user = ds.getValue(User.class);
+
+                                                    sendNotification(uid, user.getUsername());
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
                             }
                         }
                     }
@@ -209,6 +245,36 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
             @Override
             public void onClick(View v) {
                 showMoreOptions(holder.moreBtn, uid, myUid, pId, pImage);
+            }
+        });
+    }
+
+    private void sendNotification(String hisUid, String myName)
+    {
+        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(myUid, myName+" liked your post", "Thesel", hisUid, R.mipmap.ic_launcher2);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
+
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+                }
             }
         });
     }
@@ -443,19 +509,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
 
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("notifications");
-        reference.child(hisUid).child(timestamp).setValue(hashMap)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        //added successfully
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //failed
-                    }
-                });
+        reference.child(hisUid).child(timestamp).setValue(hashMap);
     }
 
     @Override

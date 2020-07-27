@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.DateFormat;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -52,9 +53,15 @@ import co.paystack.android.model.Charge;
 
 public class PaymentActivity extends AppCompatActivity {
 
+    private static final String TAG = "PaymentActivity";
+
     DatabaseReference usersRef, sessionsRef, requestsRef, cardsRef;
     FirebaseAuth mAuth;
     FirebaseUser fUser;
+
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    public static boolean isActivityRunning;
 
     private AppCompatEditText etEmail, etMastercardName, etMastercardCard, etVerveName, etVerveCard, etVisaName, etVisaCard, etCvv;
     private LinearLayoutCompat spContainer;
@@ -85,6 +92,8 @@ public class PaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+
+        setupFirebaseAuth();
 
         final Intent intent = getIntent();
         cost = intent.getLongExtra("cost",0);
@@ -535,5 +544,36 @@ public class PaymentActivity extends AppCompatActivity {
         }
 
         return sb.toString();
+    }
+
+    private void setupFirebaseAuth() {
+        mAuthListener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+            if (user != null)
+            {
+                Log.d( TAG, "onAuthStateChanged: signed_in: " + user.getUid());
+
+            } else {
+                Log.d( TAG, "onAuthStateChanged: signed_out");
+            }
+        };
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
+
+        isActivityRunning = true;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
+        }
+        isActivityRunning = false;
     }
 }

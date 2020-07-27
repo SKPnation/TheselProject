@@ -3,12 +3,15 @@ package com.skiplab.theselproject.notifications;
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
@@ -17,8 +20,35 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.skiplab.theselproject.Activity.ActivityFragment;
+import com.skiplab.theselproject.AddPost.CategoryActivity;
+import com.skiplab.theselproject.AddPost.NewPostActivity;
+import com.skiplab.theselproject.AddPost.PostFragment;
+import com.skiplab.theselproject.Authentication.AdminRegisterActivity;
+import com.skiplab.theselproject.Authentication.LoginActivity;
+import com.skiplab.theselproject.Authentication.RegisterActivity;
+import com.skiplab.theselproject.Authentication.StaffRegisterActivity;
+import com.skiplab.theselproject.ChatActivity;
+import com.skiplab.theselproject.DashboardActivity;
+import com.skiplab.theselproject.Main2Activity;
+import com.skiplab.theselproject.MainActivity;
+import com.skiplab.theselproject.PaymentActivity;
+import com.skiplab.theselproject.PostDetailActivity;
+import com.skiplab.theselproject.Profile.AccountSettingsActivity;
+import com.skiplab.theselproject.Profile.GalleryActivity;
+import com.skiplab.theselproject.Profile.MyPostsActivity;
+import com.skiplab.theselproject.Profile.ProfileFragment;
+import com.skiplab.theselproject.Profile.RequestsActivity;
+import com.skiplab.theselproject.Questionnaire.QuestionnaireActivity;
+import com.skiplab.theselproject.Search.ConsultantsActivity;
+import com.skiplab.theselproject.Search.SearchFragment;
+import com.skiplab.theselproject.Search.SelectPlanFragment;
+
 
 public class FirebaseMessaging extends FirebaseMessagingService {
+
+    private static final String TAG = "MyFirebaseMsgService";
+
     @TargetApi(Build.VERSION_CODES.O)
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -34,12 +64,15 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         if (fUser != null && sent.equals(fUser.getUid())){
             if (!savedCurrentUser.equals(user))
             {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                if(!isApplicationInForeground())
                 {
-                    sendOAndAboveNotification(remoteMessage);
-                }
-                else {
-                    sendNormalNotification(remoteMessage);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                    {
+                        sendOAndAboveNotification(remoteMessage);
+                    }
+                    else {
+                        sendNormalNotification(remoteMessage);
+                    }
                 }
             }
         }
@@ -55,12 +88,12 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int i = Integer.parseInt(user.replaceAll("[\\D]", ""));
-        //Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, DashboardActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("hisUid", user);
-        //intent.putExtras(bundle);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //PendingIntent pIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
@@ -68,8 +101,8 @@ public class FirebaseMessaging extends FirebaseMessagingService {
                 .setContentTitle(title)
                 .setContentText(body)
                 .setAutoCancel(true)
-                .setSound(defSoundUri);
-        //.setContentIntent(pIntent);
+                .setSound(defSoundUri)
+            .setContentIntent(pIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         int j = 0;
@@ -88,22 +121,35 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int i = Integer.parseInt(user.replaceAll("[\\D]", ""));
-        //Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, DashboardActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("hisUid", user);
-        //intent.putExtras(bundle);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //PendingIntent pIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT);
+        intent.putExtras(bundle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         OreoAndAboveNotification notification1 = new OreoAndAboveNotification(this);
-        Notification.Builder builder = notification1.getONotifications(title, body, defSoundUri, icon);
+        Notification.Builder builder = notification1.getONotifications(title, body, pIntent, defSoundUri, icon);
 
         int j = 0;
         if (j < 0){
             j = i;
         }
         notification1.getManager().notify(j, builder.build());
+    }
+
+    private boolean isApplicationInForeground(){
+        //check all the activities to see if any of them are running
+        boolean isActivityRunning = ChatActivity.isActivityRunning || PaymentActivity.isActivityRunning
+                || RequestsActivity.isActivityRunning;
+
+        if(isActivityRunning) {
+            Log.d(TAG, "isApplicationInForeground: application is in foreground.");
+            return true;
+        }
+        Log.d(TAG, "isApplicationInForeground: application is in background or closed.");
+        return false;
     }
 }

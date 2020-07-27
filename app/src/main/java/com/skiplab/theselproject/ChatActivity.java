@@ -93,6 +93,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class ChatActivity extends AppCompatActivity {
+
     private static final String TAG = "ChatActivity";
 
     private static final int REQUEST_PERMISSION_CODE = 1000;
@@ -129,11 +130,12 @@ public class ChatActivity extends AppCompatActivity {
 
     //firebase
     FirebaseAuth firebaseAuth;
-    FirebaseUser user;
     DatabaseReference usersRef, sessionsRef;
     FirebaseDatabase firebaseDatabase;
 
     private CountDownTimer mCountDownTimer;
+
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     private boolean mTimerRunning;
     public static boolean isActivityRunning;
@@ -152,7 +154,6 @@ public class ChatActivity extends AppCompatActivity {
     Uri image_uri = null;
 
     MediaRecorder mediaRecorder;
-    MediaPlayer mediaPlayer;
     String pathSave = "";
 
     int i = 0;
@@ -161,6 +162,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        setupFirebaseAuth();
 
         final Intent intent = getIntent();
         hisUid = intent.getStringExtra("hisUid");
@@ -1140,29 +1143,6 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    private void checkUserStatus(){
-        //get current user
-        user = firebaseAuth.getCurrentUser();
-        if (user != null){
-            //user is signed in stay here
-            myUid = user.getUid();//get Currently signed in User's id
-        }
-        else {
-            //user not signed in else go to main activity
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        checkUserStatus();
-        isActivityRunning = true;
-
-    }
-
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             exitByBackKey();
@@ -1271,4 +1251,37 @@ public class ChatActivity extends AppCompatActivity {
 
         super.onResume();
     }
+
+    private void setupFirebaseAuth() {
+        mAuthListener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+            if (user != null)
+            {
+                Log.d( TAG, "onAuthStateChanged: signed_in: " + user.getUid());
+
+            } else {
+                Log.d( TAG, "onAuthStateChanged: signed_out");
+            }
+        };
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
+
+        isActivityRunning = true;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
+        }
+        isActivityRunning = false;
+    }
+
+
 }

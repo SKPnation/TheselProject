@@ -217,6 +217,7 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
                                                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                                                             Requests requests = ds.getValue(Requests.class);
                                                             String key = requests.getTimestamp();
+
                                                             requestsRef.child(key).child("timer").setValue("Expired")
                                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                         @Override
@@ -433,7 +434,6 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
 
                                                                 builder.setView(mView);
                                                                 builder.show();
-
                                                             }
                                                             else
                                                             {
