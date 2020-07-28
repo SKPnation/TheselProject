@@ -48,7 +48,8 @@
             android:layout_toRightOf="@id/avatarIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12/06/2020"/>
+            android:textStyle="italic"
+            android:text="12/06/2020  06:30 pm" />
 
     </RelativeLayout>
 

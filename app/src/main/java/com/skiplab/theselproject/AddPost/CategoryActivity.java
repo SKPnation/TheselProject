@@ -318,6 +318,7 @@ public class CategoryActivity extends AppCompatActivity {
 
                                 if (progress - 15 > mPhotoUploadProgress)
                                 {
+                                    pd.dismiss();
                                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                                     builder.setMessage("photo upload progress: "+ String.format("%.0f", progress)+"%");
                                     builder.show();
@@ -522,6 +523,7 @@ public class CategoryActivity extends AppCompatActivity {
 
                                 if (progress - 15 > mPhotoUploadProgress)
                                 {
+                                    pd.dismiss();
                                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                                     builder.setMessage("uploading picture: "+ String.format("%.0f", progress)+"%");
                                     builder.show();

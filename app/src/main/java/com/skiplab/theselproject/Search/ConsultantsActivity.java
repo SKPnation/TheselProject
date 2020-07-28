@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +76,8 @@ public class ConsultantsActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
 
+    private ImageView backBtn;
+
     Context mContext = ConsultantsActivity.this;
     APIService apiService;
 
@@ -102,6 +105,14 @@ public class ConsultantsActivity extends AppCompatActivity {
 
         mProgressBar = findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.VISIBLE);
+
+        backBtn = findViewById(R.id.backArrow);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         recyclerView = findViewById(R.id.recyclerView);
 

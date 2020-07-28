@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.PostDetailActivity;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.Search.ConsultantsActivity;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Comment;
 
@@ -61,7 +62,6 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
         //get data
         String uid = commentList.get(position).getUid();
         String name = commentList.get(position).getuName();
-        String email = commentList.get(position).getuEmail();
         String image = commentList.get(position).getuDp();
         String cid = commentList.get(position).getCid();
         String comment = commentList.get(position).getComment();
@@ -121,10 +121,12 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
                         ref.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
                                 String comments = ""+dataSnapshot.child("pComments").getValue();
                                 int newCommentVal = Integer.parseInt(comments) - 1;
                                 ref.child("pComments").setValue(""+newCommentVal);
-                                context.startActivity(new Intent(context, DashboardActivity.class));
+                                ((PostDetailActivity)context).reloadComments();
 
                                 pd.dismiss();
                             }
