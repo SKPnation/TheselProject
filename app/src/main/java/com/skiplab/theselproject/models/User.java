@@ -1,13 +1,13 @@
 package com.skiplab.theselproject.models;
 
 public class User {
-    String uid, username, email, phone, age, profile_photo, bio, isStaff, address, accountNumber, bank, dayTime, nightTime, category1,  category2, category3, onlineStatus, selectedCategory;
+    String uid, username, email, phone, age, profile_photo, bio, isStaff, address, accountNumber, bank, dayTime, nightTime, category1,  category2, category3, onlineStatus, selectedCategory, messaging_token;
     long cost, posts;
 
     public User() {
     }
 
-    public User(String uid, String username, String email, String phone, String age, String profile_photo, String bio, String isStaff, String address, String accountNumber, String bank, String dayTime, String nightTime, String category1, String category2, String category3, String onlineStatus, String selectedCategory, long cost, long posts) {
+    public User(String uid, String username, String email, String phone, String age, String profile_photo, String bio, String isStaff, String address, String accountNumber, String bank, String dayTime, String nightTime, String category1, String category2, String category3, String onlineStatus, String selectedCategory, String messaging_token, long cost, long posts) {
         this.uid = uid;
         this.username = username;
         this.email = email;
@@ -26,6 +26,7 @@ public class User {
         this.category3 = category3;
         this.onlineStatus = onlineStatus;
         this.selectedCategory = selectedCategory;
+        this.messaging_token = messaging_token;
         this.cost = cost;
         this.posts = posts;
     }
@@ -172,6 +173,14 @@ public class User {
 
     public void setSelectedCategory(String selectedCategory) {
         this.selectedCategory = selectedCategory;
+    }
+
+    public String getMessaging_token() {
+        return messaging_token;
+    }
+
+    public void setMessaging_token(String messaging_token) {
+        this.messaging_token = messaging_token;
     }
 
     public long getCost() {

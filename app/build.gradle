@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 
 android {
@@ -8,11 +10,12 @@ android {
         applicationId "com.skiplab.theselproject"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 27
-        versionName "1.8.9.7"
+        versionCode 29
+        versionName "1.8.9.9"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -73,5 +76,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation 'com.google.firebase:firebase-analytics:15.0.1'
     implementation 'com.firebaseui:firebase-ui-database:4.1.0'
+    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+}
+repositories {
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
 }

@@ -2,6 +2,8 @@ package com.skiplab.theselproject.Adapter;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,7 +41,9 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
     Context context;
     List<Comment> commentList;
     String myUid, postId;
+
     ProgressDialog pd;
+    ClipboardManager clipboardManager;
 
     public AdapterComments(Context context, List<Comment> commentList, String myUid, String postId) {
         this.context = context;
@@ -47,6 +51,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
         this.myUid = myUid;
         this.postId = postId;
         pd = new ProgressDialog(context);
+        clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
     }
 
     @NonNull
@@ -83,11 +88,13 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
         }
         catch (Exception e) {}
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (myUid.equals(uid)){
-                    //my comment
+        if (myUid.equals(uid)){
+            holder.trashIv.setVisibility(View.VISIBLE);
+
+            holder.trashIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                //my comment
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
                     builder.setMessage("Delete comment");
                     builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
@@ -103,6 +110,18 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
                         }
                     });
                     builder.create().show();
+                }
+            });
+        }
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (myUid.equals(uid)){
+                    ClipData clipData = ClipData.newPlainText("text",commentList.get(position).getComment());
+                    clipboardManager.setPrimaryClip(clipData);
+
+                    Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
@@ -148,7 +167,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
     class MyHolder extends RecyclerView.ViewHolder{
 
         //views
-        ImageView avatarIv;
+        ImageView avatarIv, trashIv;
         TextView nameTv, timeTv, commentTv;
 
         public MyHolder(@NonNull View itemView) {
@@ -159,6 +178,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
             nameTv = itemView.findViewById(R.id.nameTv);
             timeTv = itemView.findViewById(R.id.timeTv);
             commentTv = itemView.findViewById(R.id.commentTv);
+            trashIv = itemView.findViewById(R.id.icon_trash);
         }
     }
 }

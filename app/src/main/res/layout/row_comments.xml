@@ -27,10 +27,19 @@
             android:layout_toRightOf="@id/avatarIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Skiplab"
+            android:text=""
             android:textSize="16sp"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/icon_trash"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_delete_black_24dp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/commentTv"
@@ -38,9 +47,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/nameTv"
-            android:padding="4dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="4dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:textColor="#000"
-            android:text="this is the actual comment"/>
+            android:text=""/>
 
         <TextView
             android:id="@+id/timeTv"
@@ -49,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="italic"
-            android:text="12/06/2020  06:30 pm" />
+            android:text="" />
 
     </RelativeLayout>
 
