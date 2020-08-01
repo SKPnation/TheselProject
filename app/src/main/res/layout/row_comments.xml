@@ -104,6 +104,7 @@
 
                 </RelativeLayout>
 
+
                 <TextView
                     android:id="@+id/replyTv"
                     android:layout_width="wrap_content"
