@@ -79,12 +79,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     String AES = "AES";
 
-    String fiveThousand = "N5,000";
-    String tenThousand = "N10,000";
-    String fifteenThousand = "N15,000";
-    String twentyThousand = "N20,000";
-    String twentyFiveThousand = "N25,000";
-    String thirtyThousand = "N30,000";
+    String threeThousand = "N3,000";
 
     int i = 0;
 
@@ -134,18 +129,8 @@ public class PaymentActivity extends AppCompatActivity {
 
         etEmail.setText(fUser.getEmail());
 
-        if (strCost.equals("20000"))
-            btnProceed.setText(tenThousand);
-        else if (strCost.equals("1000000"))
-            btnProceed.setText(tenThousand);
-        else if (strCost.equals("1500000"))
-            btnProceed.setText(fifteenThousand);
-        else if (strCost.equals("2000000"))
-            btnProceed.setText(twentyThousand);
-        else if (strCost.equals("2500000"))
-            btnProceed.setText(twentyFiveThousand);
-        else if (strCost.equals("3000000"))
-            btnProceed.setText(thirtyThousand);
+        if (strCost.equals("300000"))
+            btnProceed.setText(threeThousand);
 
         backBtn.setOnClickListener(v -> finish());
 

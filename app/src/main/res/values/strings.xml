@@ -5,18 +5,18 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="staffNameEt"><![CDATA[First & Last name]]></string>
 
-    <string name="secondRule">1. A Session lasts for 1 hour. Therefore, make sure you are in a comfortable position and ensure your PHONE BATTERY LIFE is sufficient enough for an hour session. </string>
+    <string name="secondRule">1. A Session lasts for 45 minutes. Therefore, make sure you are in a comfortable position and ensure your PHONE BATTERY LIFE is sufficient enough for an hour session. </string>
     <string name="thirdRule">2. Make sure you have a GOOD INTERNET CONNECTION for a smooth and successful session. </string>
     <string name="fourthRule">3. Please do not request for another counsellor immediately after a session has ended. Wait for 30minutes, then, you can send a request. </string>
     <string name="fifthRule">4. Exchange of phone numbers and emails is NOT ALLOWED on this app. If you do so, your account will be DEACTIVATED.</string>
 
-    <string name="firstCounsellorRule">1.  A Session lasts for 1 hour. Therefore, make sure you are in a comfortable position and ensure your PHONE BATTERY LIFE is sufficient enough for an hour session.</string>
+    <string name="firstCounsellorRule">1.  A Session lasts for 45 minutes. Therefore, make sure you are in a comfortable position and ensure your PHONE BATTERY LIFE is sufficient enough for an hour session.</string>
     <string name="secondCounsellorRule">2.  If your phone goes off during a session, make sure you tap the EMPTY button when your phone comes back on.</string>
     <string name="thirdCounsellorRule">3.  Only use the second rule if your timer runs out before your phone comes back on.</string>
     <string name="fourthCounsellorRule">4.  The EMPTY button is used to remove your client from the seat at the end of a session, to allow other users send you requests.</string>
     <string name="fifthCounsellorRule">5.  Exchange of phone numbers and emails is NOT ALLOWED on this app. If you do so, your account will be DEACTIVATED.</string>
     <string name="sixthCounsellorRule">6.  As a counsellor, by tapping the LEAVE session button, your session will end completely. </string>
-    <string name="seventhCounsellorRule">7. You can leave the session if a user has not replied your message 25 minutes after the beginning of the session.</string>
+    <string name="seventhCounsellorRule">7. You can leave the session if a user has not replied your message 30 minutes after the beginning of the session.</string>
 
 
     <string name="aboutHearme1"><![CDATA[Thesel is a therapeutic tele-counselling platform that is available for people going through life challenging situations.]]></string>
@@ -85,19 +85,10 @@ This policy is effective as of 2020-05-24</string>
     </string-array>
 
     <string-array name="costs">
+        <item>300000</item>
+        <item>400000</item>
+        <item>500000</item>
         <item>1000000</item>
-        <item>1500000</item>
-        <item>2000000</item>
-        <item>2500000</item>
-        <item>3000000</item>
-        <item>3500000</item>
-        <item>4000000</item>
-        <item>4500000</item>
-        <item>5000000</item>
-        <item>5500000</item>
-        <item>6000000</item>
-        <item>6500000</item>
-        <item>7000000</item>
     </string-array>
 
     <string-array name="categories">

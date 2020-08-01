@@ -3,10 +3,6 @@ package com.skiplab.theselproject.Adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.text.InputType;
-import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,38 +24,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.skiplab.theselproject.Common.Common;
-import com.skiplab.theselproject.Profile.RequestsActivity;
-import com.skiplab.theselproject.Questionnaire.QuestionnaireActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Search.ConsultantsActivity;
-import com.skiplab.theselproject.Search.UsersFragment;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
-import com.skiplab.theselproject.models.Requests;
 import com.skiplab.theselproject.models.Sessions;
 import com.skiplab.theselproject.models.User;
-import com.skiplab.theselproject.notifications.APIService;
-import com.skiplab.theselproject.notifications.Client;
-import com.skiplab.theselproject.notifications.Data;
-import com.skiplab.theselproject.notifications.Response;
-import com.skiplab.theselproject.notifications.Sender;
-import com.skiplab.theselproject.notifications.Token;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-
-import javax.annotation.Nullable;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHolder>{
 
@@ -94,26 +67,7 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
         String category3 = userList.get(position).getCategory3();
         Long cost = userList.get(position).getCost();
 
-        final String fiveThousand = "N5,000";
-        final String tenThousand = "N10,000";
-        final String fifteenThousand = "N15,000";
-        final String twentyThousand = "N20,000";
-        final String twentyFiveThousand = "N25,000";
-        final String thirtyThousand = "N30,000";
-        final String thirtyFiveThousand = "N35,000";
-        final String fortyThousand = "N40,000";
-        final String fortyFiveThousand = "N45,000";
-        final String fiftyThousand = "N50,000";
-        final String fiftyFiveThousand = "N55,000";
-        final String sixtyThousand = "N60,000";
-        final String sixtyFiveThousand = "N65,000";
-        final String seventyThousand = "N70,000";
-        final String seventyFiveThousand = "N75,000";
-        final String eightyThousand = "N80,000";
-        final String eightyFiveThousand = "N85,000";
-        final String ninetyThousand = "N90,000";
-        final String ninetyFiveThousand = "N95,000";
-        final String hundredThousand = "N100,000";
+        final String threeThousand = "N3,000";
 
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
         Query query = usersRef
@@ -424,46 +378,8 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
 
         String userCost = String.valueOf(userList.get(position).getCost());
 
-        if (userCost.equals(String.valueOf(20000)))
-            holder.mCostTv.setText(tenThousand);
-        else if (userCost.equals(String.valueOf(1000000)))
-            holder.mCostTv.setText(tenThousand);
-        else if (userCost.equals(String.valueOf(1500000)))
-            holder.mCostTv.setText(fifteenThousand);
-        else if (userCost.equals(String.valueOf(2000000)))
-            holder.mCostTv.setText(twentyThousand);
-        else if (userCost.equals(String.valueOf(2500000)))
-            holder.mCostTv.setText(twentyFiveThousand);
-        else if (userCost.equals(String.valueOf(3000000)))
-            holder.mCostTv.setText(thirtyThousand);
-        else if (userCost.equals(String.valueOf(3500000)))
-            holder.mCostTv.setText(thirtyFiveThousand);
-        else if (userCost.equals(String.valueOf(4000000)))
-            holder.mCostTv.setText(fortyThousand);
-        else if (userCost.equals(String.valueOf(4500000)))
-            holder.mCostTv.setText(fortyFiveThousand);
-        else if (userCost.equals(String.valueOf(5000000)))
-            holder.mCostTv.setText(fiftyThousand);
-        else if (userCost.equals(String.valueOf(5500000)))
-            holder.mCostTv.setText(fiftyFiveThousand);
-        else if (userCost.equals(String.valueOf(6000000)))
-            holder.mCostTv.setText(sixtyThousand);
-        else if (userCost.equals(String.valueOf(6500000)))
-            holder.mCostTv.setText(sixtyFiveThousand);
-        else if (userCost.equals(String.valueOf(7000000)))
-            holder.mCostTv.setText(seventyThousand);
-        else if (userCost.equals(String.valueOf(7500000)))
-            holder.mCostTv.setText(seventyFiveThousand);
-        else if (userCost.equals(String.valueOf(8000000)))
-            holder.mCostTv.setText(eightyThousand);
-        else if (userCost.equals(String.valueOf(8500000)))
-            holder.mCostTv.setText(eightyFiveThousand);
-        else if (userCost.equals(String.valueOf(9000000)))
-            holder.mCostTv.setText(ninetyThousand);
-        else if (userCost.equals(String.valueOf(9500000)))
-            holder.mCostTv.setText(ninetyFiveThousand);
-        else if (userCost.equals(String.valueOf(10000000)))
-            holder.mCostTv.setText(hundredThousand);
+        if (userCost.equals(String.valueOf(300000)))
+            holder.mCostTv.setText(threeThousand);
 
         try {
             UniversalImageLoader.setImage(userList.get(position).getProfile_photo(), holder.mAvatarIv, null, "");
@@ -531,46 +447,8 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
                                 nightTimeTv.setText(userList.get(position).getNightTime());
                                 final String cost = String.valueOf(userList.get(position).getCost());
 
-                                if (cost.equals(String.valueOf(20000)))
-                                    costTv.setText(tenThousand);
-                                else if (cost.equals(String.valueOf(1000000)))
-                                    costTv.setText(tenThousand);
-                                else if (cost.equals(String.valueOf(1500000)))
-                                    costTv.setText(fifteenThousand);
-                                else if (cost.equals(String.valueOf(2000000)))
-                                    costTv.setText(twentyThousand);
-                                else if (cost.equals(String.valueOf(2500000)))
-                                    costTv.setText(twentyFiveThousand);
-                                else if (cost.equals(String.valueOf(3000000)))
-                                    costTv.setText(thirtyThousand);
-                                else if (cost.equals(String.valueOf(3500000)))
-                                    costTv.setText(thirtyFiveThousand);
-                                else if (cost.equals(String.valueOf(4000000)))
-                                    costTv.setText(fortyThousand);
-                                else if (cost.equals(String.valueOf(4500000)))
-                                    costTv.setText(fortyFiveThousand);
-                                else if (cost.equals(String.valueOf(5000000)))
-                                    costTv.setText(fiftyThousand);
-                                else if (cost.equals(String.valueOf(5500000)))
-                                    costTv.setText(fiftyFiveThousand);
-                                else if (cost.equals(String.valueOf(6000000)))
-                                    costTv.setText(sixtyThousand);
-                                else if (cost.equals(String.valueOf(6500000)))
-                                    costTv.setText(sixtyFiveThousand);
-                                else if (cost.equals(String.valueOf(7000000)))
-                                    costTv.setText(seventyThousand);
-                                else if (cost.equals(String.valueOf(7500000)))
-                                    costTv.setText(seventyFiveThousand);
-                                else if (cost.equals(String.valueOf(8000000)))
-                                    costTv.setText(eightyThousand);
-                                else if (cost.equals(String.valueOf(8500000)))
-                                    costTv.setText(eightyFiveThousand);
-                                else if (cost.equals(String.valueOf(9000000)))
-                                    costTv.setText(ninetyThousand);
-                                else if (cost.equals(String.valueOf(9500000)))
-                                    costTv.setText(ninetyFiveThousand);
-                                else if (cost.equals(String.valueOf(10000000)))
-                                    costTv.setText(hundredThousand);
+                                if (cost.equals(String.valueOf(300000)))
+                                    costTv.setText(threeThousand);
 
                                 if (onlineStatus.equals("online")){
                                     offlineIv.setVisibility(View.GONE);

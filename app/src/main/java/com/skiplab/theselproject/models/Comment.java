@@ -1,14 +1,15 @@
 package com.skiplab.theselproject.models;
 
 public class Comment {
-    String cid, comment, timestamp, uid, uEmail, uDp, uName;
+    String cid, comment, cLikes, timestamp, uid, uEmail, uDp, uName;
 
     public Comment() {
     }
 
-    public Comment(String cid, String comment, String timestamp, String uid, String uEmail, String uDp, String uName) {
+    public Comment(String cid, String comment, String cLikes, String timestamp, String uid, String uEmail, String uDp, String uName) {
         this.cid = cid;
         this.comment = comment;
+        this.cLikes = cLikes;
         this.timestamp = timestamp;
         this.uid = uid;
         this.uEmail = uEmail;
@@ -30,6 +31,14 @@ public class Comment {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getcLikes() {
+        return cLikes;
+    }
+
+    public void setcLikes(String cLikes) {
+        this.cLikes = cLikes;
     }
 
     public String getTimestamp() {

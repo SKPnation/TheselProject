@@ -407,6 +407,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                     HashMap<String, Object> hashMap = new HashMap<>();
                                     hashMap.put("cid", timestamp);
                                     hashMap.put("comment", comment);
+                                    hashMap.put("cLikes","0");
                                     hashMap.put("timestamp", timestamp);
                                     hashMap.put("uEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
                                     hashMap.put("uid", myUid);
@@ -445,6 +446,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                     HashMap<String, Object> hashMap = new HashMap<>();
                                     hashMap.put("cid", timestamp);
                                     hashMap.put("comment", comment);
+                                    hashMap.put("cLikes","0");
                                     hashMap.put("timestamp", timestamp);
                                     hashMap.put("uEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
                                     hashMap.put("uid", myUid);

@@ -154,7 +154,20 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="40dp"
                         android:layout_marginTop="10dp"
-                        android:text="1hour session"
+                        android:text="45 minutes session"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                        android:textSize="20dp"
+                        android:textColor="#414141" />
+
+                    <TextView
+                        android:id="@+id/costTv"
+                        android:layout_below="@id/hour_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="40dp"
+                        android:layout_marginTop="10dp"
+                        android:text="N3,000 / $8"
+                        android:textStyle="bold"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                         android:textSize="20dp"
                         android:textColor="#414141" />

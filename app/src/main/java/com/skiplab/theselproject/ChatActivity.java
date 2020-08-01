@@ -98,7 +98,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private static final int REQUEST_PERMISSION_CODE = 1000;
 
-    private static final long START_TIME_IN_MILLIS = 4200000;
+    private static final long START_TIME_IN_MILLIS = 2700000;
 
     //permission constants
     private static final int CAMERA_REQUEST_CODE = 100;
