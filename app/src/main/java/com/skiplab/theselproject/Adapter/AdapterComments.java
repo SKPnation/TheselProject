@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,7 +51,8 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
     ProgressDialog pd;
     ClipboardManager clipboardManager;
 
-    private DatabaseReference likesRef, postsRef, usersRef, commentsRef;
+    private DatabaseReference likesRef, postsRef;
+    private FirebaseAuth mAuth;
 
     public AdapterComments(Context context, List<Comment> commentList, String myUid, String postId) {
         this.context = context;
@@ -61,8 +63,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
         clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         likesRef = FirebaseDatabase.getInstance().getReference().child("likes");
         postsRef = FirebaseDatabase.getInstance().getReference().child("posts");
-        usersRef = FirebaseDatabase.getInstance().getReference().child("users");
-        commentsRef = FirebaseDatabase.getInstance().getReference().child("comments");
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @NonNull
@@ -143,6 +144,13 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
                 return false;
             }
         });
+
+        holder.replyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((PostDetailActivity)context).replyComment(uid, name, mAuth.getUid());
+            }
+        });
     }
 
     private void setLikes(MyHolder holder, String commentKey)
@@ -213,7 +221,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
         //views
         private CardView cardView;
         private ImageView avatarIv, mHeartWhite, mHeartRed, trashIv;
-        private TextView nameTv, timeTv, commentTv, cLikesTv;
+        private TextView nameTv, timeTv, commentTv, cLikesTv,replyTv;
         private GestureDetector mGestureDetector;
 
         private Heart mHeart;
@@ -230,6 +238,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
             timeTv = itemView.findViewById(R.id.timeTv);
             cLikesTv = itemView.findViewById(R.id.cLikesTv);
             commentTv = itemView.findViewById(R.id.commentTv);
+            replyTv = itemView.findViewById(R.id.replyTv);
             trashIv = itemView.findViewById(R.id.icon_trash);
             mHeartRed = (ImageView) itemView.findViewById(R.id.image_heart_red);
             mHeartWhite = (ImageView) itemView.findViewById(R.id.image_heart);

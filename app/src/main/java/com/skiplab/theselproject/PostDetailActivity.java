@@ -91,7 +91,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView uPictureIv, pImageIv, cAvatarIv;
-    private TextView uNameTv, pTimeTv, pDescriptionTv, pLikesTv, uMoodTv, pCommentsTv, pCategoryTv;
+    private TextView uNameTv, pTimeTv, pDescriptionTv, pLikesTv, uMoodTv, pCommentsTv, pCategoryTv, mentionedUserTv;
     private ImageView moreBtn, mHeartWhite, mHeartRed, sendBtn;
     private LinearLayout profileLayout;
     private EditText commentEt;
@@ -126,6 +126,7 @@ public class PostDetailActivity extends AppCompatActivity {
         pDescriptionTv = findViewById(R.id.pDescTv);
         pLikesTv = findViewById(R.id.pLikesTV);
         pCommentsTv = findViewById(R.id.pCommentsTV);
+        mentionedUserTv = findViewById(R.id.mentionedUserTv);
         moreBtn = findViewById(R.id.moreBtn);
         mHeartRed = (ImageView) findViewById(R.id.image_heart_red);
         mHeartWhite = (ImageView) findViewById(R.id.image_heart);
@@ -200,6 +201,14 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //..
+            }
+        });
+
+        mentionedUserTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mentionedUserTv.setText("");
+                mentionedUserTv.setVisibility(View.GONE);
             }
         });
 
@@ -676,5 +685,10 @@ public class PostDetailActivity extends AppCompatActivity {
                 //..
             }
         });
+    }
+
+    public void replyComment(String commentUid, String name, String currentUid) {
+        mentionedUserTv.setText("@"+name);
+        mentionedUserTv.setVisibility(View.VISIBLE);
     }
 }
