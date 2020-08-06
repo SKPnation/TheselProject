@@ -25,9 +25,15 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.models.User;
 
 public class NewPostActivity extends AppCompatActivity {
 
@@ -50,8 +56,11 @@ public class NewPostActivity extends AppCompatActivity {
 
     String currentMood;
 
+    private DatabaseReference usersRef;
+
     //user info
     String name, email, uid, dp;
+    String adminID = "1zNcpaSxviY7GLLRGVQt8ywPla52";
 
     int i=0;
 
@@ -67,6 +76,8 @@ public class NewPostActivity extends AppCompatActivity {
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+        usersRef = FirebaseDatabase.getInstance().getReference("users");
+
         fowardArrow = findViewById(R.id.fowardArrow);
         pDescEt = findViewById(R.id.pDescEt);
         imageIv = findViewById(R.id.pImageIv);
@@ -74,6 +85,24 @@ public class NewPostActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         currentMood = intent.getStringExtra("mood");
+
+        usersRef.orderByKey().equalTo(FirebaseAuth.getInstance().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds:dataSnapshot.getChildren()){
+                            User user = ds.getValue(User.class);
+                            if (user.getUid().equals(adminID)){
+                                ImageFab.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
         ImageFab.setOnClickListener(new View.OnClickListener() {
             @Override

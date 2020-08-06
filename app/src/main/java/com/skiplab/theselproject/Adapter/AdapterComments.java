@@ -30,6 +30,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.PostDetailActivity;
 import com.skiplab.theselproject.R;
@@ -37,10 +43,20 @@ import com.skiplab.theselproject.Search.ConsultantsActivity;
 import com.skiplab.theselproject.Utils.Heart;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Comment;
+import com.skiplab.theselproject.models.User;
+import com.skiplab.theselproject.notifications.Data;
+import com.skiplab.theselproject.notifications.Response;
+import com.skiplab.theselproject.notifications.Sender;
+import com.skiplab.theselproject.notifications.Token;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
+import javax.annotation.Nullable;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHolder>{
 
@@ -51,7 +67,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
     ProgressDialog pd;
     ClipboardManager clipboardManager;
 
-    private DatabaseReference likesRef, postsRef;
+    private DatabaseReference likesRef, postsRef, usersRef;
     private FirebaseAuth mAuth;
 
     public AdapterComments(Context context, List<Comment> commentList, String myUid, String postId) {
@@ -63,6 +79,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
         clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         likesRef = FirebaseDatabase.getInstance().getReference().child("likes");
         postsRef = FirebaseDatabase.getInstance().getReference().child("posts");
+        usersRef = FirebaseDatabase.getInstance().getReference().child("users");
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -291,10 +308,23 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
                                 mProcessLike=false;
                             }
                             else {
-                                //not liked, like it
-                                postsRef.child(postId).child("comments").child(commentId).child("cLikes").setValue( ""+(cLikes+1));
-                                likesRef.child(commentId).child(myUid).setValue("Liked");
-                                mProcessLike=false;
+                                postsRef.child(postId)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                String postUname = dataSnapshot.child("uName").getValue().toString();
+                                                //not liked, like it
+                                                postsRef.child(postId).child("comments").child(commentId).child("cLikes").setValue( ""+(cLikes+1));
+                                                likesRef.child(commentId).child(myUid).setValue("Liked");
+                                                ((PostDetailActivity)context).sendNotification4(commentList.get(getAdapterPosition()).getUid(), postUname);
+                                                mProcessLike=false;
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
 
                             }
                         }

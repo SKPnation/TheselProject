@@ -91,7 +91,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView uPictureIv, pImageIv, cAvatarIv;
-    private TextView uNameTv, pTimeTv, pDescriptionTv, pLikesTv, uMoodTv, pCommentsTv, pCategoryTv, mentionedUserTv;
+    private TextView uNameTv, pTimeTv, pDescriptionTv, pLikesTv, uMoodTv, pCommentsTv, pCategoryTv, mentionedUserTv, mUidTv;
     private ImageView moreBtn, mHeartWhite, mHeartRed, sendBtn;
     private LinearLayout profileLayout;
     private EditText commentEt;
@@ -127,6 +127,7 @@ public class PostDetailActivity extends AppCompatActivity {
         pLikesTv = findViewById(R.id.pLikesTV);
         pCommentsTv = findViewById(R.id.pCommentsTV);
         mentionedUserTv = findViewById(R.id.mentionedUserTv);
+        mUidTv = findViewById(R.id.mUidTv);
         moreBtn = findViewById(R.id.moreBtn);
         mHeartRed = (ImageView) findViewById(R.id.image_heart_red);
         mHeartWhite = (ImageView) findViewById(R.id.image_heart);
@@ -207,7 +208,7 @@ public class PostDetailActivity extends AppCompatActivity {
         mentionedUserTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mentionedUserTv.setText("");
+                mUidTv.setText("");
                 mentionedUserTv.setVisibility(View.GONE);
             }
         });
@@ -270,6 +271,21 @@ public class PostDetailActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("notifications");
         reference.child(hisUid).child(timestamp).setValue(hashMap);
     }
+
+    /*private void addToCommentUserNotifications(String hisUid, String pId, String notification){
+        String timestamp = ""+System.currentTimeMillis();
+
+        HashMap<Object, String> hashMap = new HashMap<>();
+        hashMap.put("pId",pId);
+        hashMap.put("timestamp",timestamp);
+        hashMap.put("pUid",mUidTv.getText().toString());
+        hashMap.put("notification", notification);
+        hashMap.put("sUid",myUid);
+
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("notifications");
+        reference.child(hisUid).child(timestamp).setValue(hashMap);
+    }*/
 
 
     private void loadComments() {
@@ -413,81 +429,167 @@ public class PostDetailActivity extends AppCompatActivity {
 
                                 if (user.getUid().equals(post.getUid()))
                                 {
-                                    HashMap<String, Object> hashMap = new HashMap<>();
-                                    hashMap.put("cid", timestamp);
-                                    hashMap.put("comment", comment);
-                                    hashMap.put("cLikes","0");
-                                    hashMap.put("timestamp", timestamp);
-                                    hashMap.put("uEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                                    hashMap.put("uid", myUid);
-                                    hashMap.put("uDp", postDp);
-                                    hashMap.put("uName", postUname);
+                                    if (mUidTv.getText().toString().equals(""))
+                                    {
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("cid", timestamp);
+                                        hashMap.put("comment", comment);
+                                        hashMap.put("cLikes","0");
+                                        hashMap.put("timestamp", timestamp);
+                                        hashMap.put("uEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                        hashMap.put("uid", myUid);
+                                        hashMap.put("uDp", postDp);
+                                        hashMap.put("uName", postUname);
 
-                                    postsRef.child(postId).child("comments").child(timestamp).setValue(hashMap)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    //added
-                                                    progressDialog.dismiss();
-                                                    commentEt.setText("");
-                                                    Toast.makeText(mContext, "Comment Added...", Toast.LENGTH_SHORT).show();
+                                        postsRef.child(postId).child("comments").child(timestamp).setValue(hashMap)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        //added
+                                                        progressDialog.dismiss();
+                                                        commentEt.setText("");
+                                                        Toast.makeText(mContext, "Comment Added...", Toast.LENGTH_SHORT).show();
 
-                                                    updateCommentCount();
+                                                        updateCommentCount();
 
-                                                    addToHisNotifications(""+hisUid,""+postId," commented on your post");
+                                                        addToHisNotifications(""+hisUid,""+postId," commented on your post");
 
-                                                    sendNotification2(hisUid, postUname);
+                                                        sendNotification2(hisUid, postUname);
 
-                                                    onRestart();
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    //failed not added
-                                                    progressDialog.dismiss();
-                                                    Toast.makeText(mContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
+                                                        onRestart();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        //failed not added
+                                                        progressDialog.dismiss();
+                                                        Toast.makeText(mContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                    }
+                                    else
+                                    {
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("cid", timestamp);
+                                        hashMap.put("comment", mentionedUserTv.getText().toString()+" "+comment);
+                                        hashMap.put("cLikes","0");
+                                        hashMap.put("timestamp", timestamp);
+                                        hashMap.put("uEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                        hashMap.put("uid", myUid);
+                                        hashMap.put("uDp", postDp);
+                                        hashMap.put("uName", postUname);
+
+                                        postsRef.child(postId).child("comments").child(timestamp).setValue(hashMap)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        //added
+                                                        progressDialog.dismiss();
+                                                        commentEt.setText("");
+                                                        Toast.makeText(mContext, "Comment Added...", Toast.LENGTH_SHORT).show();
+
+                                                        updateCommentCount();
+
+                                                        //addToCommentUserNotifications(""+mUidTv,""+postId," mentioned you in a comment: "+comment);
+
+                                                        sendNotification2(hisUid, postUname);
+                                                        sendNotification3(mUidTv.getText().toString(), myName);
+
+                                                        onRestart();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        //failed not added
+                                                        progressDialog.dismiss();
+                                                        Toast.makeText(mContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                    }
                                 }
                                 else
                                 {
-                                    HashMap<String, Object> hashMap = new HashMap<>();
-                                    hashMap.put("cid", timestamp);
-                                    hashMap.put("comment", comment);
-                                    hashMap.put("cLikes","0");
-                                    hashMap.put("timestamp", timestamp);
-                                    hashMap.put("uEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                                    hashMap.put("uid", myUid);
-                                    hashMap.put("uDp", uDp);
-                                    hashMap.put("uName", user.getUsername());
+                                    if (mUidTv.getText().toString().equals(""))
+                                    {
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("cid", timestamp);
+                                        hashMap.put("comment", comment);
+                                        hashMap.put("cLikes","0");
+                                        hashMap.put("timestamp", timestamp);
+                                        hashMap.put("uEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                        hashMap.put("uid", myUid);
+                                        hashMap.put("uDp", uDp);
+                                        hashMap.put("uName", user.getUsername());
 
-                                    postsRef.child(postId).child("comments").child(timestamp).setValue(hashMap)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    //added
-                                                    progressDialog.dismiss();
-                                                    commentEt.setText("");
-                                                    Toast.makeText(mContext, "Comment Added...", Toast.LENGTH_SHORT).show();
+                                        postsRef.child(postId).child("comments").child(timestamp).setValue(hashMap)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        //added
+                                                        progressDialog.dismiss();
+                                                        commentEt.setText("");
+                                                        Toast.makeText(mContext, "Comment Added...", Toast.LENGTH_SHORT).show();
 
-                                                    updateCommentCount();
+                                                        updateCommentCount();
 
-                                                    addToHisNotifications(""+hisUid,""+postId," commented on your post");
+                                                        addToHisNotifications(""+hisUid,""+postId," commented on your post");
 
-                                                    sendNotification2(hisUid, myName);
+                                                        sendNotification2(hisUid, myName);
 
-                                                    onRestart();
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    //failed not added
-                                                    progressDialog.dismiss();
-                                                    Toast.makeText(mContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
+                                                        onRestart();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        //failed not added
+                                                        progressDialog.dismiss();
+                                                        Toast.makeText(mContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                    }
+                                    else
+                                    {
+                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                        hashMap.put("cid", timestamp);
+                                        hashMap.put("comment", mentionedUserTv.getText().toString()+" "+comment);
+                                        hashMap.put("cLikes","0");
+                                        hashMap.put("timestamp", timestamp);
+                                        hashMap.put("uEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                        hashMap.put("uid", myUid);
+                                        hashMap.put("uDp", uDp);
+                                        hashMap.put("uName", user.getUsername());
+
+                                        postsRef.child(postId).child("comments").child(timestamp).setValue(hashMap)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        //added
+                                                        progressDialog.dismiss();
+                                                        commentEt.setText("");
+                                                        Toast.makeText(mContext, "Comment Added...", Toast.LENGTH_SHORT).show();
+
+                                                        updateCommentCount();
+
+                                                        addToHisNotifications(""+hisUid,""+postId," commented on your post");
+
+                                                        sendNotification2(hisUid, myName);
+                                                        sendNotification3(mUidTv.getText().toString(), myName);
+
+                                                        onRestart();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        //failed not added
+                                                        progressDialog.dismiss();
+                                                        Toast.makeText(mContext, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                    }
                                 }
                             }
                         }
@@ -509,7 +611,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
                             Token token = new Token(ds1.getString("token"));
-                            Data data = new Data(myUid, myName+" commented on your post", "Thesel", hisUid, R.mipmap.ic_launcher2);
+                            Data data = new Data(myUid, "A user commented on your post", "Thesel", hisUid, R.mipmap.ic_launcher2);
 
                             Sender sender = new Sender(data, token.getToken());
                             apiService.sendNotification(sender)
@@ -534,6 +636,35 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //..
+            }
+        });
+    }
+
+    private void sendNotification3(String commentUid, String myName) {
+        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(myUid, myName+" mentioned you in a comment on "+hisName+"'s post", pCategory, commentUid, R.mipmap.ic_launcher2);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
+
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+                }
             }
         });
     }
@@ -688,7 +819,90 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
     public void replyComment(String commentUid, String name, String currentUid) {
+        mUidTv.setText(commentUid);
         mentionedUserTv.setText("@"+name);
         mentionedUserTv.setVisibility(View.VISIBLE);
+    }
+
+
+
+    private void sendNotification2(String hisUid, String myName)
+    {
+        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(myUid, "A user liked a comment on your post", pCategory, hisUid, R.mipmap.ic_launcher2);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
+
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+                }
+            }
+        });
+    }
+
+    public void sendNotification4(String commentUid, String postUname) {
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+        usersRef.orderByKey().equalTo(myUid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+                            User user = ds.getValue(User.class);
+
+                            addToHisNotifications(""+hisUid, ""+postId, " liked a comment on your post");
+
+                            sendNotification2(hisUid, myName);
+
+                            CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+                            allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                    for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                                        Token token = new Token(ds1.getString("token"));
+                                        Data data = new Data(myUid, user.getUsername()+" liked your comment on "+postUname+"'s post", pCategory, commentUid, R.mipmap.ic_launcher2);
+
+                                        Sender sender = new Sender(data, token.getToken());
+                                        apiService.sendNotification(sender)
+                                                .enqueue(new Callback<Response>() {
+                                                    @Override
+                                                    public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                                        //..
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<Response> call, Throwable t) {
+                                                        //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
+
+
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

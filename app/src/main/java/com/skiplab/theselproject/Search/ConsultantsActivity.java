@@ -3,6 +3,7 @@ package com.skiplab.theselproject.Search;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -12,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.skiplab.theselproject.Adapter.AdapterUsers;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Profile.RequestsActivity;
+import com.skiplab.theselproject.Questionnaire.NinethQuestionnaire;
 import com.skiplab.theselproject.Questionnaire.QuestionnaireActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.Requests;
@@ -83,6 +86,7 @@ public class ConsultantsActivity extends AppCompatActivity {
 
     String requestPlan;
     String adminID = "1zNcpaSxviY7GLLRGVQt8ywPla52";
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -284,16 +288,19 @@ public class ConsultantsActivity extends AppCompatActivity {
                                                                     builder.setMessage("If your PENDING request to "+ cltName + " is not ACCEPTED within 15 minutes, send another request or request for another consultant." +
                                                                             " This request will expire in 15 minutes.");
 
-                                                                    builder.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
+                                                                    i++;
+
+                                                                    Handler handler1 = new Handler();
+                                                                    handler1.postDelayed(new Runnable() {
                                                                         @Override
-                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                        public void run() {
                                                                             Intent intent = new Intent(mContext, RequestsActivity.class);
                                                                             intent.putExtra("myUid", fUser.getUid());
                                                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                                             startActivity(intent);
                                                                             finish();
                                                                         }
-                                                                    });
+                                                                    }, 15000);
 
                                                                     builder.show();
                                                                 }
