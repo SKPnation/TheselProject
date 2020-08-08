@@ -91,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:paddingLeft="40dp"
-                        android:text="10mins session"
+                        android:text="10 minutes session"
                         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                         android:textSize="20sp"
                         android:textColor="#414141" />

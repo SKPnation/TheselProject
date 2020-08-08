@@ -10,8 +10,8 @@ android {
         applicationId "com.skiplab.theselproject"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 30
-        versionName "1.9.0"
+        versionCode 31
+        versionName "1.9.1"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -79,7 +79,6 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
 }
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }

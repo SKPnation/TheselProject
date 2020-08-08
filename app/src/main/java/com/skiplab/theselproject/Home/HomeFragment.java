@@ -30,6 +30,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -42,6 +43,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.skiplab.theselproject.Adapter.AdapterConsultant;
 import com.skiplab.theselproject.Adapter.AdapterPosts;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.DashboardActivity;
@@ -75,11 +77,12 @@ public class HomeFragment extends Fragment {
 
     RelativeLayout relLayout1;
 
-    RecyclerView recyclerView;
+    RecyclerView recyclerView, cRecyclerView;
     List<Post> postList;
     List<Object> mRecyclerViewItems = new ArrayList<>();
     List<User> consultantList;
     AdapterPosts adapterPosts;
+    AdapterConsultant adapterConsultant;
 
     FirebaseDatabase db;
     DatabaseReference postDb;
@@ -127,6 +130,10 @@ public class HomeFragment extends Fragment {
 
         relLayout1 = view.findViewById(R.id.relLayout1);
 
+        cRecyclerView = view.findViewById(R.id.recycler_consultants);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        cRecyclerView.setLayoutManager(linearLayoutManager1);
+
         recyclerView = view.findViewById(R.id.recycler_posts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         //Show latest post first, for the load from last
@@ -137,7 +144,6 @@ public class HomeFragment extends Fragment {
         //init post list
         postList = new ArrayList<>();
         consultantList = new ArrayList<>();
-
 
         drawerIconIv = view.findViewById(R.id.drawer_icon);
         optionsBtn = view.findViewById(R.id.optionsToolbar);
@@ -193,6 +199,7 @@ public class HomeFragment extends Fragment {
                 }
             });
 
+            loadConsultants();
             loadPosts();
 
         }
@@ -210,7 +217,6 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
-
 
     private void showMoreOptions(ImageView optionsBtn, String myUid)
     {
@@ -251,6 +257,53 @@ public class HomeFragment extends Fragment {
         popupMenu.show();
     }
 
+    private void loadConsultants() {
+        Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid());
+        querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    User user = ds.getValue(User.class);
+                    String selCategory = user.getSelectedCategory();
+
+                    if (user.getIsStaff().equals("true") || selCategory.equals("Helpful Tips") || selCategory.equals("#COVID19 NIGERIA")){
+                        relLayout1.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        Query queryUsers = userDb.orderByChild("isStaff").equalTo("true");
+
+                        queryUsers.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                consultantList.clear();
+                                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                    User user = ds.getValue(User.class);
+
+                                    consultantList.add(user);
+
+                                    adapterConsultant = new AdapterConsultant(getActivity(), consultantList);
+                                    cRecyclerView.setAdapter(adapterConsultant);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                //pd.dismiss();
+                                Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     private void loadPosts() {
 

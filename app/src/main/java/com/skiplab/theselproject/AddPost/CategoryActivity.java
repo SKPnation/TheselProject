@@ -242,7 +242,7 @@ public class CategoryActivity extends AppCompatActivity {
                                                 User user = singleSnapshot.getValue(User.class);
                                                 Log.d( TAG, "onDataChange: (QUERY METHOD 1) found user: " + user.toString());
 
-                                                //url is received upload post to firebase firestore
+                                                //url is received upload post to firebase database
 
                                                 Post post = new Post();
                                                 post.setUid(uid);

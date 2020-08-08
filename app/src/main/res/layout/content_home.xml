@@ -12,7 +12,33 @@
     tools:showIn="@layout/app_bar_home">
 
     <RelativeLayout
-        android:id="@+id/relLayout"
+        android:id="@+id/relLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView1"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="4dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_consultants"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                tools:listitem="@layout/consultant_col" />
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relLayout2"
+        android:layout_below="@id/relLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

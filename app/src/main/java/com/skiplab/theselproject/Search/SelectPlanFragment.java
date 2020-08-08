@@ -2,6 +2,7 @@ package com.skiplab.theselproject.Search;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ public class SelectPlanFragment extends Fragment {
     FirebaseUser fUser;
     DatabaseReference reference;
 
+    ProgressDialog pd;
+
     int i = 0;
 
     public SelectPlanFragment() {
@@ -54,19 +57,27 @@ public class SelectPlanFragment extends Fragment {
         fUser = mAuth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("trials");
 
+        pd = new ProgressDialog(getActivity());
+
         cvFree = view.findViewById(R.id.cardViewFree);
         cvPaid = view.findViewById(R.id.cardViewPaid);
         freeNext = view.findViewById(R.id.free_next);
         premiumNext = view.findViewById(R.id.paid_next);
+
         freeNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pd.setMessage("Please wait...");
+                pd.show();
+
                 Query query = reference;
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.hasChild(fUser.getUid()))
                         {
+                            pd.dismiss();
+
                             AlertDialog ad = new AlertDialog.Builder(getActivity())
                                     .setMessage("You have already used your one time free session")
                                     .show();
@@ -79,6 +90,8 @@ public class SelectPlanFragment extends Fragment {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
+                                    pd.dismiss();
+
                                     Intent intent = new Intent(getActivity(), ConsultantsActivity.class);
                                     intent.putExtra("plan","Free");
                                     getActivity().startActivity(intent);
@@ -100,12 +113,17 @@ public class SelectPlanFragment extends Fragment {
         premiumNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pd.setMessage("Please wait...");
+                pd.show();
+
                 i++;
 
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        pd.dismiss();
+
                         Intent intent = new Intent(getActivity(), ConsultantsActivity.class);
                         intent.putExtra("plan","Paid");
                         getActivity().startActivity(intent);

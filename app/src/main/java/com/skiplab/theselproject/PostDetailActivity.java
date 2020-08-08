@@ -818,8 +818,8 @@ public class PostDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void replyComment(String commentUid, String name, String currentUid) {
-        mUidTv.setText(commentUid);
+    public void replyComment(String commentUserID, String name, String currentUid) {
+        mUidTv.setText(commentUserID);
         mentionedUserTv.setText("@"+name);
         mentionedUserTv.setVisibility(View.VISIBLE);
     }
@@ -856,7 +856,7 @@ public class PostDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void sendNotification4(String commentUid, String postUname) {
+    public void sendNotification4(String commentUserID, String postUname) {
 
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
         usersRef.orderByKey().equalTo(myUid)
@@ -876,7 +876,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                                     for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
                                         Token token = new Token(ds1.getString("token"));
-                                        Data data = new Data(myUid, user.getUsername()+" liked your comment on "+postUname+"'s post", pCategory, commentUid, R.mipmap.ic_launcher2);
+                                        Data data = new Data(myUid, user.getUsername()+" liked your comment on "+postUname+"'s post", pCategory, commentUserID, R.mipmap.ic_launcher2);
 
                                         Sender sender = new Sender(data, token.getToken());
                                         apiService.sendNotification(sender)

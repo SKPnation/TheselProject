@@ -285,5 +285,12 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
         }
         isActivityRunning = false;
     }
+
+    public void selectSessionType() {
+        SearchFragment fragment2 = new SearchFragment();
+        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+        ft2.replace(R.id.content, fragment2, "");
+        ft2.commit();
+    }
 }
 

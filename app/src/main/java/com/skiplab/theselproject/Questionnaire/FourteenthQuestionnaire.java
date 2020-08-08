@@ -100,9 +100,6 @@ public class FourteenthQuestionnaire extends Fragment {
 
                                         createBtn.setVisibility(View.GONE);
 
-                                        Intent intent = new Intent( getActivity(), ConsultantsActivity.class );
-                                        intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                                        startActivity( intent );
                                         getActivity().finish();
                                     }
                                 });
