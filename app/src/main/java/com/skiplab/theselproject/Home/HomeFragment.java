@@ -48,7 +48,9 @@ import com.skiplab.theselproject.Adapter.AdapterPosts;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.LatenessReportActivity;
+import com.skiplab.theselproject.Profile.AccountSettingsActivity;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Post;
 import com.skiplab.theselproject.models.User;
 
@@ -65,7 +67,7 @@ public class HomeFragment extends Fragment {
     private String[] items;
     private String mActivityTitle;
 
-    private ImageView drawerIconIv, optionsBtn;
+    private ImageView drawerIconIv, optionsBtn, mAvaterIv;
 
     private TextView feedTitleTv, selCategoryHint;
 
@@ -145,6 +147,7 @@ public class HomeFragment extends Fragment {
         postList = new ArrayList<>();
         consultantList = new ArrayList<>();
 
+        mAvaterIv = view.findViewById(R.id.avatarIv);
         drawerIconIv = view.findViewById(R.id.drawer_icon);
         optionsBtn = view.findViewById(R.id.optionsToolbar);
         feedTitleTv = view.findViewById(R.id.app_name);
@@ -228,7 +231,10 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     if (ds.getValue(User.class).getIsStaff().equals("admin"))
-                        popupMenu.getMenu().add(Menu.NONE,0,0, "Reports");
+                    {
+                        popupMenu.getMenu().add(Menu.NONE,0,0, "Requests");
+                        popupMenu.getMenu().add(Menu.NONE,1,0, "Reports");
+                    }
                 }
             }
 
@@ -238,17 +244,20 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        popupMenu.getMenu().add(Menu.NONE,1,0, "Help Centre");
+        popupMenu.getMenu().add(Menu.NONE,2,0, "Account Settings");
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
                 if (id==0){
-                    startActivity(new Intent(getActivity(), LatenessReportActivity.class));
+                    startActivity(new Intent(getActivity(), AdminRequestsActivity.class));
                 }
                 else if (id==1){
                     //...
+                }
+                else if (id==2){
+                    startActivity(new Intent(getActivity(), AccountSettingsActivity.class));
                 }
                 return false;
             }
@@ -265,6 +274,13 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     User user = ds.getValue(User.class);
                     String selCategory = user.getSelectedCategory();
+
+                    try{
+                        UniversalImageLoader.setImage(user.getProfile_photo(), mAvaterIv, null, "");
+                    }
+                    catch (Exception e){
+                        Toast.makeText(getActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
 
                     if (user.getIsStaff().equals("true") || selCategory.equals("Helpful Tips") || selCategory.equals("#COVID19 NIGERIA")){
                         relLayout1.setVisibility(View.GONE);

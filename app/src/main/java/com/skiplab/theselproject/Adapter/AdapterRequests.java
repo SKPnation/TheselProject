@@ -137,6 +137,7 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
         final String ninetyFiveThousand = "N95,000";
         final String hundredThousand = "N100,000";
 
+        String client_name = requestsList.get(position).getClient_name();
         holder.requestStatus.setText(requestsList.get(position).getStatus());
         holder.requestTime.setText(requestsList.get(position).getRequest_time());
         holder.requestPlan.setText(requestsList.get(position).getPlan());
@@ -246,6 +247,44 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
                                                 });
                                     }
                                 }, 900000);
+                            }
+                            else
+                            {
+                                holder.counsellorName.setText(requestsList.get(position).getCounsellor_name());
+                                holder.requestTimer.setText(requestsList.get(position).getTimer());
+                                holder.requestPlan.setVisibility(View.VISIBLE);
+                                holder.emptyBtn.setVisibility(View.VISIBLE);
+                                holder.requestTimer.setVisibility(View.VISIBLE);
+
+                                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                                    @Override
+                                    public boolean onLongClick(View v) {
+                                        Query query = usersRef.orderByChild("username").equalTo(client_name);
+
+                                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot singleSnapshot: dataSnapshot.getChildren() ){
+                                                    User user = singleSnapshot.getValue(User.class);
+                                                    //Log.d( TAG, "onDataChange: (QUERY METHOD 3) found user: " + user.toString());
+
+                                                    AlertDialog alertDialog = new AlertDialog.Builder(context)
+                                                            .setTitle(client_name)
+                                                            .setMessage(""+user.getEmail())
+                                                            .create();
+                                                    alertDialog.show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                //..
+                                            }
+                                        });
+
+                                        return false;
+                                    }
+                                });
                             }
                         }
                     }
