@@ -16,7 +16,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.skiplab.theselproject.Activity.ActivityFragment;
@@ -26,6 +30,11 @@ import com.skiplab.theselproject.Profile.ProfileFragment;
 import com.skiplab.theselproject.Search.SearchFragment;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.Utils.UpdateHelper;
+import com.skiplab.theselproject.notifications.APIService;
+import com.skiplab.theselproject.notifications.Client;
+import com.skiplab.theselproject.notifications.Data;
+import com.skiplab.theselproject.notifications.Response;
+import com.skiplab.theselproject.notifications.Sender;
 import com.skiplab.theselproject.notifications.Token;
 
 import androidx.annotation.NonNull;
@@ -33,7 +42,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.HashMap;
+
+import javax.annotation.Nullable;
+
 import co.paystack.android.PaystackSdk;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class DashboardActivity extends AppCompatActivity implements UpdateHelper.OnUpdateCheckListener{
 
@@ -44,6 +59,8 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
     //Firebase
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference usersRef;
+
+    APIService apiService;
 
     public static boolean isActivityRunning;
 
@@ -56,6 +73,8 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
         setContentView(R.layout.activity_dashboard);
 
         usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+        apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
         setupFirebaseAuth();
         initFCM();
@@ -290,6 +309,56 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
         FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
         ft2.replace(R.id.content, fragment2, "");
         ft2.commit();
+    }
+
+    public void selectMood() {
+        PostFragment fragment3 = new PostFragment();
+        FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
+        ft3.replace(R.id.content, fragment3, "");
+        ft3.commit();
+
+    }
+
+
+    public void sendNotification(String pId, String timestamp, String hisUid, String notification, String myUid) {
+
+        HashMap<Object, String> hashMap = new HashMap<>();
+        hashMap.put("pId",pId);
+        hashMap.put("timestamp",timestamp);
+        hashMap.put("pUid",hisUid);
+        hashMap.put("notification", notification);
+        hashMap.put("sUid",myUid);
+
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("notifications");
+        reference.child(hisUid).child(timestamp).setValue(hashMap);
+
+        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(myUid, "A user liked your post", "Thesel", hisUid, R.mipmap.ic_launcher2);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
+
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+                }
+            }
+        });
     }
 }
 

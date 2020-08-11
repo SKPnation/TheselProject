@@ -45,6 +45,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.Home.HomeFragment;
 import com.skiplab.theselproject.PostDetailActivity;
 import com.skiplab.theselproject.R;
@@ -603,9 +604,13 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
                                 mProcessLike=false;
                             }
                             else {
+                                String timestamp = ""+System.currentTimeMillis();
+                                String notification = " liked your post";
                                 //not liked, like it
                                 postsRef.child(postIde).child("pLikes").setValue( ""+(pLikes+1));
                                 likesRef.child(postIde).child(myUid).setValue("Liked");
+                                ((DashboardActivity)context).sendNotification(postIde, timestamp,
+                                        postList.get(getAdapterPosition()).getUid(), notification, myUid);
                                 mProcessLike=false;
 
                             }

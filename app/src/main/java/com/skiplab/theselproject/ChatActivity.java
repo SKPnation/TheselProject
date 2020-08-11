@@ -68,6 +68,7 @@ import com.skiplab.theselproject.Questionnaire.SixthQuestionnaire;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Chat;
 import com.skiplab.theselproject.models.LatenessReports;
+import com.skiplab.theselproject.models.Sessions;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.notifications.APIService;
 import com.skiplab.theselproject.notifications.Client;
@@ -1161,65 +1162,50 @@ public class ChatActivity extends AppCompatActivity {
                     // do something when the button is clicked
                     public void onClick(DialogInterface arg0, int arg1) {
 
-                        DatabaseReference reference = usersRef.child(myUid);
-                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        Query query = usersRef
+                                .orderByKey()
+                                .equalTo( FirebaseAuth.getInstance().getCurrentUser().getUid() );
+
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                User user = dataSnapshot.getValue(User.class);
-                                if (user.getIsStaff().equals("true"))
+                                for (DataSnapshot ds: dataSnapshot.getChildren())
                                 {
-                                    DatabaseReference sessionsRef = FirebaseDatabase.getInstance().getReference("sessions");
-                                    sessionsRef.child(myUid).child("client_id").setValue("no client");
+                                    User user = ds.getValue(User.class);
+                                    if (user.getIsStaff().equals("true"))
+                                    {
+                                        startActivity(new Intent(ChatActivity.this, DashboardActivity.class));
+                                        finish();
+                                    }
+                                    else {
+                                        int i = 0;
 
-                                    int i = 0;
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                                        builder.setMessage("ENDING SESSION..." );
+                                        builder.show();
 
-                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(ChatActivity.this);
-                                    builder1.setMessage("Your client seat is now empty");
-                                    builder1.show();
 
-                                    i++;
 
-                                    Handler handler1 = new Handler();
-                                    handler1.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            startActivity(new Intent(ChatActivity.this, DashboardActivity.class));
-                                            finish();
-                                        }
-                                    }, 2000);
+                                        i++;
 
-                                }
-                                else {
-                                    int i = 0;
+                                        Handler handler1 = new Handler();
+                                        handler1.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                startActivity(new Intent(ChatActivity.this, DashboardActivity.class));
+                                                finish();
+                                            }
+                                        }, 2000);
 
-                                    DatabaseReference sessionsRef = FirebaseDatabase.getInstance().getReference("sessions");
-                                    sessionsRef.child(hisUid).child("client_id").setValue("no client");
-
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                                    builder.setMessage("ENDING SESSION..." );
-                                    builder.show();
-
-                                    i++;
-
-                                    Handler handler1 = new Handler();
-                                    handler1.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            startActivity(new Intent(ChatActivity.this, DashboardActivity.class));
-                                            finish();
-                                        }
-                                    }, 2000);
-
+                                    }
                                 }
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //..
+
                             }
                         });
-
-
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -1232,7 +1218,7 @@ public class ChatActivity extends AppCompatActivity {
                 .show();
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
 
         DatabaseReference sessionsRef = FirebaseDatabase.getInstance().getReference("sessions");
@@ -1240,7 +1226,15 @@ public class ChatActivity extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+                            Sessions sessions = ds.getValue(Sessions.class);
+                            if (sessions.getClient_id().equals("no client"))
+                            {
+                                AlertDialog.Builder builder1 = new AlertDialog.Builder(ChatActivity.this);
+                                builder1.setMessage("Your client has left the session");
+                                builder1.show();
+                            }
+                        }
                     }
 
                     @Override
@@ -1250,7 +1244,7 @@ public class ChatActivity extends AppCompatActivity {
                 });
 
         super.onResume();
-    }
+    }*/
 
     private void setupFirebaseAuth() {
         mAuthListener = firebaseAuth -> {

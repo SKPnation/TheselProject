@@ -246,7 +246,7 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
                                                     }
                                                 });
                                     }
-                                }, 900000);
+                                }, 1200000);
                             }
                             else
                             {
@@ -682,7 +682,7 @@ public class AdapterRequests extends RecyclerView.Adapter<AdapterRequests.Reques
                                                                         handler1.postDelayed(new Runnable() {
                                                                             @Override
                                                                             public void run() {
-                                                                                context.startActivity(new Intent(context, DashboardActivity.class));
+                                                                                ((RequestsActivity)context).restartActivity();
                                                                                 Toast.makeText(context, "Your client seat is now empty", Toast.LENGTH_LONG).show();
 
                                                                             }

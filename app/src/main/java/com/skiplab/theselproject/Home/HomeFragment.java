@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -56,6 +59,8 @@ import com.skiplab.theselproject.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +73,7 @@ public class HomeFragment extends Fragment {
     private String mActivityTitle;
 
     private ImageView drawerIconIv, optionsBtn, mAvaterIv;
+    private EditText share_post_et;
 
     private TextView feedTitleTv, selCategoryHint;
 
@@ -93,6 +99,9 @@ public class HomeFragment extends Fragment {
     String myUid;
 
     private ProgressBar mProgressBar;
+
+    private Timer timer=new Timer();
+    private final long DELAY = 1000; // milliseconds
 
     public HomeFragment() {
         // Required empty public constructor
@@ -147,6 +156,7 @@ public class HomeFragment extends Fragment {
         postList = new ArrayList<>();
         consultantList = new ArrayList<>();
 
+        share_post_et = view.findViewById(R.id.share_post_et);
         mAvaterIv = view.findViewById(R.id.avatarIv);
         drawerIconIv = view.findViewById(R.id.drawer_icon);
         optionsBtn = view.findViewById(R.id.optionsToolbar);
@@ -217,6 +227,41 @@ public class HomeFragment extends Fragment {
         setupDrawer();
 
         optionsBtn.setOnClickListener(v -> showMoreOptions(optionsBtn, myUid));
+
+        share_post_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                //timer=new Timer();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                ((DashboardActivity)getActivity()).selectMood();
+
+                /*timer.cancel();
+                timer = new Timer();
+                timer.schedule(
+                        new TimerTask() {
+                            @Override
+                            public void run() {
+                                // TODO: do what you need here (refresh list)
+                                // you will probably need to use runOnUiThread(Runnable action) for some specific actions (e.g. manipulating views)
+
+                            }
+                        },
+                        DELAY
+                );*/
+            }
+        });
 
         return view;
     }

@@ -332,4 +332,8 @@ public class RequestsActivity extends AppCompatActivity {
         }
         isActivityRunning = false;
     }
+
+    public void restartActivity() {
+        retrieveRequests();
+    }
 }

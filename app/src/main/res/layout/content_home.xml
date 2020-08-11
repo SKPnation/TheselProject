@@ -54,6 +54,7 @@
             android:src="@drawable/default_img"/>
 
         <EditText
+            android:id="@+id/share_post_et"
             android:background="@drawable/customsharesthedittextstyle"
             android:layout_toRightOf="@id/avatarIv"
             android:layout_marginLeft="20dp"
