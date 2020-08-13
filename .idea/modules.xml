@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TheselProject.iml" filepath="$PROJECT_DIR$/TheselProject.iml" group="TheselProject" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="TheselProject/app" />
-      <module fileurl="file://$PROJECT_DIR$/sinch-android-rtc-3.17.4/sinch-android-rtc-3.17.4.iml" filepath="$PROJECT_DIR$/sinch-android-rtc-3.17.4/sinch-android-rtc-3.17.4.iml" group="TheselProject/sinch-android-rtc-3.17.4" />
+      <module fileurl="file://$PROJECT_DIR$/sinch-android-rtc-3.17.4/AndroidStudio3.5Projects-TheselProject-sinch-android-rtc-3.17.4.iml" filepath="$PROJECT_DIR$/sinch-android-rtc-3.17.4/AndroidStudio3.5Projects-TheselProject-sinch-android-rtc-3.17.4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TheselProject.iml" filepath="$PROJECT_DIR$/TheselProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sinch-android-rtc-3.17.4/TheselProject-sinch-android-rtc-3.17.4.iml" filepath="$PROJECT_DIR$/sinch-android-rtc-3.17.4/TheselProject-sinch-android-rtc-3.17.4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sinch-android-rtc-3.17.4/ayomideajayi-AndroidStudio3.5Projects-TheselProject-sinch-android-rtc-3.17.4.iml" filepath="$PROJECT_DIR$/sinch-android-rtc-3.17.4/ayomideajayi-AndroidStudio3.5Projects-TheselProject-sinch-android-rtc-3.17.4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sinch-android-rtc-3.17.4/ayomideajayi-AndroidStudio3.5Projects-TheselProject-sinch-android-rtc-3.17.4~1.iml" filepath="$PROJECT_DIR$/sinch-android-rtc-3.17.4/ayomideajayi-AndroidStudio3.5Projects-TheselProject-sinch-android-rtc-3.17.4~1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sinch-android-rtc-3.17.4/ayomideajayi-AndroidStudio3.5Projects-TheselProject-sinch-android-rtc-3.17.4~2.iml" filepath="$PROJECT_DIR$/sinch-android-rtc-3.17.4/ayomideajayi-AndroidStudio3.5Projects-TheselProject-sinch-android-rtc-3.17.4~2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sinch-android-rtc-3.17.4/sinch-android-rtc-3.17.4.iml" filepath="$PROJECT_DIR$/sinch-android-rtc-3.17.4/sinch-android-rtc-3.17.4.iml" />
     </modules>
   </component>
 </project>
