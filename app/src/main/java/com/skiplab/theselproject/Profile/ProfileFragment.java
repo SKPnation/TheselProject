@@ -46,8 +46,6 @@ public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
 
-    SwipeRefreshLayout swipeRefreshLayout;
-
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -144,48 +142,17 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-            swipeRefreshLayout = view.findViewById( R.id.swipe_layout );
-            swipeRefreshLayout.setColorSchemeResources( R.color.colorPrimary,
-                    android.R.color.holo_blue_dark,
-                    android.R.color.holo_orange_dark,
-                    android.R.color.holo_green_dark);
-
-            swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    if(Common.isConnectedToTheInternet(getContext()))
-                    {
-                        checkUserStatus();
-                        retrieveUserData();
-                    }
-                    else
-                    {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage("Please check your internet connection");
-                        builder.show();
-                        return;
-                    }
-                }
-            } );
-
-            //Default, when loading for first time
-            swipeRefreshLayout.post( new Runnable() {
-                @Override
-                public void run() {
-                    if(Common.isConnectedToTheInternet(getContext()))
-                    {
-                        checkUserStatus();
-                        retrieveUserData();
-                    }
-                    else
-                    {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage("Please check your internet connection");
-                        builder.show();
-                        return;
-                    }
-                }
-            } );
+            if(Common.isConnectedToTheInternet(getContext()))
+            {
+                checkUserStatus();
+                retrieveUserData();
+            }
+            else
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Please check your internet connection");
+                builder.show();
+            }
 
             setupToolbar();
         }
@@ -231,8 +198,6 @@ public class ProfileFragment extends Fragment {
                         catch (Exception e){
                             //
                         }
-
-                        swipeRefreshLayout.setRefreshing( false );
                     }
                     else if (user.getIsStaff().equals("true"))
                     {
@@ -275,7 +240,6 @@ public class ProfileFragment extends Fragment {
                             //
                         }
 
-                        swipeRefreshLayout.setRefreshing( false );
                     }
                     else
                         {
