@@ -130,7 +130,6 @@ public class ChatActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
 
     //firebase
-    FirebaseAuth firebaseAuth;
     DatabaseReference usersRef, sessionsRef;
     FirebaseDatabase firebaseDatabase;
 
@@ -202,8 +201,6 @@ public class ChatActivity extends AppCompatActivity {
 
         //create api service
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
-
-        firebaseAuth = FirebaseAuth.getInstance();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         usersRef = firebaseDatabase.getReference("users");
@@ -443,7 +440,26 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 notify = true;
-                isThisUserAStaff(myUid);
+                if (mTimerRunning)
+                {
+                    String message = messageEt.getText().toString().trim();
+
+                    if (TextUtils.isEmpty(message)){
+                        Toast.makeText(ChatActivity.this, "Cannot send an empty message", Toast.LENGTH_SHORT).show();
+                    } else {
+                        sendMessage(message);
+
+                        Toast.makeText(ChatActivity.this, "Wait for a reply...", Toast.LENGTH_SHORT).show();
+                    }
+                    //reset edittext after sending message
+                    messageEt.setText("");
+                }
+                else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                    builder.setMessage("Double tap the start button.");
+
+                    builder.show();
+                }
             }
         });
 
@@ -820,72 +836,6 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-
-    private void isThisUserAStaff(String myUid) {
-
-        Query query = usersRef.orderByKey().equalTo(myUid);
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    User user = ds.getValue(User.class);
-                    if (user.getIsStaff().equals("false"))
-                    {
-                        if (mTimerRunning)
-                        {
-                            String message = messageEt.getText().toString().trim();
-
-                            if (TextUtils.isEmpty(message)){
-                                Toast.makeText(ChatActivity.this, "Cannot send an empty message", Toast.LENGTH_SHORT).show();
-                            } else {
-                                sendMessage(message);
-
-                                Toast.makeText(ChatActivity.this, "Wait for a reply...", Toast.LENGTH_SHORT).show();
-                            }
-                            //reset edittext after sending message
-                            messageEt.setText("");
-                        }
-                        else{
-                            AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                            builder.setMessage("Double tap the start button.");
-
-                            builder.show();
-                        }
-                    }
-                    else
-                    {
-                        if (mTimerRunning)
-                        {
-                            String message = messageEt.getText().toString().trim();
-
-                            if (TextUtils.isEmpty(message)){
-                                Toast.makeText(ChatActivity.this, "Cannot send an empty message", Toast.LENGTH_SHORT).show();
-                            } else {
-                                sendMessage(message);
-
-                                Toast.makeText(ChatActivity.this, "Wait for a reply...", Toast.LENGTH_SHORT).show();
-                            }
-                            //reset edittext after sending message
-                            messageEt.setText("");
-                        }
-                        else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                            builder.setMessage("Double tap the start button.");
-
-                            builder.show();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //..
-            }
-        });
-    }
-
     private void sendMessage(final String message) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -901,8 +851,6 @@ public class ChatActivity extends AppCompatActivity {
         databaseReference.child("chats").push().setValue(hashMap);
 
         //String msg = message;
-
-
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("users").child(myUid);
         database.addValueEventListener(new ValueEventListener() {
@@ -1001,6 +949,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendNotification(final String hisUid, final String username, final String message) {
+
         CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
         allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -1249,6 +1198,7 @@ public class ChatActivity extends AppCompatActivity {
     private void setupFirebaseAuth() {
         mAuthListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
+            myUid = user.getUid();
 
             if (user != null)
             {

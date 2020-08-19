@@ -45,11 +45,21 @@ import com.skiplab.theselproject.MainActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.Post;
 import com.skiplab.theselproject.models.User;
+import com.skiplab.theselproject.notifications.APIService;
+import com.skiplab.theselproject.notifications.Client;
+import com.skiplab.theselproject.notifications.Data;
+import com.skiplab.theselproject.notifications.Response;
+import com.skiplab.theselproject.notifications.Sender;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -69,16 +79,20 @@ public class CategoryActivity extends AppCompatActivity {
 
     //user info
     String name, email, uid, dp;
-
+    private Set<String> mTokens;
+    ListView ch1;
     int i = 0;
     private double mPhotoUploadProgress = 0;
 
-    ListView ch1;
+    APIService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+
+        //create api service
+        apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
         Intent getIntent = getIntent();
         currentMood = getIntent.getStringExtra("mood");
@@ -195,6 +209,8 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
+        mTokens = new HashSet<>();
+
         checkUserStatus();
     }
 
@@ -207,10 +223,10 @@ public class CategoryActivity extends AppCompatActivity {
 
         String filePathAndName = "posts/" + "post_" + timeStamp;
 
-        if (!image_uri.equals("noImage")){
+        if (!image_uri.equals("noImage"))
+        {
             //post Image
             try {
-
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), Uri.parse(image_uri));
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -365,6 +381,8 @@ public class CategoryActivity extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             //added to firebase database
                             pd.dismiss();
+                            //getCategoryTokens(selCatTv);
+
                             Toast.makeText(CategoryActivity.this, "Post Published", Toast.LENGTH_SHORT).show();
 
                             Query query = userDbRef.orderByKey().equalTo(uid);
@@ -374,6 +392,12 @@ public class CategoryActivity extends AppCompatActivity {
                                     for (DataSnapshot ds: dataSnapshot.getChildren()){
                                         User user = ds.getValue(User.class);
                                         Long postCount = user.getPosts();
+
+                                        /*String broadcast = "New post from " + user.getUsername();
+                                        String title = selCatTv;*/
+
+                                        //send message
+                                        //broadcastMessageToCategory(title, broadcast);
 
                                         userDbRef.child(uid).child("posts").setValue(postCount+1);
                                     }
@@ -605,7 +629,60 @@ public class CategoryActivity extends AppCompatActivity {
         }
     }
 
-    private String generateID() {
+    /*
+    private void broadcastMessageToCategory(String title, String broadcast)
+    {
+        //Send message to all tokens
+        for (String token : mTokens)
+        {
+            Data data = new Data();
+            data.setTitle( title );
+            data.setBody( broadcast );
+            Sender sender = new Sender( data, token );
+            apiService.sendNotification(sender)
+                    .enqueue(new Callback<Response>() {
+                        @Override
+                        public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                            Log.d(TAG, "onNotificationSent: Sent notification"
+                                    +response.message());
+                        }
+
+                        @Override
+                        public void onFailure(Call<Response> call, Throwable t) {
+                            //Toast.makeText(ChatActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
+    private void getCategoryTokens(String selCatTv)
+    {
+        Query query = userDbRef
+                .orderByChild("selectedCategory")
+                .equalTo(selCatTv);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    String token = snapshot.getValue(User.class).getMessaging_token();
+                    Log.d(TAG, "onDataChange: got a token for user named: "
+                            + snapshot.getValue(User.class).getUsername());
+                    mTokens.add(token);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    */
+
+    private String generateID()
+    {
         String keys = "0123456789"
                 + "abcdefghijklmnopqrstuvxyz";
 
@@ -619,7 +696,8 @@ public class CategoryActivity extends AppCompatActivity {
         return sb.toString();
     }
 
-    private void checkUserStatus() {
+    private void checkUserStatus()
+    {
         //get current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {

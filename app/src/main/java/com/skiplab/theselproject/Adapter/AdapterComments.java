@@ -165,7 +165,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
         holder.replyTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((PostDetailActivity)context).replyComment(uid, name, mAuth.getUid());
+                ((PostDetailActivity)context).replyComment(uid, name);
             }
         });
     }
@@ -316,7 +316,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
                                                 //not liked, like it
                                                 postsRef.child(postId).child("comments").child(commentId).child("cLikes").setValue( ""+(cLikes+1));
                                                 likesRef.child(commentId).child(myUid).setValue("Liked");
-                                                ((PostDetailActivity)context).sendNotification4(commentList.get(getAdapterPosition()).getUid(), postUname);
+                                                ((PostDetailActivity)context).sendNotification4(commentList.get(getAdapterPosition()).getUid(), postUname, postId);
                                                 mProcessLike=false;
                                             }
 

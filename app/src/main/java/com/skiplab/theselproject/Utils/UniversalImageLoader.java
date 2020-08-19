@@ -18,7 +18,7 @@ import com.skiplab.theselproject.R;
 
 public class UniversalImageLoader {
 
-    private static final int defaultImage = R.drawable.default_img;
+    private static final int defaultImage = R.drawable.default_image;
     private Context mContext;
 
     public UniversalImageLoader(Context mContext) {

@@ -362,35 +362,6 @@ public class PostDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void sendNotification1(String hisUid, String myName) {
-        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
-        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
-                    Token token = new Token(ds1.getString("token"));
-                    Data data = new Data(myUid, myName+" liked your post", "Thesel", hisUid, R.mipmap.ic_launcher2);
-
-                    Sender sender = new Sender(data, token.getToken());
-                    apiService.sendNotification(sender)
-                            .enqueue(new Callback<Response>() {
-                                @Override
-                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                                    //..
-                                }
-
-                                @Override
-                                public void onFailure(Call<Response> call, Throwable t) {
-                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
-                                }
-                            });
-
-
-                }
-            }
-        });
-    }
-
     private void postComment() {
         progressDialog = new ProgressDialog(mContext);
         progressDialog.setMessage("Adding comment...");
@@ -454,7 +425,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                                                         addToHisNotifications(""+hisUid,""+postId," commented on your post");
 
-                                                        sendNotification2(hisUid, postUname);
+                                                        //sendNotification(hisUid, postUname);
 
                                                         onRestart();
                                                     }
@@ -493,8 +464,8 @@ public class PostDetailActivity extends AppCompatActivity {
 
                                                         //addToCommentUserNotifications(""+mUidTv,""+postId," mentioned you in a comment: "+comment);
 
-                                                        sendNotification2(hisUid, postUname);
-                                                        sendNotification3(mUidTv.getText().toString(), myName);
+                                                        //sendNotification(hisUid, postUname);
+                                                        sendNotification3(mUidTv.getText().toString(), myName, postId);
 
                                                         onRestart();
                                                     }
@@ -536,7 +507,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                                                         addToHisNotifications(""+hisUid,""+postId," commented on your post");
 
-                                                        sendNotification2(hisUid, myName);
+                                                        sendNotification(hisUid, myName);
 
                                                         onRestart();
                                                     }
@@ -575,8 +546,9 @@ public class PostDetailActivity extends AppCompatActivity {
 
                                                         addToHisNotifications(""+hisUid,""+postId," commented on your post");
 
-                                                        sendNotification2(hisUid, myName);
-                                                        sendNotification3(mUidTv.getText().toString(), myName);
+                                                        sendNotification(hisUid, myName);
+
+                                                        sendNotification3(mUidTv.getText().toString(), myName, postId);
 
                                                         onRestart();
                                                     }
@@ -604,7 +576,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 }
             }
 
-            private void sendNotification2(String hisUid, String myName) {
+            private void sendNotification(String hisUid, String myName) {
                 CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
                 allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -636,35 +608,6 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //..
-            }
-        });
-    }
-
-    private void sendNotification3(String commentUid, String myName) {
-        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
-        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
-                    Token token = new Token(ds1.getString("token"));
-                    Data data = new Data(myUid, myName+" mentioned you in a comment on "+hisName+"'s post", pCategory, commentUid, R.mipmap.ic_launcher2);
-
-                    Sender sender = new Sender(data, token.getToken());
-                    apiService.sendNotification(sender)
-                            .enqueue(new Callback<Response>() {
-                                @Override
-                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                                    //..
-                                }
-
-                                @Override
-                                public void onFailure(Call<Response> call, Throwable t) {
-                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
-                                }
-                            });
-
-
-                }
             }
         });
     }
@@ -818,16 +761,43 @@ public class PostDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void replyComment(String commentUserID, String name, String currentUid) {
-        mUidTv.setText(commentUserID);
-        mentionedUserTv.setText("@"+name);
-        mentionedUserTv.setVisibility(View.VISIBLE);
+
+    /**
+     * Private notification methods
+     */
+    private void sendNotification1(String hisUid, String myName) {
+        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(myUid, myName+" liked your post", "Thesel", hisUid, R.mipmap.ic_launcher2);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
+
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+                }
+            }
+        });
     }
 
+    private void sendNotification2(String hisUid, String myName) {
 
+        addToHisNotifications(""+hisUid,""+postId," liked a comment on your post");
 
-    private void sendNotification2(String hisUid, String myName)
-    {
         CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
         allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -856,7 +826,54 @@ public class PostDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void sendNotification4(String commentUserID, String postUname) {
+    private void sendNotification3(String commentUserID, String myName, String postId) {
+
+        addToHisNotifications(""+commentUserID,""+postId," mentioned you in a comment");
+
+        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(myUid, "A user mentioned you in a comment", pCategory, commentUserID, R.mipmap.ic_launcher2);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
+
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Public notification methods
+     */
+
+    public void replyComment(String commentUserID, String commentUname) {
+        mUidTv.setText(commentUserID);
+        mentionedUserTv.setText("@"+commentUname);
+        mentionedUserTv.setVisibility(View.VISIBLE);
+    }
+
+    public void sendNotification4(String commentUserID, String postUname, String postId) {
+
+        addToHisNotifications(""+commentUserID,""+postId," liked your comment on "+postUname+"'s post");
+
+        sendNotification2(hisUid, myName);
 
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
         usersRef.orderByKey().equalTo(myUid)
@@ -867,8 +884,6 @@ public class PostDetailActivity extends AppCompatActivity {
                             User user = ds.getValue(User.class);
 
                             addToHisNotifications(""+hisUid, ""+postId, " liked a comment on your post");
-
-                            sendNotification2(hisUid, myName);
 
                             CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
                             allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
