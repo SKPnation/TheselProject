@@ -24,3 +24,4 @@
 -keepclassmembers class com.skiplab.theselproject.models.** { *; }
 -keepclassmembers class com.skiplab.theselproject.notifications.** { *; }
 -keepclassmembers class com.skiplab.theselproject.Adapter.** { *; }
+

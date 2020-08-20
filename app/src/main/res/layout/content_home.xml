@@ -40,18 +40,17 @@
     <RelativeLayout
         android:id="@+id/poststh"
         android:layout_below="@id/relLayout1"
-        android:padding="20dp"
+        android:padding="10dp"
         android:background="#D1D1D1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatarIv"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:civ_border_color="#fff"
-            app:civ_border_width="2dp"
-            android:src="@drawable/default_img"/>
+            app:civ_border_width="2dp" />
 
         <EditText
             android:id="@+id/share_post_et"
@@ -63,7 +62,7 @@
             android:textSize="16dp"
             android:textColor="#ffffff"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="40dp"/>
 
     </RelativeLayout>
 

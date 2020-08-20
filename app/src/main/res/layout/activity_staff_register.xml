@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColor="#fff"
-                    android:hint="HearMe Staff Password"
+                    android:hint="Thesel consultant password"
                     android:textSize="20sp"
                     android:background="@android:color/transparent"
                     android:singleLine="true"

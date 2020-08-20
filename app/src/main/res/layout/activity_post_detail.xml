@@ -296,8 +296,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/default_img"/>
+                android:layout_marginRight="10dp" />
 
             <TextView
                 android:id="@+id/mentionedUserTv"

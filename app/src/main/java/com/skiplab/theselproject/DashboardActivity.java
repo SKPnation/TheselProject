@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.skiplab.theselproject.Activity.ActivityFragment;
 import com.skiplab.theselproject.Home.HomeFragment;
 import com.skiplab.theselproject.AddPost.PostFragment;
+import com.skiplab.theselproject.Home.WeeklyVideosFragment;
 import com.skiplab.theselproject.Profile.ProfileFragment;
 import com.skiplab.theselproject.Search.SearchFragment;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
@@ -319,6 +320,13 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
 
     }
 
+    public void viewWklyVideos() {
+        WeeklyVideosFragment wklyVidsFragment = new WeeklyVideosFragment();
+        FragmentTransaction wvf = getSupportFragmentManager().beginTransaction();
+        wvf.replace(R.id.content, wklyVidsFragment, "");
+        wvf.commit();
+    }
+
 
     public void sendNotification(String pId, String timestamp, String hisUid, String notification, String myUid) {
 
@@ -360,5 +368,6 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
             }
         });
     }
+
 }
 

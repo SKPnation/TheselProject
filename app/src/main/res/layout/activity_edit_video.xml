@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Home.EditVideoActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/backArrow"
+                    android:src="@drawable/ic_back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/backArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Edit video"
+                    android:textSize="24sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                    android:textColor="#ffffff"/>
+
+                <ImageView
+                    android:id="@+id/saveVideo"
+                    android:src="@drawable/ic_checkmark"
+                    android:onClick="saveVideo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <VideoView
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:id="@+id/videoview_main"
+        android:backgroundTint="@android:color/black"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Video name"
+        android:textSize="20sp"
+        android:id="@+id/et_video_name"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/black"
+        android:autoText="true"
+        />
+
+    <TextView
+        android:id="@+id/select_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="select video "
+        android:textColor="#bb00ff"
+        android:textSize="30sp"
+        android:onClick="selectVideo"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        />
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminate="true"
+        android:indeterminateTint="@android:color/holo_orange_dark"
+        android:visibility="invisible"
+        android:id="@+id/progressBar_main"
+        />
+
+</LinearLayout>

@@ -35,8 +35,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_centerVertical="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/default_img" />
+                    android:scaleType="centerCrop"/>
 
                 <LinearLayout
                     android:id="@+id/name_timer_layout"

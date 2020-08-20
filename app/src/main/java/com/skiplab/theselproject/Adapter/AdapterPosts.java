@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.format.DateFormat;
@@ -28,6 +29,9 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -157,7 +161,13 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
 
         //set user dp
         try{
-            UniversalImageLoader.setImage(uDp, holder.uPictureIv, null, "");
+            Glide
+                    .with(context)
+                    .load(uDp)
+                    .placeholder(R.drawable.default_image)
+                    .into(holder.uPictureIv);
+
+            //UniversalImageLoader.setImage(uDp, holder.uPictureIv, null, "");
         }
         catch (Exception e){
             Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -172,7 +182,13 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
             holder.pImageIv.setVisibility(View.VISIBLE);
 
             try{
-                UniversalImageLoader.setImage(pImage, holder.pImageIv, null, "");
+                Glide
+                        .with(context)
+                        .load(pImage)
+                        .placeholder(R.drawable.default_image)
+                        .into(holder.pImageIv);
+
+                //UniversalImageLoader.setImage(pImage, holder.pImageIv, null, "");
             }
             catch (Exception e){
                 Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();

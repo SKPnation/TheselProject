@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
     private String[] items;
     private String mActivityTitle;
 
-    private ImageView drawerIconIv, optionsBtn, mAvaterIv;
+    private ImageView drawerIconIv, optionsBtn, mAvaterIv, wklyVideosBtn;
     private EditText share_post_et;
 
     private TextView feedTitleTv, selCategoryHint;
@@ -156,6 +156,7 @@ public class HomeFragment extends Fragment {
         postList = new ArrayList<>();
         consultantList = new ArrayList<>();
 
+        wklyVideosBtn = view.findViewById(R.id.weekly_videos);
         share_post_et = view.findViewById(R.id.share_post_et);
         mAvaterIv = view.findViewById(R.id.avatarIv);
         drawerIconIv = view.findViewById(R.id.drawer_icon);
@@ -225,6 +226,13 @@ public class HomeFragment extends Fragment {
         drawerIconIv.setOnClickListener(v -> mDrawerLayout.openDrawer(GravityCompat.START));
         //addDrawersItem();
         setupDrawer();
+
+        wklyVideosBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((DashboardActivity)getActivity()).viewWklyVideos();
+            }
+        });
 
         optionsBtn.setOnClickListener(v -> showMoreOptions(optionsBtn, myUid));
 
@@ -351,7 +359,7 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
                                 //pd.dismiss();
-                                Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
 
                             }
                         });
@@ -361,7 +369,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                //..
             }
         });
     }
