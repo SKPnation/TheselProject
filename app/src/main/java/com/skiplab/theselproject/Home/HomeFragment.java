@@ -97,6 +97,7 @@ public class HomeFragment extends Fragment {
     DatabaseReference userDb;
 
     String myUid;
+    String selCategory;
 
     private ProgressBar mProgressBar;
 
@@ -166,25 +167,6 @@ public class HomeFragment extends Fragment {
         mDrawerLayout = view.findViewById(R.id.drawer_layout);
         mActivityTitle = getActivity().getTitle().toString();
         listView = view.findViewById(R.id.navList);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Career", "Child Abuse", "Low self-esteem",
-                "Family", "Anxiety", "Pregnancy", "Business", "Weight Loss", "Fitness", "Helpful Tips", "#COVID19 NIGERIA"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getActivity(), R.layout.list_item, R.id.listItem, items);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener((parent, view1, position, id) -> {
-            String selectedItem = (String) parent.getItemAtPosition(position);
-            //String selectedItem  = ((TextView)view).getText().toString();
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
-                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            currentUserRef.child("selectedCategory").setValue(selectedItem);
-            Intent intent = new Intent(getActivity(), DashboardActivity.class);
-            startActivity(intent);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            getActivity().finish();
-
-        });
 
         if(Common.isConnectedToTheInternet(getContext()))
         {
@@ -194,7 +176,7 @@ public class HomeFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds: dataSnapshot.getChildren()){
                         User user = ds.getValue(User.class);
-                        String selCategory = user.getSelectedCategory();
+                        selCategory = user.getSelectedCategory();
 
                         if (selCategory.isEmpty()){
                             mProgressBar.setVisibility(View.GONE);
@@ -213,8 +195,35 @@ public class HomeFragment extends Fragment {
                 }
             });
 
+            listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Career", "Low self-esteem",
+                    "Family", "Anxiety", "Pregnancy", "Business", "Weight Loss", "Fitness", "Helpful Tips", "#COVID19 NIGERIA"};
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    getActivity(), R.layout.list_item, R.id.listItem, items);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener((parent, view1, position, id) -> {
+                String selectedItem = (String) parent.getItemAtPosition(position);
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                if (selectedItem.equals(selCategory)){
+                    //..
+                }
+                else {
+                    currentUserRef.child("selectedCategory").setValue(selectedItem);
+                    Intent intent = new Intent(getActivity(), DashboardActivity.class);
+                    startActivity(intent);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    getActivity().finish();
+                }
+
+            });
+
             loadConsultants();
             loadPosts();
+
+
 
         }
         else {

@@ -135,7 +135,7 @@ public class CategoryActivity extends AppCompatActivity {
         sendPost = findViewById(R.id.sendPost);
         ch1 = findViewById(R.id.list_item);
         ch1.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        String[] items = {"Relationship", "Addiction", "Depression", "Parenting", "Career", "Child Abuse", "Low self-esteem",
+        String[] items = {"Relationship", "Addiction", "Depression", "Parenting", "Career", "Low self-esteem",
                 "Family", "Anxiety", "Pregnancy", "Business", "Weight Loss", "Fitness", "Helpful Tips", "#COVID19 NIGERIA"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, R.layout.category_row, R.id.categoryTv, items);

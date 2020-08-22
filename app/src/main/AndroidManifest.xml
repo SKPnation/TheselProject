@@ -23,7 +23,8 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Home.EditVideoActivity"></activity>
+        <activity android:name=".Home.FullscreenActivity"></activity>
+        <activity android:name=".Home.EditVideoActivity" />
         <activity android:name=".Home.AdminRequestsActivity" />
         <activity android:name=".Search.ConsultantsActivity" />
         <activity android:name=".Questionnaire.QuestionnaireActivity" />

@@ -61,6 +61,7 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
     @Override
     public void onBindViewHolder(@NonNull UsersViewHolder holder, int position) {
         String hisUID = userList.get(position).getUid();
+        String email = userList.get(position).getEmail();
         String staffName = userList.get(position).getUsername();
         String category1 = userList.get(position).getCategory1();
         String category2 = userList.get(position).getCategory2();
@@ -79,7 +80,8 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     User user = ds.getValue(User.class);
-                    if (user.getIsStaff().equals("admin")){
+                    if (user.getIsStaff().equals("admin"))
+                    {
                         holder.mEditBtn.setVisibility(View.VISIBLE);
 
                         holder.mEditBtn.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +129,7 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
                                                             TextView catTv2 = mView.findViewById(R.id.categoryTv2);
                                                             TextView catTv3 = mView.findViewById(R.id.categoryTv3);
 
-                                                            nameTv.setText(staffName);
+                                                            nameTv.setText(staffName +", "+email);
                                                             if (!category1.isEmpty()){
                                                                 catTv1.setVisibility(View.VISIBLE);
                                                                 catTv1.setText(category1);

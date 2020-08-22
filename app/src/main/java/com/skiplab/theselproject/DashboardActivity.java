@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.skiplab.theselproject.Activity.ActivityFragment;
+import com.skiplab.theselproject.Adapter.AdapterVideo;
 import com.skiplab.theselproject.Home.HomeFragment;
 import com.skiplab.theselproject.AddPost.PostFragment;
 import com.skiplab.theselproject.Home.WeeklyVideosFragment;
@@ -31,6 +34,7 @@ import com.skiplab.theselproject.Profile.ProfileFragment;
 import com.skiplab.theselproject.Search.SearchFragment;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.Utils.UpdateHelper;
+import com.skiplab.theselproject.models.Activity;
 import com.skiplab.theselproject.notifications.APIService;
 import com.skiplab.theselproject.notifications.Client;
 import com.skiplab.theselproject.notifications.Data;
@@ -368,6 +372,7 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
             }
         });
     }
+
 
 }
 

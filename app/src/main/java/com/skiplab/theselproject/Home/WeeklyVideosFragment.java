@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -77,7 +78,7 @@ public class WeeklyVideosFragment extends Fragment {
         searchVideoBtn = view.findViewById(R.id.searchVideo);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        //Show latest post first, for the load from last
+        //Show latest video first, for the load from last
         linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -177,10 +178,28 @@ public class WeeklyVideosFragment extends Fragment {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
                     startActivity(new Intent(getActivity(), DashboardActivity.class));
                     getActivity().finish();
+
+                    pausePlayer(adapterVideo.exoPlayer);
+
                     return true;
                 }
                 return false;
             }
         });
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        pausePlayer(adapterVideo.exoPlayer);
+    }
+
+    public static void pausePlayer(SimpleExoPlayer exoPlayer) {
+
+        if (exoPlayer != null) {
+            exoPlayer.stop(true);
+
+        }
+    }
+
 }

@@ -6,65 +6,114 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="#383838"
     app:cardUseCompatPadding="true"
-    app:cardCornerRadius="10dp">
-
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_video_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="Name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-            android:textColor="@android:color/white"
-            android:textSize="20dp"/>
-
-
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/exoplayer_item"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="3dp"
-            app:resize_mode="fit"
-            app:hide_on_touch="true"
-            app:show_timeout="5000"
-            app:rewind_increment="10000"
-            app:fastforward_increment="10000"
-            android:background="#000"
-            app:use_controller="true">
-
-        </com.google.android.exoplayer2.ui.PlayerView>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:padding="10dp">
 
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:padding="9dp"
-                android:background="@android:color/transparent"
-                android:id="@+id/like_btn"
+            <TextView
+                android:id="@+id/tv_video_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="Name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/moreBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_more_white"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/exo_player_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/exoplayer_item"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="3dp"
+                app:resize_mode="fit"
+                app:hide_on_touch="true"
+                app:show_timeout="5000"
+                app:rewind_increment="10000"
+                app:fastforward_increment="10000"
+                android:background="#000"
+                android:backgroundTint="@android:color/transparent"
+                android:backgroundTintMode="multiply"
+                app:player_layout_id="@layout/exo_simple_player_view"
+                app:use_controller="false"/>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"/>
+
+            <ImageView
+                android:id="@+id/play_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_play_circle"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/image_heart_red"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_liked"
+                android:visibility="invisible"
+                android:layout_marginRight="9dp"
+                android:layout_marginLeft="9dp"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/image_heart"
+                android:layout_centerVertical="true"
                 android:src="@drawable/ic_like"
+                android:layout_marginRight="9dp"
+                android:layout_marginLeft="9dp"
+                android:visibility="visible"
                 />
 
             <TextView
+                android:layout_toRightOf="@id/image_heart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
-                android:layout_gravity="center_vertical"
-                android:text="19"
+                android:layout_centerVertical="true"
                 android:id="@+id/likes_textview"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </LinearLayout>
