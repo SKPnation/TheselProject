@@ -16,7 +16,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary">
+            android:background="#ffffff">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -31,11 +31,11 @@
                     android:text=""
                     android:textSize="20sp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
-                    android:textColor="#ffffff"/>
+                    android:textColor="@color/colorPrimary"/>
 
                 <ImageView
                     android:id="@+id/settingsMenu"
-                    android:src="@drawable/ic_options"
+                    android:src="@drawable/ic_more"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
@@ -215,69 +215,6 @@
                                 android:paddingRight="20dp"
                                 android:paddingLeft="20dp"
                                 android:layout_marginBottom="10dp">
-
-                                <androidx.cardview.widget.CardView
-                                    android:id="@+id/cardViewRequests"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    app:cardCornerRadius="15dp"
-                                    app:cardBackgroundColor="#0A0A0A"
-                                    android:layout_marginRight="6dp"
-                                    android:orientation="vertical">
-
-                                    <RelativeLayout
-                                        android:id="@+id/requestsRelLayout"
-                                        android:background="@drawable/customcardviewstyle"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <TextView
-                                            android:id="@+id/num_requestsTv"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="27dp"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_marginTop="30dp"
-                                            android:textColor="@color/colorAccent"
-                                            android:textSize="25sp" />
-
-                                        <View
-                                            android:id="@+id/view_requests"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_width="60dp"
-                                            android:layout_height="1dp"
-                                            android:background="#aaa"
-                                            android:visibility="gone"
-                                            android:layout_marginTop="80dp"/>
-
-                                        <TextView
-                                            android:id="@+id/requests_client"
-                                            android:layout_centerHorizontal="true"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Requests"
-                                            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                                            android:textColor="#fff"
-                                            android:textSize="25sp"
-                                            android:visibility="gone"
-                                            android:layout_marginTop="60dp"/>
-
-                                        <TextView
-                                            android:id="@+id/requests_consult"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_centerHorizontal="true"
-                                            android:text="Requests"
-                                            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                                            android:textSize="18sp"
-                                            android:textColor="#ffffff"
-                                            android:visibility="gone"
-                                            android:layout_marginTop="90dp"/>
-
-                                    </RelativeLayout>
-
-                                </androidx.cardview.widget.CardView>
 
                                 <androidx.cardview.widget.CardView
                                     android:id="@+id/cardViewConsultations"

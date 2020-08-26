@@ -16,6 +16,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatarIv"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/colorAccent"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginEnd="5dp"
@@ -43,6 +45,7 @@
                     android:text=""
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -52,6 +55,7 @@
                     android:text=""
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimaryDark"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                     android:visibility="visible"/>
 
                 <TextView
@@ -61,6 +65,7 @@
                     android:text=""
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimaryDark"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                     android:visibility="visible"/>
 
                 <TextView
@@ -70,6 +75,7 @@
                     android:text=""
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimaryDark"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                     android:visibility="visible"/>
 
                 <Button

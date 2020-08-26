@@ -27,7 +27,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary">
+                android:background="#ffffff">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -40,8 +40,8 @@
                         android:layout_centerVertical="true"
                         android:text="Activity"
                         android:textSize="25sp"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
-                        android:textColor="#ffffff"/>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                        android:textColor="@color/colorPrimary"/>
 
                 </RelativeLayout>
 

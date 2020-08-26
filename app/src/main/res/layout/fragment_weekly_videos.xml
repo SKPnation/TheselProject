@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#000"
+    android:background="#F2F2F2"
     tools:context=".Home.WeeklyVideosFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="#ffffff"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <RelativeLayout
@@ -42,11 +42,11 @@
                     android:text="Video gallery"
                     android:textSize="24sp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                    android:textColor="#ffffff"/>
+                    android:textColor="@color/colorPrimary"/>
 
                 <ImageView
                     android:id="@+id/addVideo"
-                    android:src="@drawable/ic_add_white"
+                    android:src="@drawable/ic_add"
                     android:layout_toLeftOf="@id/searchVideo"
                     android:layout_width="30dp"
                     android:layout_height="30dp"

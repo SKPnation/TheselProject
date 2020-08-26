@@ -63,10 +63,10 @@ public class SearchFragment extends Fragment {
                     User user = singleSnapshot.getValue(User.class);
                     if (user.getIsStaff().equals("false"))
                     {
-                        SelectPlanFragment spf = new SelectPlanFragment();
+                        UsersFragment usersFragment = new UsersFragment();
                         FragmentManager fm = getFragmentManager();
 
-                        fm.beginTransaction().add(R.id.content, spf).commit();
+                        fm.beginTransaction().add(R.id.content, usersFragment).commit();
                     }
                     else if (user.getIsStaff().equals("true"))
                     {

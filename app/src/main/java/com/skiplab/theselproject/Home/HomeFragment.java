@@ -1,6 +1,9 @@
 package com.skiplab.theselproject.Home;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,9 +26,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -67,15 +72,18 @@ import java.util.TimerTask;
  */
 public class HomeFragment extends Fragment {
 
+    private Dialog introDialog;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private String[] items;
     private String mActivityTitle;
 
+    private TextView usernameTv;
     private ImageView drawerIconIv, optionsBtn, mAvaterIv, wklyVideosBtn;
     private EditText share_post_et;
+    private Button ok_btn;
 
-    private TextView feedTitleTv, selCategoryHint;
+    private TextView feedTitleTv;
 
     ListView listView;
 
@@ -96,7 +104,7 @@ public class HomeFragment extends Fragment {
     DatabaseReference postDb;
     DatabaseReference userDb;
 
-    String myUid;
+    String myUid, myName;
     String selCategory;
 
     private ProgressBar mProgressBar;
@@ -131,6 +139,8 @@ public class HomeFragment extends Fragment {
         mProgressBar = view.findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.VISIBLE);
 
+        introDialog = new Dialog(getActivity());
+
         adView = new AdView(getActivity());
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(getString(R.string.banner_ad_unit_id));
@@ -163,7 +173,6 @@ public class HomeFragment extends Fragment {
         drawerIconIv = view.findViewById(R.id.drawer_icon);
         optionsBtn = view.findViewById(R.id.optionsToolbar);
         feedTitleTv = view.findViewById(R.id.app_name);
-        selCategoryHint = view.findViewById(R.id.selCategoryHint);
         mDrawerLayout = view.findViewById(R.id.drawer_layout);
         mActivityTitle = getActivity().getTitle().toString();
         listView = view.findViewById(R.id.navList);
@@ -176,6 +185,7 @@ public class HomeFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds: dataSnapshot.getChildren()){
                         User user = ds.getValue(User.class);
+                        myName = user.getUsername();
                         selCategory = user.getSelectedCategory();
 
                         if (selCategory.isEmpty()){
@@ -245,7 +255,15 @@ public class HomeFragment extends Fragment {
 
         optionsBtn.setOnClickListener(v -> showMoreOptions(optionsBtn, myUid));
 
-        share_post_et.addTextChangedListener(new TextWatcher() {
+        share_post_et.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((DashboardActivity)getActivity()).selectMood();
+                return false;
+            }
+        });
+
+        /*share_post_et.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -264,7 +282,7 @@ public class HomeFragment extends Fragment {
 
                 ((DashboardActivity)getActivity()).selectMood();
 
-                /*timer.cancel();
+                *//*timer.cancel();
                 timer = new Timer();
                 timer.schedule(
                         new TimerTask() {
@@ -276,9 +294,9 @@ public class HomeFragment extends Fragment {
                             }
                         },
                         DELAY
-                );*/
+                );*//*
             }
-        });
+        });*/
 
         return view;
     }
@@ -396,7 +414,29 @@ public class HomeFragment extends Fragment {
                     if (selCategory.isEmpty())
                     {
                         mProgressBar.setVisibility(View.GONE);
-                        selCategoryHint.setVisibility(View.VISIBLE);
+                        final View mView =  LayoutInflater.from(getActivity()).inflate(R.layout.introductory_popup, null);
+                        usernameTv = mView.findViewById(R.id.usernameTv);
+                        usernameTv.setText(myName+"!!!");
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                                .setCancelable(false)
+                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        mDrawerLayout.openDrawer(GravityCompat.START);
+                                    }
+                                })
+                                .setView(mView)
+                                .create();
+
+                        alertDialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface arg0) {
+                                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+                            }
+                        });
+
+                        alertDialog.show();
                     }
                     else {
                         Query queryPosts = postDb.orderByChild("pCategory").equalTo(selCategory);
@@ -410,7 +450,6 @@ public class HomeFragment extends Fragment {
 
                                     //pd.dismiss();
                                     mProgressBar.setVisibility(View.GONE);
-                                    selCategoryHint.setVisibility(View.GONE);
                                     //add to list
                                     postList.add(post);
 

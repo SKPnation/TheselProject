@@ -4,6 +4,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="staffNameEt"><![CDATA[First & Last name]]></string>
+    <string name="introductory_popup_text_default">Tap the Thesel icon in the top left corner of the screen to select a category.</string>
 
     <string name="secondRule">1. A Session lasts for 45 minutes. Therefore, make sure you are in a comfortable position and ensure your PHONE BATTERY LIFE is sufficient enough for an hour session. </string>
     <string name="thirdRule">2. Make sure you have a GOOD INTERNET CONNECTION for a smooth and successful session. </string>

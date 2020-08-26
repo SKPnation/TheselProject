@@ -59,7 +59,7 @@ public class AdapterConsultant extends RecyclerView.Adapter<AdapterConsultant.Vi
         holder.mAvatarIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((DashboardActivity)context).selectSessionType();
+                ((DashboardActivity)context).consultantList();
             }
         });
     }

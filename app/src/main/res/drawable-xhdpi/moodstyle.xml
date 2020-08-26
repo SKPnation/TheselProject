@@ -8,8 +8,8 @@
 
     <corners android:radius="20dp" />
     <gradient
-        android:startColor="#ADADAD"
-        android:endColor="#ADADAD"
+        android:startColor="#000000"
+        android:endColor="#000000"
         android:type="linear"
         android:angle="180"/>
 

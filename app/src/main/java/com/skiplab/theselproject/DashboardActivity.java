@@ -106,7 +106,6 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
     public void onUpdateCheckListener(String urlApp) {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setMessage("The installed version of Thesel is no longer supported, please update your app.")
-                .setCancelable(false)
                 .setPositiveButton("UPDATE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -201,36 +200,13 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
                             ft1.commit();
                             return true;
 
-                        case R.id.nav_search:
-                            i++;
-
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (i == 1){
-                                        SearchFragment fragment2 = new SearchFragment();
-                                        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-                                        ft2.replace(R.id.content, fragment2, "");
-                                        ft2.commit();
-
-
-                                    } else if (i == 2){
-                                        Log.d(TAG, "IconDoubleClick: Double tap");
-                                    }
-                                    i=0;
-                                }
-                            }, 500);
-
-                            return true;
-
-                        case R.id.nav_post:
+                        case R.id.nav_chat:
                             //Post fragment transaction
-                            PostFragment fragment3 = new PostFragment();
+                            /*PostFragment fragment3 = new PostFragment();
                             FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
                             ft3.replace(R.id.content, fragment3, "");
                             ft3.commit();
-
+*/
                             return true;
 
                         case R.id.nav_activity:
@@ -309,7 +285,7 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
         isActivityRunning = false;
     }
 
-    public void selectSessionType() {
+    public void consultantList() {
         SearchFragment fragment2 = new SearchFragment();
         FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
         ft2.replace(R.id.content, fragment2, "");
