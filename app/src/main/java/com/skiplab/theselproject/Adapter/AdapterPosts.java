@@ -625,8 +625,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
                                 //not liked, like it
                                 postsRef.child(postIde).child("pLikes").setValue( ""+(pLikes+1));
                                 likesRef.child(postIde).child(myUid).setValue("Liked");
-                                ((DashboardActivity)context).sendNotification(postIde, timestamp,
-                                        postList.get(getAdapterPosition()).getUid(), notification, myUid);
+                                /*((DashboardActivity)context).sendNotification(postIde, timestamp,
+                                        postList.get(getAdapterPosition()).getUid(), notification, myUid);*/
                                 mProcessLike=false;
 
                             }
