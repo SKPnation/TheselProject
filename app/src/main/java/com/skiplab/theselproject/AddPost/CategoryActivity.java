@@ -2,7 +2,6 @@ package com.skiplab.theselproject.AddPost;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -38,7 +37,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.skiplab.theselproject.Activity.ActivityFragment;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.MainActivity;
@@ -47,19 +45,12 @@ import com.skiplab.theselproject.models.Post;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.notifications.APIService;
 import com.skiplab.theselproject.notifications.Client;
-import com.skiplab.theselproject.notifications.Data;
-import com.skiplab.theselproject.notifications.Response;
-import com.skiplab.theselproject.notifications.Sender;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class CategoryActivity extends AppCompatActivity {
 

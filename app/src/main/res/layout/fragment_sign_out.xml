@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#959595"
-    tools:context=".Profile.SignOutFragment">
+    tools:context=".Settings.SignOutFragment">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="#ffffff"
             android:id="@+id/tvConfirmSignout"
             android:text="Are you sure you want to sign out?"/>
 
@@ -29,8 +29,8 @@
             android:textSize="20sp"
             android:id="@+id/btnConfirmSignout"
             android:layout_below="@+id/tvConfirmSignout"
-            android:background="@drawable/customsignoutbtnstyle"
-            android:textColor="@color/colorPrimaryDark"
+            android:backgroundTint="#ffffff"
+            android:textColor="@color/colorPrimary"
             android:layout_marginTop="20dp"/>
 
 

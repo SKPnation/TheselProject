@@ -16,11 +16,12 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="?attr/actionBarSize">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="#F2F2F2">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -40,8 +41,19 @@
                         android:layout_centerVertical="true"
                         android:text="Comments"
                         android:textSize="25sp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                        android:textColor="#ffffff"/>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                        android:textColor="@color/colorPrimary"/>
+
+                    <ImageView
+                        android:id="@+id/closeBtn"
+                        android:src="@drawable/ic_close"
+                        android:tint="@color/colorPrimary"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_centerVertical="true"
+                        />
 
                 </RelativeLayout>
 
@@ -68,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/appBarLayout"
                     android:id="@+id/cardView"
-                    app:cardBackgroundColor="#ffffff"
+                    app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="3dp"
                     app:contentPadding="5dp"
@@ -81,8 +93,7 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_height="wrap_content">
 
                             <RelativeLayout
                                 android:id="@+id/uNameRelLayout"
@@ -96,7 +107,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="6dp"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                                    android:text=""
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                                     android:textColor="@color/colorAccent"
                                     android:textSize="18sp"/>
 
@@ -110,6 +122,7 @@
                                     android:src="@drawable/ic_more"/>
 
                             </RelativeLayout>
+
 
                         </RelativeLayout>
 
@@ -142,7 +155,7 @@
                                     android:textAlignment="center"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textColor="#ffffff"
                                     android:layout_marginTop="2dp"
                                     android:layout_marginLeft="5dp"
                                     android:paddingLeft="8dp"
@@ -157,7 +170,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="8dp"
                                     android:paddingTop="2dp"
-                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textColor="#ffffff"
                                     android:text="" />
 
                             </LinearLayout>
@@ -169,8 +182,10 @@
                             android:id="@+id/pDescTv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="#ffffff"
                             android:textSize="16sp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                            android:text=""
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
                             android:layout_marginTop="15dp"
@@ -201,8 +216,9 @@
                                     android:id="@+id/pLikesTV"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:text=""
                                     android:layout_gravity="center_vertical"
-                                    android:textColor="@color/colorPrimaryDark"/>
+                                    android:textColor="#ffffff"/>
 
                                 <RelativeLayout
                                     android:layout_width="wrap_content"
@@ -236,7 +252,7 @@
                                     android:layout_marginLeft="12dp"
                                     android:layout_marginRight="2dp"
                                     android:layout_gravity="center_vertical"
-                                    android:textColor="@color/colorPrimaryDark"/>
+                                    android:textColor="#ffffff"/>
 
                                 <ImageView
                                     android:id="@+id/commentBtn"
@@ -245,7 +261,6 @@
                                     android:layout_gravity="center_vertical"
                                     android:layout_width="30dp"
                                     android:layout_height="30dp" />
-
 
                             </LinearLayout>
 
@@ -262,8 +277,9 @@
                             android:id="@+id/pCategoryTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorPrimaryDark"
+                            android:textColor="#ffffff"
                             android:textSize="15sp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                             android:layout_margin="5dp"/>
 
                     </LinearLayout>

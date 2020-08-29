@@ -5,7 +5,7 @@
     android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile.TermsAndConditions">
+    tools:context=".Settings.TermsAndConditions">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"

@@ -29,7 +29,6 @@
             android:layout_marginTop="35dp"
             android:textColorHint="#aaa"
             android:textColorHighlight="#aaa"
-            android:padding="10dp"
             android:background="@drawable/customedittextstyle"
             app:errorEnabled="true">
 
@@ -37,6 +36,7 @@
                 android:id="@+id/emailEt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="20sp"
                 android:textColor="#fff"
                 android:hint="Email Address"
                 android:background="@android:color/transparent"
@@ -52,7 +52,6 @@
             android:layout_marginTop="35dp"
             android:textColorHint="#aaa"
             android:textColorHighlight="#aaa"
-            android:padding="10dp"
             android:background="@drawable/customedittextstyle"
             app:errorEnabled="true"
             app:passwordToggleEnabled="true"
@@ -62,6 +61,7 @@
                 android:id="@+id/passwordEt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="20sp"
                 android:textColor="#fff"
                 android:hint="Password"
                 android:background="@android:color/transparent"
@@ -74,11 +74,11 @@
             android:id="@+id/loginBtn"
             android:layout_width="200dp"
             android:layout_height="60dp"
-            android:background="@drawable/customregisterbtnstyle"
+            android:backgroundTint="#ffffff"
             android:layout_marginTop="40dp"
             android:text="Log In"
             android:textSize="22sp"
-            android:textColor="#fff"
+            android:textColor="@color/colorPrimary"
             android:textAppearance="@style/TextAppearance.AppCompat.Display3"
             android:textAllCaps="false" />
 

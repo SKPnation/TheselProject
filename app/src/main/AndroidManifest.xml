@@ -23,17 +23,14 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Home.FullscreenActivity"></activity>
+        <activity android:name=".AddPost.SelectMood"></activity>
+        <activity android:name=".Home.SelectCategory" />
+        <activity android:name=".Home.VideoGallery" />
+        <activity android:name=".Activity.NotificationsActivity" />
+        <activity android:name=".Home.FullscreenActivity" />
         <activity android:name=".Home.EditVideoActivity" />
-        <activity android:name=".Home.AdminRequestsActivity" />
-        <activity android:name=".Search.ConsultantsActivity" />
         <activity android:name=".Questionnaire.QuestionnaireActivity" />
-        <activity android:name=".PaymentActivity" />
-        <activity android:name=".Profile.RequestsActivity" />
         <activity android:name=".SupportActivity" />
-        <activity android:name=".LatenessReportActivity" />
-        <activity android:name=".Profile.GalleryActivity" />
-        <activity android:name=".Profile.MyPostsActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -51,7 +48,7 @@
         <activity android:name=".AddPost.CategoryActivity" />
         <activity android:name=".AddPost.NewPostActivity" />
         <activity android:name=".DashboardActivity" />
-        <activity android:name=".Profile.AccountSettingsActivity" />
+        <activity android:name=".Settings.AccountSettingsActivity" />
         <activity android:name=".Authentication.LoginActivity" />
         <activity android:name=".Authentication.RegisterActivity" />
         <activity android:name=".Main2Activity" />

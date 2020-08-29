@@ -9,32 +9,34 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="#F2F2F2"
             android:id="@+id/optionsToolbar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/backArrow"
-                    android:src="@drawable/ic_back"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:id="@+id/textSettings"
+                    android:layout_centerVertical="true"
+                    android:background="#F2F2F2"
+                    android:text="Account Settings"
+                    android:textSize="25sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/closeBtn"
+                    android:src="@drawable/ic_close"
+                    android:tint="@color/colorPrimary"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginRight="20dp"
                     android:layout_centerVertical="true"
                     />
-
-                <TextView
-                    android:layout_toRightOf="@id/backArrow"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Options"
-                    android:textSize="25sp"
-                    android:textColor="#ffffff"/>
 
             </RelativeLayout>
 

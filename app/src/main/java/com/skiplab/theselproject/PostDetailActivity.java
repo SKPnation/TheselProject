@@ -1,34 +1,25 @@
 package com.skiplab.theselproject;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,8 +40,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.skiplab.theselproject.Adapter.AdapterComments;
-import com.skiplab.theselproject.Common.Common;
-import com.skiplab.theselproject.Profile.ProfileFragment;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Comment;
 import com.skiplab.theselproject.models.Post;
@@ -67,8 +56,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.annotation.Nullable;
 
@@ -92,7 +79,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView uPictureIv, pImageIv, cAvatarIv;
     private TextView uNameTv, pTimeTv, pDescriptionTv, pLikesTv, uMoodTv, pCommentsTv, pCategoryTv, mentionedUserTv, mUidTv;
-    private ImageView moreBtn, mHeartWhite, mHeartRed, sendBtn;
+    private ImageView moreBtn, mHeartWhite, mHeartRed, sendBtn, closeBtn;
     private LinearLayout profileLayout;
     private EditText commentEt;
 
@@ -117,6 +104,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
+        closeBtn = findViewById(R.id.closeBtn);
         uPictureIv = findViewById(R.id.uPictureIv);
         pCategoryTv = findViewById(R.id.pCategoryTv);
         pImageIv = findViewById(R.id.pImageIv);
@@ -175,6 +163,13 @@ public class PostDetailActivity extends AppCompatActivity {
             }
         });
 
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,16 +217,8 @@ public class PostDetailActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(Common.isConnectedToTheInternet(getBaseContext()))
-                {
-                    loadPostInfo();
-                    loadComments();
-                }
-                else
-                {
-                    Toast.makeText(mContext, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                loadPostInfo();
+                loadComments();
             }
         } );
 
@@ -239,16 +226,8 @@ public class PostDetailActivity extends AppCompatActivity {
         swipeRefreshLayout.post( new Runnable() {
             @Override
             public void run() {
-                if(Common.isConnectedToTheInternet(getBaseContext()))
-                {
-                    loadPostInfo();
-                    loadComments();
-                }
-                else
-                {
-                    Toast.makeText(mContext, "Please check your internet connection", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                loadPostInfo();
+                loadComments();
             }
         } );
     }

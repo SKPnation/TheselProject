@@ -3,7 +3,6 @@ package com.skiplab.theselproject.Authentication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -31,7 +30,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.skiplab.theselproject.PrivacyPolicy;
 import com.skiplab.theselproject.R;
-import com.skiplab.theselproject.models.Sessions;
 import com.skiplab.theselproject.models.User;
 
 public class StaffRegisterActivity extends AppCompatActivity {
@@ -39,9 +37,8 @@ public class StaffRegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
 
     private Context mContext;
-    private TextInputEditText mUsername, mPhone, mPassword, mEmail, mAddress, mAccountNum, mBank;
+    private TextInputEditText mUsername, mPhone, mPassword, mEmail, mAddress;
     private TextView mAgreementTv, mLoginTv;
-    private EditText mCategoryEt, startTimeEt1, endTimeEt1, startTimeEt2, endTimeEt2;
     // private TextView mCategoryTv;
     private Button btnRegister;
 
@@ -52,7 +49,7 @@ public class StaffRegisterActivity extends AppCompatActivity {
     //Progressbar to display while registering the user
     ProgressDialog progressDialog;
 
-    private String email, password, username, phone, address, accountNumber, bank, category, startTime1, endTime1, startTime2, endTime2, endBreak;
+    private String email, password, username, phone, address;
 
     public static boolean isActivityRunning;
 
@@ -69,14 +66,6 @@ public class StaffRegisterActivity extends AppCompatActivity {
         mUsername = findViewById(R.id.uNameEt);
         mPhone =  findViewById(R.id.phoneEt);
         mAddress = findViewById(R.id.addressEt);
-        mAccountNum = findViewById(R.id.accNumEt);
-        mBank = findViewById(R.id.bankEt);
-        //mCategoryTv = findViewById(R.id.categoryTv);
-        //mCategoryEt = findViewById(R.id.categoryEt);
-        startTimeEt1 = findViewById(R.id.startTimeEt1);
-        endTimeEt1 = findViewById(R.id.endTimeEt1);
-        startTimeEt2 = findViewById(R.id.startTimeEt2);
-        endTimeEt2 = findViewById(R.id.endTimeEt2);
         btnRegister = (Button) findViewById(R.id.signUpBtn);
 
         mAgreementTv = findViewById(R.id.reg_agreementTv);
@@ -112,13 +101,7 @@ public class StaffRegisterActivity extends AppCompatActivity {
             password = mPassword.getText().toString();
             phone = mPhone.getText().toString();
             address = mAddress.getText().toString();
-            accountNumber = mAccountNum.getText().toString();
-            bank = mBank.getText().toString();
-            //category = mCategoryEt.getText().toString();
-            startTime1 = startTimeEt1.getText().toString();
-            startTime2 = startTimeEt2.getText().toString();
-            endTime1 = endTimeEt1.getText().toString();
-            endTime2 = endTimeEt2.getText().toString();
+
 
             //validate
             if (username.isEmpty()){
@@ -155,42 +138,15 @@ public class StaffRegisterActivity extends AppCompatActivity {
                 mAddress.setError("Your home address is required");
                 mAddress.setFocusable(true);
             }
-            else if (accountNumber.isEmpty()){
-                mAccountNum.setError("Your account number is required");
-                mAccountNum.setFocusable(true);
-            }
-            else if (bank.isEmpty()){
-                mBank.setError("Your bank name is required");
-                mBank.setFocusable(true);
-            }
-            else if (startTime1.isEmpty()){
-                startTimeEt1.setError("Please set Day time work hours");
-                startTimeEt1.setFocusable(true);
-            }
-            else if (endTime1.isEmpty()){
-                endTimeEt1.setError("Please set a 2hours break time");
-                endTimeEt1.setFocusable(true);
-            }
-            else if (startTime2.isEmpty()){
-                startTimeEt2.setError("Please set Day time work hours");
-                startTimeEt2.setFocusable(true);
-            }
-            else if (endTime2.isEmpty()){
-                endTimeEt2.setError("Please set a 2hours break time");
-                endTimeEt2.setFocusable(true);
-            }
             else{
-                String dayTime = startTime1+" - "+endTime1;
-                String nightTime = startTime2+" - "+endTime2;
-
-                register(username, email, phone, address, accountNumber, bank, dayTime, nightTime);
+                register(username, email, phone, address);
             }
         });
 
 
     }
 
-    private void register(final String username, final String email, final String phone, final String address, final String accountNumber, final String bank, final String dayTime, final String nightTime)
+    private void register(final String username, final String email, final String phone, final String address)
     {
         progressDialog.setMessage("Registering staff...");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -212,17 +168,10 @@ public class StaffRegisterActivity extends AppCompatActivity {
                             user.setEmail(email);
                             user.setPhone( phone );
                             user.setProfile_photo( "" );
-                            user.setCategory1("");
-                            user.setCategory2("");
-                            user.setCategory3("");
                             user.setUid( FirebaseAuth.getInstance().getCurrentUser().getUid() );
                             user.setBio("Edit this bio from the account settings...");
                             user.setAddress(address);
-                            user.setAccountNumber(accountNumber);
-                            user.setBank(bank);
                             user.setCost(0);
-                            user.setDayTime(dayTime);
-                            user.setNightTime(nightTime);
                             user.setIsStaff("true");
                             user.setOnlineStatus("online");
                             user.setPosts(0);
@@ -241,23 +190,8 @@ public class StaffRegisterActivity extends AppCompatActivity {
                                                 // Send email verification
                                                 sendVerificationEmail();
 
-                                                Sessions sessions = new Sessions();
-                                                sessions.setCounsellor_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                                sessions.setCounsellor_name(username);
-                                                sessions.setClient_id("no client");
-                                                sessions.setRequests(0);
-                                                sessions.setCompleted(0);
-
-                                                FirebaseDatabase.getInstance().getReference("sessions")
-                                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                        .setValue(sessions)
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                FirebaseAuth.getInstance().signOut();
-                                                                startActivity( new Intent( mContext, LoginActivity.class ) );
-                                                            }
-                                                        });
+                                                FirebaseAuth.getInstance().signOut();
+                                                startActivity( new Intent( mContext, LoginActivity.class ) );
                                             }
                                         }
                                     })

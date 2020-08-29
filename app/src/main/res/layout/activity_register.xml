@@ -36,7 +36,6 @@
                 android:layout_marginTop="15dp"
                 android:textColorHint="#aaa"
                 android:textColorHighlight="#aaa"
-                android:padding="10dp"
                 android:background="@drawable/customedittextstyle"
                 app:errorEnabled="true">
 
@@ -44,9 +43,9 @@
                     android:id="@+id/emailEt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textSize="20sp"
                     android:textColor="#fff"
                     android:hint="Email Address"
-                    android:textSize="20sp"
                     android:background="@android:color/transparent"
                     android:singleLine="true"
                     android:inputType="textEmailAddress" />
@@ -60,7 +59,6 @@
                 android:layout_marginTop="15dp"
                 android:textColorHint="#aaa"
                 android:textColorHighlight="#aaa"
-                android:padding="10dp"
                 android:background="@drawable/customedittextstyle"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="#aaa"
@@ -86,7 +84,6 @@
                 android:layout_marginTop="15dp"
                 android:textColorHint="#aaa"
                 android:textColorHighlight="#aaa"
-                android:padding="10dp"
                 android:background="@drawable/customedittextstyle"
                 app:errorEnabled="true">
 
@@ -110,7 +107,6 @@
                 android:layout_marginTop="15dp"
                 android:textColorHint="#aaa"
                 android:textColorHighlight="#aaa"
-                android:padding="10dp"
                 android:background="@drawable/customedittextstyle"
                 app:errorEnabled="true">
 
@@ -132,10 +128,10 @@
                 android:id="@+id/signUpBtn"
                 android:layout_width="200dp"
                 android:layout_height="60dp"
-                android:background="@drawable/customregisterbtnstyle"
+                android:backgroundTint="#ffffff"
                 android:text="Register"
                 android:textSize="22sp"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorPrimary"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display3"
                 android:textAllCaps="false"
                 android:layout_marginTop="30dp"

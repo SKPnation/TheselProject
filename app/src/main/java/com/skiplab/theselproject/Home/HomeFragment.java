@@ -1,39 +1,31 @@
 package com.skiplab.theselproject.Home;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -44,6 +36,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,12 +45,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.skiplab.theselproject.Activity.NotificationsActivity;
 import com.skiplab.theselproject.Adapter.AdapterConsultant;
 import com.skiplab.theselproject.Adapter.AdapterPosts;
-import com.skiplab.theselproject.Common.Common;
+import com.skiplab.theselproject.AddPost.SelectMood;
 import com.skiplab.theselproject.DashboardActivity;
-import com.skiplab.theselproject.LatenessReportActivity;
-import com.skiplab.theselproject.Profile.AccountSettingsActivity;
+import com.skiplab.theselproject.Settings.AccountSettingsActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Post;
@@ -65,23 +59,23 @@ import com.skiplab.theselproject.models.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
 
-    private Dialog introDialog;
+    private static final String TAG = "HomeFragment";
+
+
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private String[] items;
     private String mActivityTitle;
+    private FloatingActionButton fab;
 
-    private TextView usernameTv;
-    private ImageView drawerIconIv, optionsBtn, mAvaterIv, wklyVideosBtn;
+    private ImageView optionsBtn, mAvaterIv, wklyVideosBtn;
     private EditText share_post_et;
-    private Button ok_btn;
 
     private TextView feedTitleTv;
 
@@ -91,7 +85,8 @@ public class HomeFragment extends Fragment {
 
     private AdView adView;
 
-    RelativeLayout relLayout1;
+    private RelativeLayout relLayout1;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     RecyclerView recyclerView, cRecyclerView;
     List<Post> postList;
@@ -112,6 +107,17 @@ public class HomeFragment extends Fragment {
     private Timer timer=new Timer();
     private final long DELAY = 1000; // milliseconds
 
+    private final int ITEM_LOAD_COUNT = 12;
+    private int total_item = 0, last_visible_item;
+    boolean isLoading=false, isMaxData=false;
+
+    String last_node="", last_key="";
+
+    private int i=0;
+
+    private BottomAppBar bottomAppBar;
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -123,11 +129,6 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-
-        MobileAds.initialize(getActivity(), "ca-app-pub-4813843298673497~9934761507");
-
         //init firebase
         firebaseAuth = FirebaseAuth.getInstance();
         myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -136,10 +137,10 @@ public class HomeFragment extends Fragment {
         userDb = db.getReference("users");
         postDb.keepSynced(true);
 
+        mDrawerLayout = view.findViewById(R.id.drawer_layout);
+        listView = view.findViewById(R.id.navList);
+        bottomAppBar = view.findViewById(R.id.bottomAppBar);
         mProgressBar = view.findViewById(R.id.progressBar);
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        introDialog = new Dialog(getActivity());
 
         adView = new AdView(getActivity());
         adView.setAdSize(AdSize.BANNER);
@@ -157,6 +158,7 @@ public class HomeFragment extends Fragment {
         cRecyclerView.setLayoutManager(linearLayoutManager1);
 
         recyclerView = view.findViewById(R.id.recycler_posts);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         //Show latest post first, for the load from last
         linearLayoutManager.setStackFromEnd(true);
@@ -167,153 +169,249 @@ public class HomeFragment extends Fragment {
         postList = new ArrayList<>();
         consultantList = new ArrayList<>();
 
+        fab = view.findViewById(R.id.fab);
         wklyVideosBtn = view.findViewById(R.id.weekly_videos);
         share_post_et = view.findViewById(R.id.share_post_et);
         mAvaterIv = view.findViewById(R.id.avatarIv);
-        drawerIconIv = view.findViewById(R.id.drawer_icon);
         optionsBtn = view.findViewById(R.id.optionsToolbar);
         feedTitleTv = view.findViewById(R.id.app_name);
-        mDrawerLayout = view.findViewById(R.id.drawer_layout);
         mActivityTitle = getActivity().getTitle().toString();
-        listView = view.findViewById(R.id.navList);
 
-        if(Common.isConnectedToTheInternet(getContext()))
-        {
-            Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid());
-            querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds: dataSnapshot.getChildren()){
-                        User user = ds.getValue(User.class);
-                        myName = user.getUsername();
-                        selCategory = user.getSelectedCategory();
+        Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid());
+        querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren())
+                {
+                    User user = ds.getValue(User.class);
+                    selCategory = user.getSelectedCategory();
 
-                        if (selCategory.isEmpty()){
-                            mProgressBar.setVisibility(View.GONE);
-                            ///..
-                        }
-                        else {
-                            feedTitleTv.setText(selCategory);
-                            feedTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
-                        }
+                    if (selCategory.isEmpty())
+                    {
+                        mProgressBar.setVisibility(View.GONE);
+                        i++;
+
+                        Handler handler1 = new Handler();
+                        handler1.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mDrawerLayout.openDrawer(GravityCompat.START);
+                            }
+                        }, 1000);
+                    }
+                    else
+                    {
+                        feedTitleTv.setText(selCategory);
+                        feedTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+
                     }
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    //..
-                }
-            });
-
-            listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Career", "Low self-esteem",
-                    "Family", "Anxiety", "Pregnancy", "Business", "Weight Loss", "Fitness", "Helpful Tips", "#COVID19 NIGERIA"};
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                    getActivity(), R.layout.list_item, R.id.listItem, items);
-            listView.setAdapter(adapter);
-            listView.setOnItemClickListener((parent, view1, position, id) -> {
-                String selectedItem = (String) parent.getItemAtPosition(position);
-                mDrawerLayout.closeDrawer(GravityCompat.START);
-                DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-                if (selectedItem.equals(selCategory)){
-                    //..
-                }
-                else {
-                    currentUserRef.child("selectedCategory").setValue(selectedItem);
-                    Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                    startActivity(intent);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    getActivity().finish();
-                }
-
-            });
-
-            loadConsultants();
-            loadPosts();
-
-
-
-        }
-        else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Please check your internet connection");
-            builder.show();
-        }
-
-        drawerIconIv.setOnClickListener(v -> mDrawerLayout.openDrawer(GravityCompat.START));
-        //addDrawersItem();
-        setupDrawer();
-
-        wklyVideosBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                ((DashboardActivity)getActivity()).viewWklyVideos();
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
-        optionsBtn.setOnClickListener(v -> showMoreOptions(optionsBtn, myUid));
+        swipeRefreshLayout = view.findViewById( R.id.swipe_layout );
+        swipeRefreshLayout.setColorSchemeResources( R.color.colorPrimary,
+                android.R.color.holo_blue_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_green_dark);
+
+        swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                loadPosts();
+            }
+        } );
+
+        //Default, when loading for first time
+        swipeRefreshLayout.post( new Runnable() {
+            @Override
+            public void run() {
+
+                loadPosts();
+            }
+        } );
+
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Career", "Low self-esteem",
+                "Family", "Anxiety", "Pregnancy", "Business", "Weight Loss", "Fitness", "Helpful Tips", "#COVID19 NIGERIA"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity(), R.layout.list_item, R.id.listItem, items);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener((parent, view1, position, id) -> {
+            String selectedItem = (String) parent.getItemAtPosition(position);
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+            if (selectedItem.equals(selCategory)){
+                //..
+            }
+            else {
+                currentUserRef.child("selectedCategory").setValue(selectedItem);
+                Intent intent = new Intent(getActivity(), DashboardActivity.class);
+                startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                getActivity().finish();
+            }
+
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SelectCategory.class));
+            }
+        });
 
         share_post_et.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ((DashboardActivity)getActivity()).selectMood();
+                startActivity(new Intent(getActivity(), SelectMood.class));
                 return false;
             }
         });
 
-        /*share_post_et.addTextChangedListener(new TextWatcher() {
+        wklyVideosBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                // TODO Auto-generated method stub
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), VideoGallery.class));
             }
+        });
 
+        bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_menu:
+                        mDrawerLayout.openDrawer(GravityCompat.START);
 
-                //timer=new Timer();
+                        break;
+                    case R.id.nav_notifications:
+                        i++;
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                ((DashboardActivity)getActivity()).selectMood();
-
-                *//*timer.cancel();
-                timer = new Timer();
-                timer.schedule(
-                        new TimerTask() {
+                        Handler handler1 = new Handler();
+                        handler1.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                // TODO: do what you need here (refresh list)
-                                // you will probably need to use runOnUiThread(Runnable action) for some specific actions (e.g. manipulating views)
+                                if (i == 1){
 
+                                    startActivity(new Intent(getActivity(), NotificationsActivity.class));
+
+                                } else if (i == 2){
+                                    Log.d(TAG, "IconDoubleClick: Double tap");
+                                }
+                                i=0;
                             }
-                        },
-                        DELAY
-                );*//*
+                        }, 500);
+                        break;
+
+                    case R.id.nav_post:
+                        i++;
+
+                        Handler handler2 = new Handler();
+                        handler2.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (i == 1){
+
+                                    startActivity(new Intent(getActivity(), SelectMood.class));
+
+                                } else if (i == 2){
+                                    Log.d(TAG, "IconDoubleClick: Double tap");
+                                }
+                                i=0;
+                            }
+                        }, 500);
+                        break;
+
+                    case R.id.nav_settings:
+                        i++;
+
+                        Handler handler4 = new Handler();
+                        handler4.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (i == 1){
+
+                                    startActivity(new Intent(getActivity(), AccountSettingsActivity.class));
+
+                                } else if (i == 2){
+                                    Log.d(TAG, "IconDoubleClick: Double tap");
+                                }
+                                i=0;
+                            }
+                        }, 500);
+                        break;
+                }
+                return false;
             }
-        });*/
+        });
+
+
+
+
+        loadConsultants();
+        setupDrawer();
 
         return view;
     }
 
-    private void showMoreOptions(ImageView optionsBtn, String myUid)
-    {
-        PopupMenu popupMenu = new PopupMenu(getActivity(), optionsBtn, Gravity.END);
-
-        Query query = userDb.orderByKey().equalTo(myUid);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void loadPosts() {
+        Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid()).limitToLast(3);
+        querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    if (ds.getValue(User.class).getIsStaff().equals("admin"))
+                    User user = ds.getValue(User.class);
+                    String selCategory = user.getSelectedCategory();
+
+                    if (selCategory.isEmpty())
                     {
-                        popupMenu.getMenu().add(Menu.NONE,0,0, "Requests");
-                        popupMenu.getMenu().add(Menu.NONE,1,0, "Reports");
+                        mProgressBar.setVisibility(View.GONE);
+                        i++;
+
+                        Handler handler1 = new Handler();
+                        handler1.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mDrawerLayout.openDrawer(GravityCompat.START);
+                            }
+                        }, 1000);
+                    }
+                    else {
+                        Query queryPosts = postDb.orderByChild("pCategory").equalTo(selCategory);
+                        //get all data from this reference
+                        queryPosts.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                postList.clear();
+                                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                    Post post = ds.getValue(Post.class);
+
+                                    //pd.dismiss();
+                                    mProgressBar.setVisibility(View.GONE);
+                                    //add to list
+                                    postList.add(post);
+
+                                    adapterPosts = new AdapterPosts(getActivity(), postList);
+                                    adapterPosts.notifyDataSetChanged();
+                                    recyclerView.setAdapter(adapterPosts);
+                                    swipeRefreshLayout.setRefreshing( false );
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                //..
+
+                            }
+                        });
                     }
                 }
             }
@@ -323,27 +421,6 @@ public class HomeFragment extends Fragment {
                 //..
             }
         });
-
-        popupMenu.getMenu().add(Menu.NONE,2,0, "Account Settings");
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int id = item.getItemId();
-                if (id==0){
-                    startActivity(new Intent(getActivity(), AdminRequestsActivity.class));
-                }
-                else if (id==1){
-                    //...
-                }
-                else if (id==2){
-                    startActivity(new Intent(getActivity(), AccountSettingsActivity.class));
-                }
-                return false;
-            }
-        });
-
-        popupMenu.show();
     }
 
     private void loadConsultants() {
@@ -379,6 +456,7 @@ public class HomeFragment extends Fragment {
                                     consultantList.add(user);
 
                                     adapterConsultant = new AdapterConsultant(getActivity(), consultantList);
+                                    adapterConsultant.notifyDataSetChanged();
                                     cRecyclerView.setAdapter(adapterConsultant);
                                 }
                             }
@@ -387,81 +465,6 @@ public class HomeFragment extends Fragment {
                             public void onCancelled(@NonNull DatabaseError databaseError) {
                                 //pd.dismiss();
                                 //Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                //..
-            }
-        });
-    }
-
-    private void loadPosts() {
-
-        Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid());
-        querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    User user = ds.getValue(User.class);
-                    String selCategory = user.getSelectedCategory();
-
-                    if (selCategory.isEmpty())
-                    {
-                        mProgressBar.setVisibility(View.GONE);
-                        final View mView =  LayoutInflater.from(getActivity()).inflate(R.layout.introductory_popup, null);
-                        usernameTv = mView.findViewById(R.id.usernameTv);
-                        usernameTv.setText(myName+"!!!");
-                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                                .setCancelable(false)
-                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        mDrawerLayout.openDrawer(GravityCompat.START);
-                                    }
-                                })
-                                .setView(mView)
-                                .create();
-
-                        alertDialog.setOnShowListener( new DialogInterface.OnShowListener() {
-                            @Override
-                            public void onShow(DialogInterface arg0) {
-                                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
-                            }
-                        });
-
-                        alertDialog.show();
-                    }
-                    else {
-                        Query queryPosts = postDb.orderByChild("pCategory").equalTo(selCategory);
-                        //get all data from this reference
-                        queryPosts.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                postList.clear();
-                                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                    Post post = ds.getValue(Post.class);
-
-                                    //pd.dismiss();
-                                    mProgressBar.setVisibility(View.GONE);
-                                    //add to list
-                                    postList.add(post);
-
-                                    adapterPosts = new AdapterPosts(getActivity(), postList);
-                                    adapterPosts.notifyDataSetChanged();
-                                    recyclerView.setAdapter(adapterPosts);
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //..
 
                             }
                         });
@@ -499,19 +502,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.home_menu,menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if (mDrawerToggle.onOptionsItemSelected(item))
-            return true;
-
-        return super.onOptionsItemSelected(item);
-    }
 }
+
+

@@ -18,6 +18,7 @@
             android:id="@+id/avatarIv"
             app:civ_border_width="2dp"
             app:civ_border_color="@color/colorAccent"
+            android:layout_centerVertical="true"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginEnd="5dp"

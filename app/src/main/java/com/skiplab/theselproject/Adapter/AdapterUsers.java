@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,11 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.R;
-import com.skiplab.theselproject.Search.ConsultantsActivity;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
-import com.skiplab.theselproject.models.Sessions;
 import com.skiplab.theselproject.models.User;
 
 import java.util.HashMap;
@@ -93,11 +91,11 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                                    Sessions sessions = ds.getValue(Sessions.class);
-                                                    Long completed = sessions.getCompleted();
+                                                    //Sessions sessions = ds.getValue(Sessions.class);
+                                                    //Long completed = sessions.getCompleted();
 
-                                                    Long percentage = (cost*completed)/100;
-                                                    double totalPay = percentage*0.6;
+                                                    //Long percentage = (cost*completed)/100;
+                                                    //double totalPay = percentage*0.6;
 
                                                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                                                     final View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.edit_staff_info, null);
@@ -183,9 +181,9 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
                                                     });
 
                                                     phoneTv.setText(userList.get(position).getPhone());
-                                                    completedTv.setText(""+completed);
+                                                    //completedTv.setText(""+completed);
                                                     costTv.setText(""+cost);
-                                                    totalTv.setText(""+totalPay);
+                                                    //totalTv.setText(""+totalPay);
                                                     categoryTv1.setText(category1);
                                                     categoryTv2.setText(category2);
                                                     categoryTv3.setText(category3);
@@ -429,8 +427,8 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
                                 final TextView categoryTv3 = mView.findViewById(R.id.categoryTv3);
                                 final TextView dayTimeTv = mView.findViewById(R.id.dayTime);
                                 final TextView nightTimeTv = mView.findViewById(R.id.nightTime);
-                                final Button requestBtn = mView.findViewById(R.id.requestBtn);
-                                final Button profileBtn = mView.findViewById(R.id.profileBtn);
+                                final ImageButton requestBtn = mView.findViewById(R.id.requestBtn);
+                                final ImageButton profileBtn = mView.findViewById(R.id.profileBtn);
 
                                 if (!category1.isEmpty())
                                     categoryTv1.setVisibility(View.VISIBLE);
@@ -466,8 +464,6 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
                                 }catch (Exception e){
                                     //..
                                 }
-
-                                requestBtn.setText("Request");
 
                                 profileBtn.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -537,7 +533,9 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
 
                                 requestBtn.setOnClickListener(v12 -> {
 
-                                    if(Common.isConnectedToTheInternet(context)){
+                                    Toast.makeText(context, "fkrnkfdknvdfnvdknv", Toast.LENGTH_SHORT).show();
+
+                                    /*if(Common.isConnectedToTheInternet(context)){
                                         ProgressDialog progressDialog = new ProgressDialog(context);
                                         progressDialog.setMessage("Please wait...");
                                         progressDialog.show();
@@ -578,7 +576,7 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.UsersViewHol
                                         });
                                     }
                                     else
-                                        Toast.makeText(context, "Please check your internet connection...", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Please check your internet connection...", Toast.LENGTH_SHORT).show();*/
                                 });
 
 

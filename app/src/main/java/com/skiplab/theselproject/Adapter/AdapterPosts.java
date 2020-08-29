@@ -76,15 +76,16 @@ import retrofit2.Callback;
 
 public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHolder>{
 
-    Context context;
-    List<Post> postList;
+    private DatabaseReference likesRef, postsRef, usersRef;
 
     boolean mProcessLike=false;
 
     String myUid;
     APIService apiService;
 
-    private DatabaseReference likesRef, postsRef, usersRef;
+    Context context;
+    List<Post> postList;
+
 
     public AdapterPosts(Context context, List<Post> postList) {
         this.context = context;

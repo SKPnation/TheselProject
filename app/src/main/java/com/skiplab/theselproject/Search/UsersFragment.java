@@ -148,7 +148,6 @@ public class UsersFragment extends Fragment {
 
                     if (isStaff.equals("admin"))
                     {
-                        usersFrgamentTitle.setText("Thesel Consultants");
                         Query queryUsers = usersRef.orderByChild("isStaff").equalTo("true");
                         queryUsers.addValueEventListener(new ValueEventListener() {
                             @Override
@@ -174,9 +173,7 @@ public class UsersFragment extends Fragment {
                     }
                     else
                     {
-                        usersFrgamentTitle.setText("Users");
-
-                        Query queryUsers = usersRef.orderByChild("isStaff").equalTo("false");
+                        Query queryUsers = usersRef.orderByChild("isStaff").equalTo("true");
                         queryUsers.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

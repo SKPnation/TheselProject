@@ -20,29 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.skiplab.theselproject.Activity.ActivityFragment;
-import com.skiplab.theselproject.AddPost.CategoryActivity;
-import com.skiplab.theselproject.AddPost.NewPostActivity;
-import com.skiplab.theselproject.AddPost.PostFragment;
-import com.skiplab.theselproject.Authentication.AdminRegisterActivity;
-import com.skiplab.theselproject.Authentication.LoginActivity;
-import com.skiplab.theselproject.Authentication.RegisterActivity;
-import com.skiplab.theselproject.Authentication.StaffRegisterActivity;
 import com.skiplab.theselproject.ChatActivity;
 import com.skiplab.theselproject.DashboardActivity;
-import com.skiplab.theselproject.Main2Activity;
-import com.skiplab.theselproject.MainActivity;
-import com.skiplab.theselproject.PaymentActivity;
-import com.skiplab.theselproject.PostDetailActivity;
-import com.skiplab.theselproject.Profile.AccountSettingsActivity;
-import com.skiplab.theselproject.Profile.GalleryActivity;
-import com.skiplab.theselproject.Profile.MyPostsActivity;
-import com.skiplab.theselproject.Profile.ProfileFragment;
-import com.skiplab.theselproject.Profile.RequestsActivity;
-import com.skiplab.theselproject.Questionnaire.QuestionnaireActivity;
-import com.skiplab.theselproject.Search.ConsultantsActivity;
-import com.skiplab.theselproject.Search.SearchFragment;
-import com.skiplab.theselproject.Search.SelectPlanFragment;
 
 
 public class FirebaseMessaging extends FirebaseMessagingService {
@@ -142,8 +121,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
     private boolean isApplicationInForeground(){
         //check all the activities to see if any of them are running
-        boolean isActivityRunning = ChatActivity.isActivityRunning || PaymentActivity.isActivityRunning
-                || RequestsActivity.isActivityRunning;
+        boolean isActivityRunning = ChatActivity.isActivityRunning;
 
         if(isActivityRunning) {
             Log.d(TAG, "isApplicationInForeground: application is in foreground.");

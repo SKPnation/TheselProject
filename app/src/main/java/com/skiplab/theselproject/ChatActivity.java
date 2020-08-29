@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -14,12 +13,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,16 +29,13 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -64,11 +58,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.skiplab.theselproject.Adapter.AdapterChat;
 import com.skiplab.theselproject.Common.Common;
-import com.skiplab.theselproject.Questionnaire.SixthQuestionnaire;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Chat;
-import com.skiplab.theselproject.models.LatenessReports;
-import com.skiplab.theselproject.models.Sessions;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.notifications.APIService;
 import com.skiplab.theselproject.notifications.Client;
@@ -273,108 +264,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         } );
 
-        mReportBtn.setOnClickListener(v -> {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-            final View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.lateness_report_dialog, null);
-
-            final EditText reportMessageEt = mView.findViewById(R.id.report_message);
-            String report_message = reportMessageEt.getText().toString().trim();
-
-            builder.setPositiveButton("SEND", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Query query = usersRef.orderByKey().equalTo(myUid);
-
-                    query.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                User user = ds.getValue(User.class);
-                                if (user.getIsStaff().equals("false"))
-                                {
-
-                                    Query queryStaff = usersRef.orderByKey().equalTo(hisUid);
-                                    queryStaff.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                                User userStaff = ds.getValue(User.class);
-
-                                                String timestamp = String.valueOf(System.currentTimeMillis());
-
-                                                Calendar calendar = Calendar.getInstance(Locale.getDefault());
-                                                calendar.setTimeInMillis(Long.parseLong(timestamp));
-                                                String sTime = DateFormat.format("dd/MM/yyyy   hh:mm aa", calendar).toString();
-
-                                                String counsellor_id = userStaff.getUid();
-                                                String counsellor_name = userStaff.getUsername();
-                                                String cost = String.valueOf(userStaff.getCost());
-                                                String client_name = user.getUsername();
-                                                String client_id = user.getUid();
-                                                String client_phone = user.getPhone();
-                                                String client_email = user.getEmail();
-
-                                                String message = counsellor_name+" "+report_message;
-
-                                                LatenessReports reports = new LatenessReports();
-                                                reports.setCounsellor_id(counsellor_id);
-                                                reports.setCounsellor_name(counsellor_name);
-                                                reports.setCost(cost);
-                                                reports.setClient_id(client_id);
-                                                reports.setClient_name(client_name);
-                                                reports.setClient_email(client_email);
-                                                reports.setClient_phone(client_phone);
-                                                reports.setReport_message(message);
-                                                reports.setTimestamp(sTime);
-
-
-                                                FirebaseDatabase.getInstance().getReference("latenessReports")
-                                                        .child(timestamp).setValue(reports);
-
-                                                DatabaseReference database = FirebaseDatabase.getInstance().getReference("users").child(myUid);
-                                                database.addValueEventListener(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                                        if (notify)
-                                                        {
-                                                            sendNotification(adminUid, client_name, message);
-                                                            //Toast.makeText(ChatActivity.this, "Report sent", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                        //..
-                                                    }
-                                                });
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                                            //..
-                                        }
-                                    });
-                                }
-                                else{
-                                    //Toast.makeText(ChatActivity.this, ""+requestPlan, Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            //..
-                        }
-                    });
-                }
-            });
-
-            builder.setView(mView);
-            builder.show();
-        });
 
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
             @Override

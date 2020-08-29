@@ -6,7 +6,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -22,41 +21,21 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.PostDetailActivity;
 import com.skiplab.theselproject.R;
-import com.skiplab.theselproject.Search.ConsultantsActivity;
 import com.skiplab.theselproject.Utils.Heart;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Comment;
-import com.skiplab.theselproject.models.User;
-import com.skiplab.theselproject.notifications.Data;
-import com.skiplab.theselproject.notifications.Response;
-import com.skiplab.theselproject.notifications.Sender;
-import com.skiplab.theselproject.notifications.Token;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
-import javax.annotation.Nullable;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHolder>{
 
