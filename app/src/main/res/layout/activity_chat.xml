@@ -9,7 +9,7 @@
     android:background="@drawable/profile_coverphoto2"
     android:backgroundTint="#6C7A89"
     android:backgroundTintMode="multiply"
-    tools:context=".ChatActivity">
+    tools:context=".Consultation.ChatActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -68,8 +68,8 @@
 
                 <Button
                     android:id="@+id/button_start_pause"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/customrequestbtnstyle"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
@@ -114,7 +114,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/chatLayout"
-            android:layout_below="@id/toolbar"/>
+            android:layout_below="@id/toolbar"
+            tools:listitem="@layout/row_chat_left"/>
 
         <LinearLayout
             android:id="@+id/chatLayout"
