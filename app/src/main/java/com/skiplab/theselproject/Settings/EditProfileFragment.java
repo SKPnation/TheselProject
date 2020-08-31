@@ -113,6 +113,9 @@ public class EditProfileFragment extends Fragment {
         saveBtn = view.findViewById(R.id.saveBtn);
         changPhotoTv = view.findViewById(R.id.changeProfilePhoto);
 
+        mEmail.setFocusable(false);
+        mEmail.setFocusableInTouchMode(false);
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

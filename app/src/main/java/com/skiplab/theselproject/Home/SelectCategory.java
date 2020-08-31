@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.skiplab.theselproject.Adapter.AdapterMood;
 import com.skiplab.theselproject.AddPost.SelectMood;
+import com.skiplab.theselproject.Consultation.ConsultantsActivity;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
 
@@ -46,7 +47,9 @@ public class SelectCategory extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             String selectedItem = (String) parent.getItemAtPosition(position);
-
+            Intent intent = new Intent(mContext, ConsultantsActivity.class);
+            intent.putExtra("selectedItem", selectedItem);
+            startActivity(intent);
         });
 
         closeBtn = findViewById(R.id.closeBtn);

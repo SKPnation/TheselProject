@@ -185,116 +185,6 @@ public class HomeFragment extends Fragment {
         postList = new ArrayList<>();
         consultantList = new ArrayList<>();
 
-        Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid());
-        querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds: dataSnapshot.getChildren())
-                {
-                    User user = ds.getValue(User.class);
-                    selCategory = user.getSelectedCategory();
-
-                    if (selCategory.isEmpty())
-                    {
-                        mProgressBar.setVisibility(View.GONE);
-                        i++;
-
-                        Handler handler1 = new Handler();
-                        handler1.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mDrawerLayout.openDrawer(GravityCompat.START);
-                            }
-                        }, 1000);
-                    }
-                    else
-                    {
-                        feedTitleTv.setText(selCategory);
-                        feedTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        swipeRefreshLayout = view.findViewById( R.id.swipe_layout );
-        swipeRefreshLayout.setColorSchemeResources( R.color.colorPrimary,
-                android.R.color.holo_blue_dark,
-                android.R.color.holo_orange_dark,
-                android.R.color.holo_green_dark);
-
-        //Default, when loading for first time
-        swipeRefreshLayout.post( new Runnable() {
-            @Override
-            public void run() {
-
-                Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid()).limitToLast(3);
-                querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds: dataSnapshot.getChildren()){
-                            User user = ds.getValue(User.class);
-                            selCategory = user.getSelectedCategory();
-
-                            if (selCategory.isEmpty())
-                            {
-                                mProgressBar.setVisibility(View.GONE);
-                                i++;
-
-                                Handler handler1 = new Handler();
-                                handler1.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mDrawerLayout.openDrawer(GravityCompat.START);
-                                    }
-                                }, 1000);
-                            }
-                            else {
-                                getLastKeyFromFirebase();
-                                getPosts();
-                                //loadPosts();
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        //..
-                    }
-                });
-            }
-        } );
-
-        swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                //loadPosts();
-            }
-        } );
-
-        nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            if(v.getChildAt(v.getChildCount() - 1) != null) {
-                if ((scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
-                        scrollY > oldScrollY) {
-                    //code to fetch more data for endless scrolling
-                    total_item = linearLayoutManager.getItemCount();
-                    last_visible_item = linearLayoutManager.findLastVisibleItemPosition();
-
-                    if (!isLoading && total_item <= ((last_visible_item + ITEM_LOAD_COUNT))){
-                        getPosts();
-                        isLoading = true;
-                    }
-                }
-            }
-        });
-
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Career", "Low self-esteem",
                 "Family", "Anxiety", "Pregnancy", "Business", "Weight Loss", "Fitness", "Helpful Tips", "#COVID19 NIGERIA"};
@@ -411,6 +301,70 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds: dataSnapshot.getChildren())
+                        {
+                            User user = ds.getValue(User.class);
+                            selCategory = user.getSelectedCategory();
+
+                            if (selCategory.isEmpty())
+                            {
+                                mProgressBar.setVisibility(View.GONE);
+                                i++;
+
+                                Handler handler1 = new Handler();
+                                handler1.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mDrawerLayout.openDrawer(GravityCompat.START);
+                                    }
+                                }, 1000);
+                            }
+                            else
+                            {
+                                feedTitleTv.setText(selCategory);
+                                feedTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+
+                                getLastKeyFromFirebase();
+                                getPosts();
+                                //loadPosts();
+
+
+                                nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                                    if(v.getChildAt(v.getChildCount() - 1) != null) {
+                                        if ((scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
+                                                scrollY > oldScrollY) {
+
+                                            try {
+                                                //code to fetch more data for endless scrolling
+                                                total_item = linearLayoutManager.getItemCount();
+                                                last_visible_item = linearLayoutManager.findLastVisibleItemPosition();
+
+                                                if (!isLoading && total_item <= ((last_visible_item + ITEM_LOAD_COUNT))){
+                                                    getPosts();
+                                                    isLoading = true;
+                                                }
+                                            }
+                                            catch (Exception e){
+                                                Toast.makeText(getActivity(), ""+e, Toast.LENGTH_LONG).show();
+
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        //..
+                    }
+                });
+
 
 
 
@@ -423,51 +377,56 @@ public class HomeFragment extends Fragment {
     private void getPosts() {
         if (!isMaxData)
         {
-            Query query;
-            if (TextUtils.isEmpty(last_node))
-                query = postDb
-                        .orderByChild("pCategory")
-                        .equalTo(selCategory)
-                        .limitToLast(ITEM_LOAD_COUNT);
-            else
-                query = postDb
-                        .orderByChild("pCategory")
-                        .equalTo(selCategory)
-                        .startAt(last_node)
-                        .limitToLast(ITEM_LOAD_COUNT);
+            try {
+                Query query;
+                if (TextUtils.isEmpty(last_node))
+                    query = postDb
+                            .orderByChild("pCategory")
+                            .equalTo(selCategory)
+                            .limitToLast(ITEM_LOAD_COUNT);
+                else
+                    query = postDb
+                            .orderByChild("pCategory")
+                            .equalTo(selCategory)
+                            .startAt(last_node)
+                            .limitToLast(ITEM_LOAD_COUNT);
 
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.hasChildren())
-                    {
-                        List<Post> newPosts = new ArrayList<>();
-                        for (DataSnapshot ds: dataSnapshot.getChildren())
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChildren())
                         {
-                            newPosts.add(ds.getValue(Post.class));
+                            List<Post> newPosts = new ArrayList<>();
+                            for (DataSnapshot ds: dataSnapshot.getChildren())
+                            {
+                                newPosts.add(ds.getValue(Post.class));
+                            }
+                            last_node = newPosts.get(newPosts.size()-1).getpId();
+
+                            if (!last_node.equals(last_key))
+                                newPosts.remove(newPosts.size()-1);
+                            else
+                                last_node = "end";
+
+                            adapterPosts.addAll(newPosts);
+                            isLoading = false;
                         }
-                        last_node = newPosts.get(newPosts.size()-1).getpId();
-
-                        if (!last_node.equals(last_key))
-                            newPosts.remove(newPosts.size()-1);
                         else
-                            last_node = "end";
+                        {
+                            isLoading = false;
+                            isMaxData = true;
+                        }
+                    }
 
-                        adapterPosts.addAll(newPosts);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                         isLoading = false;
                     }
-                    else
-                    {
-                        isLoading = false;
-                        isMaxData = true;
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    isLoading = false;
-                }
-            });
+                });
+            }
+            catch (Exception e){
+                Toast.makeText(getActivity(), ""+e, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

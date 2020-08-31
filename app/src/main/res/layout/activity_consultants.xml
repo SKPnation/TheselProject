@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#F2F2F2"
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Search.SearchFragment">
+    android:padding="10dp"
+    tools:context=".Consultation.ConsultantsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,33 +18,35 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:id="@+id/progressBar"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="150dp"
             android:layout_centerHorizontal="true"/>
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@null">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="#ffffff">
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/users_fragment_title"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/closeBtn"
+                        android:tint="@color/colorPrimary"
+                        android:src="@drawable/ic_close"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="20dp"
                         android:layout_centerVertical="true"
-                        android:text="Thesel Consultants"
-                        android:textSize="25sp"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-                        android:textColor="@color/colorPrimary"/>
+                        />
 
                 </RelativeLayout>
 
@@ -51,13 +55,13 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recycler_view"
             android:layout_below="@id/appBarLayout"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/row_users"/>
 
     </RelativeLayout>
-
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
