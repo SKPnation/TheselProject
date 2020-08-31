@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -67,6 +68,7 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
 
+    private NestedScrollView nestedScrollView;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -107,7 +109,7 @@ public class HomeFragment extends Fragment {
     private Timer timer=new Timer();
     private final long DELAY = 1000; // milliseconds
 
-    private final int ITEM_LOAD_COUNT = 12;
+    private final int ITEM_LOAD_COUNT = 4;
     private int total_item = 0, last_visible_item;
     boolean isLoading=false, isMaxData=false;
 
@@ -137,10 +139,21 @@ public class HomeFragment extends Fragment {
         userDb = db.getReference("users");
         postDb.keepSynced(true);
 
+        relLayout1 = view.findViewById(R.id.relLayout1);
+
         mDrawerLayout = view.findViewById(R.id.drawer_layout);
         listView = view.findViewById(R.id.navList);
         bottomAppBar = view.findViewById(R.id.bottomAppBar);
         mProgressBar = view.findViewById(R.id.progressBar);
+        nestedScrollView = view.findViewById(R.id.nsv);
+
+        fab = view.findViewById(R.id.fab);
+        wklyVideosBtn = view.findViewById(R.id.weekly_videos);
+        share_post_et = view.findViewById(R.id.share_post_et);
+        mAvaterIv = view.findViewById(R.id.avatarIv);
+        optionsBtn = view.findViewById(R.id.optionsToolbar);
+        feedTitleTv = view.findViewById(R.id.app_name);
+        mActivityTitle = getActivity().getTitle().toString();
 
         adView = new AdView(getActivity());
         adView.setAdSize(AdSize.BANNER);
@@ -150,8 +163,6 @@ public class HomeFragment extends Fragment {
         adView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
-
-        relLayout1 = view.findViewById(R.id.relLayout1);
 
         cRecyclerView = view.findViewById(R.id.recycler_consultants);
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -164,18 +175,15 @@ public class HomeFragment extends Fragment {
         linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration  dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        adapterPosts = new AdapterPosts(getActivity());
+        recyclerView.setAdapter(adapterPosts);
 
         //init post list
         postList = new ArrayList<>();
         consultantList = new ArrayList<>();
-
-        fab = view.findViewById(R.id.fab);
-        wklyVideosBtn = view.findViewById(R.id.weekly_videos);
-        share_post_et = view.findViewById(R.id.share_post_et);
-        mAvaterIv = view.findViewById(R.id.avatarIv);
-        optionsBtn = view.findViewById(R.id.optionsToolbar);
-        feedTitleTv = view.findViewById(R.id.app_name);
-        mActivityTitle = getActivity().getTitle().toString();
 
         Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid());
         querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -220,22 +228,72 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_green_dark);
 
-        swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                loadPosts();
-            }
-        } );
-
         //Default, when loading for first time
         swipeRefreshLayout.post( new Runnable() {
             @Override
             public void run() {
 
-                loadPosts();
+                Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid()).limitToLast(3);
+                querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+                            User user = ds.getValue(User.class);
+                            selCategory = user.getSelectedCategory();
+
+                            if (selCategory.isEmpty())
+                            {
+                                mProgressBar.setVisibility(View.GONE);
+                                i++;
+
+                                Handler handler1 = new Handler();
+                                handler1.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mDrawerLayout.openDrawer(GravityCompat.START);
+                                    }
+                                }, 1000);
+                            }
+                            else {
+                                getLastKeyFromFirebase();
+                                getPosts();
+                                //loadPosts();
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        //..
+                    }
+                });
             }
         } );
+
+        swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                //loadPosts();
+            }
+        } );
+
+        nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if(v.getChildAt(v.getChildCount() - 1) != null) {
+                if ((scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
+                        scrollY > oldScrollY) {
+                    //code to fetch more data for endless scrolling
+                    total_item = linearLayoutManager.getItemCount();
+                    last_visible_item = linearLayoutManager.findLastVisibleItemPosition();
+
+                    if (!isLoading && total_item <= ((last_visible_item + ITEM_LOAD_COUNT))){
+                        getPosts();
+                        isLoading = true;
+                    }
+                }
+            }
+        });
 
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Career", "Low self-esteem",
@@ -362,63 +420,103 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void loadPosts() {
-        Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid()).limitToLast(3);
-        querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void getPosts() {
+        if (!isMaxData)
+        {
+            Query query;
+            if (TextUtils.isEmpty(last_node))
+                query = postDb
+                        .orderByChild("pCategory")
+                        .equalTo(selCategory)
+                        .limitToLast(ITEM_LOAD_COUNT);
+            else
+                query = postDb
+                        .orderByChild("pCategory")
+                        .equalTo(selCategory)
+                        .startAt(last_node)
+                        .limitToLast(ITEM_LOAD_COUNT);
+
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChildren())
+                    {
+                        List<Post> newPosts = new ArrayList<>();
+                        for (DataSnapshot ds: dataSnapshot.getChildren())
+                        {
+                            newPosts.add(ds.getValue(Post.class));
+                        }
+                        last_node = newPosts.get(newPosts.size()-1).getpId();
+
+                        if (!last_node.equals(last_key))
+                            newPosts.remove(newPosts.size()-1);
+                        else
+                            last_node = "end";
+
+                        adapterPosts.addAll(newPosts);
+                        isLoading = false;
+                    }
+                    else
+                    {
+                        isLoading = false;
+                        isMaxData = true;
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    isLoading = false;
+                }
+            });
+        }
+    }
+
+    private void getLastKeyFromFirebase() {
+        Query getLastKey = postDb
+                .orderByChild("pCategory")
+                .equalTo(selCategory)
+                .limitToLast(1);
+
+        getLastKey.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot lastKey: dataSnapshot.getChildren()){
+                    last_key = lastKey.getKey();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getActivity(),"Cannot get last key",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void loadPosts() {
+        Query queryPosts = postDb.orderByChild("pCategory").equalTo(selCategory);
+        //get all data from this reference
+        queryPosts.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postList.clear();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    User user = ds.getValue(User.class);
-                    String selCategory = user.getSelectedCategory();
+                    Post post = ds.getValue(Post.class);
 
-                    if (selCategory.isEmpty())
-                    {
-                        mProgressBar.setVisibility(View.GONE);
-                        i++;
+                    //pd.dismiss();
+                    mProgressBar.setVisibility(View.GONE);
+                    //add to list
+                    postList.add(post);
 
-                        Handler handler1 = new Handler();
-                        handler1.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mDrawerLayout.openDrawer(GravityCompat.START);
-                            }
-                        }, 1000);
-                    }
-                    else {
-                        Query queryPosts = postDb.orderByChild("pCategory").equalTo(selCategory);
-                        //get all data from this reference
-                        queryPosts.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                postList.clear();
-                                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                    Post post = ds.getValue(Post.class);
-
-                                    //pd.dismiss();
-                                    mProgressBar.setVisibility(View.GONE);
-                                    //add to list
-                                    postList.add(post);
-
-                                    adapterPosts = new AdapterPosts(getActivity(), postList);
-                                    adapterPosts.notifyDataSetChanged();
-                                    recyclerView.setAdapter(adapterPosts);
-                                    swipeRefreshLayout.setRefreshing( false );
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //..
-
-                            }
-                        });
-                    }
+                    adapterPosts.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing( false );
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //..
+
             }
         });
     }
@@ -502,6 +600,12 @@ public class HomeFragment extends Fragment {
 
     }
 
+    /*@Override
+    public void onResume() {
+        super.onResume();
+        getLastKeyFromFirebase();
+        getPosts();
+    }*/
 }
 
 
