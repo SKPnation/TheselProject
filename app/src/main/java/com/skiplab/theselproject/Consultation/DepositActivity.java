@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.cardview.widget.CardView;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,6 +66,8 @@ public class DepositActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference walletRef;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +76,11 @@ public class DepositActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         walletRef = FirebaseDatabase.getInstance().getReference("wallet");
 
+        progressDialog = new ProgressDialog(mContext);
+
         threetCv = findViewById(R.id.three_thousand_cv);
         sixtCv = findViewById(R.id.six_thousand_cv);
+        eighteentCv = findViewById(R.id.eighteen_thousand_cv);
 
         threetCv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +94,7 @@ public class DepositActivity extends AppCompatActivity {
                                 {
                                     Wallet wallet = ds.getValue(Wallet.class);
 
-                                    int balance = Integer.parseInt(String.valueOf(wallet.getBalance()));
+                                    int balance = wallet.getBalance();
                                     //int result = balance + 3000;
                                     //walletRef.child(mAuth.getCurrentUser().getUid()).child("balance").setValue(result);
 
@@ -121,7 +127,7 @@ public class DepositActivity extends AppCompatActivity {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                //..
                             }
                         });
             }
@@ -171,10 +177,73 @@ public class DepositActivity extends AppCompatActivity {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                //..
                             }
                         });
 
+            }
+        });
+
+        /*twelvetCv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                walletRef.orderByKey().equalTo(mAuth.getUid())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds: dataSnapshot.getChildren())
+                                {
+                                    Wallet wallet = ds.getValue(Wallet.class);
+
+                                    int balance = wallet.getBalance();
+                                    int result = balance + 12000;
+                                    if (result == 15000)
+                                    {
+                                        AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                                                .setMessage("Your Thesel wallet can't hold more than #18,000")
+                                                .create();
+                                        alertDialog.show();
+                                    }
+                                    //walletRef.child(mAuth.getCurrentUser().getUid()).child("balance").setValue(result);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                //..
+                            }
+                        });
+            }
+        });*/
+
+        eighteentCv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                walletRef.orderByKey().equalTo(mAuth.getUid())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds: dataSnapshot.getChildren())
+                                {
+                                    Wallet wallet = ds.getValue(Wallet.class);
+
+                                    int balance = wallet.getBalance();
+                                    int result = balance + 18000;
+                                    if (result > 18000)
+                                    {
+                                        AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                                                .setMessage("Your Thesel wallet can't hold more than #18,000")
+                                                .create();
+                                        alertDialog.show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
             }
         });
     }
@@ -246,7 +315,12 @@ public class DepositActivity extends AppCompatActivity {
 
                             @Override
                             public void beforeValidate(Transaction transaction) {
-                                Toast.makeText(mContext, "beforeValidate", Toast.LENGTH_LONG).show();
+                                /*AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                        .setMessage("This might take a minute...")
+                                        .create();
+                                alertDialog.show();*/
+
+                                Toast.makeText(mContext, "This might take a minute...", Toast.LENGTH_LONG).show();
 
                                 //snackBar("beforeValidate");
                             }
