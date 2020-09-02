@@ -37,6 +37,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,12 +51,14 @@ import com.skiplab.theselproject.Activity.NotificationsActivity;
 import com.skiplab.theselproject.Adapter.AdapterConsultant;
 import com.skiplab.theselproject.Adapter.AdapterPosts;
 import com.skiplab.theselproject.AddPost.SelectMood;
+import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.Settings.AccountSettingsActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Post;
 import com.skiplab.theselproject.models.User;
+import com.skiplab.theselproject.models.Wallet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +79,7 @@ public class HomeFragment extends Fragment {
     private String mActivityTitle;
     private FloatingActionButton fab;
 
-    private ImageView optionsBtn, mAvaterIv, wklyVideosBtn;
+    private ImageView optionsBtn, mAvaterIv, walletBtn;
     private EditText share_post_et;
 
     private TextView feedTitleTv;
@@ -148,7 +151,7 @@ public class HomeFragment extends Fragment {
         nestedScrollView = view.findViewById(R.id.nsv);
 
         fab = view.findViewById(R.id.fab);
-        wklyVideosBtn = view.findViewById(R.id.weekly_videos);
+        walletBtn = view.findViewById(R.id.walletBtn);
         share_post_et = view.findViewById(R.id.share_post_et);
         mAvaterIv = view.findViewById(R.id.avatarIv);
         optionsBtn = view.findViewById(R.id.optionsToolbar);
@@ -164,6 +167,9 @@ public class HomeFragment extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
+        postList = new ArrayList<>();
+        consultantList = new ArrayList<>();
+
         cRecyclerView = view.findViewById(R.id.recycler_consultants);
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         cRecyclerView.setLayoutManager(linearLayoutManager1);
@@ -178,12 +184,9 @@ public class HomeFragment extends Fragment {
         DividerItemDecoration  dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        adapterPosts = new AdapterPosts(getActivity());
+        adapterPosts = new AdapterPosts(getActivity(), postList);
         recyclerView.setAdapter(adapterPosts);
 
-        //init post list
-        postList = new ArrayList<>();
-        consultantList = new ArrayList<>();
 
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Career", "Low self-esteem",
@@ -213,7 +216,45 @@ public class HomeFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SelectCategory.class));
+                FirebaseDatabase.getInstance().getReference("wallet")
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists())
+                                {
+                                    if (dataSnapshot.hasChild(firebaseAuth.getUid()))
+                                    {
+                                        //Toast.makeText(getActivity(), "has child",Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getActivity(), SelectCategory.class));
+                                    }
+                                    else {
+                                        //Toast.makeText(getActivity(), "no child",Toast.LENGTH_SHORT).show();
+
+                                        Wallet wallet = new Wallet();
+                                        wallet.setBalance(0);
+                                        wallet.setUid(firebaseAuth.getUid());
+
+                                        FirebaseDatabase.getInstance().getReference().child("wallet").child(firebaseAuth.getUid()).setValue(wallet)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        startActivity(new Intent(getActivity(), SelectCategory.class));
+                                                    }
+                                                });
+                                    }
+                                }
+                                else
+                                {
+                                    Toast.makeText(getActivity(), "not exist",Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
             }
         });
 
@@ -225,10 +266,49 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        wklyVideosBtn.setOnClickListener(new View.OnClickListener() {
+        walletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), VideoGallery.class));
+                FirebaseDatabase.getInstance().getReference("wallet")
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists())
+                                {
+                                    if (dataSnapshot.hasChild(firebaseAuth.getUid()))
+                                    {
+                                        //Toast.makeText(getActivity(), "has child",Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getActivity(), WalletActivity.class));
+
+                                    }
+                                    else {
+                                        Toast.makeText(getActivity(), "no child",Toast.LENGTH_SHORT).show();
+
+                                        Wallet wallet = new Wallet();
+                                        wallet.setBalance(0);
+                                        wallet.setUid(firebaseAuth.getUid());
+
+                                        FirebaseDatabase.getInstance().getReference().child("wallet").child(firebaseAuth.getUid()).setValue(wallet)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        startActivity(new Intent(getActivity(), WalletActivity.class));
+                                                    }
+                                                });
+                                    }
+                                }
+                                else
+                                {
+                                    Toast.makeText(getActivity(), "not exist",Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
             }
         });
 
@@ -256,7 +336,7 @@ public class HomeFragment extends Fragment {
                                 }
                                 i=0;
                             }
-                        }, 500);
+                        }, 200);
                         break;
 
                     case R.id.nav_post:
@@ -275,7 +355,26 @@ public class HomeFragment extends Fragment {
                                 }
                                 i=0;
                             }
-                        }, 500);
+                        }, 200);
+                        break;
+
+                    case R.id.nav_videos:
+                        i++;
+
+                        Handler handler3 = new Handler();
+                        handler3.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (i == 1){
+
+                                    startActivity(new Intent(getActivity(), VideoGallery.class));
+
+                                } else if (i == 2){
+                                    Log.d(TAG, "IconDoubleClick: Double tap");
+                                }
+                                i=0;
+                            }
+                        }, 200);
                         break;
 
                     case R.id.nav_settings:
@@ -294,7 +393,7 @@ public class HomeFragment extends Fragment {
                                 }
                                 i=0;
                             }
-                        }, 500);
+                        }, 200);
                         break;
                 }
                 return false;
@@ -328,12 +427,12 @@ public class HomeFragment extends Fragment {
                                 feedTitleTv.setText(selCategory);
                                 feedTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
 
-                                getLastKeyFromFirebase();
-                                getPosts();
-                                //loadPosts();
+                                //getLastKeyFromFirebase();
+                                //getPosts();
+                                loadPosts();
 
 
-                                nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                                /*nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                                     if(v.getChildAt(v.getChildCount() - 1) != null) {
                                         if ((scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
                                                 scrollY > oldScrollY) {
@@ -354,7 +453,7 @@ public class HomeFragment extends Fragment {
                                             }
                                         }
                                     }
-                                });
+                                });*/
                             }
                         }
                     }
@@ -374,7 +473,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void getPosts() {
+    /*private void getPosts() {
         if (!isMaxData)
         {
             try {
@@ -449,7 +548,7 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(),"Cannot get last key",Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
 
     private void loadPosts() {
@@ -468,7 +567,7 @@ public class HomeFragment extends Fragment {
                     postList.add(post);
 
                     adapterPosts.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing( false );
+                    //swipeRefreshLayout.setRefreshing( false );
                 }
             }
 
@@ -566,5 +665,3 @@ public class HomeFragment extends Fragment {
         getPosts();
     }*/
 }
-
-

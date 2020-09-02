@@ -23,7 +23,11 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddPost.SelectMood"></activity>
+        <activity android:name=".Consultation.DepositActivity"></activity>
+        <activity android:name=".Consultation.WalletActivity" />
+        <activity android:name=".Consultation.ChatActivity" />
+        <activity android:name=".Consultation.ConsultantsActivity" />
+        <activity android:name=".AddPost.SelectMood" />
         <activity android:name=".Home.SelectCategory" />
         <activity android:name=".Home.VideoGallery" />
         <activity android:name=".Activity.NotificationsActivity" />
@@ -39,7 +43,6 @@
             android:name="co.paystack.android.PublicKey"
             android:value="pk_live_b52f8dfdae10acd0d8844ac2a135306ac4026c98" />
 
-        <activity android:name=".ChatActivity" />
         <activity android:name=".Authentication.StaffRegisterActivity" />
         <activity android:name=".Authentication.AdminRegisterActivity" />
         <activity android:name=".TermsOfService" />

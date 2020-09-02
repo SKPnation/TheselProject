@@ -80,8 +80,8 @@
                 android:layout_weight="3"/>
 
             <ImageView
-                android:id="@+id/weekly_videos"
-                android:src="@drawable/ic_video_library"
+                android:id="@+id/walletBtn"
+                android:src="@drawable/ic_wallet"
                 android:layout_toRightOf="@id/share_post_et"
                 android:layout_gravity="center_vertical"
                 android:layout_width="0dp"

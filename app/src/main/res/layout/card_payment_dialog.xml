@@ -5,159 +5,86 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_main_email"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Email Address"
+            android:textAllCaps="true"
+            android:inputType="textEmailAddress" />
 
-            <TextView
-                android:id="@+id/titleTv"
-                android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_main_name"
+            android:layout_below="@id/et_main_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Card Name"
+            android:textAllCaps="true"
+            android:inputType="text" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_main_card"
+            android:layout_below="@id/et_main_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Card Number"
+            android:inputType="number" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_main_cvv"
+            android:layout_below="@id/et_main_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Card CVV"
+            android:inputType="number" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/sp_container"
+            android:layout_below="@id/et_main_cvv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:animateLayoutChanges="true"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sp_main_month"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Read the 6 rules before payment"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="@color/colorPrimary"
-                android:paddingLeft="10dp"
-                android:layout_centerHorizontal="true"/>
+                android:layout_weight="1"
+                android:entries="@array/months"
+                android:spinnerMode="dropdown" />
 
-            <LinearLayout
-                android:layout_below="@id/titleTv"
-                android:id="@+id/rulesLayout"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/secondRule"
-                    android:textColor="#B70000"
-                    android:textSize="14sp"
-                    android:paddingRight="5dp"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="10dp"/>
-
-                <TextView
-                    android:layout_below="@id/titleTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/thirdRule"
-                    android:textColor="#B70000"
-                    android:textSize="14sp"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp"/>
-
-                <TextView
-                    android:layout_below="@id/titleTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fourthRule"
-                    android:textColor="#B70000"
-                    android:textSize="14sp"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp"/>
-
-                <TextView
-                    android:layout_below="@id/titleTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fifthRule"
-                    android:textColor="#B70000"
-                    android:textSize="14sp"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="5dp"/>
-
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_main_email"
-                android:layout_below="@id/rulesLayout"
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sp_main_year"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Email Address"
-                android:textAllCaps="true"
-                android:inputType="textEmailAddress" />
+                android:layout_weight="1"
+                android:spinnerMode="dropdown" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_main_name"
-                android:layout_below="@id/et_main_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Card Name"
-                android:textAllCaps="true"
-                android:inputType="text" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_main_card"
-                android:layout_below="@id/et_main_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Card Number"
-                android:inputType="number" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_main_proceed"
+            android:layout_below="@id/sp_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text=""
+            android:textColor="#ffffff"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_container" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/et_main_cvv"
-                android:layout_below="@id/et_main_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Card CVV"
-                android:inputType="number" />
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/sp_container"
-                android:layout_below="@id/et_main_cvv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:animateLayoutChanges="true"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/sp_main_month"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:entries="@array/months"
-                    android:spinnerMode="dropdown" />
-
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/sp_main_year"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:spinnerMode="dropdown" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bt_main_proceed"
-                android:layout_below="@id/sp_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text=""
-                android:textColor="#ffffff"
-                app:backgroundTint="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sp_container" />
-
-        </RelativeLayout>
-
-    </ScrollView>
-
-
-
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

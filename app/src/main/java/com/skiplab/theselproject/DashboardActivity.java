@@ -183,5 +183,9 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
         }
         isActivityRunning = false;
     }
+
+    public void sendNotification(String postIde, String timestamp, String uid, String notification, String myUid) {
+        //..
+    }
 }
 

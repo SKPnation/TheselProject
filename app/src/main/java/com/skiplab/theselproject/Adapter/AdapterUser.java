@@ -4,14 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -25,12 +26,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.ChatActivity;
-import com.skiplab.theselproject.Consultation.ConsultantsActivity;
+import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.User;
-import com.skiplab.theselproject.notifications.Data;
+import com.skiplab.theselproject.models.Wallet;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder>{
@@ -38,13 +40,16 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
     Context context;
     List<User> userList;
     FirebaseAuth mAuth;
-    DatabaseReference usersRef;
+    DatabaseReference usersRef, walletRef;
+
+    int i = 0;
 
     public AdapterUser(Context context, List<User> userList) {
         this.context = context;
         this.userList = userList;
         mAuth = FirebaseAuth.getInstance();
         usersRef = FirebaseDatabase.getInstance().getReference("users");
+        walletRef = FirebaseDatabase.getInstance().getReference("wallet");
     }
 
     @NonNull
@@ -97,14 +102,169 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         holder.chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Common.isConnectedToTheInternet(context)){
-                    Intent intent = new Intent(context, ChatActivity.class);
-                    intent.putExtra("hisUID", hisUID);
-                    context.startActivity(intent);
+                if (Common.isConnectedToTheInternet(context))
+                {
+                    usersRef.orderByKey().equalTo(hisUID)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot ds: dataSnapshot.getChildren())
+                                    {
+                                        User user = ds.getValue(User.class);
+                                        if (user.getOnlineStatus().equals("offline"))
+                                        {
+                                            walletRef.orderByKey().equalTo(mAuth.getUid())
+                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            for (DataSnapshot ds: dataSnapshot.getChildren())
+                                                            {
+                                                                Wallet wallet = ds.getValue(Wallet.class);
+                                                                int balance = wallet.getBalance();
+                                                                if (!(balance >= 3000))
+                                                                {
+                                                                    AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                            .setMessage(user.getUsername().toUpperCase()+" is offline.")
+                                                                            .create();
+                                                                    alertDialog.show();
+                                                                }
+                                                                else
+                                                                {
+                                                                    Intent intent = new Intent(context, ChatActivity.class);
+                                                                    intent.putExtra("hisUID", hisUID);
+                                                                    context.startActivity(intent);
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                        }
+                                                    });
+                                        }
+                                        else if (user.getOnlineStatus().equals("deactivated"))
+                                        {
+                                            walletRef.orderByKey().equalTo(mAuth.getUid())
+                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            for (DataSnapshot ds: dataSnapshot.getChildren())
+                                                            {
+                                                                Wallet wallet = ds.getValue(Wallet.class);
+                                                                int balance = wallet.getBalance();
+                                                                if (!(balance >= 3000))
+                                                                {
+                                                                    AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                            .setMessage(user.getUsername().toUpperCase()+" is unavailable at the moment.")
+                                                                            .create();
+                                                                    alertDialog.show();
+                                                                }
+                                                                else
+                                                                {
+                                                                    Intent intent = new Intent(context, ChatActivity.class);
+                                                                    intent.putExtra("hisUID", hisUID);
+                                                                    context.startActivity(intent);
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                        }
+                                                    });
+                                        }
+                                        else
+                                        {
+                                            walletRef.orderByKey().equalTo(mAuth.getUid())
+                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            for (DataSnapshot ds: dataSnapshot.getChildren())
+                                                            {
+                                                                Wallet wallet = ds.getValue(Wallet.class);
+                                                                int balance = wallet.getBalance();
+                                                                if (!(balance >= 3000))
+                                                                {
+                                                                    AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                            .setMessage("Your wallet is empty!!!")
+                                                                            .create();
+                                                                    alertDialog.show();
+
+                                                                    i++;
+
+                                                                    Handler handler = new Handler();
+                                                                    handler.postDelayed(new Runnable() {
+                                                                        @Override
+                                                                        public void run() {
+                                                                            alertDialog.dismiss();
+                                                                            context.startActivity(new Intent(context, WalletActivity.class));
+                                                                        }
+                                                                    }, 1000);
+                                                                }
+                                                                else
+                                                                {
+                                                                    Intent intent = new Intent(context, ChatActivity.class);
+                                                                    intent.putExtra("hisUID", hisUID);
+                                                                    context.startActivity(intent);
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                        }
+                                                    });
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    //..
+                                }
+                            });
                 }
                 else {
-                    //..
+                    AlertDialog alertDialog =new AlertDialog.Builder(context)
+                            .setMessage("Please check your internet connection")
+                            .create();
+                    alertDialog.show();
                 }
+            }
+        });
+
+        holder.timeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                final View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.counselling_hours_layout, null);
+
+                TextView daytimeTv= mView.findViewById(R.id.dayTime);
+                TextView nighttimeTv = mView.findViewById(R.id.nightTime);
+
+                usersRef.orderByKey().equalTo(hisUID)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                    User user = ds.getValue(User.class);
+                                    daytimeTv.setText(user.getDayTime());
+                                    nighttimeTv.setText(user.getNightTime());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                builder.setView(mView);
+                builder.show();
             }
         });
 
@@ -189,7 +349,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
     public class UserViewHolder extends RecyclerView.ViewHolder{
 
         ImageView mAvatarIv, onlineIv, offlineIv;
-        ImageButton profileBtn, chatBtn;
+        ImageButton profileBtn, timeBtn, chatBtn;
         TextView usernameTv, countryTv, categoryTv1, categoryTv2, categoryTv3, mCostTv;
         View mView;
 
@@ -207,6 +367,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
             categoryTv2 = itemView.findViewById(R.id.categoryTv2);
             categoryTv3 = itemView.findViewById(R.id.categoryTv3);
             profileBtn = itemView.findViewById(R.id.profileBtn);
+            timeBtn = itemView.findViewById(R.id.timeBtn);
             chatBtn = itemView.findViewById(R.id.chatBtn);
             mCostTv = itemView.findViewById(R.id.costTv);
         }

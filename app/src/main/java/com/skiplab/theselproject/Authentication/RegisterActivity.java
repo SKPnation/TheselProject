@@ -26,7 +26,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.skiplab.theselproject.PrivacyPolicy;
-import com.skiplab.theselproject.models.Cards;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.R;
 
@@ -213,25 +212,8 @@ public class RegisterActivity extends AppCompatActivity {
                                                 // Send email verification
                                                 sendVerificationEmail();
 
-                                                Cards cards = new Cards();
-                                                cards.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                                cards.setCardName1("");
-                                                cards.setCardNumber1("");
-                                                cards.setCardName2("");
-                                                cards.setCardNumber2("");
-                                                cards.setCardName3("");
-                                                cards.setCardNumber3("");
-
-                                                FirebaseDatabase.getInstance().getReference("cards")
-                                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                        .setValue(cards)
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                FirebaseAuth.getInstance().signOut();
-                                                                startActivity( new Intent( RegisterActivity.this, LoginActivity.class ) );
-                                                            }
-                                                        });
+                                                FirebaseAuth.getInstance().signOut();
+                                                startActivity( new Intent( RegisterActivity.this, LoginActivity.class ) );
                                             }
                                         }
                                     })

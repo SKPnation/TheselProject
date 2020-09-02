@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -43,9 +44,10 @@ public class ConsultantsActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
 
     FirebaseDatabase db;
-    DatabaseReference usersRef;
+    DatabaseReference usersRef, walletRef;
 
     private ProgressBar mProgressBar;
+    ImageView closeBtn;
 
     String selectedItem;
 
@@ -58,11 +60,20 @@ public class ConsultantsActivity extends AppCompatActivity {
         selectedItem = intent.getStringExtra("selectedItem");
 
         mProgressBar = findViewById(R.id.progressBar);
+        closeBtn = findViewById(R.id.closeBtn);
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //init
         firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         usersRef = db.getReference("users");
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager( new GridLayoutManager( this, 2 ) );

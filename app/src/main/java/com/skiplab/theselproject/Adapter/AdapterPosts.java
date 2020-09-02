@@ -87,18 +87,19 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
     Context context;
     List<Post> postList;
 
-    public AdapterPosts(Context context) {
+    public AdapterPosts(Context context, List<Post> postList) {
         this.context = context;
-        this.postList = new ArrayList<>();
+        this.postList = postList;
         myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         likesRef = FirebaseDatabase.getInstance().getReference().child("likes");
         postsRef = FirebaseDatabase.getInstance().getReference().child("posts");
         usersRef = FirebaseDatabase.getInstance().getReference().child("users");
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
-        //mRecyclerViewItems = recyclerViewItems;
     }
 
-    public void addAll(List<Post> newPosts)
+
+
+    /*public void addAll(List<Post> newPosts)
     {
         int initSize = postList.size();
         postList.addAll(newPosts);
@@ -108,7 +109,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
     public String getLastItemId()
     {
         return postList.get(postList.size()-1).getpId();
-    }
+    }*/
 
     @NonNull
     @Override

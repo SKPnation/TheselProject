@@ -47,7 +47,7 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="Select a category to consult a counselor "
+        android:text="Select a category to consult a counsellor "
         android:textSize="23sp"
         android:textColor="#0098D1"
         android:textStyle="bold"
