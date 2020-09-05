@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -26,11 +25,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.skiplab.theselproject.models.Chat;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
+import com.skiplab.theselproject.models.ChatMessage;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -42,12 +40,12 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder>{
     private static final int MSG_TYPE_LEFT = 0;
     private static final int MSG_TYPE_RIGHT = 1;
     Context context;
-    List<Chat> chatList;
+    List<ChatMessage> chatList;
     String imageUrl;
 
     FirebaseUser fUser;
 
-    public AdapterChat(Context context, List<Chat> chatList, String imageUrl) {
+    public AdapterChat(Context context, List<ChatMessage> chatList, String imageUrl) {
         this.context = context;
         this.chatList = chatList;
         this.imageUrl = imageUrl;
@@ -164,7 +162,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder>{
             }
         });
 
-        //set seen or delivered status message
+        /*//set seen or delivered status message
         if (position == chatList.size()-1){
             if (chatList.get(position).isSeen()){
                 holder.isSeenTv.setText("Seen");
@@ -175,20 +173,20 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder>{
         }
         else {
             holder.isSeenTv.setVisibility(View.GONE);
-        }
+        }*/
     }
 
     private void deleteMessage(int position) {
         String myUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String msgTimeStamp = chatList.get(position).getTimestamp();
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("chats");
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("chatroom_messages");
         Query query = dbRef.orderByChild("timestamp").equalTo(msgTimeStamp);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
 
-                    if (ds.child("sender").getValue().equals(myUID)) {
+                    if (ds.child("sender_id").getValue().equals(myUID)) {
                         //ds.getRef().removeValue();
 
                         HashMap<String, Object> hashMap = new HashMap<>();
@@ -219,7 +217,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder>{
     public int getItemViewType(int position) {
         //get Currently signed in user
         fUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (chatList.get(position).getSender().equals(fUser.getUid())){
+        if (chatList.get(position).getSender_id().equals(fUser.getUid())){
             return MSG_TYPE_RIGHT;
         }
         else {

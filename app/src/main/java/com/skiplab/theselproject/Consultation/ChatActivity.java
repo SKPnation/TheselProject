@@ -1,6 +1,7 @@
 package com.skiplab.theselproject.Consultation;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,17 +10,21 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,19 +32,37 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+//import com.skiplab.theselproject.Adapter.AdapterChat;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.skiplab.theselproject.Adapter.AdapterChat;
+import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
-import com.skiplab.theselproject.models.Chat;
+import com.skiplab.theselproject.models.ChatMessage;
+import com.skiplab.theselproject.models.ChatRoom;
 import com.skiplab.theselproject.models.User;
+import com.skiplab.theselproject.models.Wallet;
 import com.skiplab.theselproject.notifications.APIService;
 import com.skiplab.theselproject.notifications.Client;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
+
+    Context mContext = ChatActivity.this;
 
     private static final String TAG = "ChatActivity";
 
@@ -64,20 +87,22 @@ public class ChatActivity extends AppCompatActivity {
     CircleImageView profileIv;
     TextView nameTv, countDownTv, planTv;
     EditText messageEt;
-    Button mButtonStartPause, mReportBtn;
+    Button mButtonStart, mReportBtn;
     ImageButton sendBtn, attachBtn, recordBtn;
+
     private ProgressDialog progressDialog;
 
     String adminUid = "MrRpckxLVqVzscd34r6PAxIJNVC2";
 
-    List<Chat> chatList;
+    List<ChatMessage> chatList;
     AdapterChat adapterChat;
 
     SwipeRefreshLayout swipeRefreshLayout;
 
     //firebase
-    DatabaseReference usersRef, sessionsRef;
     FirebaseDatabase firebaseDatabase;
+    DatabaseReference usersRef, mMessageReference;
+    CollectionReference mChatroomReference;
 
     private CountDownTimer mCountDownTimer;
 
@@ -91,6 +116,7 @@ public class ChatActivity extends AppCompatActivity {
     String hisUID;
     String myUid;
     String hisImage;
+    String chatroomID;
 
     APIService apiService;
     boolean notify = false;
@@ -102,7 +128,7 @@ public class ChatActivity extends AppCompatActivity {
     String pathSave = "";
 
     int i = 0;
-
+    int num_messages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +139,12 @@ public class ChatActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         hisUID = intent.getStringExtra("hisUID");
+        chatroomID = intent.getStringExtra("chatroomID");
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        usersRef = firebaseDatabase.getReference("users");
+        mChatroomReference = FirebaseFirestore.getInstance().collection("chatrooms");
+        mMessageReference = FirebaseDatabase.getInstance().getReference("chatroom_messages");
 
         //init views
         toolbar = findViewById(R.id.toolbar);
@@ -120,6 +152,7 @@ public class ChatActivity extends AppCompatActivity {
         toolbar.setTitle("");
 
         progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait...");
 
         //init permissions arrays
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -129,7 +162,7 @@ public class ChatActivity extends AppCompatActivity {
         profileIv = findViewById(R.id.profileIv);
         nameTv = findViewById(R.id.nameTv);
         countDownTv = findViewById(R.id.text_view_countdown);
-        mButtonStartPause = findViewById(R.id.button_start_pause);
+        mButtonStart = findViewById(R.id.button_start_pause);
         mReportBtn = findViewById(R.id.reportBtn);
         messageEt = findViewById(R.id.messageEt);
         sendBtn = findViewById(R.id.sendBtn);
@@ -147,13 +180,124 @@ public class ChatActivity extends AppCompatActivity {
         //create api service
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        usersRef = firebaseDatabase.getReference("users");
-        
-        getConsultantDetails();
+        mButtonStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Common.isConnectedToTheInternet(mContext))
+                {
+                    progressDialog.show();
+                    /*walletRef.orderByKey().equalTo(myUid)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot ds: dataSnapshot.getChildren())
+                                    {
+                                        Wallet wallet = ds.getValue(Wallet.class);
+                                        int balance = wallet.getBalance();
+                                        if (balance >= 3000)
+                                        {
+                                            int result = balance - 3000;
+                                            try {
+                                                DatabaseReference ref = walletRef.child(myUid);
+                                                ref.child("balance").setValue(result);
+                                                progressDialog.dismiss();
+                                            }
+                                            catch (Exception e){
+                                                Log.d(TAG,"Error: "+e);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });*/
+                }
+                else {
+                    AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                            .setMessage("Please check your internet connection")
+                            .create();
+                    alertDialog.show();
+                }
+            }
+        });
+
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String message = messageEt.getText().toString().trim();
+                
+                sendMessage(message);
+            }
+        });
+
+        getRecepientDetails();
+        readMessages();
     }
 
-    private void getConsultantDetails()
+    private void sendMessage(String message) {
+        String timestamp = String.valueOf(System.currentTimeMillis());
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("sender_id", myUid);
+        hashMap.put("receiver_id", hisUID);
+        hashMap.put("chatroom_id", chatroomID);
+        hashMap.put("message", message);
+        hashMap.put("timestamp", timestamp);
+        hashMap.put("type", "text");
+
+        mMessageReference.push().setValue(hashMap);
+
+        mChatroomReference.document(chatroomID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("num_messages",chatRoom.getNum_messages()+1);
+                            mChatroomReference.document(chatroomID).set(hashMap, SetOptions.merge());
+                        }
+                    }
+                });
+
+    }
+
+    private void readMessages() {
+        chatList = new ArrayList<>();
+        mMessageReference
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        chatList.clear();
+                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+                            ChatMessage chat = ds.getValue(ChatMessage.class);
+
+                            if (chat.getReceiver_id().equals(myUid) && chat.getSender_id().equals(hisUID) ||
+                                    chat.getReceiver_id().equals(hisUID) && chat.getSender_id().equals(myUid)){
+                                chatList.add(chat);
+                            }
+
+                            //adapter
+                            adapterChat = new AdapterChat(ChatActivity.this, chatList, hisImage);
+                            adapterChat.notifyDataSetChanged();
+                            recyclerView.setAdapter(adapterChat);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        //..
+                    }
+                });
+    }
+
+
+    private void getRecepientDetails()
     {
         usersRef.orderByKey().equalTo(hisUID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -169,19 +313,19 @@ public class ChatActivity extends AppCompatActivity {
                                 hisImage = user.getProfile_photo();
 
                                 try {
-                                    UniversalImageLoader.setImage(user.getProfile_photo(), profileIv, null, "");
+                                    UniversalImageLoader.setImage(hisImage, profileIv, null, "");
                                 }
                                 catch (Exception e){
                                     //
                                 }
                             }
-                            else
+                            else if (user.getIsStaff().equals("false"))
                             {
                                 nameTv.setText(user.getUsername());
                                 hisImage = user.getProfile_photo();
 
                                 try {
-                                    UniversalImageLoader.setImage(user.getProfile_photo(), profileIv, null, "");
+                                    UniversalImageLoader.setImage(hisImage, profileIv, null, "");
                                 }
                                 catch (Exception e){
                                     //

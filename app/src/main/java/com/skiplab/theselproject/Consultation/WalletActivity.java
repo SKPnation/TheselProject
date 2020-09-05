@@ -20,6 +20,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.models.Wallet;
 
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class WalletActivity extends AppCompatActivity {
     Button depositBtn;
     TextView balanceTv;
 
-    DatabaseReference walletRef;
+    DatabaseReference usersRef;
     FirebaseAuth mAuth;
 
     @Override
@@ -39,17 +40,17 @@ public class WalletActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
 
-        walletRef = FirebaseDatabase.getInstance().getReference("wallet");
+        usersRef = FirebaseDatabase.getInstance().getReference("users");
         mAuth = FirebaseAuth.getInstance();
         balanceTv = findViewById(R.id.balance_tv);
 
-        walletRef.orderByKey().equalTo(mAuth.getUid())
+        usersRef.orderByKey().equalTo(mAuth.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
-                            Wallet wallet = ds.getValue(Wallet.class);
-                            balanceTv.setText(String.valueOf(wallet.getBalance()));
+                            //User user = ds.getValue(User.class);
+                            balanceTv.setText(ds.child("wallet").getValue().toString());
                         }
                     }
 

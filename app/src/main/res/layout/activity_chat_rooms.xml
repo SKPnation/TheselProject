@@ -3,12 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#F2F2F2"
-    android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    tools:context=".Consultation.ConsultantsActivity">
+    tools:context=".Consultation.ChatRoomsActivity">
 
     <ProgressBar
         android:layout_width="150dp"
@@ -33,6 +30,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Ongoing session"
+                    android:textSize="25sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                    android:textColor="@color/colorPrimary"/>
+
                 <ImageView
                     android:id="@+id/closeBtn"
                     android:tint="@color/colorPrimary"
@@ -56,7 +63,6 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/row_users"/>
-
+        tools:listitem="@layout/layout_chatroom_listitem"/>
 
 </RelativeLayout>

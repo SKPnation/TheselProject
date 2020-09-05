@@ -59,31 +59,49 @@
                     android:hint="@string/staffNameEt"
                     android:background="@android:color/transparent"
                     android:singleLine="true"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textAllCaps="true"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phone_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="15dp"
-                android:textColorHint="#aaa"
-                android:textColorHighlight="#aaa"
+                android:layout_height="match_parent"
                 android:background="@drawable/customedittextstyle"
-                app:errorEnabled="true">
+                android:orientation="vertical"
+                android:layout_marginTop="15dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phoneEt"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="#fff"
-                    android:textSize="20sp"
-                    android:hint="Phone Number"
-                    android:background="@android:color/transparent"
-                    android:singleLine="true" />
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Phone number"
+                    android:textSize="18sp"/>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ccp_defaultNameCode="NG"/>
+
+                    <EditText
+                        android:id="@+id/phoneEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="phone"
+                        android:textColorHint="#aaa"
+                        android:textColor="@android:color/white"
+                        android:inputType="phone"
+                        android:singleLine="true"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email_layout"
@@ -133,86 +151,39 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/address_layout"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="15dp"
-                android:textColorHint="#aaa"
-                android:textColorHighlight="#aaa"
-                android:background="@drawable/customedittextstyle"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/addressEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="#fff"
-                    android:hint="Country"
-                    android:textSize="20sp"
-                    android:background="@android:color/transparent"
-                    android:singleLine="true"
-                    android:inputType="textPostalAddress" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/accountNum_layout"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="15dp"
-                android:textColorHint="#aaa"
-                android:textColorHighlight="#aaa"
-                android:background="@drawable/customedittextstyle"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/accNumEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="#fff"
-                    android:hint="Account Number"
-                    android:textSize="20sp"
-                    android:background="@android:color/transparent"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/bank_layout"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="15dp"
-                android:textColorHint="#aaa"
-                android:textColorHighlight="#aaa"
-                android:background="@drawable/customedittextstyle"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/bankEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="#fff"
-                    android:hint="Name of Bank"
-                    android:textSize="20sp"
-                    android:background="@android:color/transparent"
-                    android:singleLine="true"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/categoryTv"
-                android:layout_below="@id/address_layout"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Your Category"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#00A7E5"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="20dp"
-                android:visibility="gone"/>
+                android:background="@drawable/customedittextstyle"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Select your location"
+                    android:textSize="18sp"/>
+
+                <LinearLayout
+                    android:id="@+id/sp_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@android:color/white"
+                    android:animateLayoutChanges="true"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <Spinner
+                        android:id="@+id/sp_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/categoryEt"
@@ -230,7 +201,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Put in your convenient conselling hours during the day and night. Ensure you are available during your counselling hours."
+                android:text="Put in your convenient counselling hours during the day and night. Ensure you are available during your counselling hours."
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/colorAccent"/>

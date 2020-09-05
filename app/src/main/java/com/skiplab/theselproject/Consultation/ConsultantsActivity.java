@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.skiplab.theselproject.Adapter.AdapterUser;
+import com.skiplab.theselproject.DashboardActivity;
+import com.skiplab.theselproject.Home.SelectCategory;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.User;
 
@@ -44,7 +46,7 @@ public class ConsultantsActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
 
     FirebaseDatabase db;
-    DatabaseReference usersRef, walletRef;
+    DatabaseReference usersRef;
 
     private ProgressBar mProgressBar;
     ImageView closeBtn;
@@ -76,10 +78,7 @@ public class ConsultantsActivity extends AppCompatActivity {
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager( new GridLayoutManager( this, 2 ) );
-        LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation( recyclerView.getContext(),
-                R.anim.layout_fall_down);
-        recyclerView.setLayoutAnimation( controller );
+        recyclerView.setLayoutManager( new GridLayoutManager( this, 1 ) );
 
         loadConsultants();
     }
@@ -100,10 +99,7 @@ public class ConsultantsActivity extends AppCompatActivity {
                 }
                 adapterUser = new AdapterUser(mContext, userList);
                 recyclerView.setAdapter(adapterUser);
-                //swipeRefreshLayout.setRefreshing( false );
-                //Animation
-                recyclerView.getAdapter().notifyDataSetChanged();
-                recyclerView.scheduleLayoutAnimation();
+                adapterUser.notifyDataSetChanged();
             }
 
             @Override
@@ -112,5 +108,15 @@ public class ConsultantsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(mContext, SelectCategory.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

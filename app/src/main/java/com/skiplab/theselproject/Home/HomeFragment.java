@@ -51,6 +51,7 @@ import com.skiplab.theselproject.Activity.NotificationsActivity;
 import com.skiplab.theselproject.Adapter.AdapterConsultant;
 import com.skiplab.theselproject.Adapter.AdapterPosts;
 import com.skiplab.theselproject.AddPost.SelectMood;
+import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.Settings.AccountSettingsActivity;
@@ -95,28 +96,21 @@ public class HomeFragment extends Fragment {
 
     RecyclerView recyclerView, cRecyclerView;
     List<Post> postList;
-    List<Object> mRecyclerViewItems = new ArrayList<>();
     List<User> consultantList;
     AdapterPosts adapterPosts;
     AdapterConsultant adapterConsultant;
 
     FirebaseDatabase db;
     DatabaseReference postDb;
-    DatabaseReference userDb;
+    DatabaseReference userDb, walletDb;
 
     String myUid, myName;
     String selCategory;
 
     private ProgressBar mProgressBar;
 
-    private Timer timer=new Timer();
-    private final long DELAY = 1000; // milliseconds
-
-    private final int ITEM_LOAD_COUNT = 4;
-    private int total_item = 0, last_visible_item;
-    boolean isLoading=false, isMaxData=false;
-
-    String last_node="", last_key="";
+    boolean isScrolling = false;
+    int currentItems, totalItems, scrollOutItems;
 
     private int i=0;
 
@@ -140,6 +134,7 @@ public class HomeFragment extends Fragment {
         db = FirebaseDatabase.getInstance();
         postDb = db.getReference("posts");
         userDb = db.getReference("users");
+        walletDb  = db.getReference("wallet");
         postDb.keepSynced(true);
 
         relLayout1 = view.findViewById(R.id.relLayout1);
@@ -213,102 +208,11 @@ public class HomeFragment extends Fragment {
 
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference("wallet")
-                        .addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists())
-                                {
-                                    if (dataSnapshot.hasChild(firebaseAuth.getUid()))
-                                    {
-                                        //Toast.makeText(getActivity(), "has child",Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getActivity(), SelectCategory.class));
-                                    }
-                                    else {
-                                        //Toast.makeText(getActivity(), "no child",Toast.LENGTH_SHORT).show();
-
-                                        Wallet wallet = new Wallet();
-                                        wallet.setBalance(0);
-                                        wallet.setUid(firebaseAuth.getUid());
-
-                                        FirebaseDatabase.getInstance().getReference().child("wallet").child(firebaseAuth.getUid()).setValue(wallet)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        startActivity(new Intent(getActivity(), SelectCategory.class));
-                                                    }
-                                                });
-                                    }
-                                }
-                                else
-                                {
-                                    Toast.makeText(getActivity(), "not exist",Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-            }
-        });
-
         share_post_et.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 startActivity(new Intent(getActivity(), SelectMood.class));
                 return false;
-            }
-        });
-
-        walletBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference("wallet")
-                        .addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists())
-                                {
-                                    if (dataSnapshot.hasChild(firebaseAuth.getUid()))
-                                    {
-                                        //Toast.makeText(getActivity(), "has child",Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getActivity(), WalletActivity.class));
-
-                                    }
-                                    else {
-                                        Toast.makeText(getActivity(), "no child",Toast.LENGTH_SHORT).show();
-
-                                        Wallet wallet = new Wallet();
-                                        wallet.setBalance(0);
-                                        wallet.setUid(firebaseAuth.getUid());
-
-                                        FirebaseDatabase.getInstance().getReference().child("wallet").child(firebaseAuth.getUid()).setValue(wallet)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        startActivity(new Intent(getActivity(), WalletActivity.class));
-                                                    }
-                                                });
-                                    }
-                                }
-                                else
-                                {
-                                    Toast.makeText(getActivity(), "not exist",Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
             }
         });
 
@@ -427,34 +331,61 @@ public class HomeFragment extends Fragment {
                                 feedTitleTv.setText(selCategory);
                                 feedTitleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
 
-                                //getLastKeyFromFirebase();
-                                //getPosts();
                                 loadPosts();
+                            }
 
+                            fab.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (user.getIsStaff().equals("false"))
+                                    {
+                                        if (!ds.hasChild("wallet")){
+                                            DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
+                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                            currentUserRef.child("wallet").setValue(0);
 
-                                /*nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                                    if(v.getChildAt(v.getChildCount() - 1) != null) {
-                                        if ((scrollY >= (v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight())) &&
-                                                scrollY > oldScrollY) {
+                                            Intent intent = new Intent(getActivity(), SelectCategory.class);
+                                            startActivity(intent);
+                                        }
+                                        else{
+                                            Intent intent = new Intent(getActivity(), SelectCategory.class);
+                                            startActivity(intent);
 
-                                            try {
-                                                //code to fetch more data for endless scrolling
-                                                total_item = linearLayoutManager.getItemCount();
-                                                last_visible_item = linearLayoutManager.findLastVisibleItemPosition();
-
-                                                if (!isLoading && total_item <= ((last_visible_item + ITEM_LOAD_COUNT))){
-                                                    getPosts();
-                                                    isLoading = true;
-                                                }
-                                            }
-                                            catch (Exception e){
-                                                Toast.makeText(getActivity(), ""+e, Toast.LENGTH_LONG).show();
-
-                                            }
                                         }
                                     }
-                                });*/
-                            }
+                                    else if (user.getIsStaff().equals("true"))
+                                    {
+                                        startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
+                                    }
+                                }
+                            });
+
+
+                            walletBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (user.getIsStaff().equals("false"))
+                                    {
+                                        if (!ds.hasChild("wallet")){
+                                            DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
+                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                            currentUserRef.child("wallet").setValue(0);
+
+                                            Intent intent = new Intent(getActivity(), WalletActivity.class);
+                                            startActivity(intent);
+                                        }
+                                        else{
+                                            Intent intent = new Intent(getActivity(), WalletActivity.class);
+                                            startActivity(intent);
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
+                                    }
+                                }
+                            });
                         }
                     }
 
@@ -467,89 +398,13 @@ public class HomeFragment extends Fragment {
 
 
 
+
+
         loadConsultants();
         setupDrawer();
 
         return view;
     }
-
-    /*private void getPosts() {
-        if (!isMaxData)
-        {
-            try {
-                Query query;
-                if (TextUtils.isEmpty(last_node))
-                    query = postDb
-                            .orderByChild("pCategory")
-                            .equalTo(selCategory)
-                            .limitToLast(ITEM_LOAD_COUNT);
-                else
-                    query = postDb
-                            .orderByChild("pCategory")
-                            .equalTo(selCategory)
-                            .startAt(last_node)
-                            .limitToLast(ITEM_LOAD_COUNT);
-
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChildren())
-                        {
-                            List<Post> newPosts = new ArrayList<>();
-                            for (DataSnapshot ds: dataSnapshot.getChildren())
-                            {
-                                newPosts.add(ds.getValue(Post.class));
-                            }
-                            last_node = newPosts.get(newPosts.size()-1).getpId();
-
-                            if (!last_node.equals(last_key))
-                                newPosts.remove(newPosts.size()-1);
-                            else
-                                last_node = "end";
-
-                            adapterPosts.addAll(newPosts);
-                            isLoading = false;
-                        }
-                        else
-                        {
-                            isLoading = false;
-                            isMaxData = true;
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        isLoading = false;
-                    }
-                });
-            }
-            catch (Exception e){
-                Toast.makeText(getActivity(), ""+e, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void getLastKeyFromFirebase() {
-        Query getLastKey = postDb
-                .orderByChild("pCategory")
-                .equalTo(selCategory)
-                .limitToLast(1);
-
-        getLastKey.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot lastKey: dataSnapshot.getChildren()){
-                    last_key = lastKey.getKey();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getActivity(),"Cannot get last key",Toast.LENGTH_SHORT).show();
-            }
-        });
-    }*/
-
 
     private void loadPosts() {
         Query queryPosts = postDb.orderByChild("pCategory").equalTo(selCategory);

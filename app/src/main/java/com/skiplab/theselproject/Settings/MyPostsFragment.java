@@ -110,7 +110,7 @@ public class MyPostsFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //loadPosts();
+                loadPosts();
             }
         } );
 
@@ -118,14 +118,13 @@ public class MyPostsFragment extends Fragment {
         swipeRefreshLayout.post( new Runnable() {
             @Override
             public void run() {
-                //loadPosts();
+                loadPosts();
             }
         } );
 
         return view;
     }
 
-/*
     private void loadPosts(){
 
         usersRef.orderByKey().equalTo(myUid)
@@ -176,7 +175,6 @@ public class MyPostsFragment extends Fragment {
                     }
                 });
     }
-*/
 
     private void checkUserStatus() {
         //get current user

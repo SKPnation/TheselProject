@@ -16,7 +16,8 @@
             android:id="@+id/profileIv"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:civ_border_color="@null" />
+            app:civ_border_color="@null"
+            android:visibility="visible"/>
 
         <TextView
             android:id="@+id/messageTv"

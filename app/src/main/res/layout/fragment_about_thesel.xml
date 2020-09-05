@@ -97,18 +97,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="#fff"
                 android:text="Therapeutic Counselling on this platform is at a cost"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColor="#fff"
-                android:text="Our tariff is rated on hourly basis, varying with consultant."/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColor="#fff"
-                android:text="As a new user, you will be allowed to enjoy a one time free 10 minutes session with any consultant of your choice."/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -119,7 +108,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:gravity="bottom"
                 android:weightSum="2">
 
                 <LinearLayout
