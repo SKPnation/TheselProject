@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,7 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.ChatActivity;
+import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatRoom;
@@ -77,9 +80,12 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds :dataSnapshot.getChildren())
                         {
-                            User client = ds.getValue(User.class);
-                            if (client.getIsStaff().equals("false"))
+                            User user = ds.getValue(User.class);
+
+                            if (user.getIsStaff().equals("false"))
                             {
+                                int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
+
                                 usersRef.orderByKey().equalTo(counsellorID)
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
@@ -109,14 +115,32 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
                                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Intent intent = new Intent(context, ChatActivity.class);
-                                        intent.putExtra("hisUID", counsellorID);
-                                        intent.putExtra("chatroomID",chatroomID);
-                                        context.startActivity(intent);
+                                        if (Common.isConnectedToTheInternet(context))
+                                        {
+                                            if (wallet < 3000)
+                                            {
+                                                context.startActivity(new Intent(context, WalletActivity.class));
+                                            }
+                                            else if (wallet >= 3000)
+                                            {
+                                                Intent intent = new Intent(context, ChatActivity.class);
+                                                intent.putExtra("hisUID", counsellorID);
+                                                intent.putExtra("chatroomID",chatroomID);
+                                                intent.putExtra("myName",clientName);
+                                                context.startActivity(intent);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                    .setMessage("Please check your internet connection!")
+                                                    .create();
+                                            alertDialog.show();
+                                        }
                                     }
                                 });
                             }
-                            else if (client.getIsStaff().equals("true"))
+                            else if (user.getIsStaff().equals("true"))
                             {
                                 //set client name
                                 holder.hisNameTv.setText(clientName);
@@ -126,14 +150,36 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
                                     UniversalImageLoader.setImage(clientDp, holder.avaterIv, null, "");
                                 }
                                 catch (Exception e){
+                                    //..
                                 }
+
+                                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (Common.isConnectedToTheInternet(context))
+                                        {
+                                            Intent intent = new Intent(context, ChatActivity.class);
+                                            intent.putExtra("hisUID", clientUID);
+                                            intent.putExtra("chatroomID",chatroomID);
+                                            intent.putExtra("myName",user.getUsername());
+                                            context.startActivity(intent);
+                                        }
+                                        else
+                                        {
+                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                    .setMessage("Please check your internet connection!")
+                                                    .create();
+                                            alertDialog.show();
+                                        }
+                                    }
+                                });
                             }
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        //..
                     }
                 });
     }

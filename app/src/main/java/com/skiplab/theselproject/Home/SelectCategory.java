@@ -1,5 +1,6 @@
 package com.skiplab.theselproject.Home;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.skiplab.theselproject.Adapter.AdapterMood;
 import com.skiplab.theselproject.AddPost.SelectMood;
+import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.ConsultantsActivity;
 import com.skiplab.theselproject.DashboardActivity;
@@ -50,10 +52,20 @@ public class SelectCategory extends AppCompatActivity {
                 mContext, R.layout.list_category, R.id.listCategory, items);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view1, position, id) -> {
-            String selectedItem = (String) parent.getItemAtPosition(position);
-            Intent intent = new Intent(mContext, ConsultantsActivity.class);
-            intent.putExtra("selectedItem", selectedItem);
-            startActivity(intent);
+            if (Common.isConnectedToTheInternet(mContext))
+            {
+                String selectedItem = (String) parent.getItemAtPosition(position);
+                Intent intent = new Intent(mContext, ConsultantsActivity.class);
+                intent.putExtra("selectedItem", selectedItem);
+                startActivity(intent);
+            }
+            else
+            {
+                AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                        .setMessage("Please check your internet connection!")
+                        .create();
+                alertDialog.show();
+            }
         });
 
         closeBtn = findViewById(R.id.closeBtn);
@@ -76,9 +88,6 @@ public class SelectCategory extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(mContext, DashboardActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
         finish();
     }
 }

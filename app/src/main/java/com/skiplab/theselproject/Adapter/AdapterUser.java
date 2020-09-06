@@ -27,14 +27,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.skiplab.theselproject.Common.Common;
-import com.skiplab.theselproject.Consultation.ChatActivity;
 import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.R;
@@ -42,15 +39,8 @@ import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatMessage;
 import com.skiplab.theselproject.models.ChatRoom;
 import com.skiplab.theselproject.models.User;
-import com.skiplab.theselproject.models.Wallet;
-import com.skiplab.theselproject.notifications.Data;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 import java.util.UUID;
 
 public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder>{
@@ -135,12 +125,17 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                         User counsellor = ds.getValue(User.class);
                                         if (counsellor.getOnlineStatus().equals("offline"))
                                         {
-                                            //...
-
+                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                    .setMessage(counsellor.getUsername()+" is offline!")
+                                                    .create();
+                                            alertDialog.show();
                                         }
                                         else if (counsellor.getOnlineStatus().equals("deactivated"))
                                         {
-                                            //..
+                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                    .setMessage(counsellor.getUsername()+" is unavailable at the moment!")
+                                                    .create();
+                                            alertDialog.show();
                                         }
                                         else
                                         {
@@ -182,13 +177,21 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                                                         if (task.isSuccessful())
                                                                                         {
-                                                                                            if(task.getResult().size() > 0) {
-                                                                                                Toast.makeText(context,"exist",Toast.LENGTH_SHORT).show();
+                                                                                            if(task.getResult().size() > 0)
+                                                                                            {
+                                                                                                AlertDialog.Builder alertDialog =new AlertDialog.Builder(context);
+                                                                                                alertDialog.setCancelable(false);
+                                                                                                alertDialog.setMessage("End your ongoing session before starting a new session!");
+                                                                                                alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                                                    @Override
+                                                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                                                        dialog.dismiss();
 
-                                                                                                /*for (DocumentSnapshot document : task.getResult()) {
-                                                                                                    Log.d(FTAG, "Room already exists, start the chat");
+                                                                                                        context.startActivity(new Intent(context, ChatRoomsActivity.class));
+                                                                                                    }
+                                                                                                });
+                                                                                                alertDialog.show();
 
-                                                                                                }*/
                                                                                             } else {
                                                                                                 mChatroomReference.whereEqualTo("counsellor_id",hisUID)
                                                                                                         .get()
@@ -198,7 +201,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                 if (task.isSuccessful()){
                                                                                                                     if (task.getResult().size() > 0)
                                                                                                                     {
-                                                                                                                        Toast.makeText(context,counsellor.getUsername()+" is currently in a session with a client.",Toast.LENGTH_SHORT).show();
+                                                                                                                        Toast.makeText(context,counsellor.getUsername()+" is in a ongoing session with a client.",Toast.LENGTH_SHORT).show();
                                                                                                                     }
                                                                                                                     else
                                                                                                                     {
@@ -219,7 +222,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                         String messageId = mMessageReference.push().getKey();
 
                                                                                                                         ChatMessage message = new ChatMessage();
-                                                                                                                        message.setMessage("Welcome to the new chatroom! \n"+"Get everything off your mind");
+                                                                                                                        message.setMessage("Hi! I'm "+counsellor.getUsername()+". Welcome to Thesel.\n"+"Let me know what's bothering you.");
                                                                                                                         message.setTimestamp(timestamp);
                                                                                                                         message.setSender_id(hisUID);
                                                                                                                         message.setReceiver_id(mAuth.getUid());
@@ -231,10 +234,20 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                             public void onSuccess(Void aVoid) {
                                                                                                                                 mMessageReference.child(messageId).setValue(message);
 
+                                                                                                                                AlertDialog.Builder alertDialog =new AlertDialog.Builder(context);
+                                                                                                                                alertDialog.setCancelable(false);
+                                                                                                                                alertDialog.setMessage("New session with " + counsellor.getUsername()+"!");
+                                                                                                                                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                                                                                    @Override
+                                                                                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                                                                                        dialog.dismiss();
+
+                                                                                                                                        context.startActivity(new Intent(context, ChatRoomsActivity.class));
+                                                                                                                                    }
+                                                                                                                                });
+                                                                                                                                alertDialog.show();
                                                                                                                             }
                                                                                                                         });
-
-                                                                                                                        Toast.makeText(context, "New session with " + counsellor.getUsername(), Toast.LENGTH_SHORT).show();
                                                                                                                     }
                                                                                                                 }
                                                                                                             }
@@ -279,7 +292,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                 }
                 else {
                     AlertDialog alertDialog =new AlertDialog.Builder(context)
-                            .setMessage("Please check your internet connection")
+                            .setMessage("Please check your internet connection!")
                             .create();
                     alertDialog.show();
                 }
@@ -308,7 +321,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                //..
                             }
                         });
 

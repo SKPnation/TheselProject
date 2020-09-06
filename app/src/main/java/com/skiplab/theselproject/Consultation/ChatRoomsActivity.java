@@ -9,8 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +40,8 @@ import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.ChatRoom;
 import com.skiplab.theselproject.models.User;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +61,9 @@ public class ChatRoomsActivity extends AppCompatActivity {
 
     ProgressBar mProgressBar;
 
+    TextView hintText;
+    private ImageView closeBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +74,9 @@ public class ChatRoomsActivity extends AppCompatActivity {
         chatroomRef = FirebaseFirestore.getInstance().collection("chatrooms");
 
         mProgressBar = findViewById(R.id.progressBar);
+
+        hintText = findViewById(R.id.hintText);
+        closeBtn = findViewById(R.id.closeBtn);
 
         chatroomList = new ArrayList<>();
 
@@ -102,27 +112,56 @@ public class ChatRoomsActivity extends AppCompatActivity {
                         //..
                     }
                 });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DashboardActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void loadClientChatrooms() {
-        Query query = chatroomRef.whereEqualTo("creator_id",mAuth.getUid());
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                chatroomList.clear();
-                for (DocumentSnapshot ds: queryDocumentSnapshots.getDocuments() )
-                {
-                    ChatRoom chatRoom = ds.toObject(ChatRoom.class);
+        chatroomRef.whereEqualTo("creator_id",mAuth.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            if(task.getResult().size() > 0) {
+                                task.getResult().getQuery().addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                        chatroomList.clear();
+                                        for (DocumentSnapshot ds: queryDocumentSnapshots.getDocuments() )
+                                        {
+                                            ChatRoom chatRoom = ds.toObject(ChatRoom.class);
 
-                    mProgressBar.setVisibility(View.GONE);
+                                            mProgressBar.setVisibility(View.GONE);
 
-                    chatroomList.add(chatRoom);
-                }
-                chatroomAdapter = new ChatroomListAdapter(mContext, chatroomList);
-                recyclerView.setAdapter(chatroomAdapter);
-                chatroomAdapter.notifyDataSetChanged();
-            }
-        });
+                                            chatroomList.add(chatRoom);
+
+                                        }
+                                        chatroomAdapter = new ChatroomListAdapter(mContext, chatroomList);
+                                        recyclerView.setAdapter(chatroomAdapter);
+                                        chatroomAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                mProgressBar.setVisibility(View.GONE);
+                                hintText.setText("You have no ongoing session at the moment!");
+                            }
+
+
+                        }
+                    }
+                });
     }
 
     private void loadCounsultantChatrooms() {
@@ -154,17 +193,13 @@ public class ChatRoomsActivity extends AppCompatActivity {
                                 });
                             }
                             else
+                            {
                                 mProgressBar.setVisibility(View.GONE);
+                                hintText.setText("You have no ongoing session at the moment!");
+                            }
                         }
                     }
                 });
-        /*Query query = chatroomRef.whereEqualTo("counsellor_id",mAuth.getUid());
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-            }
-        });*/
     }
 
     @Override
@@ -174,5 +209,6 @@ public class ChatRoomsActivity extends AppCompatActivity {
         Intent intent = new Intent(mContext, DashboardActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 }

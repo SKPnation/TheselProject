@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.core.widget.NestedScrollView;
@@ -16,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -37,7 +37,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,6 +50,7 @@ import com.skiplab.theselproject.Activity.NotificationsActivity;
 import com.skiplab.theselproject.Adapter.AdapterConsultant;
 import com.skiplab.theselproject.Adapter.AdapterPosts;
 import com.skiplab.theselproject.AddPost.SelectMood;
+import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.DashboardActivity;
@@ -59,11 +59,9 @@ import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Post;
 import com.skiplab.theselproject.models.User;
-import com.skiplab.theselproject.models.Wallet;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,7 +100,7 @@ public class HomeFragment extends Fragment {
 
     FirebaseDatabase db;
     DatabaseReference postDb;
-    DatabaseReference userDb, walletDb;
+    DatabaseReference userDb;
 
     String myUid, myName;
     String selCategory;
@@ -134,7 +132,6 @@ public class HomeFragment extends Fragment {
         db = FirebaseDatabase.getInstance();
         postDb = db.getReference("posts");
         userDb = db.getReference("users");
-        walletDb  = db.getReference("wallet");
         postDb.keepSynced(true);
 
         relLayout1 = view.findViewById(R.id.relLayout1);
@@ -313,6 +310,9 @@ public class HomeFragment extends Fragment {
                             User user = ds.getValue(User.class);
                             selCategory = user.getSelectedCategory();
 
+                            if (user.getIsStaff().equals("true"))
+                                walletBtn.setVisibility(View.GONE);
+
                             if (selCategory.isEmpty())
                             {
                                 mProgressBar.setVisibility(View.GONE);
@@ -337,26 +337,42 @@ public class HomeFragment extends Fragment {
                             fab.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    if (user.getIsStaff().equals("false"))
+                                    if (Common.isConnectedToTheInternet(getContext()))
                                     {
-                                        if (!ds.hasChild("wallet")){
-                                            DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
-                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                            currentUserRef.child("wallet").setValue(0);
+                                        if (user.getIsStaff().equals("false"))
+                                        {
+                                            if (!ds.hasChild("wallet")){
+                                                DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
+                                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                                currentUserRef.child("wallet").setValue(0);
 
+                                                Intent intent = new Intent(getActivity(), SelectCategory.class);
+                                                startActivity(intent);
+                                            }
+                                            else{
+                                                Intent intent = new Intent(getActivity(), SelectCategory.class);
+                                                startActivity(intent);
+
+                                            }
+                                        }
+                                        else if (user.getIsStaff().equals("true"))
+                                        {
+                                            startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
+                                        }
+                                        else
+                                        {
                                             Intent intent = new Intent(getActivity(), SelectCategory.class);
                                             startActivity(intent);
                                         }
-                                        else{
-                                            Intent intent = new Intent(getActivity(), SelectCategory.class);
-                                            startActivity(intent);
-
-                                        }
                                     }
-                                    else if (user.getIsStaff().equals("true"))
+                                    else
                                     {
-                                        startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
+                                        AlertDialog alertDialog =new AlertDialog.Builder(getActivity())
+                                                .setMessage("Please check your internet connection!")
+                                                .create();
+                                        alertDialog.show();
                                     }
+
                                 }
                             });
 
@@ -364,25 +380,34 @@ public class HomeFragment extends Fragment {
                             walletBtn.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    if (user.getIsStaff().equals("false"))
+                                    if (Common.isConnectedToTheInternet(getContext()))
                                     {
-                                        if (!ds.hasChild("wallet")){
-                                            DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
-                                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                            currentUserRef.child("wallet").setValue(0);
+                                        if (user.getIsStaff().equals("false"))
+                                        {
+                                            if (!ds.hasChild("wallet")){
+                                                DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
+                                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                                currentUserRef.child("wallet").setValue(0);
 
-                                            Intent intent = new Intent(getActivity(), WalletActivity.class);
-                                            startActivity(intent);
+                                                Intent intent = new Intent(getActivity(), WalletActivity.class);
+                                                startActivity(intent);
+                                            }
+                                            else{
+                                                Intent intent = new Intent(getActivity(), WalletActivity.class);
+                                                startActivity(intent);
+                                            }
                                         }
-                                        else{
-                                            Intent intent = new Intent(getActivity(), WalletActivity.class);
-                                            startActivity(intent);
-
+                                        else
+                                        {
+                                            //..
                                         }
                                     }
                                     else
                                     {
-                                        startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
+                                        AlertDialog alertDialog =new AlertDialog.Builder(getActivity())
+                                                .setMessage("Please check your internet connection!")
+                                                .create();
+                                        alertDialog.show();
                                     }
                                 }
                             });

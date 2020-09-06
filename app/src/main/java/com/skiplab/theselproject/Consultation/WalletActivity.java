@@ -8,29 +8,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
-import com.skiplab.theselproject.models.User;
-import com.skiplab.theselproject.models.Wallet;
-
-import java.util.HashMap;
 
 public class WalletActivity extends AppCompatActivity {
 
     Context mContext = WalletActivity.this;
 
-    Button depositBtn;
-    TextView balanceTv;
+    private Button depositBtn;
+    private TextView balanceTv;
+    private ImageView closeBtn;
 
     DatabaseReference usersRef;
     FirebaseAuth mAuth;
@@ -42,7 +38,19 @@ public class WalletActivity extends AppCompatActivity {
 
         usersRef = FirebaseDatabase.getInstance().getReference("users");
         mAuth = FirebaseAuth.getInstance();
+
         balanceTv = findViewById(R.id.balance_tv);
+        closeBtn = findViewById(R.id.closeBtn);
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DashboardActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         usersRef.orderByKey().equalTo(mAuth.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {

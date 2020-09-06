@@ -12,28 +12,21 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.skiplab.theselproject.DashboardActivity;
-import com.skiplab.theselproject.Home.SelectCategory;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.User;
-import com.skiplab.theselproject.models.Wallet;
 
 import java.util.Calendar;
 
@@ -52,9 +45,10 @@ public class DepositActivity extends AppCompatActivity {
     private Card card;
     private Charge charge;
 
-    AppCompatEditText etEmail,etName,etCard,etCvv;
-    AppCompatSpinner spMonth,spYear;
-    AppCompatButton btProceed;
+    private AppCompatEditText etEmail,etName,etCard,etCvv;
+    private AppCompatSpinner spMonth,spYear;
+    private AppCompatButton btProceed;
+    private ImageView closeBtn;
 
     private String email, cardNumber, cvv;
     private int expiryMonth, expiryYear;
@@ -65,7 +59,7 @@ public class DepositActivity extends AppCompatActivity {
     int eighteen_thousand = 1800000;
 
     FirebaseAuth mAuth;
-    DatabaseReference walletRef, usersRef;
+    DatabaseReference usersRef;
 
     ProgressDialog progressDialog;
 
@@ -75,7 +69,6 @@ public class DepositActivity extends AppCompatActivity {
         setContentView(R.layout.activity_deposit);
 
         mAuth = FirebaseAuth.getInstance();
-        walletRef = FirebaseDatabase.getInstance().getReference("wallet");
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 
         progressDialog = new ProgressDialog(this);
@@ -84,6 +77,17 @@ public class DepositActivity extends AppCompatActivity {
         sixtCv = findViewById(R.id.six_thousand_cv);
         twelvetCv = findViewById(R.id.twelve_thousand_cv);
         eighteentCv = findViewById(R.id.eighteen_thousand_cv);
+        closeBtn = findViewById(R.id.closeBtn);
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, WalletActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         usersRef.orderByKey().equalTo(mAuth.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,67 +98,51 @@ public class DepositActivity extends AppCompatActivity {
                             User user = ds.getValue(User.class);
                             if (user.getIsStaff().equals("false"))
                             {
+                                int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
+
                                 threetCv.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
 
-                                        int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
                                         int result = wallet + 3000;
-                                        usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result);
+                                        if (result > 18000)
+                                        {
+                                            AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                                                    .setMessage("Your Thesel wallet can't hold more than #18,000")
+                                                    .create();
+                                            alertDialog.show();
+                                        }
+                                        else
+                                        {
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                            View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.card_payment_dialog, null);
 
+                                            etEmail = mView.findViewById(R.id.et_main_email);
+                                            etName = mView.findViewById(R.id.et_main_name);
+                                            etCard = mView.findViewById(R.id.et_main_card);
+                                            etCvv = mView.findViewById(R.id.et_main_cvv);
+                                            spMonth= mView.findViewById(R.id.sp_main_month);
+                                            spYear = mView.findViewById(R.id.sp_main_year);
+                                            btProceed = mView.findViewById(R.id.bt_main_proceed);
 
-                /*walletRef.orderByKey().equalTo(mAuth.getUid())
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds : dataSnapshot.getChildren())
-                                {
-                                    Wallet wallet = ds.getValue(Wallet.class);
+                                            etEmail.setText(mAuth.getCurrentUser().getEmail());
+                                            btProceed.setText("PROCEED:  #3000");
 
-                                    int balance = wallet.getBalance();
-                                    int result = balance + 3000;
-                                    if (result > 18000)
-                                    {
-                                        AlertDialog alertDialog = new AlertDialog.Builder(mContext)
-                                                .setMessage("Your Thesel wallet can't hold more than #18,000")
-                                                .create();
-                                        alertDialog.show();
-                                    }
-                                    else
-                                    {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                                        View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.card_payment_dialog, null);
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
+                                            //here we set the adapter to the year spinner
+                                            spYear.setAdapter(adapter);
 
-                                        etEmail = mView.findViewById(R.id.et_main_email);
-                                        etName = mView.findViewById(R.id.et_main_name);
-                                        etCard = mView.findViewById(R.id.et_main_card);
-                                        etCvv = mView.findViewById(R.id.et_main_cvv);
-                                        spMonth= mView.findViewById(R.id.sp_main_month);
-                                        spYear = mView.findViewById(R.id.sp_main_year);
-                                        btProceed = mView.findViewById(R.id.bt_main_proceed);
+                                            btProceed.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    chargeCard(three_thousand, wallet);
+                                                }
+                                            });
 
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
-                                        //here we set the adapter to the year spinner
-                                        spYear.setAdapter(adapter);
+                                            builder.setView(mView);
+                                            builder.show();
+                                        }
 
-                                        btProceed.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                chargeCard(three_thousand, balance);
-                                            }
-                                        });
-
-                                        builder.setView(mView);
-                                        builder.show();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //..
-                            }
-                        });*/
                                     }
                                 });
 
@@ -162,63 +150,133 @@ public class DepositActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
 
-                                        int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
                                         int result = wallet + 6000;
-                                        usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result);
-                /*walletRef.orderByKey().equalTo(mAuth.getUid())
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds : dataSnapshot.getChildren())
-                                {
-                                    Wallet wallet = ds.getValue(Wallet.class);
+                                        if (result > 18000)
+                                        {
+                                            AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                                                    .setMessage("Your Thesel wallet can't hold more than #18,000")
+                                                    .create();
+                                            alertDialog.show();
+                                        }
+                                        else
+                                        {
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                            View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.card_payment_dialog, null);
 
-                                    int balance = wallet.getBalance();
-                                    int result = balance + 6000;
-                                    if (result > 18000)
-                                    {
-                                        AlertDialog alertDialog = new AlertDialog.Builder(mContext)
-                                                .setMessage("Your Thesel wallet can't hold more than #18,000")
-                                                .create();
-                                        alertDialog.show();
+                                            etEmail = mView.findViewById(R.id.et_main_email);
+                                            etName = mView.findViewById(R.id.et_main_name);
+                                            etCard = mView.findViewById(R.id.et_main_card);
+                                            etCvv = mView.findViewById(R.id.et_main_cvv);
+                                            spMonth= mView.findViewById(R.id.sp_main_month);
+                                            spYear = mView.findViewById(R.id.sp_main_year);
+                                            btProceed = mView.findViewById(R.id.bt_main_proceed);
+
+                                            etEmail.setText(mAuth.getCurrentUser().getEmail());
+                                            btProceed.setText("PROCEED:  #6000");
+
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
+                                            //here we set the adapter to the year spinner
+                                            spYear.setAdapter(adapter);
+
+                                            btProceed.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    chargeCard(six_thousand, wallet);
+                                                }
+                                            });
+
+                                            builder.setView(mView);
+                                            builder.show();
+                                        }
+
                                     }
-                                    else
-                                    {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                                        View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.card_payment_dialog, null);
+                                });
 
-                                        etEmail = mView.findViewById(R.id.et_main_email);
-                                        etName = mView.findViewById(R.id.et_main_name);
-                                        etCard = mView.findViewById(R.id.et_main_card);
-                                        etCvv = mView.findViewById(R.id.et_main_cvv);
-                                        spMonth= mView.findViewById(R.id.sp_main_month);
-                                        spYear = mView.findViewById(R.id.sp_main_year);
-                                        btProceed = mView.findViewById(R.id.bt_main_proceed);
+                                twelvetCv.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        int result = wallet + 12000;
+                                        if (result > 18000)
+                                        {
+                                            AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                                                    .setMessage("Your Thesel wallet can't hold more than #18,000")
+                                                    .create();
+                                            alertDialog.show();
+                                        }
+                                        else
+                                        {
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                            View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.card_payment_dialog, null);
 
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
-                                        //here we set the adapter to the year spinner
-                                        spYear.setAdapter(adapter);
+                                            etEmail = mView.findViewById(R.id.et_main_email);
+                                            etName = mView.findViewById(R.id.et_main_name);
+                                            etCard = mView.findViewById(R.id.et_main_card);
+                                            etCvv = mView.findViewById(R.id.et_main_cvv);
+                                            spMonth= mView.findViewById(R.id.sp_main_month);
+                                            spYear = mView.findViewById(R.id.sp_main_year);
+                                            btProceed = mView.findViewById(R.id.bt_main_proceed);
 
-                                        btProceed.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                chargeCard(six_thousand, balance);
-                                            }
-                                        });
+                                            etEmail.setText(mAuth.getCurrentUser().getEmail());
+                                            btProceed.setText("PROCEED:  #12000");
 
-                                        builder.setView(mView);
-                                        builder.show();
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
+                                            //here we set the adapter to the year spinner
+                                            spYear.setAdapter(adapter);
+
+                                            btProceed.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    chargeCard(twelve_thousand, wallet);
+                                                }
+                                            });
+
+                                            builder.setView(mView);
+                                            builder.show();
+                                        }
                                     }
+                                });
 
-                                }
-                            }
+                                eighteentCv.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        int result = wallet + 18000;
+                                        if (result > 18000)
+                                        {
+                                            AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                                                    .setMessage("Your Thesel wallet can't hold more than #18,000")
+                                                    .create();
+                                            alertDialog.show();
+                                        }
+                                        else
+                                        {
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                            View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.card_payment_dialog, null);
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //..
-                            }
-                        });*/
+                                            etEmail = mView.findViewById(R.id.et_main_email);
+                                            etName = mView.findViewById(R.id.et_main_name);
+                                            etCard = mView.findViewById(R.id.et_main_card);
+                                            etCvv = mView.findViewById(R.id.et_main_cvv);
+                                            spMonth= mView.findViewById(R.id.sp_main_month);
+                                            spYear = mView.findViewById(R.id.sp_main_year);
+                                            btProceed = mView.findViewById(R.id.bt_main_proceed);
 
+                                            etEmail.setText(mAuth.getCurrentUser().getEmail());
+                                            btProceed.setText("PROCEED:  #18000");
+
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
+                                            //here we set the adapter to the year spinner
+                                            spYear.setAdapter(adapter);
+
+                                            btProceed.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    chargeCard(eighteen_thousand, wallet);
+                                                }
+                                            });
+
+                                            builder.setView(mView);
+                                            builder.show();
+                                        }
                                     }
                                 });
                             }
@@ -230,127 +288,11 @@ public class DepositActivity extends AppCompatActivity {
 
                     }
                 });
-
-
-
-        twelvetCv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                walletRef.orderByKey().equalTo(mAuth.getUid())
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds: dataSnapshot.getChildren())
-                                {
-                                    Wallet wallet = ds.getValue(Wallet.class);
-
-                                    int balance = wallet.getBalance();
-                                    int result = balance + 12000;
-                                    if (result > 18000)
-                                    {
-                                        AlertDialog alertDialog = new AlertDialog.Builder(mContext)
-                                                .setMessage("Your Thesel wallet can't hold more than #18,000")
-                                                .create();
-                                        alertDialog.show();
-                                    }
-                                    else
-                                    {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                                        View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.card_payment_dialog, null);
-
-                                        etEmail = mView.findViewById(R.id.et_main_email);
-                                        etName = mView.findViewById(R.id.et_main_name);
-                                        etCard = mView.findViewById(R.id.et_main_card);
-                                        etCvv = mView.findViewById(R.id.et_main_cvv);
-                                        spMonth= mView.findViewById(R.id.sp_main_month);
-                                        spYear = mView.findViewById(R.id.sp_main_year);
-                                        btProceed = mView.findViewById(R.id.bt_main_proceed);
-
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
-                                        //here we set the adapter to the year spinner
-                                        spYear.setAdapter(adapter);
-
-                                        btProceed.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                chargeCard(twelve_thousand, balance);
-                                            }
-                                        });
-
-                                        builder.setView(mView);
-                                        builder.show();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //..
-                            }
-                        });
-            }
-        });
-
-        eighteentCv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                walletRef.orderByKey().equalTo(mAuth.getUid())
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds: dataSnapshot.getChildren())
-                                {
-                                    Wallet wallet = ds.getValue(Wallet.class);
-
-                                    int balance = wallet.getBalance();
-                                    int result = balance + 18000;
-                                    if (result > 18000)
-                                    {
-                                        AlertDialog alertDialog = new AlertDialog.Builder(mContext)
-                                                .setMessage("Your Thesel wallet can't hold more than #18,000")
-                                                .create();
-                                        alertDialog.show();
-                                    }
-                                    else
-                                    {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                                        View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.card_payment_dialog, null);
-
-                                        etEmail = mView.findViewById(R.id.et_main_email);
-                                        etName = mView.findViewById(R.id.et_main_name);
-                                        etCard = mView.findViewById(R.id.et_main_card);
-                                        etCvv = mView.findViewById(R.id.et_main_cvv);
-                                        spMonth= mView.findViewById(R.id.sp_main_month);
-                                        spYear = mView.findViewById(R.id.sp_main_year);
-                                        btProceed = mView.findViewById(R.id.bt_main_proceed);
-
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
-                                        //here we set the adapter to the year spinner
-                                        spYear.setAdapter(adapter);
-
-                                        btProceed.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                chargeCard(eighteen_thousand, balance);
-                                            }
-                                        });
-
-                                        builder.setView(mView);
-                                        builder.show();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-            }
-        });
     }
 
-    private void chargeCard(int amountInNaira, int balance) {
+    private void chargeCard(int amountInNaira, int wallet) {
+
+        String userEmail = etEmail.getText().toString().trim();
         String cardName = etName.getText().toString().trim();
         String cardCvv = etCvv.getText().toString().trim();
         String cardNumber = etCard.getText().toString().trim();
@@ -379,7 +321,7 @@ public class DepositActivity extends AppCompatActivity {
 
                         //setup a charge object to set values like amount, reference etc
                         Charge charge = new Charge();
-                        charge.setEmail(mAuth.getCurrentUser().getEmail());
+                        charge.setEmail(userEmail);
                         //the amount(in KOBO eg 1000 kobo = 10 Naira) the customer is to pay for the product or service
                         // basically add 2 extra zeros at the end of your amount to convert from kobo to naira.
                         charge.setAmount(amountInNaira);
@@ -396,21 +338,57 @@ public class DepositActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
 
                                 if (amountInNaira == 300000){
-                                    int result = balance + 3000;
-                                    walletRef.child(mAuth.getCurrentUser().getUid()).child("balance").setValue(result);
+                                    int result = wallet + 3000;
+                                    usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Intent intent = new Intent(mContext, WalletActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            });
                                 }
                                 else if (amountInNaira == 600000){
-                                    int result = balance + 6000;
-                                    walletRef.child(mAuth.getCurrentUser().getUid()).child("balance").setValue(result);
+                                    int result = wallet + 6000;
+                                    usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Intent intent = new Intent(mContext, WalletActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            });
                                 }
                                 else if (amountInNaira == 1200000){
-                                    int result = balance + 12000;
-                                    walletRef.child(mAuth.getCurrentUser().getUid()).child("balance").setValue(result);
+                                    int result = wallet + 12000;
+                                    usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Intent intent = new Intent(mContext, WalletActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            });
                                 }
-                                else
+                                else if (amountInNaira == 1800000)
                                 {
-                                    int result = balance + 18000;
-                                    walletRef.child(mAuth.getCurrentUser().getUid()).child("balance").setValue(result);
+                                    int result = wallet + 18000;
+                                    usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Intent intent = new Intent(mContext, WalletActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            });
                                 }
 
                                 Toast.makeText(mContext, "Successful deposit!", Toast.LENGTH_LONG).show();

@@ -99,7 +99,12 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder>{
                 holder.messageIv.setVisibility(View.VISIBLE);
                 holder.playIv.setVisibility(View.GONE);
 
-                UniversalImageLoader.setImage(message, holder.messageIv, null, "");
+                try {
+                    UniversalImageLoader.setImage(message, holder.messageIv, null, "");
+                }
+                catch (Exception e){
+                    //...
+                }
             }
         }
         else
