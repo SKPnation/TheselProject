@@ -23,7 +23,8 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Consultation.ChatRoomsActivity"></activity>
+        <activity android:name=".EditConsultantProfile"></activity>
+        <activity android:name=".Consultation.ChatRoomsActivity" />
         <activity android:name=".Consultation.DepositActivity" />
         <activity android:name=".Consultation.WalletActivity" />
         <activity android:name=".Consultation.ChatActivity" />

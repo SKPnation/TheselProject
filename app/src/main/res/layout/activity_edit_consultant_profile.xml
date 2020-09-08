@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    tools:context=".EditConsultantProfile">
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="2dp"
+        android:padding="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -14,13 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:weightSum="9"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -29,7 +32,7 @@
 
             <TextView
                 android:id="@+id/phoneTv"
-                android:layout_weight="7"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -40,14 +43,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:weightSum="9"
+            android:layout_marginTop="20dp"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -55,27 +58,28 @@
                 android:text="Cost: "/>
 
             <TextView
-                android:id="@+id/costEt"
-                android:layout_weight="7"
+                android:id="@+id/costTv"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:textSize="20sp"
                 android:layout_marginLeft="5dp"
-                android:hint="cost"/>
+                android:hint="cost"
+                android:text=""/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:weightSum="9"
+            android:layout_marginTop="20dp"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -84,7 +88,7 @@
 
             <TextView
                 android:id="@+id/categoryTv1"
-                android:layout_weight="7"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:textSize="20sp"
@@ -96,14 +100,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:weightSum="9"
+            android:layout_marginTop="20dp"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -112,7 +116,7 @@
 
             <TextView
                 android:id="@+id/categoryTv2"
-                android:layout_weight="7"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:textSize="20sp"
@@ -124,14 +128,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:weightSum="9"
+            android:layout_marginTop="20dp"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -140,7 +144,7 @@
 
             <TextView
                 android:id="@+id/categoryTv3"
-                android:layout_weight="7"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:textSize="20sp"
@@ -152,27 +156,56 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:weightSum="9"
+            android:layout_marginTop="20dp"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
+                android:padding="2dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Status: "/>
+
+            <TextView
+                android:id="@+id/status_tv"
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp"
+                android:hint="status"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:weightSum="6"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:text="Country: "/>
 
-            <TextView
-                android:id="@+id/countryTv"
-                android:layout_weight="7"
+            <EditText
+                android:id="@+id/countryEt"
+                android:layout_weight="4"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:textSize="20sp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:textSize="20sp"
                 android:hint="country"/>
 
         </LinearLayout>
@@ -180,42 +213,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:weightSum="9"
+            android:layout_marginTop="20dp"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:text="Completed: "/>
+                android:text="Payments: "/>
 
             <TextView
-                android:id="@+id/completedTv"
-                android:layout_weight="6.5"
+                android:id="@+id/num_payments_tv"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:textSize="20sp"
+                android:text=""
                 android:layout_marginLeft="5dp"
-                android:hint="Completed sessions"/>
+                android:hint="num of payments"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:weightSum="9"
+            android:layout_marginTop="20dp"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -224,10 +258,11 @@
 
             <TextView
                 android:id="@+id/totalTv"
-                android:layout_weight="7"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:textSize="20sp"
+                android:text=""
                 android:layout_marginLeft="5dp"
                 android:hint="Total pay out"/>
 
@@ -236,14 +271,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:weightSum="9"
+            android:layout_marginTop="20dp"
+            android:weightSum="7"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:padding="2dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Consultations: "/>
+
+            <TextView
+                android:id="@+id/consultationsTv"
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp"
+                android:text=""
+                android:hint="num of consultations"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:weightSum="6"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -252,9 +316,10 @@
 
             <EditText
                 android:id="@+id/daytimeEt"
-                android:layout_weight="7"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:hint="day"/>
 
         </LinearLayout>
@@ -262,13 +327,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="9"
+            android:layout_marginTop="10dp"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -277,9 +343,10 @@
 
             <EditText
                 android:id="@+id/nightimeEt"
-                android:layout_weight="7"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:hint="night"/>
 
         </LinearLayout>
@@ -288,13 +355,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:weightSum="9"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -303,9 +370,10 @@
 
             <EditText
                 android:id="@+id/bankEt"
-                android:layout_weight="7"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:hint="bank name"/>
 
         </LinearLayout>
@@ -313,13 +381,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="9"
+            android:layout_marginTop="10dp"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -328,9 +397,10 @@
 
             <EditText
                 android:id="@+id/accountnumEt"
-                android:layout_weight="7"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:hint="account number"/>
 
         </LinearLayout>
@@ -338,13 +408,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="9"
+            android:layout_marginTop="10dp"
+            android:weightSum="6"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:padding="2dp"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -353,14 +424,22 @@
 
             <TextView
                 android:id="@+id/profileTv"
-                android:layout_weight="7"
+                android:layout_weight="4"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:textSize="20sp"
                 android:layout_marginLeft="5dp"
-                android:hint="Profile description"/>
+                android:hint="Profile description"
+                android:layout_marginBottom="10dp"/>
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="SAVE"/>
 
     </LinearLayout>
 

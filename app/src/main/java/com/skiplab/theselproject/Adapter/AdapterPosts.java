@@ -288,7 +288,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
                     Token token = new Token(ds1.getString("token"));
-                    Data data = new Data(myUid, myName+" liked your post", "Thesel", hisUid, R.mipmap.ic_launcher2);
+                    Data data = new Data(myUid, "A user liked your post", "Thesel", hisUid, R.mipmap.ic_launcher3);
 
                     Sender sender = new Sender(data, token.getToken());
                     apiService.sendNotification(sender)
@@ -635,12 +635,11 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
                             }
                             else {
                                 String timestamp = ""+System.currentTimeMillis();
-                                String notification = " liked your post";
                                 //not liked, like it
                                 postsRef.child(postIde).child("pLikes").setValue( ""+(pLikes+1));
                                 likesRef.child(postIde).child(myUid).setValue("Liked");
-                                /*((DashboardActivity)context).sendNotification(postIde, timestamp,
-                                        postList.get(getAdapterPosition()).getUid(), notification, myUid);*/
+                                ((DashboardActivity)context).sendNotification(postIde, timestamp,
+                                        postList.get(getAdapterPosition()).getUid());
                                 mProcessLike=false;
 
                             }

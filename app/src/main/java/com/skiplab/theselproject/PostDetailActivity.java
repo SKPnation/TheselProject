@@ -251,21 +251,6 @@ public class PostDetailActivity extends AppCompatActivity {
         reference.child(hisUid).child(timestamp).setValue(hashMap);
     }
 
-    /*private void addToCommentUserNotifications(String hisUid, String pId, String notification){
-        String timestamp = ""+System.currentTimeMillis();
-
-        HashMap<Object, String> hashMap = new HashMap<>();
-        hashMap.put("pId",pId);
-        hashMap.put("timestamp",timestamp);
-        hashMap.put("pUid",mUidTv.getText().toString());
-        hashMap.put("notification", notification);
-        hashMap.put("sUid",myUid);
-
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("notifications");
-        reference.child(hisUid).child(timestamp).setValue(hashMap);
-    }*/
-
 
     private void loadComments() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
@@ -404,7 +389,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                                                         addToHisNotifications(""+hisUid,""+postId," commented on your post");
 
-                                                        //sendNotification(hisUid, postUname);
+                                                        sendNotification(hisUid, postUname);
 
                                                         onRestart();
                                                     }
@@ -441,9 +426,9 @@ public class PostDetailActivity extends AppCompatActivity {
 
                                                         updateCommentCount();
 
-                                                        //addToCommentUserNotifications(""+mUidTv,""+postId," mentioned you in a comment: "+comment);
+                                                        addToHisNotifications(""+hisUid,""+postId," commented on your post");
 
-                                                        //sendNotification(hisUid, postUname);
+
                                                         sendNotification3(mUidTv.getText().toString(), myName, postId);
 
                                                         onRestart();
@@ -523,10 +508,6 @@ public class PostDetailActivity extends AppCompatActivity {
 
                                                         updateCommentCount();
 
-                                                        addToHisNotifications(""+hisUid,""+postId," commented on your post");
-
-                                                        sendNotification(hisUid, myName);
-
                                                         sendNotification3(mUidTv.getText().toString(), myName, postId);
 
                                                         onRestart();
@@ -562,7 +543,7 @@ public class PostDetailActivity extends AppCompatActivity {
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
                             Token token = new Token(ds1.getString("token"));
-                            Data data = new Data(myUid, "A user commented on your post", "Thesel", hisUid, R.mipmap.ic_launcher2);
+                            Data data = new Data(myUid, "A user commented on your post", "Thesel", hisUid, R.mipmap.ic_launcher3);
 
                             Sender sender = new Sender(data, token.getToken());
                             apiService.sendNotification(sender)
@@ -751,7 +732,7 @@ public class PostDetailActivity extends AppCompatActivity {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
                     Token token = new Token(ds1.getString("token"));
-                    Data data = new Data(myUid, myName+" liked your post", "Thesel", hisUid, R.mipmap.ic_launcher2);
+                    Data data = new Data(myUid, myName+" liked your post", "Thesel", hisUid, R.mipmap.ic_launcher3);
 
                     Sender sender = new Sender(data, token.getToken());
                     apiService.sendNotification(sender)
@@ -783,7 +764,7 @@ public class PostDetailActivity extends AppCompatActivity {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
                     Token token = new Token(ds1.getString("token"));
-                    Data data = new Data(myUid, "A user liked a comment on your post", pCategory, hisUid, R.mipmap.ic_launcher2);
+                    Data data = new Data(myUid, "A user liked a comment on your post", pCategory, hisUid, R.mipmap.ic_launcher3);
 
                     Sender sender = new Sender(data, token.getToken());
                     apiService.sendNotification(sender)
@@ -815,7 +796,7 @@ public class PostDetailActivity extends AppCompatActivity {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
                     Token token = new Token(ds1.getString("token"));
-                    Data data = new Data(myUid, "A user mentioned you in a comment", pCategory, commentUserID, R.mipmap.ic_launcher2);
+                    Data data = new Data(myUid, "A user mentioned you in a comment", pCategory, commentUserID, R.mipmap.ic_launcher3);
 
                     Sender sender = new Sender(data, token.getToken());
                     apiService.sendNotification(sender)
@@ -870,7 +851,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                                     for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
                                         Token token = new Token(ds1.getString("token"));
-                                        Data data = new Data(myUid, user.getUsername()+" liked your comment on "+postUname+"'s post", pCategory, commentUserID, R.mipmap.ic_launcher2);
+                                        Data data = new Data(myUid, user.getUsername()+" liked your comment on "+postUname+"'s post", pCategory, commentUserID, R.mipmap.ic_launcher3);
 
                                         Sender sender = new Sender(data, token.getToken());
                                         apiService.sendNotification(sender)

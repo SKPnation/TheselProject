@@ -1,18 +1,16 @@
 package com.skiplab.theselproject.models;
 
-public class ReferenceNumber {
-    String uid, referenceNumber, timestamp, uName, uDp;
-    Long amount;
+public class Deposits {
+    String uid, referenceNumber, timestamp;
+    int amount;
 
-    public ReferenceNumber() {
+    public Deposits() {
     }
 
-    public ReferenceNumber(String uid, String referenceNumber, String timestamp, String uName, String uDp, Long amount) {
+    public Deposits(String uid, String referenceNumber, String timestamp, int amount) {
         this.uid = uid;
         this.referenceNumber = referenceNumber;
         this.timestamp = timestamp;
-        this.uName = uName;
-        this.uDp = uDp;
         this.amount = amount;
     }
 
@@ -40,27 +38,11 @@ public class ReferenceNumber {
         this.timestamp = timestamp;
     }
 
-    public String getuName() {
-        return uName;
-    }
-
-    public void setuName(String uName) {
-        this.uName = uName;
-    }
-
-    public String getuDp() {
-        return uDp;
-    }
-
-    public void setuDp(String uDp) {
-        this.uDp = uDp;
-    }
-
-    public Long getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 }

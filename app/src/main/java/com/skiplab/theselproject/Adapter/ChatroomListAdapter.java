@@ -1,6 +1,7 @@
 package com.skiplab.theselproject.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -13,15 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.ChatActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
+import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatRoom;
@@ -37,12 +42,14 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
     List<ChatRoom> chatRoomList;
     FirebaseAuth mAuth;
     DatabaseReference usersRef;
+    CollectionReference mChatroomReference;
 
     public ChatroomListAdapter(Context context, List<ChatRoom> chatRoomList) {
         this.context = context;
         this.chatRoomList = chatRoomList;
         mAuth = FirebaseAuth.getInstance();
         usersRef = FirebaseDatabase.getInstance().getReference("users");
+        mChatroomReference = FirebaseFirestore.getInstance().collection("chatrooms");
     }
 
     @NonNull
@@ -182,6 +189,35 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
                         //..
                     }
                 });
+
+        holder.iconTrashIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("END SESSION");
+                builder.setMessage("Are you sure?");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mChatroomReference.document(chatroomID).delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        context.startActivity(new Intent(context, DashboardActivity.class));
+                                    }
+                                });
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.show();
+            }
+        });
     }
 
     @Override

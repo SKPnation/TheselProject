@@ -21,8 +21,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Display4"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:text="Relationship"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 

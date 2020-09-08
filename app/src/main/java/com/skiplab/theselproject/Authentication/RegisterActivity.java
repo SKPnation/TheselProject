@@ -15,6 +15,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.hbb20.CountryCodePicker;
 import com.skiplab.theselproject.PrivacyPolicy;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.R;
@@ -36,7 +38,9 @@ public class RegisterActivity extends AppCompatActivity {
     private Context mContext;
     private TextInputEditText mEmail, mPassword, mConfirmPwd, mAge;
     private TextView mAgreementTv;
+    private EditText mPhone;
     private Button btnRegister;
+    private CountryCodePicker ccp;
 
     private FirebaseAuth mAuth;
 
@@ -44,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     private String text = "By clicking register, you are indicating that you have read and agreed to the Terms of Service and Privacy Policy";
-    private String email, password, confirmPwd;
+    private String email, phone, password, confirmPwd;
     private int age;
 
     public static boolean isActivityRunning;
@@ -60,9 +64,13 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         mEmail = findViewById(R.id.emailEt);
+        mPhone =  findViewById(R.id.phoneEt);
         mPassword =  findViewById(R.id.passwordEt);
         mConfirmPwd = findViewById(R.id.confirmPwdEt);
         mAge = findViewById(R.id.ageEt);
+
+        ccp = findViewById(R.id.ccp);
+        ccp.registerCarrierNumberEditText(mPhone);
 
         mAgreementTv = findViewById(R.id.reg_agreementTv);
         SpannableString ss = new SpannableString(text);
@@ -92,6 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 email = mEmail.getText().toString();
+                phone = ccp.getFullNumberWithPlus();
                 password = mPassword.getText().toString();
                 confirmPwd = mConfirmPwd.getText().toString();
                 try{
@@ -110,6 +119,11 @@ public class RegisterActivity extends AppCompatActivity {
                     //set error and focus to email editText
                     mEmail.setError("Invalid Email");
                     mEmail.setFocusable(true);
+                }
+                else if (mPhone.getText().toString().isEmpty()){
+                    //set error and focus to password editText
+                    mPhone.setError("Please type a valid phone number");
+                    mPhone.setFocusable(true);
                 }
                 else if (password.isEmpty()){
                     mPassword.setError("Password is required");
@@ -136,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
                     mAge.setFocusable(true);
                 }
                 else{
-                    registerUser(email, password, confirmPwd, age);
+                    registerUser(email, phone, password, confirmPwd, age);
                 }
             }
         });
@@ -170,7 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void registerUser(final String email, String password, String confirmPwd, final int age) {
+    private void registerUser(final String email, String phone, String password, String confirmPwd, final int age) {
         progressDialog.setMessage("Registering user...");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -190,7 +204,7 @@ public class RegisterActivity extends AppCompatActivity {
                             user.setUsername( email.substring( 0, email.indexOf( "@" ) ) );
                             user.setProfile_photo( "" );
                             user.setEmail(email);
-                            user.setPhone("1");
+                            user.setPhone(phone);
                             user.setUid( FirebaseAuth.getInstance().getCurrentUser().getUid() );
                             user.setBio("Edit this bio from the account settings...");
                             user.setIsStaff("false");

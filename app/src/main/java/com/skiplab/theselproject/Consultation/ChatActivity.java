@@ -49,7 +49,10 @@ import com.google.firebase.database.ValueEventListener;
 //import com.skiplab.theselproject.Adapter.AdapterChat;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -60,9 +63,14 @@ import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatMessage;
 import com.skiplab.theselproject.models.ChatRoom;
+import com.skiplab.theselproject.models.Profile;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.notifications.APIService;
 import com.skiplab.theselproject.notifications.Client;
+import com.skiplab.theselproject.notifications.Data;
+import com.skiplab.theselproject.notifications.Response;
+import com.skiplab.theselproject.notifications.Sender;
+import com.skiplab.theselproject.notifications.Token;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -73,7 +81,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -107,8 +119,6 @@ public class ChatActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    String adminUid = "MrRpckxLVqVzscd34r6PAxIJNVC2";
-
     List<ChatMessage> chatList;
     AdapterChat adapterChat;
 
@@ -117,7 +127,7 @@ public class ChatActivity extends AppCompatActivity {
     //firebase
     FirebaseDatabase firebaseDatabase;
     DatabaseReference usersRef, mMessageReference;
-    CollectionReference mChatroomReference;
+    CollectionReference mChatroomReference, mProfileReference;
 
     private CountDownTimer mCountDownTimer;
 
@@ -162,6 +172,7 @@ public class ChatActivity extends AppCompatActivity {
 
         mChatroomReference = FirebaseFirestore.getInstance().collection("chatrooms");
         mMessageReference = FirebaseDatabase.getInstance().getReference("chatroom_messages");
+        mProfileReference = FirebaseFirestore.getInstance().collection("profiles");
 
         //init views
         toolbar = findViewById(R.id.toolbar);
@@ -214,36 +225,43 @@ public class ChatActivity extends AppCompatActivity {
                                             if (user.getIsStaff().equals("false"))
                                             {
                                                 int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
-                                                if (wallet < 3000)
-                                                {
-                                                    startActivity(new Intent(mContext, WalletActivity.class));
-                                                }
-                                                else if (wallet >= 3000)
-                                                {
-                                                    int result = wallet - 3000;
-                                                    usersRef.child(myUid).child("wallet").setValue(result)
-                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                @Override
-                                                                public void onSuccess(Void aVoid) {
-                                                                    Toast.makeText(mContext,"Deducted successfully!",Toast.LENGTH_SHORT).show();
+                                                int result = wallet - 3000;
+
+                                                usersRef.child(myUid).child("wallet").setValue(result);
+
+                                                mProfileReference.document(hisUID)
+                                                        .get()
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                if (task.isSuccessful())
+                                                                {
+                                                                    Profile profile = task.getResult().toObject(Profile.class);
+                                                                    HashMap<String,Object> hashMap = new HashMap<>();
+                                                                    hashMap.put("num_of_payments", profile.getNum_of_payments()+1);
+
+                                                                    mProfileReference.document(hisUID).set(hashMap, SetOptions.merge());
                                                                 }
-                                                            });
+                                                            }
+                                                        });
 
-                                                    startTimer();
+                                                startTimer();
 
-                                                    i++;
+                                                i++;
 
-                                                    Handler handler = new Handler();
-                                                    handler.postDelayed(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            AlertDialog alertDialog =new AlertDialog.Builder(mContext)
-                                                                    .setMessage("You have 5 minutes left!")
-                                                                    .create();
-                                                            alertDialog.show();
-                                                        }
-                                                    }, 600000);
-                                                }
+                                                Handler handler = new Handler();
+                                                handler.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                .setMessage("You have 5 minutes left!")
+                                                                .create();
+                                                        alertDialog.show();
+                                                    }
+                                                }, 600000);
+
+                                                Toast.makeText(mContext,"Deducted successfully!",Toast.LENGTH_SHORT).show();
+
                                             }
                                             else
                                             {
@@ -268,7 +286,7 @@ public class ChatActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                        //..
                                     }
                                 });
 
@@ -490,7 +508,7 @@ public class ChatActivity extends AppCompatActivity {
 
         if (notify)
         {
-            //sendNotification(hisUID, myName, message);
+            sendNotification(hisUID, myName, message);
         }
 
     }
@@ -594,6 +612,21 @@ public class ChatActivity extends AppCompatActivity {
 
                             databaseReference.child("chatroom_messages").push().setValue(hashMap);
 
+                            mChatroomReference.document(chatroomID)
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()){
+                                                ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
+                                                HashMap<String, Object> hashMap = new HashMap<>();
+                                                hashMap.put("num_messages",chatRoom.getNum_messages()+1);
+                                                mChatroomReference.document(chatroomID).set(hashMap, SetOptions.merge());
+                                            }
+                                        }
+                                    });
+
+
                             //send Notification
                             DatabaseReference database = FirebaseDatabase.getInstance().getReference("users").child(myUid);
                             database.addValueEventListener(new ValueEventListener() {
@@ -603,7 +636,7 @@ public class ChatActivity extends AppCompatActivity {
 
                                     if (notify){
                                         progressDialog.dismiss();
-                                        //sendNotification(hisUID, user.getUsername(), " Sent you a recording...");
+                                        sendNotification(hisUID, user.getUsername(), "Sent you a recording...");
                                     }
                                     notify = false;
                                 }
@@ -702,6 +735,20 @@ public class ChatActivity extends AppCompatActivity {
 
                                 databaseReference.child("chatroom_messages").push().setValue(hashMap);
 
+                                mChatroomReference.document(chatroomID)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()){
+                                                    ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
+                                                    HashMap<String, Object> hashMap = new HashMap<>();
+                                                    hashMap.put("num_messages",chatRoom.getNum_messages()+1);
+                                                    mChatroomReference.document(chatroomID).set(hashMap, SetOptions.merge());
+                                                }
+                                            }
+                                        });
+
                                 //send Notification
                                 DatabaseReference database = FirebaseDatabase.getInstance().getReference("users").child(myUid);
                                 database.addValueEventListener(new ValueEventListener() {
@@ -711,7 +758,7 @@ public class ChatActivity extends AppCompatActivity {
 
                                         if (notify){
                                             progressDialog.dismiss();
-                                            //sendNotification(hisUID, user.getUsername(), " Sent you a picture...");
+                                            sendNotification(hisUID, user.getUsername(), "Sent you a picture...");
                                         }
                                         notify = false;
                                     }
@@ -894,6 +941,36 @@ public class ChatActivity extends AppCompatActivity {
 
         countDownTv.setText(timeLeftFormatted);
 
+    }
+
+
+    private void sendNotification(String hisUID, String myName, String message) {
+        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(myUid, message, myName, hisUID, R.mipmap.ic_launcher3);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
+
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+                }
+            }
+        });
     }
 
 

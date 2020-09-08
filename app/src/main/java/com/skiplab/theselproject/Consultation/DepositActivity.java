@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.models.Deposits;
 import com.skiplab.theselproject.models.User;
 
 import java.util.Calendar;
@@ -42,16 +43,10 @@ public class DepositActivity extends AppCompatActivity {
 
     CardView threetCv, sixtCv, twelvetCv, eighteentCv;
 
-    private Card card;
-    private Charge charge;
-
     private AppCompatEditText etEmail,etName,etCard,etCvv;
     private AppCompatSpinner spMonth,spYear;
     private AppCompatButton btProceed;
     private ImageView closeBtn;
-
-    private String email, cardNumber, cvv;
-    private int expiryMonth, expiryYear;
 
     int three_thousand = 300000;
     int six_thousand = 600000;
@@ -59,7 +54,7 @@ public class DepositActivity extends AppCompatActivity {
     int eighteen_thousand = 1800000;
 
     FirebaseAuth mAuth;
-    DatabaseReference usersRef;
+    DatabaseReference usersRef, depositsRef;
 
     ProgressDialog progressDialog;
 
@@ -70,6 +65,7 @@ public class DepositActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         usersRef = FirebaseDatabase.getInstance().getReference("users");
+        depositsRef = FirebaseDatabase.getInstance().getReference("deposits");
 
         progressDialog = new ProgressDialog(this);
 
@@ -263,6 +259,7 @@ public class DepositActivity extends AppCompatActivity {
                                             etEmail.setText(mAuth.getCurrentUser().getEmail());
                                             btProceed.setText("PROCEED:  #18000");
 
+
                                             ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
                                             //here we set the adapter to the year spinner
                                             spYear.setAdapter(adapter);
@@ -285,7 +282,7 @@ public class DepositActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        //..
                     }
                 });
     }
@@ -335,10 +332,20 @@ public class DepositActivity extends AppCompatActivity {
                             public void onSuccess(Transaction transaction) {
                                 btProceed.setEnabled(true);
 
-                                progressDialog.dismiss();
+                                String timestamp = String.valueOf(System.currentTimeMillis());
 
-                                if (amountInNaira == 300000){
+                                if (amountInNaira == 300000)
+                                {
                                     int result = wallet + 3000;
+
+                                    Deposits deposits = new Deposits();
+                                    deposits.setUid(mAuth.getUid());
+                                    deposits.setAmount((amountInNaira/100));
+                                    deposits.setReferenceNumber(customRef);
+                                    deposits.setTimestamp(timestamp);
+
+                                    depositsRef.child(timestamp).setValue(deposits);
+
                                     usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
@@ -349,9 +356,21 @@ public class DepositActivity extends AppCompatActivity {
                                                     finish();
                                                 }
                                             });
+
+                                    progressDialog.dismiss();
                                 }
-                                else if (amountInNaira == 600000){
+                                else if (amountInNaira == 600000)
+                                {
                                     int result = wallet + 6000;
+
+                                    Deposits deposits = new Deposits();
+                                    deposits.setUid(mAuth.getUid());
+                                    deposits.setAmount((amountInNaira/100));
+                                    deposits.setReferenceNumber(customRef);
+                                    deposits.setTimestamp(timestamp);
+
+                                    depositsRef.child(timestamp).setValue(deposits);
+
                                     usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
@@ -363,8 +382,18 @@ public class DepositActivity extends AppCompatActivity {
                                                 }
                                             });
                                 }
-                                else if (amountInNaira == 1200000){
+                                else if (amountInNaira == 1200000)
+                                {
                                     int result = wallet + 12000;
+
+                                    Deposits deposits = new Deposits();
+                                    deposits.setUid(mAuth.getUid());
+                                    deposits.setAmount((amountInNaira/100));
+                                    deposits.setReferenceNumber(customRef);
+                                    deposits.setTimestamp(timestamp);
+
+                                    depositsRef.child(timestamp).setValue(deposits);
+
                                     usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
@@ -379,6 +408,15 @@ public class DepositActivity extends AppCompatActivity {
                                 else if (amountInNaira == 1800000)
                                 {
                                     int result = wallet + 18000;
+
+                                    Deposits deposits = new Deposits();
+                                    deposits.setUid(mAuth.getUid());
+                                    deposits.setAmount((amountInNaira/100));
+                                    deposits.setReferenceNumber(customRef);
+                                    deposits.setTimestamp(timestamp);
+
+                                    depositsRef.child(timestamp).setValue(deposits);
+
                                     usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override

@@ -29,19 +29,37 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
+import com.skiplab.theselproject.EditConsultantProfile;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatMessage;
 import com.skiplab.theselproject.models.ChatRoom;
+import com.skiplab.theselproject.models.Profile;
 import com.skiplab.theselproject.models.User;
+import com.skiplab.theselproject.notifications.APIService;
+import com.skiplab.theselproject.notifications.Client;
+import com.skiplab.theselproject.notifications.Data;
+import com.skiplab.theselproject.notifications.Response;
+import com.skiplab.theselproject.notifications.Sender;
+import com.skiplab.theselproject.notifications.Token;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+
+import javax.annotation.Nullable;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder>{
 
@@ -50,8 +68,12 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
     FirebaseAuth mAuth;
     DatabaseReference usersRef;
 
-    CollectionReference mChatroomReference;
+    CollectionReference mChatroomReference, mProfileReference;
     DatabaseReference mMessageReference;
+
+    APIService apiService;
+
+    String adminUID = "1zNcpaSxviY7GLLRGVQt8ywPla52";
 
     int i = 0;
 
@@ -61,7 +83,9 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         mAuth = FirebaseAuth.getInstance();
         usersRef = FirebaseDatabase.getInstance().getReference("users");
         mChatroomReference = FirebaseFirestore.getInstance().collection("chatrooms");
+        mProfileReference = FirebaseFirestore.getInstance().collection("profiles");
         mMessageReference = FirebaseDatabase.getInstance().getReference("chatroom_messages");
+        apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
     }
 
     @NonNull
@@ -75,7 +99,6 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         String hisUID = userList.get(position).getUid();
-        String email = userList.get(position).getEmail();
         String username = userList.get(position).getUsername();
         String country = userList.get(position).getAddress();
         String category1 = userList.get(position).getCategory1();
@@ -85,23 +108,54 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         String userCost = String.valueOf(userList.get(position).getCost());
 
 
-        usersRef.orderByKey().equalTo(hisUID)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds: dataSnapshot.getChildren())
-                        {
-                            User user = ds.getValue(User.class);
-                            if (user.getOnlineStatus().equals("online"))
-                                holder.onlineIv.setVisibility(View.VISIBLE);
-                        }
-                    }
+        if (userList.get(position).getOnlineStatus().equals("online"))
+        {
+            holder.onlineIv.setVisibility(View.VISIBLE);
+        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
 
-                    }
-                });
+                usersRef.orderByKey().equalTo(mAuth.getUid())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds: dataSnapshot.getChildren())
+                                {
+                                    User user = ds.getValue(User.class);
+                                    if (user.getIsStaff().equals("admin"))
+                                    {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                        builder.setMessage("PICK ONE!");
+                                        builder.setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Intent intent = new Intent(context, EditConsultantProfile.class);
+                                                intent.putExtra("hisUID",hisUID);
+                                                context.startActivity(intent);
+                                            }
+                                        });
+                                        builder.setNegativeButton("DELETE", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                //..
+                                            }
+                                        });
+
+                                        builder.show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                //..
+                            }
+                        });
+                return false;
+            }
+        });
 
         //get Data
         holder.usernameTv.setText(username);
@@ -116,6 +170,10 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
             public void onClick(View v) {
                 if (Common.isConnectedToTheInternet(context))
                 {
+                    ProgressDialog progressDialog = new ProgressDialog(context);
+                    progressDialog.setMessage("Please wait...");
+                    progressDialog.show();
+
                     usersRef.orderByKey().equalTo(hisUID)
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -125,6 +183,8 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                         User counsellor = ds.getValue(User.class);
                                         if (counsellor.getOnlineStatus().equals("offline"))
                                         {
+                                            progressDialog.dismiss();
+
                                             AlertDialog alertDialog =new AlertDialog.Builder(context)
                                                     .setMessage(counsellor.getUsername()+" is offline!")
                                                     .create();
@@ -132,6 +192,8 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                         }
                                         else if (counsellor.getOnlineStatus().equals("deactivated"))
                                         {
+                                            progressDialog.dismiss();
+
                                             AlertDialog alertDialog =new AlertDialog.Builder(context)
                                                     .setMessage(counsellor.getUsername()+" is unavailable at the moment!")
                                                     .create();
@@ -151,6 +213,8 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                     int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
                                                                     if (!(wallet >= 3000))
                                                                     {
+                                                                        progressDialog.dismiss();
+
                                                                         AlertDialog alertDialog =new AlertDialog.Builder(context)
                                                                                 .setMessage("Your wallet is empty!!!")
                                                                                 .create();
@@ -179,6 +243,8 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                         {
                                                                                             if(task.getResult().size() > 0)
                                                                                             {
+                                                                                                progressDialog.dismiss();
+
                                                                                                 AlertDialog.Builder alertDialog =new AlertDialog.Builder(context);
                                                                                                 alertDialog.setCancelable(false);
                                                                                                 alertDialog.setMessage("End your ongoing session before starting a new session!");
@@ -193,6 +259,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                 alertDialog.show();
 
                                                                                             } else {
+
                                                                                                 mChatroomReference.whereEqualTo("counsellor_id",hisUID)
                                                                                                         .get()
                                                                                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -201,7 +268,17 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                 if (task.isSuccessful()){
                                                                                                                     if (task.getResult().size() > 0)
                                                                                                                     {
-                                                                                                                        Toast.makeText(context,counsellor.getUsername()+" is in a ongoing session with a client.",Toast.LENGTH_SHORT).show();
+                                                                                                                        progressDialog.dismiss();
+
+                                                                                                                        i++;
+
+                                                                                                                        Handler handler = new Handler();
+                                                                                                                        handler.postDelayed(new Runnable() {
+                                                                                                                            @Override
+                                                                                                                            public void run() {
+                                                                                                                                Toast.makeText(context,counsellor.getUsername()+" is in an ongoing session.",Toast.LENGTH_SHORT).show();
+                                                                                                                            }
+                                                                                                                        },2000);
                                                                                                                     }
                                                                                                                     else
                                                                                                                     {
@@ -229,12 +306,34 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                         message.setType("text");
                                                                                                                         message.setChatroom_id(chatroomId);
 
+                                                                                                                        mProfileReference.document(hisUID).get()
+                                                                                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                                                                    @Override
+                                                                                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                                                                        if (task.getResult().exists())
+                                                                                                                                        {
+                                                                                                                                            long num_of_consultations = task.getResult().getLong("num_of_consultations");
+                                                                                                                                            HashMap<String, Object> hashMap = new HashMap<>();
+                                                                                                                                            hashMap.put("num_of_consultations",num_of_consultations+1);
+
+                                                                                                                                            mProfileReference.document(hisUID).set(hashMap, SetOptions.merge());
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                });
+
                                                                                                                         mChatroomReference.document(chatroomId).set(chatroom).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                                                             @Override
                                                                                                                             public void onSuccess(Void aVoid) {
+
+                                                                                                                                sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
+
+                                                                                                                                sendAdminNotification(client.getUid(), client.getUsername(), "NEW CONSULTATION!!!", counsellor.getUsername());
+
+                                                                                                                                progressDialog.dismiss();
+
                                                                                                                                 mMessageReference.child(messageId).setValue(message);
 
-                                                                                                                                AlertDialog.Builder alertDialog =new AlertDialog.Builder(context);
+                                                                                                                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
                                                                                                                                 alertDialog.setCancelable(false);
                                                                                                                                 alertDialog.setMessage("New session with " + counsellor.getUsername()+"!");
                                                                                                                                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -246,8 +345,14 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                     }
                                                                                                                                 });
                                                                                                                                 alertDialog.show();
+
+
+
+
                                                                                                                             }
                                                                                                                         });
+
+
                                                                                                                     }
                                                                                                                 }
                                                                                                             }
@@ -362,24 +467,22 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                     catTv3.setText(category3);
                 }
 
-                FirebaseDatabase.getInstance().getReference("profiles").orderByKey().equalTo(hisUID)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                FirebaseFirestore.getInstance().collection("profiles")
+                        .document(hisUID)
+                        .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds:dataSnapshot.getChildren()){
-                                    if (ds.exists()){
-                                        String desc = ds.child("description").getValue().toString();
-                                        if (!desc.equals(""))
-                                            descEt.setText(desc);
-                                    }
+                            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                                if (documentSnapshot.exists())
+                                {
+                                    Profile profile = documentSnapshot.toObject(Profile.class);
+
+                                    String desc = profile.getDescription();
+                                    if (!desc.equals(""))
+                                        descEt.setText(desc);
                                 }
                             }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
                         });
+
                 descEt.setFocusable(false);
                 descEt.setFocusableInTouchMode(false);
 
@@ -402,6 +505,65 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         }
         catch (Exception e){
         }
+
+    }
+
+    private void sendAdminNotification(String clientUID, String client_name, String message, String consultant_name) {
+        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(clientUID, message+" from "+client_name, consultant_name, adminUID, R.mipmap.ic_launcher3);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
+
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+                }
+            }
+        });
+    }
+
+    private void sendNotification(String hisUID, String myName, String message) {
+        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(mAuth.getUid(), message, myName, hisUID, R.mipmap.ic_launcher3);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
+
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+                }
+            }
+        });
     }
 
     @Override
