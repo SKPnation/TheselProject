@@ -18,6 +18,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,7 +26,10 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -114,7 +118,7 @@ public class ChatActivity extends AppCompatActivity {
     CircleImageView profileIv;
     TextView nameTv, countDownTv;
     EditText messageEt;
-    Button mButtonStart;
+    Button mButtonStart, mButtonThanks;
     ImageButton sendBtn, attachBtn, recordBtn;
 
     private ProgressDialog progressDialog;
@@ -152,6 +156,10 @@ public class ChatActivity extends AppCompatActivity {
     MediaRecorder mediaRecorder;
     String pathSave = "";
 
+    SpannableString ss_thanks;
+    ForegroundColorSpan fcsBlack;
+    String thanks = "THANKS";
+
     int i = 0;
     int num_messages;
 
@@ -169,6 +177,11 @@ public class ChatActivity extends AppCompatActivity {
         hisUID = intent.getStringExtra("hisUID");
         chatroomID = intent.getStringExtra("chatroomID");
         myName = intent.getStringExtra("myName");
+
+        ss_thanks = new SpannableString(thanks);
+        fcsBlack = new ForegroundColorSpan(Color.BLACK);
+        ss_thanks.setSpan(fcsBlack, 0,5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
 
         mChatroomReference = FirebaseFirestore.getInstance().collection("chatrooms");
         mMessageReference = FirebaseDatabase.getInstance().getReference("chatroom_messages");
@@ -191,6 +204,7 @@ public class ChatActivity extends AppCompatActivity {
         nameTv = findViewById(R.id.nameTv);
         countDownTv = findViewById(R.id.text_view_countdown);
         mButtonStart = findViewById(R.id.button_start_pause);
+        mButtonThanks = findViewById(R.id.button_thanks);
         messageEt = findViewById(R.id.messageEt);
         sendBtn = findViewById(R.id.sendBtn);
         attachBtn = findViewById(R.id.attachBtn);
@@ -225,7 +239,7 @@ public class ChatActivity extends AppCompatActivity {
                                             if (user.getIsStaff().equals("false"))
                                             {
                                                 int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
-                                                int result = wallet - 3000;
+                                                int result = wallet - 1500;
 
                                                 usersRef.child(myUid).child("wallet").setValue(result);
 
@@ -300,6 +314,57 @@ public class ChatActivity extends AppCompatActivity {
                     alertDialog.show();
                 }
 
+            }
+        });
+
+        mButtonThanks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                usersRef.orderByKey().equalTo(myUid)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds: dataSnapshot.getChildren())
+                                {
+                                    User user = ds.getValue(User.class);
+                                    if (user.getIsStaff().equals("false"))
+                                    {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                                        builder.setMessage("Are you satisfied with the consultation?");
+
+                                        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                String message = "Thanks, I'm satisfied with the consultation.";
+
+                                                sendMessage(message);
+                                            }
+                                        });
+
+                                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        builder.show();
+                                    }
+                                    else
+                                    {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                                        builder.setMessage("This button can only be used by the client!");
+
+                                        builder.show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
             }
         });
 
@@ -424,10 +489,12 @@ public class ChatActivity extends AppCompatActivity {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
                                 builder.setCancelable(false);
                                 builder.setTitle("PLEASE READ THIS!");
-                                builder.setMessage("1. You have 15 minutes to say what's on your mind! \n"
-                                        +"2. The moment you start the timer, #3000 will be deducted from your Thesel wallet!\n"
-                                        +"3. Check back to see the consultant's reply to your messages during his/her counselling hours!\n"
-                                        +"4. EXCHANGE OF PHONE NUMBERS AND EMAIL ADDRESSES ARE NOT ALLOWED!!!");
+                                builder.setMessage("1. You have 15 MINUTES to say what's on your mind!\n\n"
+                                        +"2. The moment you start the timer, #1500 will be deducted from your THESEL WALLET!\n\n"
+                                        +"3. Check back to see the consultant's reply to your messages during his/her counselling hours!\n\n"
+                                        +"4. Click the '"+ss_thanks+"' button if you are satisfied with the consultation!\n\n"
+                                        +"5. This ONGOING SESSION will end if you do not reply the counsellor's message within 24 HOURS!\n\n"
+                                        +"6. EXCHANGE OF PHONE NUMBERS AND EMAIL ADDRESSES ARE NOT ALLOWED!!!");
                                 builder.setPositiveButton("BEGIN", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -452,13 +519,14 @@ public class ChatActivity extends AppCompatActivity {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
                                 builder.setCancelable(false);
                                 builder.setTitle("PLEASE READ THIS!");
-                                builder.setMessage("1. Try not to give very short replies. Provide enough possible solutions to the client's problems!\n"
+                                builder.setMessage("1. Try not to give very short replies. Provide enough possible solutions to the client's problems!\n\n"
                                         +"2. You can be speaking with the same client for days until he/she is satisfied with your counselling." +
-                                        " During the process, other users will not be allowed to consult you!\n"
-                                        +"3. Delete the session when you are sure the client is satisfied with your counselling.\n"
-                                        +"4. Your chat history with that client will still be available on the database for future " +
-                                        "consultations.\n"
-                                        +"5. EXCHANGE OF PHONE NUMBERS AND EMAIL ADDRESSES ARE NOT ALLOWED!!!");
+                                        " During the process, other users will not be allowed to consult you!\n\n"
+                                        +"3. Delete the session when the client is satisfied with the consultation.\n\n"
+                                        +"4. Your CHAT HISTORY with that client will still be available on the database for future " +
+                                        "consultations.\n\n"
+                                        +"5. Delete the session if you don't get a reply within 24HOURS!\n\n"
+                                        +"6. EXCHANGE OF PHONE NUMBERS AND EMAIL ADDRESSES ARE NOT ALLOWED!!!");
                                 builder.setPositiveButton("BEGIN", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

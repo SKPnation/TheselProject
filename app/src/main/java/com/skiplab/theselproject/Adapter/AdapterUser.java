@@ -211,7 +211,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                 if (client.getIsStaff().equals("false"))
                                                                 {
                                                                     int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
-                                                                    if (!(wallet >= 3000))
+                                                                    if (!(wallet >= 1500))
                                                                     {
                                                                         progressDialog.dismiss();
 

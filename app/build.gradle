@@ -10,8 +10,8 @@ android {
         applicationId "com.skiplab.theselproject"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 36
-        versionName "1.9.6"
+        versionCode 38
+        versionName "1.9.8"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

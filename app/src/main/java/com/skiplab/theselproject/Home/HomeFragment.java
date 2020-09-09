@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
     private String mActivityTitle;
     private FloatingActionButton fab;
 
-    private ImageView optionsBtn, mAvaterIv, walletBtn;
+    private ImageView optionsBtn, mAvaterIv, walletBtn, videosBtn;
     private EditText share_post_et;
 
     private TextView feedTitleTv;
@@ -144,6 +144,7 @@ public class HomeFragment extends Fragment {
 
         fab = view.findViewById(R.id.fab);
         walletBtn = view.findViewById(R.id.walletBtn);
+        videosBtn = view.findViewById(R.id.videosBtn);
         share_post_et = view.findViewById(R.id.share_post_et);
         mAvaterIv = view.findViewById(R.id.avatarIv);
         optionsBtn = view.findViewById(R.id.optionsToolbar);
@@ -210,6 +211,13 @@ public class HomeFragment extends Fragment {
             public boolean onTouch(View v, MotionEvent event) {
                 startActivity(new Intent(getActivity(), SelectMood.class));
                 return false;
+            }
+        });
+
+        videosBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), VideoGallery.class));
             }
         });
 
@@ -419,9 +427,6 @@ public class HomeFragment extends Fragment {
                         //..
                     }
                 });
-
-
-
 
 
 

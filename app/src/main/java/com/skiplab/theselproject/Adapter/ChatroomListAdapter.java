@@ -124,11 +124,11 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
                                     public void onClick(View v) {
                                         if (Common.isConnectedToTheInternet(context))
                                         {
-                                            if (wallet < 3000)
+                                            if (wallet < 1500)
                                             {
                                                 context.startActivity(new Intent(context, WalletActivity.class));
                                             }
-                                            else if (wallet >= 3000)
+                                            else if (wallet >= 1500)
                                             {
                                                 Intent intent = new Intent(context, ChatActivity.class);
                                                 intent.putExtra("hisUID", counsellorID);
