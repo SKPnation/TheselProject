@@ -342,16 +342,16 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
             //add items in menu
             popupMenu.getMenu().add(Menu.NONE,0,0, "Delete");
             popupMenu.getMenu().add(Menu.NONE,1,0, "Edit");
+
         }
         else if (myUid.equals("1zNcpaSxviY7GLLRGVQt8ywPla52")){
             popupMenu.getMenu().add(Menu.NONE,0,0, "Delete");
             popupMenu.getMenu().add(Menu.NONE,1,0, "Edit");
         }
-        popupMenu.getMenu().add(Menu.NONE, 2, 0,"View Comments");
 
         if (!uid.equals(myUid)){
             //add items in menu
-            //popupMenu.getMenu().add(Menu.NONE,3,0, "Report");
+            popupMenu.getMenu().add(Menu.NONE,3,0, "Report");
         }
 
         //item click listener

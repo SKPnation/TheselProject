@@ -27,7 +27,6 @@
             android:layout_toRightOf="@id/avatarIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Skiplab"
             android:textSize="16sp"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"/>
@@ -47,8 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/nameTv"
             android:padding="4dp"
-            android:textColor="#000"
-            android:text="this is the actual comment"/>
+            android:textColor="#000" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -68,8 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
-                    android:textStyle="italic"
-                    android:text="12/06/2020  06:30 pm" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/cLikesTv"
