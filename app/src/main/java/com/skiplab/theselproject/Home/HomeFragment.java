@@ -1,6 +1,8 @@
 package com.skiplab.theselproject.Home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -54,8 +56,8 @@ import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.DashboardActivity;
-import com.skiplab.theselproject.Settings.AccountSettingsActivity;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.Settings.AccountSettingsActivity;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Post;
 import com.skiplab.theselproject.models.User;
@@ -178,7 +180,6 @@ public class HomeFragment extends Fragment {
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         adapterPosts = new AdapterPosts(getActivity(), postList);
-        recyclerView.setAdapter(adapterPosts);
 
 
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -349,7 +350,11 @@ public class HomeFragment extends Fragment {
                                     {
                                         if (user.getIsStaff().equals("false"))
                                         {
-                                            if (!ds.hasChild("wallet")){
+                                            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                                    .setMessage("The private consultation feature is currently undergoing an upgrade")
+                                                    .create();
+                                            alertDialog.show();
+                                            /*if (!ds.hasChild("wallet")){
                                                 DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
                                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                                 currentUserRef.child("wallet").setValue(0);
@@ -361,11 +366,15 @@ public class HomeFragment extends Fragment {
                                                 Intent intent = new Intent(getActivity(), SelectCategory.class);
                                                 startActivity(intent);
 
-                                            }
+                                            }*/
                                         }
                                         else if (user.getIsStaff().equals("true"))
                                         {
-                                            startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
+                                            //startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
+                                            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                                    .setMessage("The private consultation feature is currently undergoing an upgrade")
+                                                    .create();
+                                            alertDialog.show();
                                         }
                                         else
                                         {
@@ -392,7 +401,11 @@ public class HomeFragment extends Fragment {
                                     {
                                         if (user.getIsStaff().equals("false"))
                                         {
-                                            if (!ds.hasChild("wallet")){
+                                            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                                    .setMessage("The private consultation feature is currently undergoing an upgrade")
+                                                    .create();
+                                            alertDialog.show();
+                                            /*if (!ds.hasChild("wallet")){
                                                 DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
                                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                                 currentUserRef.child("wallet").setValue(0);
@@ -403,7 +416,7 @@ public class HomeFragment extends Fragment {
                                             else{
                                                 Intent intent = new Intent(getActivity(), WalletActivity.class);
                                                 startActivity(intent);
-                                            }
+                                            }*/
                                         }
                                         else
                                         {
@@ -452,7 +465,7 @@ public class HomeFragment extends Fragment {
                     postList.add(post);
 
                     adapterPosts.notifyDataSetChanged();
-                    //swipeRefreshLayout.setRefreshing( false );
+                    recyclerView.setAdapter(adapterPosts);
                 }
             }
 
@@ -543,10 +556,5 @@ public class HomeFragment extends Fragment {
 
     }
 
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        getLastKeyFromFirebase();
-        getPosts();
-    }*/
+
 }

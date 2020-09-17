@@ -116,7 +116,7 @@
                 android:layout_marginRight="6dp"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
                 ads:adSize="BANNER"
                 ads:adUnitId="@string/banner_ad_unit_id" />

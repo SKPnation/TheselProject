@@ -92,6 +92,7 @@ public class DashboardActivity extends AppCompatActivity implements UpdateHelper
     @Override
     public void onUpdateCheckListener(String urlApp) {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setCancelable(false)
                 .setMessage("The installed version of Thesel is no longer supported, please update your app.")
                 .setPositiveButton("UPDATE", new DialogInterface.OnClickListener() {
                     @Override

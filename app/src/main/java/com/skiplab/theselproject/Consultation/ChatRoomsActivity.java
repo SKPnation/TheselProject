@@ -1,13 +1,16 @@
 package com.skiplab.theselproject.Consultation;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -28,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.skiplab.theselproject.Adapter.ChatroomListAdapter;
+import com.skiplab.theselproject.Authentication.LoginActivity;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.ChatRoom;
@@ -39,6 +43,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 public class ChatRoomsActivity extends AppCompatActivity {
+
+    private static final String TAG = "ChatRoomsActivity";
 
     Context mContext = ChatRoomsActivity.this;
 
@@ -53,7 +59,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
     ProgressBar mProgressBar;
 
     TextView hintText;
-    private ImageView closeBtn;
+    private ImageView closeBtn, logOutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
 
         hintText = findViewById(R.id.hintText);
         closeBtn = findViewById(R.id.closeBtn);
+        logOutBtn = findViewById(R.id.sign_out_btn);
 
         chatroomList = new ArrayList<>();
 
@@ -88,12 +95,65 @@ public class ChatRoomsActivity extends AppCompatActivity {
                             User user = ds.getValue(User.class);
                             if (user.getIsStaff().equals("false"))
                             {
+                                closeBtn.setVisibility(View.VISIBLE);
+
                                 loadClientChatrooms();
+
+                                closeBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(mContext, DashboardActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                });
 
                             }
                             else if (user.getIsStaff().equals("true"))
                             {
+                                logOutBtn.setVisibility(View.VISIBLE);
+
                                 loadCounsultantChatrooms();
+
+                                closeBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        finish();
+                                    }
+                                });
+
+                                logOutBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                        builder.setTitle("Sign Out");
+                                        builder.setMessage("Are you sure?");
+                                        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                try {
+                                                    usersRef.child(mAuth.getUid()).child("onlineStatus").setValue("offline");
+                                                    Intent intent = new Intent( mContext, LoginActivity.class );
+                                                    intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                                                    startActivity( intent );
+                                                    mAuth.signOut();
+                                                }
+                                                catch (Exception e){
+                                                    Log.e(TAG, "signOut: Error "+e.getMessage());
+                                                }
+                                            }
+                                        });
+                                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        builder.show();
+                                    }
+                                });
                             }
                         }
                     }
@@ -103,16 +163,6 @@ public class ChatRoomsActivity extends AppCompatActivity {
                         //..
                     }
                 });
-
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, DashboardActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     private void loadClientChatrooms() {
@@ -197,9 +247,9 @@ public class ChatRoomsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(mContext, DashboardActivity.class);
+        /*Intent intent = new Intent(mContext, DashboardActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        startActivity(intent);*/
         finish();
     }
 }

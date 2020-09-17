@@ -47,6 +47,7 @@ import com.skiplab.theselproject.models.User;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -301,9 +302,9 @@ public class EditProfileFragment extends Fragment {
                 progressDialog.setMessage("Uploading...");
                 progressDialog.show();
 
-                final String timeStamp = ""+System.currentTimeMillis();
+                final String randomNum = ""+ UUID.randomUUID().toString();
 
-                String fileNameAndPath = "Profiles/"+"image_"+timeStamp;
+                String fileNameAndPath = "Profiles/"+"image_"+randomNum;
 
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image_uri);

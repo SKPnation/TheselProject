@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,8 +18,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.skiplab.theselproject.Consultation.ConsultantsActivity;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.EditConsultantProfile;
+import com.skiplab.theselproject.Home.SelectCategory;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.User;
@@ -75,6 +78,16 @@ public class AdapterConsultant extends RecyclerView.Adapter<AdapterConsultant.Vi
                                         Intent intent = new Intent(context, EditConsultantProfile.class);
                                         intent.putExtra("hisUID",hisUID);
                                         context.startActivity(intent);
+
+                                        Log.d("hisEmail: ",consultantList.get(position).getEmail() );
+                                    }
+                                    else
+                                    {
+                                        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                                                .setMessage("The private consultation feature is currently undergoing an upgrade")
+                                                .create();
+                                        alertDialog.show();
+                                        //context.startActivity(new Intent(context, SelectCategory.class));
                                     }
                                 }
                             }

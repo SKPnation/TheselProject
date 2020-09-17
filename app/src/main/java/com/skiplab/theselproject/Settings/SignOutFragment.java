@@ -73,7 +73,6 @@ public class SignOutFragment extends Fragment {
                     intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                     startActivity( intent );
                     mAuth.signOut();
-
                 }
                 catch (Exception e){
                     Log.e(TAG, "signOut: Error "+e.getMessage());
