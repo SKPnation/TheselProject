@@ -548,6 +548,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
         return postList.size();
     }
 
+    //Post View Holder
     class PostViewHolder extends RecyclerView.ViewHolder{
 
         private static final String TAG = "PostViewHolder";
@@ -658,5 +659,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
             }
         }
     }
+
+
 
 }

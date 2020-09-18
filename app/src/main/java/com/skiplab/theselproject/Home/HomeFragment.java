@@ -77,7 +77,6 @@ public class HomeFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private String[] items;
-    private String mActivityTitle;
     private FloatingActionButton fab;
 
     private ImageView optionsBtn, mAvaterIv, walletBtn, videosBtn;
@@ -111,6 +110,8 @@ public class HomeFragment extends Fragment {
 
     boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
+
+    public static final int ITEM_PER_AD = 4;
 
     private int i=0;
 
@@ -151,7 +152,6 @@ public class HomeFragment extends Fragment {
         mAvaterIv = view.findViewById(R.id.avatarIv);
         optionsBtn = view.findViewById(R.id.optionsToolbar);
         feedTitleTv = view.findViewById(R.id.app_name);
-        mActivityTitle = getActivity().getTitle().toString();
 
         adView = new AdView(getActivity());
         adView.setAdSize(AdSize.BANNER);
@@ -476,6 +476,8 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+
 
     private void loadConsultants() {
         Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid());
