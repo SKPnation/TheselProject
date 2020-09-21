@@ -62,6 +62,7 @@ import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Post;
 import com.skiplab.theselproject.models.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -348,38 +349,49 @@ public class HomeFragment extends Fragment {
                                 public void onClick(View v) {
                                     if (Common.isConnectedToTheInternet(getContext()))
                                     {
-                                        if (user.getIsStaff().equals("false"))
+                                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
                                         {
+                                            if (user.getIsStaff().equals("false"))
+                                            {
                                             /*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                                     .setMessage("The private consultation feature is currently undergoing an upgrade")
                                                     .create();
                                             alertDialog.show();*/
-                                            if (!ds.hasChild("wallet")){
-                                                DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
-                                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                                currentUserRef.child("wallet").setValue(0);
+                                                if (!ds.hasChild("wallet")){
+                                                    DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
+                                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                                    currentUserRef.child("wallet").setValue(0);
 
-                                                Intent intent = new Intent(getActivity(), SelectCategory.class);
-                                                startActivity(intent);
-                                            }
-                                            else{
-                                                Intent intent = new Intent(getActivity(), SelectCategory.class);
-                                                startActivity(intent);
+                                                    Intent intent = new Intent(getActivity(), SelectCategory.class);
+                                                    startActivity(intent);
+                                                }
+                                                else{
+                                                    Intent intent = new Intent(getActivity(), SelectCategory.class);
+                                                    startActivity(intent);
 
+                                                }
                                             }
-                                        }
-                                        else if (user.getIsStaff().equals("true"))
-                                        {
-                                            startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
+                                            else if (user.getIsStaff().equals("true"))
+                                            {
+                                                startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
                                             /*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                                     .setMessage("The private consultation feature is currently undergoing an upgrade")
                                                     .create();
                                             alertDialog.show();*/
+                                            }
+                                            else
+                                            {
+                                                Intent intent = new Intent(getActivity(), SelectCategory.class);
+                                                startActivity(intent);
+                                            }
                                         }
                                         else
                                         {
-                                            Intent intent = new Intent(getActivity(), SelectCategory.class);
-                                            startActivity(intent);
+                                            AlertDialog alertDialog =new AlertDialog.Builder(getActivity())
+                                                    .setTitle("Upgrade your OS")
+                                                    .setMessage("To use this feature, your Android OS must be 8.0 and above!")
+                                                    .create();
+                                            alertDialog.show();
                                         }
                                     }
                                     else

@@ -8,10 +8,10 @@ android {
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.skiplab.theselproject"
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdkVersion 29
-        versionCode 39
-        versionName "1.9.9"
+        versionCode 40
+        versionName "1.9.9.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -99,6 +99,13 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.10.8'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.8'
 
+    //horizontal calendar
+    implementation 'devs.mulham.horizontalcalendar:horizontalcalendar:1.3.4'
+
+    //JavaEmailApi
+    implementation files('libs/activation.jar')
+    implementation files('libs/additionnal.jar')
+    implementation files('libs/mail.jar')
 
 }
 repositories {

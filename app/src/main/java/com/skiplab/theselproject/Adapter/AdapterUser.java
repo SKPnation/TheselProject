@@ -43,6 +43,7 @@ import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.EditConsultantProfile;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.Utils.JavaMailAPI;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatMessage;
 import com.skiplab.theselproject.models.ChatRoom;
@@ -106,7 +107,8 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         String hisUID = userList.get(position).getUid();
-        String username = userList.get(position).getUsername();
+        String hisEmail = userList.get(position).getEmail();
+        String hisName = userList.get(position).getUsername();
         String country = userList.get(position).getAddress();
         String category1 = userList.get(position).getCategory1();
         String category2 = userList.get(position).getCategory2();
@@ -193,7 +195,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         });
 
         //get Data
-        holder.usernameTv.setText(username);
+        holder.usernameTv.setText(hisName);
         holder.usernameTv.setAllCaps(true);
         holder.countryTv.setText("["+country+"]");
         holder.categoryTv1.setText(category1);
@@ -217,7 +219,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                 TextView catTv2 = mView.findViewById(R.id.categoryTv2);
                 TextView catTv3 = mView.findViewById(R.id.categoryTv3);
 
-                nameTv.setText(username);
+                nameTv.setText(hisName);
                 if (!category1.isEmpty()){
                     catTv1.setVisibility(View.VISIBLE);
                     catTv1.setText(category1);
@@ -355,7 +357,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                             progressDialog.dismiss();
 
                                                             AlertDialog alertDialog =new AlertDialog.Builder(context)
-                                                                    .setMessage(username+" is offline!")
+                                                                    .setMessage(hisName+" is offline!")
                                                                     .create();
                                                             alertDialog.show();
                                                         }
@@ -364,7 +366,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                             progressDialog.dismiss();
 
                                                             AlertDialog alertDialog =new AlertDialog.Builder(context)
-                                                                    .setMessage(username+" is unavailable at the moment!")
+                                                                    .setMessage(hisName+" is unavailable at the moment!")
                                                                     .create();
                                                             alertDialog.show();
                                                         }
@@ -432,7 +434,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                                                                 AlertDialog.Builder alertDialog =new AlertDialog.Builder(context);
                                                                                                                 alertDialog.setCancelable(false);
-                                                                                                                alertDialog.setMessage("Sorry, "+username+"'s Instant Session slots are full."+"\n\n"+ "Please book an appointment.");
+                                                                                                                alertDialog.setMessage("Sorry, "+hisName+"'s Instant Session slots are full."+"\n\n"+ "Please book an appointment.");
                                                                                                                 alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
                                                                                                                     @Override
                                                                                                                     public void onClick(DialogInterface dialog, int which) {
@@ -449,17 +451,27 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                                                                 usersRef.child(mAuth.getUid()).child("wallet").setValue(result);
 
+                                                                                                                JavaMailAPI javaMailAPI = new JavaMailAPI(
+                                                                                                                        context,
+                                                                                                                        "ayomideseaz@gmail.com",
+                                                                                                                        "THESEL CONSULTATION",
+                                                                                                                        "Hello "+hisName+","+"\n\n"+client.getUsername().toUpperCase()+" just paid for a 1week Instant Session with you on the Thesel platform."+
+                                                                                                                                "\n\n\n"+"Warm Regards,"+"\n"+"Thesel Team.");
+
+                                                                                                                javaMailAPI.execute();
+
                                                                                                                 LocalDate today = null;
                                                                                                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                                                                                                                     today = LocalDate.now();
+                                                                                                                    todayDate = today;
+                                                                                                                    expiryDate = todayDate.plusDays(1);
+
+                                                                                                                    expiryDateS = expiryDate.toString();
+                                                                                                                    todayDateS = todayDate.toString();
+
+                                                                                                                    expiryDay = todayDate.plusDays(1).getDayOfWeek().toString();
                                                                                                                 }
-                                                                                                                todayDate = today;
-                                                                                                                expiryDate = todayDate.plusDays(1);
 
-                                                                                                                expiryDateS = expiryDate.toString();
-                                                                                                                todayDateS = todayDate.toString();
-
-                                                                                                                expiryDay = todayDate.plusDays(1).getDayOfWeek().toString();
 
                                                                                                                 String timestamp = String.valueOf(System.currentTimeMillis());
 
@@ -478,7 +490,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                 String messageId = mMessageReference.push().getKey();
 
                                                                                                                 ChatMessage message = new ChatMessage();
-                                                                                                                message.setMessage("Hi! I'm "+username+". Welcome to Thesel.\n"+"Let me know what's bothering you.");
+                                                                                                                message.setMessage("Hi! I'm "+hisName+". Welcome to Thesel.\n"+"Let me know what's bothering you.");
                                                                                                                 message.setTimestamp(timestamp);
                                                                                                                 message.setSender_id(hisUID);
                                                                                                                 message.setReceiver_id(mAuth.getUid());
@@ -515,7 +527,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                                                                                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
                                                                                                                                 alertDialog.setCancelable(false);
-                                                                                                                                alertDialog.setMessage("New session with " + username+"!");
+                                                                                                                                alertDialog.setMessage("New session with " + hisName+"!");
                                                                                                                                 alertDialog.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
                                                                                                                                     @Override
                                                                                                                                     public void onClick(DialogInterface dialog, int which) {
