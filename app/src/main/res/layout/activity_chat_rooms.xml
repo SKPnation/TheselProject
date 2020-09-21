@@ -37,16 +37,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Ongoing session"
-                    android:textSize="25sp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-                    android:textColor="@color/colorPrimary"/>
-
                 <ImageView
                     android:id="@+id/closeBtn"
                     android:tint="@color/colorPrimary"
@@ -56,19 +46,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="20dp"
                     android:layout_centerVertical="true"
-                    android:visibility="gone"
-                    />
-
-                <ImageView
-                    android:id="@+id/sign_out_btn"
-                    android:tint="@color/colorPrimary"
-                    android:src="@drawable/ic_sign_out"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="20dp"
-                    android:layout_centerVertical="true"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     />
 
             </RelativeLayout>
@@ -77,12 +55,92 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <RelativeLayout
+        android:id="@+id/layout_one"
         android:layout_below="@id/appBarLayout"
-        android:layout_marginTop="6dp"
-        tools:listitem="@layout/layout_chatroom_listitem" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:background="@drawable/grey_border">
+
+        <LinearLayout
+            android:id="@+id/title_instant_session_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/title_instant_session"
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="25sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                android:textColor="@color/colorPrimary"
+                android:layout_weight="2.5"/>
+
+            <ImageView
+                android:id="@+id/session_count"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:layout_weight="0.5"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_below="@id/title_instant_session_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:scrollbars="horizontal"
+            tools:listitem="@layout/layout_chatroom_listitem" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_two"
+        android:layout_below="@id/layout_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:background="@drawable/grey_border">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Appointments"
+                android:textSize="25sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                android:textColor="@color/colorPrimary"
+                android:layout_weight="2.5"/>
+
+            <ImageView
+                android:id="@+id/appt_count"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:layout_weight="0.5"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </RelativeLayout>

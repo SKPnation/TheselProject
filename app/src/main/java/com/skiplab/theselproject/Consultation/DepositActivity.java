@@ -110,7 +110,8 @@ public class DepositActivity extends AppCompatActivity {
                                         }
                                         else
                                         {
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                            usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result);
+                                            /*AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                                             View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.card_payment_dialog, null);
 
                                             etEmail = mView.findViewById(R.id.et_main_email);
@@ -122,7 +123,7 @@ public class DepositActivity extends AppCompatActivity {
                                             btProceed = mView.findViewById(R.id.bt_main_proceed);
 
                                             etEmail.setText(mAuth.getCurrentUser().getEmail());
-                                            btProceed.setText("PROCEED:  #3000");
+                                            btProceed.setText("PROCEED:  N3000");
 
                                             ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
                                             //here we set the adapter to the year spinner
@@ -136,7 +137,7 @@ public class DepositActivity extends AppCompatActivity {
                                             });
 
                                             builder.setView(mView);
-                                            builder.show();
+                                            builder.show();*/
                                         }
 
                                     }
@@ -168,7 +169,7 @@ public class DepositActivity extends AppCompatActivity {
                                             btProceed = mView.findViewById(R.id.bt_main_proceed);
 
                                             etEmail.setText(mAuth.getCurrentUser().getEmail());
-                                            btProceed.setText("PROCEED:  #6000");
+                                            btProceed.setText("PROCEED:  N6000");
 
                                             ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
                                             //here we set the adapter to the year spinner
@@ -213,7 +214,7 @@ public class DepositActivity extends AppCompatActivity {
                                             btProceed = mView.findViewById(R.id.bt_main_proceed);
 
                                             etEmail.setText(mAuth.getCurrentUser().getEmail());
-                                            btProceed.setText("PROCEED:  #12000");
+                                            btProceed.setText("PROCEED:  N12000");
 
                                             ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
                                             //here we set the adapter to the year spinner
@@ -257,7 +258,7 @@ public class DepositActivity extends AppCompatActivity {
                                             btProceed = mView.findViewById(R.id.bt_main_proceed);
 
                                             etEmail.setText(mAuth.getCurrentUser().getEmail());
-                                            btProceed.setText("PROCEED:  #18000");
+                                            btProceed.setText("PROCEED:  N18000");
 
 
                                             ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());

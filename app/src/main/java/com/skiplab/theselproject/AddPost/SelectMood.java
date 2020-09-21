@@ -39,9 +39,7 @@ public class SelectMood extends AppCompatActivity {
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( mContext, DashboardActivity.class );
-                intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                startActivity( intent );
+
                 finish();
             }
         });
@@ -51,9 +49,7 @@ public class SelectMood extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent( mContext, DashboardActivity.class );
-        intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-        startActivity( intent );
+
         finish();
     }
 }

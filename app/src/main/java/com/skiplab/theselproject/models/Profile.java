@@ -2,19 +2,18 @@ package com.skiplab.theselproject.models;
 
 public class Profile {
 
-    String user_id, description;
-    long num_of_consultations, num_of_payments;
-    double total;
+    String user_id, description, appt_timer;
+    long appointments, instants;
 
     public Profile() {
     }
 
-    public Profile(String user_id, String description, long num_of_consultations, long num_of_payments, double total) {
+    public Profile(String user_id, String description, String appt_timer, long appointments, long instants) {
         this.user_id = user_id;
         this.description = description;
-        this.num_of_consultations = num_of_consultations;
-        this.num_of_payments = num_of_payments;
-        this.total = total;
+        this.appt_timer = appt_timer;
+        this.appointments = appointments;
+        this.instants = instants;
     }
 
     public String getUser_id() {
@@ -33,27 +32,27 @@ public class Profile {
         this.description = description;
     }
 
-    public long getNum_of_consultations() {
-        return num_of_consultations;
+    public String getAppt_timer() {
+        return appt_timer;
     }
 
-    public void setNum_of_consultations(long num_of_consultations) {
-        this.num_of_consultations = num_of_consultations;
+    public void setAppt_timer(String appt_timer) {
+        this.appt_timer = appt_timer;
     }
 
-    public long getNum_of_payments() {
-        return num_of_payments;
+    public long getAppointments() {
+        return appointments;
     }
 
-    public void setNum_of_payments(long num_of_payments) {
-        this.num_of_payments = num_of_payments;
+    public void setAppointments(long appointments) {
+        this.appointments = appointments;
     }
 
-    public double getTotal() {
-        return total;
+    public long getInstants() {
+        return instants;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setInstants(long instants) {
+        this.instants = instants;
     }
 }

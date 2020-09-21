@@ -220,7 +220,7 @@ public class ChatActivity extends AppCompatActivity {
         //create api service
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
-        mButtonStart.setOnClickListener(new View.OnClickListener() {
+        /*mButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Common.isConnectedToTheInternet(mContext))
@@ -315,7 +315,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
 
         mButtonThanks.setOnClickListener(new View.OnClickListener() {
             @Override

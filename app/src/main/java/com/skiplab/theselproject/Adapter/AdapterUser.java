@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.skiplab.theselproject.Common.Common;
+import com.skiplab.theselproject.Consultation.BookAppointment;
 import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.EditConsultantProfile;
@@ -53,6 +55,7 @@ import com.skiplab.theselproject.notifications.Response;
 import com.skiplab.theselproject.notifications.Sender;
 import com.skiplab.theselproject.notifications.Token;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -74,7 +77,10 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
     APIService apiService;
 
+    LocalDate todayDate, expiryDate;
+
     String adminUID = "1zNcpaSxviY7GLLRGVQt8ywPla52";
+    String expiryDateS, todayDateS, expiryDay;
 
     int i = 0;
 
@@ -106,12 +112,16 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         String category2 = userList.get(position).getCategory2();
         String category3 = userList.get(position).getCategory3();
         Long cost = userList.get(position).getCost();
-        String userCost = String.valueOf(userList.get(position).getCost());
-
 
         if (userList.get(position).getOnlineStatus().equals("online"))
         {
             holder.onlineIv.setVisibility(View.VISIBLE);
+        }
+
+        try {
+            UniversalImageLoader.setImage(userList.get(position).getProfile_photo(), holder.mAvatarIv, null, "");
+        }
+        catch (Exception e){
         }
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -190,277 +200,6 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         holder.categoryTv2.setText(category2);
         holder.categoryTv3.setText(category3);
 
-        holder.chatBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Common.isConnectedToTheInternet(context))
-                {
-                    ProgressDialog progressDialog = new ProgressDialog(context);
-                    progressDialog.setMessage("Please wait...");
-                    progressDialog.show();
-
-                    usersRef.orderByKey().equalTo(hisUID)
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot ds: dataSnapshot.getChildren())
-                                    {
-                                        User counsellor = ds.getValue(User.class);
-                                        if (counsellor.getOnlineStatus().equals("offline"))
-                                        {
-                                            progressDialog.dismiss();
-
-                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
-                                                    .setMessage(counsellor.getUsername()+" is offline!")
-                                                    .create();
-                                            alertDialog.show();
-                                        }
-                                        else if (counsellor.getOnlineStatus().equals("deactivated"))
-                                        {
-                                            progressDialog.dismiss();
-
-                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
-                                                    .setMessage(counsellor.getUsername()+" is unavailable at the moment!")
-                                                    .create();
-                                            alertDialog.show();
-                                        }
-                                        else
-                                        {
-                                            usersRef.orderByKey().equalTo(mAuth.getUid())
-                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                            for (DataSnapshot ds: dataSnapshot.getChildren())
-                                                            {
-                                                                User client = ds.getValue(User.class);
-                                                                if (client.getIsStaff().equals("false"))
-                                                                {
-                                                                    int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
-                                                                    if (!(wallet >= 1500))
-                                                                    {
-                                                                        progressDialog.dismiss();
-
-                                                                        AlertDialog alertDialog =new AlertDialog.Builder(context)
-                                                                                .setMessage("Your wallet is empty!!!")
-                                                                                .create();
-                                                                        alertDialog.show();
-
-                                                                        i++;
-
-                                                                        Handler handler = new Handler();
-                                                                        handler.postDelayed(new Runnable() {
-                                                                            @Override
-                                                                            public void run() {
-                                                                                alertDialog.dismiss();
-                                                                                context.startActivity(new Intent(context, WalletActivity.class));
-
-                                                                            }
-                                                                        },2000);
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        mChatroomReference.whereEqualTo("creator_id", mAuth.getUid())
-                                                                                .get()
-                                                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                                    @Override
-                                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                                        if (task.isSuccessful())
-                                                                                        {
-                                                                                            if(task.getResult().size() > 0)
-                                                                                            {
-                                                                                                progressDialog.dismiss();
-
-                                                                                                AlertDialog.Builder alertDialog =new AlertDialog.Builder(context);
-                                                                                                alertDialog.setCancelable(false);
-                                                                                                alertDialog.setMessage("End your ongoing session before starting a new session!");
-                                                                                                alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
-                                                                                                    @Override
-                                                                                                    public void onClick(DialogInterface dialog, int which) {
-                                                                                                        dialog.dismiss();
-
-                                                                                                        context.startActivity(new Intent(context, ChatRoomsActivity.class));
-                                                                                                    }
-                                                                                                });
-                                                                                                alertDialog.show();
-
-                                                                                            } else {
-
-                                                                                                mChatroomReference.whereEqualTo("counsellor_id",hisUID)
-                                                                                                        .get()
-                                                                                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                                                            @Override
-                                                                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                                                                if (task.isSuccessful()){
-                                                                                                                    if (task.getResult().size() > 0)
-                                                                                                                    {
-                                                                                                                        progressDialog.dismiss();
-
-                                                                                                                        i++;
-
-                                                                                                                        Handler handler = new Handler();
-                                                                                                                        handler.postDelayed(new Runnable() {
-                                                                                                                            @Override
-                                                                                                                            public void run() {
-                                                                                                                                Toast.makeText(context,counsellor.getUsername()+" is in an ongoing session.",Toast.LENGTH_SHORT).show();
-                                                                                                                            }
-                                                                                                                        },2000);
-                                                                                                                    }
-                                                                                                                    else
-                                                                                                                    {
-                                                                                                                        String timestamp = String.valueOf(System.currentTimeMillis());
-
-                                                                                                                        String chatroomId = UUID.randomUUID().toString();
-
-                                                                                                                        ChatRoom chatroom = new ChatRoom();
-                                                                                                                        chatroom.setChatroom_id(chatroomId);
-                                                                                                                        chatroom.setCreator_id(mAuth.getUid());
-                                                                                                                        chatroom.setCreator_name(client.getUsername());
-                                                                                                                        chatroom.setCreator_dp(client.getProfile_photo());
-                                                                                                                        chatroom.setCounsellor_id(hisUID);
-                                                                                                                        chatroom.setTimestamp(timestamp);
-                                                                                                                        chatroom.setNum_messages(1);
-
-                                                                                                                        //create a unique id for the message
-                                                                                                                        String messageId = mMessageReference.push().getKey();
-
-                                                                                                                        ChatMessage message = new ChatMessage();
-                                                                                                                        message.setMessage("Hi! I'm "+counsellor.getUsername()+". Welcome to Thesel.\n"+"Let me know what's bothering you.");
-                                                                                                                        message.setTimestamp(timestamp);
-                                                                                                                        message.setSender_id(hisUID);
-                                                                                                                        message.setReceiver_id(mAuth.getUid());
-                                                                                                                        message.setType("text");
-                                                                                                                        message.setChatroom_id(chatroomId);
-
-                                                                                                                        mProfileReference.document(hisUID).get()
-                                                                                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                                                                                    @Override
-                                                                                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                                                                                        if (task.getResult().exists())
-                                                                                                                                        {
-                                                                                                                                            long num_of_consultations = task.getResult().getLong("num_of_consultations");
-                                                                                                                                            HashMap<String, Object> hashMap = new HashMap<>();
-                                                                                                                                            hashMap.put("num_of_consultations",num_of_consultations+1);
-
-                                                                                                                                            mProfileReference.document(hisUID).set(hashMap, SetOptions.merge());
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                });
-
-                                                                                                                        mChatroomReference.document(chatroomId).set(chatroom).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                                                                            @Override
-                                                                                                                            public void onSuccess(Void aVoid) {
-
-                                                                                                                                sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
-
-                                                                                                                                sendAdminNotification(client.getUid(), client.getUsername(), "NEW CONSULTATION!!!", counsellor.getUsername());
-
-                                                                                                                                progressDialog.dismiss();
-
-                                                                                                                                mMessageReference.child(messageId).setValue(message);
-
-                                                                                                                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-                                                                                                                                alertDialog.setCancelable(false);
-                                                                                                                                alertDialog.setMessage("New session with " + counsellor.getUsername()+"!");
-                                                                                                                                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                                                                                                    @Override
-                                                                                                                                    public void onClick(DialogInterface dialog, int which) {
-                                                                                                                                        dialog.dismiss();
-
-                                                                                                                                        context.startActivity(new Intent(context, ChatRoomsActivity.class));
-                                                                                                                                    }
-                                                                                                                                });
-                                                                                                                                alertDialog.show();
-
-
-
-
-                                                                                                                            }
-                                                                                                                        });
-
-
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            }
-                                                                                                        }).addOnFailureListener(new OnFailureListener() {
-                                                                                                    @Override
-                                                                                                    public void onFailure(@NonNull Exception e) {
-                                                                                                        Toast.makeText(context,"Failed Query: ERROR: "+e,Toast.LENGTH_SHORT).show();
-                                                                                                    }
-                                                                                                });
-
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }).addOnFailureListener(new OnFailureListener() {
-                                                                            @Override
-                                                                            public void onFailure(@NonNull Exception e) {
-                                                                                Toast.makeText(context,"Failed Query: ERROR: "+e,Toast.LENGTH_SHORT).show();
-                                                                            }
-                                                                        });
-
-
-                                                                    }
-                                                                }
-
-                                                            }
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                            //..
-                                                        }
-                                                    });
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    //..
-                                }
-                            });
-                }
-                else {
-                    AlertDialog alertDialog =new AlertDialog.Builder(context)
-                            .setMessage("Please check your internet connection!")
-                            .create();
-                    alertDialog.show();
-                }
-            }
-        });
-
-        holder.timeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                final View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.counselling_hours_layout, null);
-
-                TextView daytimeTv= mView.findViewById(R.id.dayTime);
-                TextView nighttimeTv = mView.findViewById(R.id.nightTime);
-
-                usersRef.orderByKey().equalTo(hisUID)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                                    User user = ds.getValue(User.class);
-                                    daytimeTv.setText(user.getDayTime());
-                                    nighttimeTv.setText(user.getNightTime());
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                //..
-                            }
-                        });
-
-
-                builder.setView(mView);
-                builder.show();
-            }
-        });
-
         holder.profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -525,11 +264,326 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
             }
         });
 
-        try {
-            UniversalImageLoader.setImage(userList.get(position).getProfile_photo(), holder.mAvatarIv, null, "");
-        }
-        catch (Exception e){
-        }
+        holder.scheduleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Common.isConnectedToTheInternet(context))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Consultations at a later time");
+                    builder.setMessage("Book an appointment for a day/time of your choice.");
+                    builder.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(context, BookAppointment.class);
+                            intent.putExtra("hisUID",hisUID);
+                            intent.putExtra("hisCost",cost);
+                            context.startActivity(intent);
+                        }
+                    });
+
+                    builder.show();
+                }
+                else
+                {
+                    AlertDialog alertDialog =new AlertDialog.Builder(context)
+                            .setMessage("Please check your internet connection!")
+                            .create();
+                    alertDialog.show();
+                }
+
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                final View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.counselling_hours_layout, null);
+
+                TextView daytimeTv= mView.findViewById(R.id.dayTime);
+                TextView nighttimeTv = mView.findViewById(R.id.nightTime);
+
+                usersRef.orderByKey().equalTo(hisUID)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                                    User user = ds.getValue(User.class);
+                                    daytimeTv.setText(user.getDayTime());
+                                    nighttimeTv.setText(user.getNightTime());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                //..
+                            }
+                        });
+
+
+                builder.setView(mView);
+                builder.show();*/
+            }
+        });
+
+        holder.instantBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Common.isConnectedToTheInternet(context))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    final View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.layout_instant_consultation, null);
+
+                    Button start_btn = mView.findViewById(R.id.start_instant_btn);
+
+                    start_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (Common.isConnectedToTheInternet(context))
+                            {
+                                ProgressDialog progressDialog = new ProgressDialog(context);
+                                progressDialog.setMessage("Loading...");
+                                progressDialog.show();
+
+                                usersRef.orderByKey().equalTo(mAuth.getUid())
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot ds: dataSnapshot.getChildren())
+                                                {
+                                                    User client = ds.getValue(User.class);
+
+                                                    if (client.getIsStaff().equals("false"))
+                                                    {
+                                                        if (userList.get(position).getOnlineStatus().equals("offline"))
+                                                        {
+                                                            progressDialog.dismiss();
+
+                                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                    .setMessage(username+" is offline!")
+                                                                    .create();
+                                                            alertDialog.show();
+                                                        }
+                                                        else if (userList.get(position).equals("deactivated"))
+                                                        {
+                                                            progressDialog.dismiss();
+
+                                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                    .setMessage(username+" is unavailable at the moment!")
+                                                                    .create();
+                                                            alertDialog.show();
+                                                        }
+                                                        else
+                                                        {
+                                                            int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
+                                                            if (!(wallet >= 6000))
+                                                            {
+                                                                AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                        .setMessage("Insufficient funds!!!")
+                                                                        .create();
+                                                                alertDialog.show();
+
+                                                                i++;
+
+                                                                Handler handler = new Handler();
+                                                                handler.postDelayed(new Runnable() {
+                                                                    @Override
+                                                                    public void run() {
+                                                                        alertDialog.dismiss();
+                                                                        context.startActivity(new Intent(context, WalletActivity.class));
+
+                                                                    }
+                                                                },2000);
+                                                            }
+                                                            else
+                                                            {
+                                                                mChatroomReference.whereEqualTo("client_id", mAuth.getUid())
+                                                                        .get()
+                                                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                                if (task.isSuccessful())
+                                                                                {
+                                                                                    if(task.getResult().size() > 0)
+                                                                                    {
+                                                                                        progressDialog.dismiss();
+
+
+                                                                                        AlertDialog.Builder alertDialog =new AlertDialog.Builder(context);
+                                                                                        alertDialog.setCancelable(false);
+                                                                                        alertDialog.setMessage("End your current instant session before starting a new one!");
+                                                                                        alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                                            @Override
+                                                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                                                dialog.dismiss();
+
+                                                                                                context.startActivity(new Intent(context, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        });
+                                                                                        alertDialog.show();
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        mChatroomReference.whereEqualTo("counsellor_id", hisUID)
+                                                                                                .get()
+                                                                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                                                    @Override
+                                                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task1) {
+                                                                                                        if (task1.isSuccessful())
+                                                                                                        {
+                                                                                                            if (task1.getResult().size() > 4)
+                                                                                                            {
+                                                                                                                progressDialog.dismiss();
+
+                                                                                                                AlertDialog.Builder alertDialog =new AlertDialog.Builder(context);
+                                                                                                                alertDialog.setCancelable(false);
+                                                                                                                alertDialog.setMessage("Sorry, "+username+"'s Instant Session slots are full."+"\n\n"+ "Please book an appointment.");
+                                                                                                                alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                                                                    @Override
+                                                                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                                                                        dialog.dismiss();
+
+                                                                                                                        //context.startActivity(new Intent(context, BookAppointment.class));
+                                                                                                                    }
+                                                                                                                });
+                                                                                                                alertDialog.show();
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                int result = wallet - 6000;
+
+                                                                                                                usersRef.child(mAuth.getUid()).child("wallet").setValue(result);
+
+                                                                                                                LocalDate today = null;
+                                                                                                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                                                                                                    today = LocalDate.now();
+                                                                                                                }
+                                                                                                                todayDate = today;
+                                                                                                                expiryDate = todayDate.plusDays(1);
+
+                                                                                                                expiryDateS = expiryDate.toString();
+                                                                                                                todayDateS = todayDate.toString();
+
+                                                                                                                expiryDay = todayDate.plusDays(1).getDayOfWeek().toString();
+
+                                                                                                                String timestamp = String.valueOf(System.currentTimeMillis());
+
+                                                                                                                String chatroomId = UUID.randomUUID().toString();
+
+                                                                                                                ChatRoom chatRoom = new ChatRoom();
+                                                                                                                chatRoom.setCounsellor_id(hisUID);
+                                                                                                                chatRoom.setClient_id(mAuth.getUid());
+                                                                                                                chatRoom.setTimestamp(timestamp);
+                                                                                                                chatRoom.setChatroom_id(chatroomId);
+                                                                                                                chatRoom.setExpiryDate(expiryDateS);
+                                                                                                                chatRoom.setExpiryDay(expiryDay);
+                                                                                                                chatRoom.setNum_messages(1);
+
+                                                                                                                //create a unique id for the message
+                                                                                                                String messageId = mMessageReference.push().getKey();
+
+                                                                                                                ChatMessage message = new ChatMessage();
+                                                                                                                message.setMessage("Hi! I'm "+username+". Welcome to Thesel.\n"+"Let me know what's bothering you.");
+                                                                                                                message.setTimestamp(timestamp);
+                                                                                                                message.setSender_id(hisUID);
+                                                                                                                message.setReceiver_id(mAuth.getUid());
+                                                                                                                message.setType("text");
+                                                                                                                message.setChatroom_id(chatroomId);
+
+                                                                                                                mProfileReference.document(hisUID)
+                                                                                                                        .get()
+                                                                                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                                                            @Override
+                                                                                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                                                                if (task.getResult().exists())
+                                                                                                                                {
+                                                                                                                                    long instants = task.getResult().getLong("instants");
+                                                                                                                                    HashMap<String, Object> hashMap = new HashMap<>();
+                                                                                                                                    hashMap.put("instants",instants+1);
+
+                                                                                                                                    mProfileReference.document(hisUID).set(hashMap, SetOptions.merge());
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        });
+
+                                                                                                                mChatroomReference.document(chatroomId).set(chatRoom)
+                                                                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                                            @Override
+                                                                                                                            public void onSuccess(Void aVoid) {
+                                                                                                                                //sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
+
+                                                                                                                                //sendAdminNotification(client.getUid(), client.getUsername(), "NEW CONSULTATION!!!", counsellor.getUsername());
+
+                                                                                                                                progressDialog.dismiss();
+
+                                                                                                                                mMessageReference.child(messageId).setValue(message);
+
+                                                                                                                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                                                                                                                                alertDialog.setCancelable(false);
+                                                                                                                                alertDialog.setMessage("New session with " + username+"!");
+                                                                                                                                alertDialog.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
+                                                                                                                                    @Override
+                                                                                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                                                                                        dialog.dismiss();
+
+                                                                                                                                        context.startActivity(new Intent(context, ChatRoomsActivity.class));
+                                                                                                                                    }
+                                                                                                                                });
+                                                                                                                                alertDialog.show();
+
+                                                                                                                            }
+                                                                                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                                                                                    @Override
+                                                                                                                    public void onFailure(@NonNull Exception e) {
+                                                                                                                        Toast.makeText(context,"Add Instant Session Failed: "+e,Toast.LENGTH_SHORT).show();
+                                                                                                                    }
+                                                                                                                });
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                }).addOnFailureListener(new OnFailureListener() {
+                                                                                            @Override
+                                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                                Toast.makeText(context,"Counsellor Query Failed: "+e,Toast.LENGTH_SHORT).show();
+                                                                                            }
+                                                                                        });
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+                                                                        Toast.makeText(context,"Client Query Failed: "+e,Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                //..
+                                            }
+                                        });
+                            }
+                            else {
+                                AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                        .setMessage("Please check your internet connection!")
+                                        .create();
+                                alertDialog.show();
+                            }
+
+                        }
+                    });
+
+                    builder.setView(mView);
+                    builder.show();
+                }
+                else {
+                    AlertDialog alertDialog =new AlertDialog.Builder(context)
+                            .setMessage("Please check your internet connection!")
+                            .create();
+                    alertDialog.show();
+                }
+            }
+        });
 
     }
 
@@ -599,7 +653,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
     public class UserViewHolder extends RecyclerView.ViewHolder{
 
         ImageView mAvatarIv, onlineIv, offlineIv;
-        ImageButton profileBtn, timeBtn, chatBtn;
+        ImageButton profileBtn, scheduleBtn, instantBtn;
         TextView usernameTv, countryTv, categoryTv1, categoryTv2, categoryTv3, mCostTv;
         View mView;
 
@@ -617,8 +671,8 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
             categoryTv2 = itemView.findViewById(R.id.categoryTv2);
             categoryTv3 = itemView.findViewById(R.id.categoryTv3);
             profileBtn = itemView.findViewById(R.id.profileBtn);
-            timeBtn = itemView.findViewById(R.id.timeBtn);
-            chatBtn = itemView.findViewById(R.id.chatBtn);
+            scheduleBtn = itemView.findViewById(R.id.scheduleBtn);
+            instantBtn = itemView.findViewById(R.id.instantBtn);
             mCostTv = itemView.findViewById(R.id.costTv);
         }
     }

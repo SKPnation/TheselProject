@@ -97,20 +97,6 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
     }
 
-
-
-    /*public void addAll(List<Post> newPosts)
-    {
-        int initSize = postList.size();
-        postList.addAll(newPosts);
-        notifyItemRangeChanged(initSize,newPosts.size());
-    }
-
-    public String getLastItemId()
-    {
-        return postList.get(postList.size()-1).getpId();
-    }*/
-
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

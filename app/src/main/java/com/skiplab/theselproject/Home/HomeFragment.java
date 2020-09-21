@@ -350,11 +350,11 @@ public class HomeFragment extends Fragment {
                                     {
                                         if (user.getIsStaff().equals("false"))
                                         {
-                                            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                            /*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                                     .setMessage("The private consultation feature is currently undergoing an upgrade")
                                                     .create();
-                                            alertDialog.show();
-                                            /*if (!ds.hasChild("wallet")){
+                                            alertDialog.show();*/
+                                            if (!ds.hasChild("wallet")){
                                                 DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
                                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                                 currentUserRef.child("wallet").setValue(0);
@@ -366,15 +366,15 @@ public class HomeFragment extends Fragment {
                                                 Intent intent = new Intent(getActivity(), SelectCategory.class);
                                                 startActivity(intent);
 
-                                            }*/
+                                            }
                                         }
                                         else if (user.getIsStaff().equals("true"))
                                         {
-                                            //startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
-                                            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                            startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
+                                            /*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                                     .setMessage("The private consultation feature is currently undergoing an upgrade")
                                                     .create();
-                                            alertDialog.show();
+                                            alertDialog.show();*/
                                         }
                                         else
                                         {
@@ -401,11 +401,11 @@ public class HomeFragment extends Fragment {
                                     {
                                         if (user.getIsStaff().equals("false"))
                                         {
-                                            AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                            /*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                                     .setMessage("The private consultation feature is currently undergoing an upgrade")
                                                     .create();
-                                            alertDialog.show();
-                                            /*if (!ds.hasChild("wallet")){
+                                            alertDialog.show();*/
+                                            if (!ds.hasChild("wallet")){
                                                 DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
                                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                                 currentUserRef.child("wallet").setValue(0);
@@ -416,7 +416,7 @@ public class HomeFragment extends Fragment {
                                             else{
                                                 Intent intent = new Intent(getActivity(), WalletActivity.class);
                                                 startActivity(intent);
-                                            }*/
+                                            }
                                         }
                                         else
                                         {

@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -32,17 +35,22 @@ import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatRoom;
 import com.skiplab.theselproject.models.User;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapter.ViewHolder>{
 
+    private static final String TAG = "ChatroomListAdapter";
+
     Context context;
     List<ChatRoom> chatRoomList;
     FirebaseAuth mAuth;
     DatabaseReference usersRef;
     CollectionReference mChatroomReference;
+
+    LocalDate todayDate;
 
     public ChatroomListAdapter(Context context, List<ChatRoom> chatRoomList) {
         this.context = context;
@@ -62,24 +70,29 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         String chatroomID = chatRoomList.get(position).getChatroom_id();
-        String clientUID = chatRoomList.get(position).getCreator_id();
-        String clientDp = chatRoomList.get(position).getCreator_dp();
-        String clientName = chatRoomList.get(position).getCreator_name();
+        String clientUID = chatRoomList.get(position).getClient_id();
         String counsellorID = chatRoomList.get(position).getCounsellor_id();
         String timestamp = chatRoomList.get(position).getTimestamp();
-        int chatroom_messages = chatRoomList.get(position).getNum_messages();
+        long chatroom_messages = chatRoomList.get(position).getNum_messages();
+        String expiryDAY = chatRoomList.get(position).getExpiryDay();
+        String expiryDATE = chatRoomList.get(position).getExpiryDate();
 
         //set the number of chat messages
-        String chatMessagesString = chatroom_messages + " messages";
-
-        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
-        calendar.setTimeInMillis(Long.parseLong(timestamp));
-        String dateTime = DateFormat.format("dd/MM/yyyy  hh:mm aa", calendar).toString();
+        String chatMessagesString = chatroom_messages + " message(s)";
 
         //set number of chatroom messages
-        holder.dateTv.setText(dateTime);
+        holder.expiryDayTv.setText(expiryDAY+", ");
+        holder.expiryDateTv.setText(expiryDATE);
         holder.numMessagesTv.setText(chatMessagesString);
+
+        LocalDate today = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            today = LocalDate.now();
+        }
+        todayDate = today;
+        String todayDateS = todayDate.toString();
 
         usersRef.orderByKey().equalTo(mAuth.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -91,8 +104,6 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
 
                             if (user.getIsStaff().equals("false"))
                             {
-                                int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
-
                                 usersRef.orderByKey().equalTo(counsellorID)
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
@@ -103,12 +114,126 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
 
                                                     //set counsellor name
                                                     holder.hisNameTv.setText(counsellor.getUsername());
+                                                    holder.categoryTv.setText(counsellor.getCategory1());
 
                                                     //set counsellor dp
                                                     try {
                                                         UniversalImageLoader.setImage(counsellor.getProfile_photo(), holder.avaterIv, null, "");
                                                     }
                                                     catch (Exception e){
+                                                        Log.d("ERROR: ", ""+e);
+                                                    }
+
+                                                    holder.chatBtn.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            if (Common.isConnectedToTheInternet(context))
+                                                            {
+                                                                Intent intent = new Intent(context, ChatActivity.class);
+                                                                intent.putExtra("hisUID", counsellorID);
+                                                                intent.putExtra("chatroomID",chatroomID);
+                                                                intent.putExtra("myName",counsellor.getUsername());
+                                                                context.startActivity(intent);
+                                                            }
+                                                            else
+                                                            {
+                                                                AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                        .setMessage("Please check your internet connection!")
+                                                                        .create();
+                                                                alertDialog.show();
+                                                            }
+                                                        }
+                                                    });
+
+                                                    if (LocalDate.parse(todayDateS).isAfter(LocalDate.parse(expiryDATE)))
+                                                    {
+                                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                                        builder.setCancelable(false);
+                                                        builder.setMessage("Your Instant Session with "+counsellor.getUsername()+" has EXPIRED!");
+                                                        builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                dialog.dismiss();
+                                                            }
+                                                        });
+
+                                                        builder.show();
+                                                    }
+                                                    else
+                                                    {
+                                                        Toast.makeText(context, "NOT EXPIRED", Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                //..
+                                            }
+                                        });
+
+                            }
+                            else if (user.getIsStaff().equals("true"))
+                            {
+                                usersRef.orderByKey().equalTo(clientUID)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot ds :dataSnapshot.getChildren())
+                                                {
+                                                    User client = ds.getValue(User.class);
+
+                                                    //set counsellor name
+                                                    holder.hisNameTv.setText(client.getUsername());
+                                                    holder.categoryTv.setText(user.getCategory1());
+
+                                                    //set counsellor dp
+                                                    try {
+                                                        UniversalImageLoader.setImage(client.getProfile_photo(), holder.avaterIv, null, "");
+                                                    }
+                                                    catch (Exception e){
+                                                        Log.d("ERROR: ", ""+e);
+                                                    }
+
+                                                    holder.chatBtn.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            if (Common.isConnectedToTheInternet(context))
+                                                            {
+                                                                Intent intent = new Intent(context, ChatActivity.class);
+                                                                intent.putExtra("hisUID", clientUID);
+                                                                intent.putExtra("chatroomID",chatroomID);
+                                                                intent.putExtra("myName",client.getUsername());
+                                                                context.startActivity(intent);
+                                                            }
+                                                            else
+                                                            {
+                                                                AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                        .setMessage("Please check your internet connection!")
+                                                                        .create();
+                                                                alertDialog.show();
+                                                            }
+                                                        }
+                                                    });
+
+                                                    if (LocalDate.parse(todayDateS).isAfter(LocalDate.parse(expiryDATE)))
+                                                    {
+                                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                                        builder.setCancelable(false);
+                                                        builder.setMessage("Your Instant Session with "+client.getUsername()+" has EXPIRED!");
+                                                        builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                dialog.dismiss();
+                                                            }
+                                                        });
+
+                                                        builder.show();
+                                                    }
+                                                    else
+                                                    {
+                                                        Toast.makeText(context, "NOT EXPIRED", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
                                             }
@@ -119,67 +244,7 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
                                             }
                                         });
 
-                                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        if (Common.isConnectedToTheInternet(context))
-                                        {
-                                            if (wallet < 1500)
-                                            {
-                                                context.startActivity(new Intent(context, WalletActivity.class));
-                                            }
-                                            else if (wallet >= 1500)
-                                            {
-                                                Intent intent = new Intent(context, ChatActivity.class);
-                                                intent.putExtra("hisUID", counsellorID);
-                                                intent.putExtra("chatroomID",chatroomID);
-                                                intent.putExtra("myName",clientName);
-                                                context.startActivity(intent);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
-                                                    .setMessage("Please check your internet connection!")
-                                                    .create();
-                                            alertDialog.show();
-                                        }
-                                    }
-                                });
-                            }
-                            else if (user.getIsStaff().equals("true"))
-                            {
-                                //set client name
-                                holder.hisNameTv.setText(clientName);
 
-                                //set client dp
-                                try {
-                                    UniversalImageLoader.setImage(clientDp, holder.avaterIv, null, "");
-                                }
-                                catch (Exception e){
-                                    //..
-                                }
-
-                                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        if (Common.isConnectedToTheInternet(context))
-                                        {
-                                            Intent intent = new Intent(context, ChatActivity.class);
-                                            intent.putExtra("hisUID", clientUID);
-                                            intent.putExtra("chatroomID",chatroomID);
-                                            intent.putExtra("myName",user.getUsername());
-                                            context.startActivity(intent);
-                                        }
-                                        else
-                                        {
-                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
-                                                    .setMessage("Please check your internet connection!")
-                                                    .create();
-                                            alertDialog.show();
-                                        }
-                                    }
-                                });
                             }
                         }
                     }
@@ -227,16 +292,20 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder{
         ImageView avaterIv, iconTrashIv;
-        TextView dateTv, hisNameTv, numMessagesTv;
+        TextView categoryTv, expiryDateTv, expiryDayTv, hisNameTv, numMessagesTv;
+        Button chatBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            avaterIv = itemView.findViewById(R.id.avatarIv);
+            avaterIv = itemView.findViewById(R.id.hisImage);
+            categoryTv = itemView.findViewById(R.id.categoryTv);
             iconTrashIv = itemView.findViewById(R.id.icon_trash);
-            dateTv = itemView.findViewById(R.id.consultation_date);
-            hisNameTv = itemView.findViewById(R.id.his_name);
+            expiryDateTv = itemView.findViewById(R.id.expiry_date);
+            expiryDayTv = itemView.findViewById(R.id.expiry_day);
+            hisNameTv = itemView.findViewById(R.id.hisName);
             numMessagesTv = itemView.findViewById(R.id.number_chatmessages);
+            chatBtn = itemView.findViewById(R.id.chat_btn);
         }
     }
 }

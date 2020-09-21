@@ -9,13 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,8 +61,8 @@ public class ChatRoomsActivity extends AppCompatActivity {
 
     ProgressBar mProgressBar;
 
-    TextView hintText;
-    private ImageView closeBtn, logOutBtn;
+    TextView hintText, titleInstantSession;
+    private ImageView closeBtn, sessionCountIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +77,14 @@ public class ChatRoomsActivity extends AppCompatActivity {
 
         hintText = findViewById(R.id.hintText);
         closeBtn = findViewById(R.id.closeBtn);
-        logOutBtn = findViewById(R.id.sign_out_btn);
+        sessionCountIv = findViewById(R.id.session_count);
+        titleInstantSession = findViewById(R.id.title_instant_session);
 
         chatroomList = new ArrayList<>();
 
         recyclerView = findViewById(R.id.recycler_view);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
         //Show latest video first, for the load from last
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -95,117 +99,41 @@ public class ChatRoomsActivity extends AppCompatActivity {
                             User user = ds.getValue(User.class);
                             if (user.getIsStaff().equals("false"))
                             {
-                                closeBtn.setVisibility(View.VISIBLE);
+                                titleInstantSession.setText("Instant Session");
 
-                                loadClientChatrooms();
-
-                                closeBtn.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(mContext, DashboardActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                });
+                                loadClientSession();
 
                             }
                             else if (user.getIsStaff().equals("true"))
                             {
-                                logOutBtn.setVisibility(View.VISIBLE);
+                                titleInstantSession.setText("Instant Sessions");
 
-                                loadCounsultantChatrooms();
+                                loadCounsultantSessions();
 
-                                closeBtn.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        finish();
-                                    }
-                                });
-
-                                logOutBtn.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                                        builder.setTitle("Sign Out");
-                                        builder.setMessage("Are you sure?");
-                                        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                try {
-                                                    usersRef.child(mAuth.getUid()).child("onlineStatus").setValue("offline");
-                                                    Intent intent = new Intent( mContext, LoginActivity.class );
-                                                    intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                                                    startActivity( intent );
-                                                    mAuth.signOut();
-                                                }
-                                                catch (Exception e){
-                                                    Log.e(TAG, "signOut: Error "+e.getMessage());
-                                                }
-                                            }
-                                        });
-                                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-
-                                        builder.show();
-                                    }
-                                });
+                                sessionCountIv.setVisibility(View.VISIBLE);
                             }
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        //..
+
                     }
                 });
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*Intent intent = new Intent(mContext, DashboardActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);*/
+                finish();
+            }
+        });
+
     }
 
-    private void loadClientChatrooms() {
-        chatroomRef.whereEqualTo("creator_id",mAuth.getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful())
-                        {
-                            if(task.getResult().size() > 0) {
-                                task.getResult().getQuery().addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                        chatroomList.clear();
-                                        for (DocumentSnapshot ds: queryDocumentSnapshots.getDocuments() )
-                                        {
-                                            ChatRoom chatRoom = ds.toObject(ChatRoom.class);
-
-                                            mProgressBar.setVisibility(View.GONE);
-
-                                            chatroomList.add(chatRoom);
-
-                                        }
-                                        chatroomAdapter = new ChatroomListAdapter(mContext, chatroomList);
-                                        recyclerView.setAdapter(chatroomAdapter);
-                                        chatroomAdapter.notifyDataSetChanged();
-                                    }
-                                });
-                            }
-                            else
-                            {
-                                mProgressBar.setVisibility(View.GONE);
-                                hintText.setText("You have no ongoing session at the moment!");
-                            }
-
-
-                        }
-                    }
-                });
-    }
-
-    private void loadCounsultantChatrooms() {
+    private void loadCounsultantSessions() {
         chatroomRef.whereEqualTo("counsellor_id",mAuth.getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -214,6 +142,13 @@ public class ChatRoomsActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                             if(task.getResult().size() > 0) {
+
+                                int number_sessions = task.getResult().size();
+
+                                TextDrawable textDrawable = TextDrawable.builder()
+                                        .buildRound(""+number_sessions, Color.BLACK);
+                                sessionCountIv.setImageDrawable(textDrawable);
+
                                 task.getResult().getQuery().addSnapshotListener(new EventListener<QuerySnapshot>() {
                                     @Override
                                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -236,12 +171,53 @@ public class ChatRoomsActivity extends AppCompatActivity {
                             else
                             {
                                 mProgressBar.setVisibility(View.GONE);
-                                hintText.setText("You have no ongoing session at the moment!");
+                                hintText.setText("No Instant Sessions!");
                             }
                         }
                     }
                 });
     }
+
+    private void loadClientSession() {
+        chatroomRef.whereEqualTo("client_id",mAuth.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            if(task.getResult().size() > 0) {
+                                task.getResult().getQuery().addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                        chatroomList.clear();
+                                        for (DocumentSnapshot ds: queryDocumentSnapshots.getDocuments() )
+                                        {
+                                            ChatRoom chatRoom = ds.toObject(ChatRoom.class);
+
+                                            mProgressBar.setVisibility(View.GONE);
+
+                                            chatroomList.add(chatRoom);
+
+                                        }
+                                        chatroomAdapter = new ChatroomListAdapter(mContext, chatroomList);
+                                        recyclerView.setAdapter(chatroomAdapter);
+                                        chatroomAdapter.notifyDataSetChanged();
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                mProgressBar.setVisibility(View.GONE);
+                                hintText.setText("No Instant Session!");
+                            }
+
+
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void onBackPressed() {

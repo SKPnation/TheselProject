@@ -1,82 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="3dp">
+    android:layout_height="wrap_content"
+    android:padding="3dp"
+    app:cardBackgroundColor="#f2f2f2"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/grey_border"
-        android:id="@+id/layout_container">
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/relLayout1"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/avatarIv"
-                android:scaleType="centerCrop" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/hisImage"
+                android:layout_centerVertical="true"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/colorAccent"/>
 
-            <TextView
+            <LinearLayout
+                android:layout_toRightOf="@id/hisImage"
+                android:layout_toLeftOf="@id/icon_trash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/consultation_date"
-                android:layout_toRightOf="@id/avatarIv"
-                android:layout_toLeftOf="@+id/icon_trash"
-                android:textColor="#707070"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="20dp"
                 android:layout_centerVertical="true"
-                android:textSize="13sp"/>
+                android:orientation="vertical"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp">
+
+                <TextView
+                    android:id="@+id/hisName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/categoryTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textSize="18sp"
+                    android:textColor="#393939"/>
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="25dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:id="@+id/icon_trash"
                 android:scaleType="centerCrop"
-                android:tint="@android:color/holo_red_dark"
+                android:tint="@android:color/background_dark"
                 android:src="@drawable/ic_delete_black_24dp"/>
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/relLayout1"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:layout_alignParentRight="true"
-                android:id="@+id/number_chatmessages"/>
+                android:text="7 DAYS"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_red_dark"
+                android:padding="5dp"
+                android:background="@android:color/white"
+                android:layout_marginTop="10dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="#000"
+                    android:id="@+id/number_chatmessages"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:text="Expiry date: "
                 android:textColor="#000"
-                android:id="@+id/his_name"
-                android:layout_toLeftOf="@+id/number_chatmessages"
-                android:layout_alignParentLeft="true"/>
+                android:textSize="16sp"
+                />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/expiry_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="16sp"
+                />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/expiry_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#BF0000"
+                android:textSize="16sp"
+                />
 
-</RelativeLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/chat_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Chat"
+            android:textAllCaps="false"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

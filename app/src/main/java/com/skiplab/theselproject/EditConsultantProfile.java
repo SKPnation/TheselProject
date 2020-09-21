@@ -106,7 +106,7 @@ public class EditConsultantProfile extends AppCompatActivity {
                             bankEt.setText(user.getBank());
                             accountNumEt.setText(user.getAccountNumber());
 
-                            profileRef.whereEqualTo("user_id",hisUID)
+                            /*profileRef.whereEqualTo("user_id",hisUID)
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                         @Override
@@ -197,7 +197,7 @@ public class EditConsultantProfile extends AppCompatActivity {
                                                 }
                                             }
                                         }
-                                    });
+                                    });*/
                         }
                     }
 
@@ -336,7 +336,7 @@ public class EditConsultantProfile extends AppCompatActivity {
         String num_of_consultations = num_consultations_tv.getText().toString();
         String description = profileTv.getText().toString();
 
-        profileRef.whereEqualTo("user_id",hisUID)
+        /*profileRef.whereEqualTo("user_id",hisUID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -408,6 +408,6 @@ public class EditConsultantProfile extends AppCompatActivity {
                             }
                         }
                     }
-                });
+                });*/
     }
 }

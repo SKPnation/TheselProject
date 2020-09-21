@@ -83,11 +83,11 @@ public class AdapterConsultant extends RecyclerView.Adapter<AdapterConsultant.Vi
                                     }
                                     else
                                     {
-                                        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                                        /*AlertDialog alertDialog = new AlertDialog.Builder(context)
                                                 .setMessage("The private consultation feature is currently undergoing an upgrade")
                                                 .create();
-                                        alertDialog.show();
-                                        //context.startActivity(new Intent(context, SelectCategory.class));
+                                        alertDialog.show();*/
+                                        context.startActivity(new Intent(context, SelectCategory.class));
                                     }
                                 }
                             }
