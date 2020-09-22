@@ -90,170 +90,166 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
         LocalDate today = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             today = LocalDate.now();
-        }
-        todayDate = today;
-        String todayDateS = todayDate.toString();
 
-        usersRef.orderByKey().equalTo(mAuth.getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds :dataSnapshot.getChildren())
-                        {
-                            User user = ds.getValue(User.class);
+            todayDate = today;
+            String todayDateS = todayDate.toString();
 
-                            if (user.getIsStaff().equals("false"))
+            usersRef.orderByKey().equalTo(mAuth.getUid())
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot ds :dataSnapshot.getChildren())
                             {
-                                usersRef.orderByKey().equalTo(counsellorID)
-                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                for (DataSnapshot ds :dataSnapshot.getChildren())
-                                                {
-                                                    User counsellor = ds.getValue(User.class);
+                                User user = ds.getValue(User.class);
 
-                                                    //set counsellor name
-                                                    holder.hisNameTv.setText(counsellor.getUsername());
-                                                    holder.categoryTv.setText(counsellor.getCategory1());
-
-                                                    //set counsellor dp
-                                                    try {
-                                                        UniversalImageLoader.setImage(counsellor.getProfile_photo(), holder.avaterIv, null, "");
-                                                    }
-                                                    catch (Exception e){
-                                                        Log.d("ERROR: ", ""+e);
-                                                    }
-
-                                                    holder.chatBtn.setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View v) {
-                                                            if (Common.isConnectedToTheInternet(context))
-                                                            {
-                                                                Intent intent = new Intent(context, ChatActivity.class);
-                                                                intent.putExtra("hisUID", counsellorID);
-                                                                intent.putExtra("chatroomID",chatroomID);
-                                                                intent.putExtra("myName",counsellor.getUsername());
-                                                                context.startActivity(intent);
-                                                            }
-                                                            else
-                                                            {
-                                                                AlertDialog alertDialog =new AlertDialog.Builder(context)
-                                                                        .setMessage("Please check your internet connection!")
-                                                                        .create();
-                                                                alertDialog.show();
-                                                            }
-                                                        }
-                                                    });
-
-                                                    if (LocalDate.parse(todayDateS).isAfter(LocalDate.parse(expiryDATE)))
+                                if (user.getIsStaff().equals("false"))
+                                {
+                                    usersRef.orderByKey().equalTo(counsellorID)
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot ds :dataSnapshot.getChildren())
                                                     {
-                                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                                        builder.setCancelable(false);
-                                                        builder.setMessage("Your Instant Session with "+counsellor.getUsername()+" has EXPIRED!");
-                                                        builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                        User counsellor = ds.getValue(User.class);
+
+                                                        //set counsellor name
+                                                        holder.hisNameTv.setText(counsellor.getUsername());
+                                                        holder.categoryTv.setText(counsellor.getCategory1());
+
+                                                        //set counsellor dp
+                                                        try {
+                                                            UniversalImageLoader.setImage(counsellor.getProfile_photo(), holder.avaterIv, null, "");
+                                                        }
+                                                        catch (Exception e){
+                                                            Log.d("ERROR: ", ""+e);
+                                                        }
+
+                                                        holder.chatBtn.setOnClickListener(new View.OnClickListener() {
                                                             @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-                                                                dialog.dismiss();
+                                                            public void onClick(View v) {
+                                                                if (Common.isConnectedToTheInternet(context))
+                                                                {
+                                                                    Intent intent = new Intent(context, ChatActivity.class);
+                                                                    intent.putExtra("hisUID", counsellorID);
+                                                                    intent.putExtra("chatroomID",chatroomID);
+                                                                    intent.putExtra("myName",counsellor.getUsername());
+                                                                    context.startActivity(intent);
+                                                                }
+                                                                else
+                                                                {
+                                                                    AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                            .setMessage("Please check your internet connection!")
+                                                                            .create();
+                                                                    alertDialog.show();
+                                                                }
                                                             }
                                                         });
 
-                                                        builder.show();
-                                                    }
-                                                    else
-                                                    {
-                                                        Toast.makeText(context, "NOT EXPIRED", Toast.LENGTH_SHORT).show();
-                                                    }
+                                                        if (LocalDate.parse(todayDateS).isAfter(LocalDate.parse(expiryDATE)))
+                                                        {
+                                                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                                            builder.setCancelable(false);
+                                                            builder.setMessage("Your Instant Session with "+counsellor.getUsername()+" has EXPIRED!");
+                                                            builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    dialog.dismiss();
 
-                                                }
-                                            }
+                                                                    mChatroomReference.document(chatroomID).delete();
+                                                                }
+                                                            });
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                //..
-                                            }
-                                        });
-
-                            }
-                            else if (user.getIsStaff().equals("true"))
-                            {
-                                usersRef.orderByKey().equalTo(clientUID)
-                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                for (DataSnapshot ds :dataSnapshot.getChildren())
-                                                {
-                                                    User client = ds.getValue(User.class);
-
-                                                    //set counsellor name
-                                                    holder.hisNameTv.setText(client.getUsername());
-                                                    holder.categoryTv.setText(user.getCategory1());
-
-                                                    //set counsellor dp
-                                                    try {
-                                                        UniversalImageLoader.setImage(client.getProfile_photo(), holder.avaterIv, null, "");
-                                                    }
-                                                    catch (Exception e){
-                                                        Log.d("ERROR: ", ""+e);
-                                                    }
-
-                                                    holder.chatBtn.setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View v) {
-                                                            if (Common.isConnectedToTheInternet(context))
-                                                            {
-                                                                Intent intent = new Intent(context, ChatActivity.class);
-                                                                intent.putExtra("hisUID", clientUID);
-                                                                intent.putExtra("chatroomID",chatroomID);
-                                                                intent.putExtra("myName",client.getUsername());
-                                                                context.startActivity(intent);
-                                                            }
-                                                            else
-                                                            {
-                                                                AlertDialog alertDialog =new AlertDialog.Builder(context)
-                                                                        .setMessage("Please check your internet connection!")
-                                                                        .create();
-                                                                alertDialog.show();
-                                                            }
+                                                            builder.show();
                                                         }
-                                                    });
+                                                    }
+                                                }
 
-                                                    if (LocalDate.parse(todayDateS).isAfter(LocalDate.parse(expiryDATE)))
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                    //..
+                                                }
+                                            });
+
+                                }
+                                else if (user.getIsStaff().equals("true"))
+                                {
+                                    usersRef.orderByKey().equalTo(clientUID)
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot ds :dataSnapshot.getChildren())
                                                     {
-                                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                                        builder.setCancelable(false);
-                                                        builder.setMessage("Your Instant Session with "+client.getUsername()+" has EXPIRED!");
-                                                        builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                        User client = ds.getValue(User.class);
+
+                                                        //set counsellor name
+                                                        holder.hisNameTv.setText(client.getUsername());
+                                                        holder.categoryTv.setText(user.getCategory1());
+
+                                                        //set counsellor dp
+                                                        try {
+                                                            UniversalImageLoader.setImage(client.getProfile_photo(), holder.avaterIv, null, "");
+                                                        }
+                                                        catch (Exception e){
+                                                            Log.d("ERROR: ", ""+e);
+                                                        }
+
+                                                        holder.chatBtn.setOnClickListener(new View.OnClickListener() {
                                                             @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-                                                                dialog.dismiss();
+                                                            public void onClick(View v) {
+                                                                if (Common.isConnectedToTheInternet(context))
+                                                                {
+                                                                    Intent intent = new Intent(context, ChatActivity.class);
+                                                                    intent.putExtra("hisUID", clientUID);
+                                                                    intent.putExtra("chatroomID",chatroomID);
+                                                                    intent.putExtra("myName",client.getUsername());
+                                                                    context.startActivity(intent);
+                                                                }
+                                                                else
+                                                                {
+                                                                    AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                            .setMessage("Please check your internet connection!")
+                                                                            .create();
+                                                                    alertDialog.show();
+                                                                }
                                                             }
                                                         });
 
-                                                        builder.show();
-                                                    }
-                                                    else
-                                                    {
-                                                        Toast.makeText(context, "NOT EXPIRED", Toast.LENGTH_SHORT).show();
+                                                        if (LocalDate.parse(todayDateS).isAfter(LocalDate.parse(expiryDATE)))
+                                                        {
+                                                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                                            builder.setCancelable(false);
+                                                            builder.setMessage("Your Instant Session with "+client.getUsername()+" has EXPIRED!");
+                                                            builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    dialog.dismiss();
+
+                                                                    mChatroomReference.document(chatroomID).delete();
+                                                                }
+                                                            });
+
+                                                            builder.show();
+                                                        }
                                                     }
                                                 }
-                                            }
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                //..
-                                            }
-                                        });
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                    //..
+                                                }
+                                            });
 
 
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        //..
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            //..
+                        }
+                    });
+        }
 
         holder.iconTrashIv.setOnClickListener(new View.OnClickListener() {
             @Override

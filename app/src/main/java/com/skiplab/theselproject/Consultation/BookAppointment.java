@@ -65,6 +65,8 @@ public class BookAppointment extends AppCompatActivity {
     String hisUID, myUID;
     long hisCost;
 
+    String TRUE = "true", FALSE="false";
+
     LocalDate todayDate, expiryDate;
 
     Calendar selected_date, date1;
@@ -254,29 +256,16 @@ public class BookAppointment extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         Morning morning = documentSnapshot.toObject(Morning.class);
-                        if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("false")))
-                        {
-                            seven_am_btn.setVisibility(View.GONE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.GONE);
-                            eleven_am_btn.setVisibility(View.GONE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("true")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.VISIBLE);
-                            nine_am_btn.setVisibility(View.VISIBLE);
-                            ten_am_btn.setVisibility(View.VISIBLE);
-                            eleven_am_btn.setVisibility(View.VISIBLE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("false")))
+
+                        /**
+                         * W.R.T; 7:00AM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(FALSE))
                         {
                             seven_am_btn.setVisibility(View.VISIBLE);
                             eight_am_btn.setVisibility(View.GONE);
@@ -284,9 +273,9 @@ public class BookAppointment extends AppCompatActivity {
                             ten_am_btn.setVisibility(View.GONE);
                             eleven_am_btn.setVisibility(View.GONE);
                         }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("false")))
+                        //STEP 2
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(FALSE))
                         {
                             seven_am_btn.setVisibility(View.VISIBLE);
                             eight_am_btn.setVisibility(View.VISIBLE);
@@ -294,9 +283,44 @@ public class BookAppointment extends AppCompatActivity {
                             ten_am_btn.setVisibility(View.GONE);
                             eleven_am_btn.setVisibility(View.GONE);
                         }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("false")))
+                        //STEP 3
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(FALSE))
+                        {
+                            seven_am_btn.setVisibility(View.VISIBLE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.VISIBLE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 4
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(FALSE))
+                        {
+                            seven_am_btn.setVisibility(View.VISIBLE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.VISIBLE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 5
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.VISIBLE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * 2ND STAGE
+                         */
+
+                        //STEP 6
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(FALSE))
                         {
                             seven_am_btn.setVisibility(View.VISIBLE);
                             eight_am_btn.setVisibility(View.VISIBLE);
@@ -304,9 +328,64 @@ public class BookAppointment extends AppCompatActivity {
                             ten_am_btn.setVisibility(View.GONE);
                             eleven_am_btn.setVisibility(View.GONE);
                         }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("false")))
+                        //STEP 7
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(FALSE))
+                        {
+                            seven_am_btn.setVisibility(View.VISIBLE);
+                            eight_am_btn.setVisibility(View.VISIBLE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.VISIBLE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 8
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.VISIBLE);
+                            eight_am_btn.setVisibility(View.VISIBLE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 9
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(FALSE))
+                        {
+                            seven_am_btn.setVisibility(View.VISIBLE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.VISIBLE);
+                            ten_am_btn.setVisibility(View.VISIBLE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 10
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.VISIBLE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.VISIBLE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 11
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.VISIBLE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.VISIBLE);
+                            eleven_am_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * 3RD STAGE
+                         */
+
+                        //STEP 12
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(FALSE))
                         {
                             seven_am_btn.setVisibility(View.VISIBLE);
                             eight_am_btn.setVisibility(View.VISIBLE);
@@ -314,248 +393,256 @@ public class BookAppointment extends AppCompatActivity {
                             ten_am_btn.setVisibility(View.VISIBLE);
                             eleven_am_btn.setVisibility(View.GONE);
                         }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("true")))
+                        //STEP 13
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(TRUE))
                         {
-                            seven_am_btn.setVisibility(View.GONE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.GONE);
+                            seven_am_btn.setVisibility(View.VISIBLE);
+                            eight_am_btn.setVisibility(View.VISIBLE);
+                            nine_am_btn.setVisibility(View.VISIBLE);
                             ten_am_btn.setVisibility(View.GONE);
                             eleven_am_btn.setVisibility(View.VISIBLE);
                         }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("true")))
+                        //STEP 14
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(TRUE))
                         {
-                            seven_am_btn.setVisibility(View.GONE);
-                            eight_am_btn.setVisibility(View.GONE);
+                            seven_am_btn.setVisibility(View.VISIBLE);
+                            eight_am_btn.setVisibility(View.VISIBLE);
                             nine_am_btn.setVisibility(View.GONE);
                             ten_am_btn.setVisibility(View.VISIBLE);
                             eleven_am_btn.setVisibility(View.VISIBLE);
                         }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("true")))
+                        //STEP 15
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(TRUE))
                         {
-                            seven_am_btn.setVisibility(View.GONE);
+                            seven_am_btn.setVisibility(View.VISIBLE);
                             eight_am_btn.setVisibility(View.GONE);
                             nine_am_btn.setVisibility(View.VISIBLE);
                             ten_am_btn.setVisibility(View.VISIBLE);
                             eleven_am_btn.setVisibility(View.VISIBLE);
                         }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("true")))
+
+                        /**
+                         * 4TH STAGE
+                         */
+
+                        //STEP 16: ALL TRUE
+                        else if (morning.getSeven_am().equals(TRUE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(TRUE))
                         {
-                            seven_am_btn.setVisibility(View.GONE);
+                            seven_am_btn.setVisibility(View.VISIBLE);
                             eight_am_btn.setVisibility(View.VISIBLE);
                             nine_am_btn.setVisibility(View.VISIBLE);
                             ten_am_btn.setVisibility(View.VISIBLE);
                             eleven_am_btn.setVisibility(View.VISIBLE);
                         }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("true")))
+
+
+                        /**
+                         * W.R.T; 8:00AM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(FALSE))
                         {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.GONE);
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.VISIBLE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 2
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(FALSE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.VISIBLE);
                             nine_am_btn.setVisibility(View.VISIBLE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 3
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(FALSE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.VISIBLE);
+                            nine_am_btn.setVisibility(View.GONE);
                             ten_am_btn.setVisibility(View.VISIBLE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 4
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.VISIBLE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.GONE);
                             eleven_am_btn.setVisibility(View.VISIBLE);
                         }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("true")))
+
+                        /**
+                         * 2ND STAGE
+                         */
+
+                        //STEP 5
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(FALSE))
                         {
-                            seven_am_btn.setVisibility(View.VISIBLE);
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.VISIBLE);
+                            nine_am_btn.setVisibility(View.VISIBLE);
+                            ten_am_btn.setVisibility(View.VISIBLE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 6
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.VISIBLE);
+                            nine_am_btn.setVisibility(View.VISIBLE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 7
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
                             eight_am_btn.setVisibility(View.VISIBLE);
                             nine_am_btn.setVisibility(View.GONE);
                             ten_am_btn.setVisibility(View.VISIBLE);
                             eleven_am_btn.setVisibility(View.VISIBLE);
                         }
 
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("true")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.VISIBLE);
-                            nine_am_btn.setVisibility(View.VISIBLE);
-                            ten_am_btn.setVisibility(View.GONE);
-                            eleven_am_btn.setVisibility(View.VISIBLE);
-                        }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("false")))
-                        {
-                            seven_am_btn.setVisibility(View.GONE);
-                            eight_am_btn.setVisibility(View.VISIBLE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.GONE);
-                            eleven_am_btn.setVisibility(View.GONE);
-                        }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("false")))
-                        {
-                            seven_am_btn.setVisibility(View.GONE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.VISIBLE);
-                            ten_am_btn.setVisibility(View.GONE);
-                            eleven_am_btn.setVisibility(View.GONE);
-                        }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("false")))
-                        {
-                            seven_am_btn.setVisibility(View.GONE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.VISIBLE);
-                            eleven_am_btn.setVisibility(View.GONE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("false")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.VISIBLE);
-                            ten_am_btn.setVisibility(View.GONE);
-                            eleven_am_btn.setVisibility(View.GONE);
-                        }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("false")))
-                        {
-                            seven_am_btn.setVisibility(View.GONE);
-                            eight_am_btn.setVisibility(View.VISIBLE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.VISIBLE);
-                            eleven_am_btn.setVisibility(View.GONE);
-                        }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("true")))
-                        {
-                            seven_am_btn.setVisibility(View.GONE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.VISIBLE);
-                            ten_am_btn.setVisibility(View.GONE);
-                            eleven_am_btn.setVisibility(View.VISIBLE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("false")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.VISIBLE);
-                            eleven_am_btn.setVisibility(View.GONE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("true")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.GONE);
-                            eleven_am_btn.setVisibility(View.VISIBLE);
-                        }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("true")))
-                        {
-                            seven_am_btn.setVisibility(View.GONE);
-                            eight_am_btn.setVisibility(View.VISIBLE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.VISIBLE);
-                            eleven_am_btn.setVisibility(View.VISIBLE);
-                        }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("true")))
-                        {
-                            seven_am_btn.setVisibility(View.GONE);
-                            eight_am_btn.setVisibility(View.VISIBLE);
-                            nine_am_btn.setVisibility(View.VISIBLE);
-                            ten_am_btn.setVisibility(View.GONE);
-                            eleven_am_btn.setVisibility(View.VISIBLE);
-                        }
-                        else if (morning.getSeven_am().equals("false") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("false")))
+                        /**
+                         * 3RD STAGE
+                         */
+
+                        //STEP 8
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(TRUE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(TRUE))
                         {
                             seven_am_btn.setVisibility(View.GONE);
                             eight_am_btn.setVisibility(View.VISIBLE);
                             nine_am_btn.setVisibility(View.VISIBLE);
                             ten_am_btn.setVisibility(View.VISIBLE);
-                            eleven_am_btn.setVisibility(View.GONE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("true")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.VISIBLE);
                             eleven_am_btn.setVisibility(View.VISIBLE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("true")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.VISIBLE);
-                            ten_am_btn.setVisibility(View.GONE);
-                            eleven_am_btn.setVisibility(View.VISIBLE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("true") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("false")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.VISIBLE);
-                            ten_am_btn.setVisibility(View.VISIBLE);
-                            eleven_am_btn.setVisibility(View.GONE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("false")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("true")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.GONE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.VISIBLE);
-                            eleven_am_btn.setVisibility(View.VISIBLE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("false")
-                                && morning.getEleven_am().equals("true")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.VISIBLE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.GONE);
-                            eleven_am_btn.setVisibility(View.VISIBLE);
-                        }
-                        else if (morning.getSeven_am().equals("true") && morning.getEight_am().equals("true")
-                                && (morning.getNine_am().equals("false") && morning.getTen_am().equals("true")
-                                && morning.getEleven_am().equals("false")))
-                        {
-                            seven_am_btn.setVisibility(View.VISIBLE);
-                            eight_am_btn.setVisibility(View.VISIBLE);
-                            nine_am_btn.setVisibility(View.GONE);
-                            ten_am_btn.setVisibility(View.VISIBLE);
-                            eleven_am_btn.setVisibility(View.GONE);
                         }
 
+
+                        /**
+                         * W.R.T; 9:00AM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(FALSE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.VISIBLE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 2
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(FALSE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.VISIBLE);
+                            ten_am_btn.setVisibility(View.VISIBLE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 3
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.VISIBLE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * 2ND STAGE
+                         */
+
+                        //STEP 4
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(TRUE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.VISIBLE);
+                            ten_am_btn.setVisibility(View.VISIBLE);
+                            eleven_am_btn.setVisibility(View.VISIBLE);
+                        }
+
+
+                        /**
+                         * W.R.T; 10:00AM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(FALSE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.VISIBLE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(TRUE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.VISIBLE);
+                            eleven_am_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * W.R.T; 11:00AM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(TRUE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 2: ALL FALSE
+                        else if (morning.getSeven_am().equals(FALSE) && morning.getEight_am().equals(FALSE) && morning.getNine_am().equals(FALSE)
+                                && morning.getTen_am().equals(FALSE) && morning.getEleven_am().equals(FALSE))
+                        {
+                            seven_am_btn.setVisibility(View.GONE);
+                            eight_am_btn.setVisibility(View.GONE);
+                            nine_am_btn.setVisibility(View.GONE);
+                            ten_am_btn.setVisibility(View.GONE);
+                            eleven_am_btn.setVisibility(View.GONE);
+                        }
                     }
                 });
 

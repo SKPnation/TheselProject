@@ -71,7 +71,7 @@
             android:text=""
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="#005F28"
             android:layout_marginTop="2dp"
             android:visibility="visible"/>
 
