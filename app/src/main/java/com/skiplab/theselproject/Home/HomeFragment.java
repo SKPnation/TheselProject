@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -39,6 +42,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +53,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.skiplab.theselproject.Activity.NotificationsActivity;
 import com.skiplab.theselproject.Adapter.AdapterConsultant;
 import com.skiplab.theselproject.Adapter.AdapterPosts;
@@ -66,6 +77,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -79,11 +92,12 @@ public class HomeFragment extends Fragment {
     private ActionBarDrawerToggle mDrawerToggle;
     private String[] items;
     private FloatingActionButton fab;
+    private FrameLayout frameLayout;
 
-    private ImageView optionsBtn, mAvaterIv, walletBtn, videosBtn;
+    private ImageView optionsBtn, mAvaterIv, walletBtn, videosBtn, addPostBtn;
     private EditText share_post_et;
 
-    private TextView feedTitleTv;
+    private TextView feedTitleTv, txt_notification_badge;
 
     ListView listView;
 
@@ -103,6 +117,7 @@ public class HomeFragment extends Fragment {
     FirebaseDatabase db;
     DatabaseReference postDb;
     DatabaseReference userDb;
+    CollectionReference myNotificationDb;
 
     String myUid, myName;
     String selCategory;
@@ -115,9 +130,9 @@ public class HomeFragment extends Fragment {
     public static final int ITEM_PER_AD = 4;
 
     private int i=0;
+    private int count;
 
     private BottomAppBar bottomAppBar;
-
 
     public HomeFragment() {
         // Required empty public constructor
@@ -136,6 +151,8 @@ public class HomeFragment extends Fragment {
         db = FirebaseDatabase.getInstance();
         postDb = db.getReference("posts");
         userDb = db.getReference("users");
+        myNotificationDb = FirebaseFirestore.getInstance().collection("myNotifications");
+
         postDb.keepSynced(true);
 
         relLayout1 = view.findViewById(R.id.relLayout1);
@@ -145,14 +162,17 @@ public class HomeFragment extends Fragment {
         bottomAppBar = view.findViewById(R.id.bottomAppBar);
         mProgressBar = view.findViewById(R.id.progressBar);
         nestedScrollView = view.findViewById(R.id.nsv);
+        frameLayout = view.findViewById(R.id.consult_notify_layout);
 
         fab = view.findViewById(R.id.fab);
         walletBtn = view.findViewById(R.id.walletBtn);
-        videosBtn = view.findViewById(R.id.videosBtn);
+        //videosBtn = view.findViewById(R.id.videosBtn);
         share_post_et = view.findViewById(R.id.share_post_et);
+        //addPostBtn = view.findViewById(R.id.add_post);
         mAvaterIv = view.findViewById(R.id.avatarIv);
         optionsBtn = view.findViewById(R.id.optionsToolbar);
         feedTitleTv = view.findViewById(R.id.app_name);
+        txt_notification_badge = view.findViewById(R.id.txt_notification_badge);
 
         adView = new AdView(getActivity());
         adView.setAdSize(AdSize.BANNER);
@@ -208,6 +228,34 @@ public class HomeFragment extends Fragment {
 
         });
 
+
+        /*addPostBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SelectMood.class));
+            }
+        });*/
+
+        share_post_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                startActivity(new Intent(getActivity(), SelectMood.class));
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //..
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+
+        });
+
         share_post_et.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -216,12 +264,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        videosBtn.setOnClickListener(new View.OnClickListener() {
+        /*videosBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), VideoGallery.class));
             }
-        });
+        });*/
 
         bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -241,44 +289,6 @@ public class HomeFragment extends Fragment {
                                 if (i == 1){
 
                                     startActivity(new Intent(getActivity(), NotificationsActivity.class));
-
-                                } else if (i == 2){
-                                    Log.d(TAG, "IconDoubleClick: Double tap");
-                                }
-                                i=0;
-                            }
-                        }, 200);
-                        break;
-
-                    case R.id.nav_post:
-                        i++;
-
-                        Handler handler2 = new Handler();
-                        handler2.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (i == 1){
-
-                                    startActivity(new Intent(getActivity(), SelectMood.class));
-
-                                } else if (i == 2){
-                                    Log.d(TAG, "IconDoubleClick: Double tap");
-                                }
-                                i=0;
-                            }
-                        }, 200);
-                        break;
-
-                    case R.id.nav_videos:
-                        i++;
-
-                        Handler handler3 = new Handler();
-                        handler3.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (i == 1){
-
-                                    startActivity(new Intent(getActivity(), VideoGallery.class));
 
                                 } else if (i == 2){
                                     Log.d(TAG, "IconDoubleClick: Double tap");
@@ -321,7 +331,21 @@ public class HomeFragment extends Fragment {
                             selCategory = user.getSelectedCategory();
 
                             if (user.getIsStaff().equals("true"))
+                            {
+                                frameLayout.setVisibility(View.VISIBLE);
                                 walletBtn.setVisibility(View.GONE);
+                                initNotificationUpdate();
+                            }
+                            else if (user.getIsStaff().equals("admin"))
+                            {
+                                walletBtn.setVisibility(View.GONE);
+                                frameLayout.setVisibility(View.GONE);
+                            }
+                            else
+                            {
+                                frameLayout.setVisibility(View.GONE);
+                            }
+
 
                             if (selCategory.isEmpty())
                             {
@@ -411,28 +435,39 @@ public class HomeFragment extends Fragment {
                                 public void onClick(View v) {
                                     if (Common.isConnectedToTheInternet(getContext()))
                                     {
-                                        if (user.getIsStaff().equals("false"))
+                                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
                                         {
+                                            if (user.getIsStaff().equals("false"))
+                                            {
                                             /*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                                     .setMessage("The private consultation feature is currently undergoing an upgrade")
                                                     .create();
                                             alertDialog.show();*/
-                                            if (!ds.hasChild("wallet")){
-                                                DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
-                                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                                currentUserRef.child("wallet").setValue(0);
+                                                if (!ds.hasChild("wallet")){
+                                                    DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
+                                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                                    currentUserRef.child("wallet").setValue(0);
 
-                                                Intent intent = new Intent(getActivity(), WalletActivity.class);
-                                                startActivity(intent);
+                                                    Intent intent = new Intent(getActivity(), WalletActivity.class);
+                                                    startActivity(intent);
+                                                }
+                                                else{
+                                                    Intent intent = new Intent(getActivity(), WalletActivity.class);
+                                                    startActivity(intent);
+                                                }
                                             }
-                                            else{
-                                                Intent intent = new Intent(getActivity(), WalletActivity.class);
-                                                startActivity(intent);
+                                            else
+                                            {
+                                                //..
                                             }
                                         }
                                         else
                                         {
-                                            //..
+                                            AlertDialog alertDialog =new AlertDialog.Builder(getActivity())
+                                                    .setTitle("Upgrade your OS")
+                                                    .setMessage("To use this feature, your Android OS must be 8.0 and above!")
+                                                    .create();
+                                            alertDialog.show();
                                         }
                                     }
                                     else
@@ -453,12 +488,50 @@ public class HomeFragment extends Fragment {
                     }
                 });
 
-
-
         loadConsultants();
         setupDrawer();
 
         return view;
+    }
+
+    private void initNotificationUpdate() {
+        myNotificationDb
+                .whereEqualTo("uid",myUid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            if (task.getResult().size() > 0)
+                            {
+                                task.getResult().getQuery().whereEqualTo("read",false)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful())
+                                                {
+                                                    count = task.getResult().size();
+
+                                                    if (count == 0)
+                                                        txt_notification_badge.setVisibility(View.GONE);
+                                                    else
+                                                    {
+                                                        txt_notification_badge.setVisibility(View.VISIBLE);
+                                                        if (count<=9)
+                                                            txt_notification_badge.setText(String.valueOf(count));
+                                                        else
+                                                            txt_notification_badge.setText("9+");
+                                                    }
+
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
     }
 
     private void loadPosts() {
@@ -554,14 +627,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Thesel");
                 getActivity().invalidateOptionsMenu();
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Feed");
                 getActivity().invalidateOptionsMenu();
             }
         };

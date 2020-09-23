@@ -20,6 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class WalletActivity extends AppCompatActivity {
 
     Context mContext = WalletActivity.this;
@@ -58,7 +61,9 @@ public class WalletActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             //User user = ds.getValue(User.class);
-                            balanceTv.setText(ds.child("wallet").getValue().toString());
+                            Locale locale = new Locale("en", "NG");
+                            NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+                            balanceTv.setText(fmt.format(ds.child("wallet").getValue()));
                         }
                     }
 

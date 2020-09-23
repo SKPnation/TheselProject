@@ -55,6 +55,7 @@ public class VideoGallery extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         usersRef = FirebaseDatabase.getInstance().getReference("users");
         videosRef = FirebaseDatabase.getInstance().getReference("videos");
+        videosRef.keepSynced(true);
 
         recyclerView = findViewById(R.id.recycler_view);
         addVideoBtn = findViewById(R.id.addVideo);

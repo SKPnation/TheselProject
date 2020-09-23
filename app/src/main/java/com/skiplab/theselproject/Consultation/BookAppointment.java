@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hbb20.CCPCountry;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.Appointment;
 import com.skiplab.theselproject.models.Early;
@@ -34,9 +36,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.annotation.Nullable;
@@ -73,6 +78,8 @@ public class BookAppointment extends AppCompatActivity {
     HorizontalCalendarView horizontalCalendarView;
     SimpleDateFormat simpleDateFormat;
 
+    String five_am = "", one_pm ="13:00 - 13:40";
+
     public static boolean isActivityRunning;
 
     @Override
@@ -93,7 +100,7 @@ public class BookAppointment extends AppCompatActivity {
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.DATE,0);
         Calendar endDate = Calendar.getInstance();
-        endDate.add(Calendar.DATE,6);
+        endDate.add(Calendar.DATE,7);
 
         HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(this,R.id.calendar_view)
                 .range(startDate,endDate)
@@ -159,22 +166,44 @@ public class BookAppointment extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
+                                TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                                String countryCode = tm.getSimCountryIso().toUpperCase();
+                                Locale loc = new Locale("",countryCode);
+                                String country = loc.getDisplayCountry();
 
+                                LocalDateTime time = null;
                                 LocalDate today = null;
+                                String formattedTime = null;
+
                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                                     today = LocalDate.now();
-                                }
-                                todayDate = today;
+                                    time = LocalDateTime.now();
+                                    DateTimeFormatter myFormatTime = DateTimeFormatter.ofPattern("HH:mm");
+                                    formattedTime = time.format(myFormatTime);
 
-                                try {
-                                    if (todayDate.toString().equals(simpleDateFormat.format(date1.getTime())))
-                                    {
-                                        Toast.makeText(mContext, "Choose another day on the calendar", Toast.LENGTH_LONG).show();
+                                    todayDate = today;
+
+                                    try {
+                                        if (LocalTime.parse(formattedTime).isBefore(LocalTime.parse("15:00")))
+                                            Toast.makeText(mContext, country+": "+formattedTime, Toast.LENGTH_LONG).show();
+                                        else
+                                            Toast.makeText(mContext, country+": NO!!!", Toast.LENGTH_LONG).show();
                                     }
-                                }
-                                catch (Exception e)
-                                {
-                                    Log.d(TAG, "ERROR: "+e );
+                                    catch (Exception e)
+                                    {
+                                        Log.d(TAG, "ERROR: "+e );
+                                    }
+
+                                    /*try {
+                                        if (todayDate.toString().equals(simpleDateFormat.format(date1.getTime())))
+                                        {
+                                            Toast.makeText(mContext, formattedTime, Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Log.d(TAG, "ERROR: "+e );
+                                    }*/
                                 }
                                 /*expiryDate = todayDate.plusDays(1);
 

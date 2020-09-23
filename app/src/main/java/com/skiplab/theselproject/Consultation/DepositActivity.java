@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,7 +30,9 @@ import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.Deposits;
 import com.skiplab.theselproject.models.User;
 
+import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import co.paystack.android.Paystack;
 import co.paystack.android.PaystackSdk;
@@ -42,6 +45,7 @@ public class DepositActivity extends AppCompatActivity {
     Context mContext = DepositActivity.this;
 
     CardView threetCv, sixtCv, twelvetCv, eighteentCv;
+    TextView threet_tv, sixt_tv, twelvet_tv, eighteent_tv;
 
     private AppCompatEditText etEmail,etName,etCard,etCvv;
     private AppCompatSpinner spMonth,spYear;
@@ -52,6 +56,9 @@ public class DepositActivity extends AppCompatActivity {
     int six_thousand = 600000;
     int twelve_thousand = 1200000;
     int eighteen_thousand = 1800000;
+
+    Locale locale;
+    NumberFormat fmt;
 
     FirebaseAuth mAuth;
     DatabaseReference usersRef, depositsRef;
@@ -68,6 +75,19 @@ public class DepositActivity extends AppCompatActivity {
         depositsRef = FirebaseDatabase.getInstance().getReference("deposits");
 
         progressDialog = new ProgressDialog(this);
+
+        locale = new Locale("en", "NG");
+        fmt = NumberFormat.getCurrencyInstance(locale);
+
+        threet_tv = findViewById(R.id.three_thousand_tv);
+        sixt_tv = findViewById(R.id.six_thousand_tv);
+        twelvet_tv = findViewById(R.id.twelve_thousand_tv);
+        eighteent_tv = findViewById(R.id.eighteen_thousand_tv);
+
+        threet_tv.setText(fmt.format(3000));
+        sixt_tv.setText(fmt.format(6000));
+        twelvet_tv.setText(fmt.format(12000));
+        eighteent_tv.setText(fmt.format(18000));
 
         threetCv = findViewById(R.id.three_thousand_cv);
         sixtCv = findViewById(R.id.six_thousand_cv);
@@ -104,7 +124,7 @@ public class DepositActivity extends AppCompatActivity {
                                         if (result > 18000)
                                         {
                                             AlertDialog alertDialog = new AlertDialog.Builder(mContext)
-                                                    .setMessage("Your Thesel wallet can't hold more than #18,000")
+                                                    .setMessage("Your Thesel wallet can't hold more than N18,000")
                                                     .create();
                                             alertDialog.show();
                                         }
@@ -123,7 +143,7 @@ public class DepositActivity extends AppCompatActivity {
                                             btProceed = mView.findViewById(R.id.bt_main_proceed);
 
                                             etEmail.setText(mAuth.getCurrentUser().getEmail());
-                                            btProceed.setText("PROCEED:  N3000");
+                                            btProceed.setText("PROCEED: "+fmt.format(3000));
 
                                             ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
                                             //here we set the adapter to the year spinner
@@ -151,7 +171,7 @@ public class DepositActivity extends AppCompatActivity {
                                         if (result > 18000)
                                         {
                                             AlertDialog alertDialog = new AlertDialog.Builder(mContext)
-                                                    .setMessage("Your Thesel wallet can't hold more than #18,000")
+                                                    .setMessage("Your Thesel wallet can't hold more than N18,000")
                                                     .create();
                                             alertDialog.show();
                                         }
@@ -169,7 +189,7 @@ public class DepositActivity extends AppCompatActivity {
                                             btProceed = mView.findViewById(R.id.bt_main_proceed);
 
                                             etEmail.setText(mAuth.getCurrentUser().getEmail());
-                                            btProceed.setText("PROCEED:  N6000");
+                                            btProceed.setText("PROCEED: "+fmt.format(6000));
 
                                             ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
                                             //here we set the adapter to the year spinner
@@ -196,7 +216,7 @@ public class DepositActivity extends AppCompatActivity {
                                         if (result > 18000)
                                         {
                                             AlertDialog alertDialog = new AlertDialog.Builder(mContext)
-                                                    .setMessage("Your Thesel wallet can't hold more than #18,000")
+                                                    .setMessage("Your Thesel wallet can't hold more than N18,000")
                                                     .create();
                                             alertDialog.show();
                                         }
@@ -214,7 +234,7 @@ public class DepositActivity extends AppCompatActivity {
                                             btProceed = mView.findViewById(R.id.bt_main_proceed);
 
                                             etEmail.setText(mAuth.getCurrentUser().getEmail());
-                                            btProceed.setText("PROCEED:  N12000");
+                                            btProceed.setText("PROCEED: "+fmt.format(12000));
 
                                             ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());
                                             //here we set the adapter to the year spinner
@@ -240,7 +260,7 @@ public class DepositActivity extends AppCompatActivity {
                                         if (result > 18000)
                                         {
                                             AlertDialog alertDialog = new AlertDialog.Builder(mContext)
-                                                    .setMessage("Your Thesel wallet can't hold more than #18,000")
+                                                    .setMessage("Your Thesel wallet can't hold more than N18,000")
                                                     .create();
                                             alertDialog.show();
                                         }
@@ -258,7 +278,7 @@ public class DepositActivity extends AppCompatActivity {
                                             btProceed = mView.findViewById(R.id.bt_main_proceed);
 
                                             etEmail.setText(mAuth.getCurrentUser().getEmail());
-                                            btProceed.setText("PROCEED:  N18000");
+                                            btProceed.setText("PROCEED: "+fmt.format(18000));
 
 
                                             ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, getYears());

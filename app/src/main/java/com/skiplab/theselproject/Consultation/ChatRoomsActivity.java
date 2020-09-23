@@ -146,7 +146,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
                                 int number_sessions = task.getResult().size();
 
                                 TextDrawable textDrawable = TextDrawable.builder()
-                                        .buildRound(""+number_sessions, Color.BLACK);
+                                        .buildRound(""+number_sessions, getColor(R.color.colorPrimary));
                                 sessionCountIv.setImageDrawable(textDrawable);
 
                                 task.getResult().getQuery().addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -171,7 +171,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
                             else
                             {
                                 mProgressBar.setVisibility(View.GONE);
-                                hintText.setText("No Instant Sessions!");
+                                hintText.setText("No Consultation!");
                             }
                         }
                     }
@@ -209,7 +209,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
                             else
                             {
                                 mProgressBar.setVisibility(View.GONE);
-                                hintText.setText("No Instant Session!");
+                                hintText.setText("No Consultation!");
                             }
 
 

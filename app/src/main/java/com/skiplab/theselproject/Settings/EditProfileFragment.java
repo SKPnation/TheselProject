@@ -25,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anstrontechnologies.corehelper.AnstronCoreHelper;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,7 +68,6 @@ public class EditProfileFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     StorageReference storageRef;
     DatabaseReference usersRef;
-    AnstronCoreHelper coreHelper;
 
     //permissions array
     String[] cameraPermissions;
@@ -102,7 +100,6 @@ public class EditProfileFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
         usersRef = FirebaseDatabase.getInstance().getReference("users");
-        coreHelper = new AnstronCoreHelper(getActivity());
 
         mProfilePhoto = view.findViewById(R.id.profile_photo);
         uNameEt = view.findViewById(R.id.display_name);

@@ -28,6 +28,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.ChatActivity;
+import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
@@ -156,6 +157,8 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
                                                                     dialog.dismiss();
 
                                                                     mChatroomReference.document(chatroomID).delete();
+
+                                                                    ((ChatRoomsActivity)context).finish();
                                                                 }
                                                             });
 
@@ -225,6 +228,8 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
                                                                     dialog.dismiss();
 
                                                                     mChatroomReference.document(chatroomID).delete();
+
+                                                                    ((ChatRoomsActivity)context).finish();
                                                                 }
                                                             });
 

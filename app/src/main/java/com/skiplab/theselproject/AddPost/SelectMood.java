@@ -39,7 +39,7 @@ public class SelectMood extends AppCompatActivity {
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(mContext, DashboardActivity.class));
                 finish();
             }
         });
@@ -49,7 +49,7 @@ public class SelectMood extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-
+        startActivity(new Intent(mContext, DashboardActivity.class));
         finish();
     }
 }

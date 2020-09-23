@@ -86,13 +86,13 @@
                             android:text="Fee"/>
 
                         <TextView
+                            android:id="@+id/instant_fee_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:textColor="@android:color/black"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                            android:textSize="20sp"
-                            android:text="N6000"/>
+                            android:textSize="20sp" />
 
                     </LinearLayout>
 

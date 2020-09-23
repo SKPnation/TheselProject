@@ -89,6 +89,7 @@ public class PhotoGallery extends Fragment {
         storageRef = FirebaseStorage.getInstance().getReference();
         usersRef = FirebaseDatabase.getInstance().getReference("users");
         galleryRef = FirebaseDatabase.getInstance().getReference("gallery");
+        galleryRef.keepSynced(true);
         coreHelper = new AnstronCoreHelper(getActivity());
 
         closeBtn = view.findViewById(R.id.closeBtn);

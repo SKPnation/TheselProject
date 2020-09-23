@@ -89,7 +89,7 @@ public class ConsultantsActivity extends AppCompatActivity {
     private void loadConsultants()
     {
         Query queryUsers = usersRef.orderByChild("category1").equalTo(selectedItem);
-        queryUsers.addValueEventListener(new ValueEventListener() {
+        queryUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();

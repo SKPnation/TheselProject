@@ -42,17 +42,50 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="25sp" />
 
-                <ImageView
-                    android:id="@+id/videosBtn"
-                    android:tint="@color/colorPrimary"
-                    android:src="@drawable/ic_video_library"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="20dp"
+                <FrameLayout
+                    android:id="@+id/consult_notify_layout"
+                    android:layout_toLeftOf="@id/moreBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingRight="5dp"
+                    android:focusable="true"
+                    android:layout_marginLeft="10dp"
                     android:layout_centerVertical="true"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:src="@drawable/ic_event_note_black_24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:id="@+id/txt_notification_badge"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="right|end|top"
+                        android:layout_marginEnd="-5dp"
+                        android:layout_marginRight="-5dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@drawable/badge_background"
+                        android:gravity="center"
+                        android:padding="0.25dp"
+                        android:textColor="@android:color/white"
+                        android:text="0"
+                        android:textSize="10sp"/>
+
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/moreBtn"
+                    android:src="@drawable/ic_options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"/>
+
 
             </RelativeLayout>
 

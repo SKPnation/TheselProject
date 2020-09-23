@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -47,6 +50,7 @@ import com.skiplab.theselproject.Utils.JavaMailAPI;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatMessage;
 import com.skiplab.theselproject.models.ChatRoom;
+import com.skiplab.theselproject.models.MyNotifications;
 import com.skiplab.theselproject.models.Profile;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.notifications.APIService;
@@ -56,9 +60,14 @@ import com.skiplab.theselproject.notifications.Response;
 import com.skiplab.theselproject.notifications.Sender;
 import com.skiplab.theselproject.notifications.Token;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -68,12 +77,14 @@ import retrofit2.Callback;
 
 public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder>{
 
+    private static final String TAG = "AdapterUser";
+
     Context context;
     List<User> userList;
     FirebaseAuth mAuth;
     DatabaseReference usersRef;
 
-    CollectionReference mChatroomReference, mProfileReference;
+    CollectionReference mChatroomReference, mProfileReference, allTokens;
     DatabaseReference mMessageReference;
 
     APIService apiService;
@@ -93,6 +104,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         mChatroomReference = FirebaseFirestore.getInstance().collection("chatrooms");
         mProfileReference = FirebaseFirestore.getInstance().collection("profiles");
         mMessageReference = FirebaseDatabase.getInstance().getReference("chatroom_messages");
+        allTokens = FirebaseFirestore.getInstance().collection("tokens");
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
     }
 
@@ -109,16 +121,24 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         String hisUID = userList.get(position).getUid();
         String hisEmail = userList.get(position).getEmail();
         String hisName = userList.get(position).getUsername();
-        String country = userList.get(position).getAddress();
+        String hisLocation = userList.get(position).getAddress();
         String category1 = userList.get(position).getCategory1();
         String category2 = userList.get(position).getCategory2();
         String category3 = userList.get(position).getCategory3();
         Long cost = userList.get(position).getCost();
 
+        TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+        String countryCode = tm.getSimCountryIso().toUpperCase();
+        Locale loc = new Locale("",countryCode);
+        String myLocation = loc.getDisplayCountry();
+
+        if (!myLocation.equals(hisLocation))
+            holder.scheduleBtn.setVisibility(View.GONE);
+        else if (myLocation.equals(null))
+            holder.scheduleBtn.setVisibility(View.GONE);
+
         if (userList.get(position).getOnlineStatus().equals("online"))
-        {
             holder.onlineIv.setVisibility(View.VISIBLE);
-        }
 
         try {
             UniversalImageLoader.setImage(userList.get(position).getProfile_photo(), holder.mAvatarIv, null, "");
@@ -197,7 +217,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         //get Data
         holder.usernameTv.setText(hisName);
         holder.usernameTv.setAllCaps(true);
-        holder.countryTv.setText("["+country+"]");
+        holder.countryTv.setText("["+hisLocation+"]");
         holder.categoryTv1.setText(category1);
         holder.categoryTv2.setText(category2);
         holder.categoryTv3.setText(category3);
@@ -271,20 +291,55 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
             public void onClick(View v) {
                 if (Common.isConnectedToTheInternet(context))
                 {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Consultations at a later time");
-                    builder.setMessage("Book an appointment for a day/time of your choice.");
-                    builder.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(context, BookAppointment.class);
-                            intent.putExtra("hisUID",hisUID);
-                            intent.putExtra("hisCost",cost);
-                            context.startActivity(intent);
-                        }
-                    });
+                    LocalDateTime time = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        time = LocalDateTime.now();
+                        DateTimeFormatter myFormatTime = DateTimeFormatter.ofPattern("HH:mm");
+                        String formattedTime = time.format(myFormatTime);
 
-                    builder.show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("Consultations at a later time");
+                        builder.setMessage("Book an appointment for a day/time of your choice.");
+                        builder.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try
+                                {
+                                    if (LocalTime.parse(formattedTime).isAfter(LocalTime.parse("20:00")))
+                                    {
+                                        dialog.dismiss();
+
+                                        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                                        builder1.setTitle("Closed!");
+                                        builder1.setMessage("This feature closes at 8PM and re-opens at 12AM.");
+                                        builder1.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        builder1.show();
+                                    }
+                                    else
+                                    {
+                                        dialog.dismiss();
+
+                                        Intent intent = new Intent(context, BookAppointment.class);
+                                        intent.putExtra("hisUID",hisUID);
+                                        intent.putExtra("hisCost",cost);
+                                        context.startActivity(intent);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    Log.d(TAG, "ERROR: "+e );
+                                }
+                            }
+                        });
+
+                        builder.show();
+                    }
                 }
                 else
                 {
@@ -330,6 +385,11 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     final View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.layout_instant_consultation, null);
+
+                    TextView fee_tv = mView.findViewById(R.id.instant_fee_tv);
+                    Locale locale = new Locale("en", "NG");
+                    NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+                    fee_tv.setText(fmt.format(6000));
 
                     Button start_btn = mView.findViewById(R.id.start_instant_btn);
 
@@ -453,7 +513,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                                                                 JavaMailAPI javaMailAPI = new JavaMailAPI(
                                                                                                                         context,
-                                                                                                                        "ayomideseaz@gmail.com",
+                                                                                                                        "skiplab.innovation@gmail.com",
                                                                                                                         "THESEL CONSULTATION",
                                                                                                                         "Hello "+hisName+","+"\n\n"+client.getUsername().toUpperCase()+" just paid for a 1week Instant Session with you on the Thesel platform."+
                                                                                                                                 "\n\n\n"+"Warm Regards,"+"\n"+"Thesel Team.");
@@ -464,14 +524,13 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                                                                                                                     today = LocalDate.now();
                                                                                                                     todayDate = today;
-                                                                                                                    expiryDate = todayDate.plusDays(1);
+                                                                                                                    expiryDate = todayDate.plusDays(7);
 
                                                                                                                     expiryDateS = expiryDate.toString();
                                                                                                                     todayDateS = todayDate.toString();
 
-                                                                                                                    expiryDay = todayDate.plusDays(1).getDayOfWeek().toString();
+                                                                                                                    expiryDay = todayDate.plusDays(7).getDayOfWeek().toString();
                                                                                                                 }
-
 
                                                                                                                 String timestamp = String.valueOf(System.currentTimeMillis());
 
@@ -517,9 +576,28 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                                                             @Override
                                                                                                                             public void onSuccess(Void aVoid) {
-                                                                                                                                //sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
 
-                                                                                                                                //sendAdminNotification(client.getUid(), client.getUsername(), "NEW CONSULTATION!!!", counsellor.getUsername());
+                                                                                                                                //Create notification
+                                                                                                                                MyNotifications myNotifications = new MyNotifications();
+                                                                                                                                myNotifications.setUid(hisUID);
+                                                                                                                                myNotifications.setTitle("New consultation");
+                                                                                                                                myNotifications.setContent("You have a new Instant Session with "+client.getUsername());
+                                                                                                                                myNotifications.setTimestamp(timestamp);
+                                                                                                                                myNotifications.setRead(false);
+
+                                                                                                                                FirebaseFirestore.getInstance().collection("myNotifications")
+                                                                                                                                        .document(myNotifications.getUid())
+                                                                                                                                        .set(myNotifications)
+                                                                                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                                                            @Override
+                                                                                                                                            public void onSuccess(Void aVoid) {
+
+                                                                                                                                                //sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
+
+                                                                                                                                                sendAdminNotification(mAuth.getUid(), "Instant Session for "+hisName, "New Consultation");
+
+                                                                                                                                            }
+                                                                                                                                        });
 
                                                                                                                                 progressDialog.dismiss();
 
@@ -528,7 +606,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
                                                                                                                                 alertDialog.setCancelable(false);
                                                                                                                                 alertDialog.setMessage("New session with " + hisName+"!");
-                                                                                                                                alertDialog.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
+                                                                                                                                alertDialog.setPositiveButton("PROCEED", new DialogInterface.OnClickListener() {
                                                                                                                                     @Override
                                                                                                                                     public void onClick(DialogInterface dialog, int which) {
                                                                                                                                         dialog.dismiss();
@@ -599,14 +677,13 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
     }
 
-    private void sendAdminNotification(String clientUID, String client_name, String message, String consultant_name) {
-        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+    private void sendAdminNotification(String clientUID, String body, String title) {
         allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
                     Token token = new Token(ds1.getString("token"));
-                    Data data = new Data(clientUID, message+" from "+client_name, consultant_name, adminUID, R.mipmap.ic_launcher3);
+                    Data data = new Data(clientUID, body, title, adminUID, R.mipmap.ic_launcher3);
 
                     Sender sender = new Sender(data, token.getToken());
                     apiService.sendNotification(sender)
@@ -628,14 +705,13 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         });
     }
 
-    private void sendNotification(String hisUID, String myName, String message) {
-        CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
+    private void sendNotification(String hisUID, String myName, String body) {
         allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
                     Token token = new Token(ds1.getString("token"));
-                    Data data = new Data(mAuth.getUid(), message, myName, hisUID, R.mipmap.ic_launcher3);
+                    Data data = new Data(mAuth.getUid(), body, myName, hisUID, R.mipmap.ic_launcher3);
 
                     Sender sender = new Sender(data, token.getToken());
                     apiService.sendNotification(sender)
