@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +26,8 @@ public class AdminEdit extends AppCompatActivity {
 
     TextView hisNameTv;
     Button realtimeDbBtn;
+    Button availabilityBtn;
+    ImageView closeBtn;
 
     DatabaseReference usersRef;
 
@@ -40,6 +43,15 @@ public class AdminEdit extends AppCompatActivity {
 
         hisNameTv = findViewById(R.id.hisName);
         realtimeDbBtn = findViewById(R.id.realtime_db_btn);
+        availabilityBtn = findViewById(R.id.availability_btn);
+        closeBtn = findViewById(R.id.closeBtn);
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         usersRef.orderByKey().equalTo(hisUID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -63,6 +75,15 @@ public class AdminEdit extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, RealtimeDbEdit.class);
+                intent.putExtra("hisUID",hisUID);
+                startActivity(intent);
+            }
+        });
+
+        availabilityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, AvailabilityEdit.class);
                 intent.putExtra("hisUID",hisUID);
                 startActivity(intent);
             }

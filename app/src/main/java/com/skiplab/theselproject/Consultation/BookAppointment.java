@@ -28,9 +28,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hbb20.CCPCountry;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.models.Afternoon;
 import com.skiplab.theselproject.models.Appointment;
 import com.skiplab.theselproject.models.Early;
+import com.skiplab.theselproject.models.Evening;
 import com.skiplab.theselproject.models.Morning;
+import com.skiplab.theselproject.models.Night;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -60,12 +63,16 @@ public class BookAppointment extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private CollectionReference earlyDb, morningDb, afternoonDb, eveningDb;
+    private CollectionReference earlyDb, morningDb, afternoonDb, eveningDb, nightDb;
     private CollectionReference appointmentDb;
 
 
     private Button five_am_btn, six_am_btn;
     private Button seven_am_btn, eight_am_btn, nine_am_btn, ten_am_btn, eleven_am_btn;
+    private Button twelve_pm_btn, one_pm_btn, two_pm_btn, three_pm_btn, four_pm_btn;
+    private Button five_pm_btn, six_pm_btn, seven_pm_btn, eight_pm_btn;
+    private Button nine_pm_btn, ten_pm_btn, eleven_pm_btn;
+
 
     String hisUID, myUID;
     long hisCost;
@@ -122,14 +129,29 @@ public class BookAppointment extends AppCompatActivity {
         });
 
 
-
         five_am_btn = findViewById(R.id.five_am_btn);
         six_am_btn = findViewById(R.id.six_am_btn);
+
         seven_am_btn = findViewById(R.id.seven_am_btn);
         eight_am_btn = findViewById(R.id.eight_am_btn);
         nine_am_btn = findViewById(R.id.nine_am_btn);
         ten_am_btn = findViewById(R.id.ten_am_btn);
         eleven_am_btn = findViewById(R.id.eleven_am_btn);
+
+        twelve_pm_btn = findViewById(R.id.twelve_pm_btn);
+        one_pm_btn = findViewById(R.id.one_pm_btn);
+        two_pm_btn = findViewById(R.id.two_pm_btn);
+        three_pm_btn = findViewById(R.id.three_pm_btn);
+        four_pm_btn = findViewById(R.id.four_pm_btn);
+
+        five_pm_btn = findViewById(R.id.five_pm_btn);
+        six_pm_btn = findViewById(R.id.six_pm_btn);
+        seven_pm_btn = findViewById(R.id.seven_pm_btn);
+        eight_pm_btn = findViewById(R.id.eight_pm_btn);
+
+        nine_pm_btn = findViewById(R.id.nine_pm_btn);
+        ten_pm_btn = findViewById(R.id.ten_pm_btn);
+        eleven_pm_btn = findViewById(R.id.eleven_pm_btn);
 
         appointmentDb = FirebaseFirestore.getInstance().collection("appointments");
 
@@ -137,6 +159,7 @@ public class BookAppointment extends AppCompatActivity {
         morningDb = FirebaseFirestore.getInstance().collection("morning");
         afternoonDb = FirebaseFirestore.getInstance().collection("afternoon");
         eveningDb = FirebaseFirestore.getInstance().collection("evening");
+        nightDb = FirebaseFirestore.getInstance().collection("night");
 
 
         earlyDb.document(hisUID)
@@ -279,6 +302,8 @@ public class BookAppointment extends AppCompatActivity {
                         });
                     }
                 });
+
+
 
         morningDb.document(hisUID)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -675,15 +700,684 @@ public class BookAppointment extends AppCompatActivity {
                     }
                 });
 
+
+
         afternoonDb.document(hisUID)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        //..
+                        Afternoon afternoon = documentSnapshot.toObject(Afternoon.class);
+
+                        /**
+                         * W.R.T; 12:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 2
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 3
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 4
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 5
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * 2ND STAGE
+                         */
+
+                        //STEP 6
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 7
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 8
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 9
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 10
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 11
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * 3RD STAGE
+                         */
+
+                        //STEP 12
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 13
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 14
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 15
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * 4TH STAGE
+                         */
+
+                        //STEP 16: ALL TRUE
+                        else if (afternoon.getTwelve_pm().equals(TRUE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.VISIBLE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+
+
+                        /**
+                         * W.R.T; 1:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 2
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 3
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 4
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+
+                        /**
+                         * 2ND STAGE
+                         */
+
+                        //STEP 5
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 6
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 7
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+
+                        /**
+                         * 3RD STAGE
+                         */
+
+                        //STEP 8
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(TRUE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.VISIBLE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+
+                        /**
+                         * W.R.T; 2:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 2
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 3
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * 2ND STAGE
+                         */
+
+                        //STEP 4
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(TRUE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.VISIBLE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * W.R.T; 3:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(TRUE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.VISIBLE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * W.R.T; 4:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(TRUE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 2: ALL FALSE
+                        else if (afternoon.getTwelve_pm().equals(FALSE) && afternoon.getOne_pm().equals(FALSE) && afternoon.getTwo_pm().equals(FALSE)
+                                && afternoon.getThree_pm().equals(FALSE) && afternoon.getFour_pm().equals(FALSE))
+                        {
+                            twelve_pm_btn.setVisibility(View.GONE);
+                            one_pm_btn.setVisibility(View.GONE);
+                            two_pm_btn.setVisibility(View.GONE);
+                            three_pm_btn.setVisibility(View.GONE);
+                            four_pm_btn.setVisibility(View.GONE);
+                        }
                     }
                 });
 
-        Toast.makeText(mContext,""+hisCost,Toast.LENGTH_SHORT).show();
+
+
+        eveningDb.document(hisUID)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        Evening evening = documentSnapshot.toObject(Evening.class);
+
+                        /**
+                         * W.R.T; 5:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        if (evening.getFive_pm().equals(TRUE) && evening.getSix_pm().equals(FALSE) && evening.getSeven_pm().equals(FALSE)
+                                && evening.getEight_pm().equals(FALSE))
+                        {
+                            five_pm_btn.setVisibility(View.VISIBLE);
+                            six_pm_btn.setVisibility(View.GONE);
+                            seven_pm_btn.setVisibility(View.GONE);
+                            eight_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 2
+                        else if (evening.getFive_pm().equals(TRUE) && evening.getSix_pm().equals(TRUE) && evening.getSeven_pm().equals(FALSE)
+                                && evening.getEight_pm().equals(FALSE))
+                        {
+                            five_pm_btn.setVisibility(View.VISIBLE);
+                            six_pm_btn.setVisibility(View.VISIBLE);
+                            seven_pm_btn.setVisibility(View.GONE);
+                            eight_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 3
+                        else if (evening.getFive_pm().equals(TRUE) && evening.getSix_pm().equals(FALSE) && evening.getSeven_pm().equals(TRUE)
+                                && evening.getEight_pm().equals(FALSE))
+                        {
+                            five_pm_btn.setVisibility(View.VISIBLE);
+                            six_pm_btn.setVisibility(View.GONE);
+                            seven_pm_btn.setVisibility(View.VISIBLE);
+                            eight_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 4
+                        else if (evening.getFive_pm().equals(TRUE) && evening.getSix_pm().equals(FALSE) && evening.getSeven_pm().equals(FALSE)
+                                && evening.getEight_pm().equals(TRUE))
+                        {
+                            five_pm_btn.setVisibility(View.VISIBLE);
+                            six_pm_btn.setVisibility(View.GONE);
+                            seven_pm_btn.setVisibility(View.GONE);
+                            eight_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * 2ND STAGE
+                         */
+
+                        //STEP 6
+                        else if (evening.getFive_pm().equals(TRUE) && evening.getSix_pm().equals(TRUE) && evening.getSeven_pm().equals(TRUE)
+                                && evening.getEight_pm().equals(FALSE))
+                        {
+                            five_pm_btn.setVisibility(View.VISIBLE);
+                            six_pm_btn.setVisibility(View.VISIBLE);
+                            seven_pm_btn.setVisibility(View.VISIBLE);
+                            eight_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 7
+                        else if (evening.getFive_pm().equals(TRUE) && evening.getSix_pm().equals(TRUE) && evening.getSeven_pm().equals(FALSE)
+                                && evening.getEight_pm().equals(TRUE))
+                        {
+                            five_pm_btn.setVisibility(View.VISIBLE);
+                            six_pm_btn.setVisibility(View.VISIBLE);
+                            seven_pm_btn.setVisibility(View.GONE);
+                            eight_pm_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 8: ALL TRUE
+                        else if (evening.getFive_pm().equals(TRUE) && evening.getSix_pm().equals(TRUE) && evening.getSeven_pm().equals(TRUE)
+                                && evening.getEight_pm().equals(TRUE))
+                        {
+                            five_pm_btn.setVisibility(View.VISIBLE);
+                            six_pm_btn.setVisibility(View.VISIBLE);
+                            seven_pm_btn.setVisibility(View.VISIBLE);
+                            eight_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+
+                        /**
+                         * W.R.T; 6:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (evening.getFive_pm().equals(FALSE) && evening.getSix_pm().equals(TRUE) && evening.getSeven_pm().equals(FALSE)
+                                && evening.getEight_pm().equals(FALSE))
+                        {
+                            five_pm_btn.setVisibility(View.GONE);
+                            six_pm_btn.setVisibility(View.VISIBLE);
+                            seven_pm_btn.setVisibility(View.GONE);
+                            eight_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 2
+                        else if (evening.getFive_pm().equals(FALSE) && evening.getSix_pm().equals(TRUE) && evening.getSeven_pm().equals(TRUE)
+                                && evening.getEight_pm().equals(FALSE))
+                        {
+                            five_pm_btn.setVisibility(View.GONE);
+                            six_pm_btn.setVisibility(View.VISIBLE);
+                            seven_pm_btn.setVisibility(View.VISIBLE);
+                            eight_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 3
+                        else if (evening.getFive_pm().equals(FALSE) && evening.getSix_pm().equals(TRUE) && evening.getSeven_pm().equals(FALSE)
+                                && evening.getEight_pm().equals(TRUE))
+                        {
+                            five_pm_btn.setVisibility(View.GONE);
+                            six_pm_btn.setVisibility(View.VISIBLE);
+                            seven_pm_btn.setVisibility(View.GONE);
+                            eight_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * 2ND STAGE
+                         */
+
+                        //STEP 4
+                        else if (evening.getFive_pm().equals(FALSE) && evening.getSix_pm().equals(TRUE) && evening.getSeven_pm().equals(TRUE)
+                                && evening.getEight_pm().equals(TRUE))
+                        {
+                            five_pm_btn.setVisibility(View.GONE);
+                            six_pm_btn.setVisibility(View.VISIBLE);
+                            seven_pm_btn.setVisibility(View.VISIBLE);
+                            eight_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+
+                        /**
+                         * W.R.T; 7:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (evening.getFive_pm().equals(FALSE) && evening.getSix_pm().equals(FALSE) && evening.getSeven_pm().equals(TRUE)
+                                && evening.getEight_pm().equals(FALSE))
+                        {
+                            five_pm_btn.setVisibility(View.GONE);
+                            six_pm_btn.setVisibility(View.GONE);
+                            seven_pm_btn.setVisibility(View.VISIBLE);
+                            eight_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 2
+                        else if (evening.getFive_pm().equals(FALSE) && evening.getSix_pm().equals(FALSE) && evening.getSeven_pm().equals(TRUE)
+                                && evening.getEight_pm().equals(TRUE))
+                        {
+                            five_pm_btn.setVisibility(View.GONE);
+                            six_pm_btn.setVisibility(View.GONE);
+                            seven_pm_btn.setVisibility(View.VISIBLE);
+                            eight_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * W.R.T; 8:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (evening.getFive_pm().equals(FALSE) && evening.getSix_pm().equals(FALSE) && evening.getSeven_pm().equals(FALSE)
+                                && evening.getEight_pm().equals(TRUE))
+                        {
+                            five_pm_btn.setVisibility(View.GONE);
+                            six_pm_btn.setVisibility(View.GONE);
+                            seven_pm_btn.setVisibility(View.GONE);
+                            eight_pm_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 2: ALL FALSE
+                        else if (evening.getFive_pm().equals(FALSE) && evening.getSix_pm().equals(FALSE) && evening.getSeven_pm().equals(FALSE)
+                                && evening.getEight_pm().equals(FALSE))
+                        {
+                            five_pm_btn.setVisibility(View.GONE);
+                            six_pm_btn.setVisibility(View.GONE);
+                            seven_pm_btn.setVisibility(View.GONE);
+                            eight_pm_btn.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+
+        nightDb.document(hisUID)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        Night night = documentSnapshot.toObject(Night.class);
+
+                        /**
+                         * W.R.T; 9:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        if (night.getNine_pm().equals(TRUE) && night.getTen_pm().equals(FALSE) && night.getEleven_pm().equals(FALSE))
+                        {
+                            nine_pm_btn.setVisibility(View.VISIBLE);
+                            ten_pm_btn.setVisibility(View.GONE);
+                            eleven_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 2
+                        else if (night.getNine_pm().equals(TRUE) && night.getTen_pm().equals(TRUE) && night.getEleven_pm().equals(FALSE))
+                        {
+                            nine_pm_btn.setVisibility(View.VISIBLE);
+                            ten_pm_btn.setVisibility(View.VISIBLE);
+                            eleven_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 3
+                        else if (night.getNine_pm().equals(TRUE) && night.getTen_pm().equals(FALSE) && night.getEleven_pm().equals(TRUE))
+                        {
+                            nine_pm_btn.setVisibility(View.VISIBLE);
+                            ten_pm_btn.setVisibility(View.GONE);
+                            eleven_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+                        /**
+                         * 2ND STAGE
+                         */
+
+                        //STEP 4: ALL TRUE
+                        else if (night.getNine_pm().equals(TRUE) && night.getTen_pm().equals(TRUE) && night.getEleven_pm().equals(TRUE))
+                        {
+                            nine_pm_btn.setVisibility(View.VISIBLE);
+                            ten_pm_btn.setVisibility(View.VISIBLE);
+                            eleven_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+
+                        /**
+                         * W.R.T; 10:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (night.getNine_pm().equals(FALSE) && night.getTen_pm().equals(TRUE) && night.getEleven_pm().equals(FALSE))
+                        {
+                            nine_pm_btn.setVisibility(View.GONE);
+                            ten_pm_btn.setVisibility(View.VISIBLE);
+                            eleven_pm_btn.setVisibility(View.GONE);
+                        }
+                        //STEP 2
+                        else if (night.getNine_pm().equals(FALSE) && night.getTen_pm().equals(TRUE) && night.getEleven_pm().equals(TRUE))
+                        {
+                            nine_pm_btn.setVisibility(View.GONE);
+                            ten_pm_btn.setVisibility(View.VISIBLE);
+                            eleven_pm_btn.setVisibility(View.VISIBLE);
+                        }
+
+
+                        /**
+                         * W.R.T; 11:00PM
+                         *
+                         * 1ST STAGE
+                         */
+
+                        //STEP 1
+                        else if (night.getNine_pm().equals(FALSE) && night.getTen_pm().equals(FALSE) && night.getEleven_pm().equals(TRUE))
+                        {
+                            nine_pm_btn.setVisibility(View.GONE);
+                            ten_pm_btn.setVisibility(View.GONE);
+                            eleven_pm_btn.setVisibility(View.VISIBLE);
+                        }
+                        //STEP 2: ALL FALSE
+                        else if (night.getNine_pm().equals(FALSE) && night.getTen_pm().equals(FALSE) && night.getEleven_pm().equals(FALSE))
+                        {
+                            nine_pm_btn.setVisibility(View.GONE);
+                            ten_pm_btn.setVisibility(View.GONE);
+                            eleven_pm_btn.setVisibility(View.GONE);
+                        }
+
+                    }
+                });
+
     }
 
     @Override

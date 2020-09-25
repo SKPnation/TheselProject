@@ -5,19 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f2f2"
-    tools:context=".AdminEdit">
+    android:background="#F2F2F2"
+    tools:context=".Home.ConsultationNotificationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#f2f2f2">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="#F2F2F2"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <RelativeLayout
@@ -25,14 +25,25 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/hisName"
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:text="Notifications"
                     android:textSize="25sp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display3"
                     android:textColor="@color/colorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/addVideo"
+                    android:src="@drawable/ic_add"
+                    android:layout_toLeftOf="@id/closeBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"/>
 
                 <ImageView
                     android:id="@+id/closeBtn"
@@ -51,52 +62,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@id/appBarLayout"
+        android:id="@+id/recycler_notification"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp">
-
-        <Button
-            android:id="@+id/realtime_db_btn"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="Realtime Db"
-            android:textSize="30sp"/>
-
-        <Button
-            android:id="@+id/availability_btn"
-            android:layout_below="@id/realtime_db_btn"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="Availability"
-            android:textSize="30sp"/>
-
-        <Button
-            android:id="@+id/instants_btn"
-            android:layout_below="@id/availability_btn"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="Instant Sessions"
-            android:textSize="30sp"/>
-
-        <Button
-            android:id="@+id/appointments_btn"
-            android:layout_below="@id/instants_btn"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="Appointments"
-            android:textSize="30sp"/>
-
-        <Button
-            android:id="@+id/profiles_btn"
-            android:layout_below="@id/appointments_btn"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:text="Profiles"
-            android:textSize="30sp"/>
-
-    </RelativeLayout>
-
+        tools:listitem="@layout/layout_notification_item"/>
 
 </RelativeLayout>

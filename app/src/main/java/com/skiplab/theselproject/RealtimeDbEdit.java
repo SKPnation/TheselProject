@@ -30,7 +30,7 @@ public class RealtimeDbEdit extends AppCompatActivity {
 
     TextView hisNameTv, emailTv, phoneTv, countryTv, categoryOne, categoryTwo, categoryThree, statusTv;
     TextView costTv, dayTv, nightTv, bankTv, accountNum;
-    ImageView saveBtn;
+    ImageView saveBtn, backBtn;
 
     DatabaseReference usersRef;
 
@@ -66,6 +66,14 @@ public class RealtimeDbEdit extends AppCompatActivity {
         accountNum = findViewById(R.id.acc_num_Tv);
         statusTv = findViewById(R.id.status_tv);
         saveBtn = findViewById(R.id.saveBtn);
+        backBtn = findViewById(R.id.backArrow);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         usersRef.orderByKey().equalTo(hisUID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {

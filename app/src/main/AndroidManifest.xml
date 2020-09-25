@@ -25,10 +25,11 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RealtimeDbEdit"></activity>
+        <activity android:name=".AvailabilityEdit"></activity>
+        <activity android:name=".Home.ConsultationNotificationActivity" />
+        <activity android:name=".RealtimeDbEdit" />
         <activity android:name=".AdminEdit" />
         <activity android:name=".Consultation.BookAppointment" />
-        <activity android:name=".EditConsultantProfile" />
         <activity android:name=".Consultation.ChatRoomsActivity" />
         <activity android:name=".Consultation.DepositActivity" />
         <activity android:name=".Consultation.WalletActivity" />

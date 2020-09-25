@@ -369,6 +369,7 @@
                                     android:textAllCaps="false"/>
 
                                 <Button
+                                    android:id="@+id/one_pm_btn"
                                     android:layout_width="0dp"
                                     android:layout_height="60dp"
                                     android:layout_weight="1"
@@ -386,6 +387,7 @@
                                 android:weightSum="2">
 
                                 <Button
+                                    android:id="@+id/two_pm_btn"
                                     android:layout_width="0dp"
                                     android:layout_height="60dp"
                                     android:layout_weight="1"
@@ -397,6 +399,7 @@
                                     android:textAllCaps="false"/>
 
                                 <Button
+                                    android:id="@+id/three_pm_btn"
                                     android:layout_width="0dp"
                                     android:layout_height="60dp"
                                     android:layout_weight="1"
@@ -414,6 +417,7 @@
                                 android:weightSum="1">
 
                                 <Button
+                                    android:id="@+id/four_pm_btn"
                                     android:layout_width="0dp"
                                     android:layout_height="60dp"
                                     android:layout_weight="1"
@@ -432,13 +436,240 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/evening_cv"
+                    android:layout_below="@id/afternoon_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/evening_header"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#F2F2F2"
+                            android:backgroundTintMode="multiply"
+                            android:background="@drawable/grey_border_bottom">
+
+                            <ImageView
+                                android:src="@drawable/evening"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:text="Evening"
+                                android:textSize="20sp"
+                                android:textColor="@color/colorPrimaryDark" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="15dp"
+                                android:text="5:00pm - 8:45pm"
+                                android:textSize="20sp"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Display4"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="2">
+
+                                <Button
+                                    android:id="@+id/five_pm_btn"
+                                    android:layout_width="0dp"
+                                    android:layout_height="60dp"
+                                    android:layout_weight="1"
+                                    android:backgroundTint="#393939"
+                                    android:elevation="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:text="5:00pm"
+                                    android:textSize="20sp"
+                                    android:textAllCaps="false"/>
+
+                                <Button
+                                    android:id="@+id/six_pm_btn"
+                                    android:layout_width="0dp"
+                                    android:layout_height="60dp"
+                                    android:layout_weight="1"
+                                    android:backgroundTint="#393939"
+                                    android:elevation="4dp"
+                                    android:text="6:00pm"
+                                    android:textSize="20sp"
+                                    android:textAllCaps="false"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="2">
+
+                                <Button
+                                    android:id="@+id/seven_pm_btn"
+                                    android:layout_width="0dp"
+                                    android:layout_height="60dp"
+                                    android:layout_weight="1"
+                                    android:backgroundTint="#393939"
+                                    android:elevation="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:text="7:00pm"
+                                    android:textSize="20sp"
+                                    android:textAllCaps="false"/>
+
+                                <Button
+                                    android:id="@+id/eight_pm_btn"
+                                    android:layout_width="0dp"
+                                    android:layout_height="60dp"
+                                    android:layout_weight="1"
+                                    android:backgroundTint="#393939"
+                                    android:elevation="4dp"
+                                    android:text="8:00pm"
+                                    android:textSize="20sp"
+                                    android:textAllCaps="false"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/night_cv"
+                    android:layout_below="@id/evening_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/night_header"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#F2F2F2"
+                            android:backgroundTintMode="multiply"
+                            android:background="@drawable/grey_border_bottom">
+
+                            <ImageView
+                                android:src="@drawable/night_icon"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:text="Night"
+                                android:textSize="20sp"
+                                android:textColor="@color/colorPrimaryDark" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="15dp"
+                                android:text="9:00pm - 11:45pm"
+                                android:textSize="20sp"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Display4"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="2">
+
+                                <Button
+                                    android:id="@+id/nine_pm_btn"
+                                    android:layout_width="0dp"
+                                    android:layout_height="60dp"
+                                    android:layout_weight="1"
+                                    android:backgroundTint="#393939"
+                                    android:elevation="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:text="9:00pm"
+                                    android:textSize="20sp"
+                                    android:textAllCaps="false"/>
+
+                                <Button
+                                    android:id="@+id/ten_pm_btn"
+                                    android:layout_width="0dp"
+                                    android:layout_height="60dp"
+                                    android:layout_weight="1"
+                                    android:backgroundTint="#393939"
+                                    android:elevation="4dp"
+                                    android:text="10:00pm"
+                                    android:textSize="20sp"
+                                    android:textAllCaps="false"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="1">
+
+                                <Button
+                                    android:id="@+id/eleven_pm_btn"
+                                    android:layout_width="0dp"
+                                    android:layout_height="60dp"
+                                    android:layout_weight="1"
+                                    android:backgroundTint="#393939"
+                                    android:elevation="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:text="11:00pm"
+                                    android:textSize="20sp"
+                                    android:textAllCaps="false"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
 
             </RelativeLayout>
 
         </ScrollView>
-
-
-
 
     </RelativeLayout>
 

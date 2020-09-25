@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
     Animation skipbig, nothingtocome, btnanim;
 
     ImageView appNameIv;
-    TextView sloganTv, nextTv;
+    TextView appNameTv, sloganTv;
+
+    RelativeLayout mainActivity_click;
 
     public static boolean isActivityRunning;
 
@@ -72,15 +75,36 @@ public class MainActivity extends AppCompatActivity {
         nothingtocome = AnimationUtils.loadAnimation(mContext, R.anim.skipbg);
         btnanim = AnimationUtils.loadAnimation(mContext, R.anim.skipbg);
 
+        appNameTv = findViewById(R.id.app_name);
         appNameIv = findViewById(R.id.appNameIv);
         sloganTv = findViewById(R.id.slogan1Tv);
-        nextTv = findViewById(R.id.main1_nextTv);
+        mainActivity_click = findViewById(R.id.mainActivity_click);
 
         appNameIv.setAnimation(skipbig);
         sloganTv.setAnimation(skipbig);
-        nextTv.setAnimation(skipbig);
 
-        nextTv.setOnClickListener(new View.OnClickListener() {
+        appNameTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, Main2Activity.class));
+            }
+        });
+
+        appNameIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, Main2Activity.class));
+            }
+        });
+
+        mainActivity_click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, Main2Activity.class));
+            }
+        });
+
+        sloganTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mContext, Main2Activity.class));

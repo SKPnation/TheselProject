@@ -8,6 +8,7 @@
     android:backgroundTintMode="multiply"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainActivity_click"
     tools:context=".MainActivity">
 
     <ImageView
@@ -42,24 +43,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp">
-
-        <TextView
-            android:id="@+id/main1_nextTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="25dp"
-            android:text="Next"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
-
-    </RelativeLayout>
 
 
 </RelativeLayout>

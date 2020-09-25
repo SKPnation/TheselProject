@@ -488,6 +488,13 @@ public class HomeFragment extends Fragment {
                     }
                 });
 
+        frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),ConsultationNotificationActivity.class));
+            }
+        });
+
         loadConsultants();
         setupDrawer();
 
@@ -496,7 +503,7 @@ public class HomeFragment extends Fragment {
 
     private void initNotificationUpdate() {
         myNotificationDb
-                .whereEqualTo("uid",myUid)
+                .whereEqualTo("counsellor_id",myUid)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -506,25 +513,20 @@ public class HomeFragment extends Fragment {
                             if (task.getResult().size() > 0)
                             {
                                 task.getResult().getQuery().whereEqualTo("read",false)
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                             @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if (task.isSuccessful())
+                                            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                                count = documentSnapshots.size();
+
+                                                if (count == 0)
+                                                    txt_notification_badge.setVisibility(View.GONE);
+                                                else
                                                 {
-                                                    count = task.getResult().size();
-
-                                                    if (count == 0)
-                                                        txt_notification_badge.setVisibility(View.GONE);
+                                                    txt_notification_badge.setVisibility(View.VISIBLE);
+                                                    if (count<=9)
+                                                        txt_notification_badge.setText(String.valueOf(count));
                                                     else
-                                                    {
-                                                        txt_notification_badge.setVisibility(View.VISIBLE);
-                                                        if (count<=9)
-                                                            txt_notification_badge.setText(String.valueOf(count));
-                                                        else
-                                                            txt_notification_badge.setText("9+");
-                                                    }
-
+                                                        txt_notification_badge.setText("9+");
                                                 }
                                             }
                                         });
@@ -641,5 +643,9 @@ public class HomeFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        initNotificationUpdate();
+    }
 }

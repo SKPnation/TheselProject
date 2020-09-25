@@ -3,17 +3,18 @@ package com.skiplab.theselproject.models;
 public class Profile {
 
     String user_id, description, appt_timer;
-    long appointments, instants;
+    long appointments, instants, instant_cost;
 
     public Profile() {
     }
 
-    public Profile(String user_id, String description, String appt_timer, long appointments, long instants) {
+    public Profile(String user_id, String description, String appt_timer, long appointments, long instants, long instant_cost) {
         this.user_id = user_id;
         this.description = description;
         this.appt_timer = appt_timer;
         this.appointments = appointments;
         this.instants = instants;
+        this.instant_cost = instant_cost;
     }
 
     public String getUser_id() {
@@ -54,5 +55,13 @@ public class Profile {
 
     public void setInstants(long instants) {
         this.instants = instants;
+    }
+
+    public long getInstant_cost() {
+        return instant_cost;
+    }
+
+    public void setInstant_cost(long instant_cost) {
+        this.instant_cost = instant_cost;
     }
 }
