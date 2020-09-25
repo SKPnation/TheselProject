@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#797979"
-    tools:context=".Consultation.BookAppointment">
+    tools:context=".Consultation.BookAppointment1">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"

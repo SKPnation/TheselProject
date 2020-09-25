@@ -1,23 +1,17 @@
 package com.skiplab.theselproject.Consultation;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -25,27 +19,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.hbb20.CCPCountry;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.Afternoon;
-import com.skiplab.theselproject.models.Appointment;
 import com.skiplab.theselproject.models.Early;
 import com.skiplab.theselproject.models.Evening;
 import com.skiplab.theselproject.models.Morning;
 import com.skiplab.theselproject.models.Night;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import javax.annotation.Nullable;
 
@@ -53,13 +40,11 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarView;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
-import static android.os.Build.VERSION_CODES.O;
-
-public class BookAppointment extends AppCompatActivity {
+public class BookAppointment1 extends AppCompatActivity {
 
     private static final String TAG = "BookAppointment";
 
-    private Context mContext = BookAppointment.this;
+    private Context mContext = BookAppointment1.this;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -92,7 +77,7 @@ public class BookAppointment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_appointment);
+        setContentView(R.layout.activity_book_appointment1);
 
         setupFirebaseAuth();
 

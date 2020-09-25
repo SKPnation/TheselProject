@@ -69,36 +69,32 @@ public class ConsultationNotificationActivity extends AppCompatActivity {
 
         recycler_notification.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setStackFromEnd(true);
-        layoutManager.setReverseLayout(true);
+        //layoutManager.setStackFromEnd(true);
+        //layoutManager.setReverseLayout(true);
         recycler_notification.setLayoutManager(layoutManager);
         recycler_notification.addItemDecoration(new DividerItemDecoration(this,layoutManager.getOrientation()));
 
-        notificationsDb.whereEqualTo("counsellor_id",mAuth.getUid())
+        notificationsDb
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.getResult().size() > 0)
                         {
-                            task.getResult().getQuery().addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                    firstList.clear();
-                                    for (DocumentSnapshot ds: documentSnapshots.getDocuments() )
-                                    {
-                                        MyNotifications myNotifications = ds.toObject(MyNotifications.class);
+                            firstList.clear();
+                            for (DocumentSnapshot ds: task.getResult())
+                            {
+                                MyNotifications myNotifications = ds.toObject(MyNotifications.class);
 
-                                        //mProgressBar.setVisibility(View.GONE);
+                                if (myNotifications.getCounsellor_id().equals(mAuth.getUid()) && !myNotifications.isRead())
+                                    firstList.add(myNotifications);
 
-                                        firstList.add(myNotifications);
+                            }
+                            adapter = new MyNotificationAdapter(mContext, firstList);
+                            recycler_notification.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
 
-                                    }
-                                    adapter = new MyNotificationAdapter(mContext, firstList);
-                                    recycler_notification.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
                         }
                     }
                 });
@@ -106,4 +102,3 @@ public class ConsultationNotificationActivity extends AppCompatActivity {
 
 
 }
-

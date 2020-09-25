@@ -1,18 +1,24 @@
 package com.skiplab.theselproject.models;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
 
 public class MyNotifications {
+    @ServerTimestamp
+    private Date timestamp;
     private String counsellor_id, client_id;
     private String title, category, content;
     private String expiry_date, appointment_time;
-    private String timestamp;
     private boolean read;
 
     public MyNotifications() {
     }
 
-    public MyNotifications(String counsellor_id, String client_id, String title, String category, String content, String expiry_date, String appointment_time, String timestamp, boolean read) {
+    public MyNotifications(Date timestamp, String counsellor_id, String client_id, String title, String category, String content, String expiry_date, String appointment_time, boolean read) {
+        this.timestamp = timestamp;
         this.counsellor_id = counsellor_id;
         this.client_id = client_id;
         this.title = title;
@@ -20,8 +26,15 @@ public class MyNotifications {
         this.content = content;
         this.expiry_date = expiry_date;
         this.appointment_time = appointment_time;
-        this.timestamp = timestamp;
         this.read = read;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getCounsellor_id() {
@@ -78,14 +91,6 @@ public class MyNotifications {
 
     public void setAppointment_time(String appointment_time) {
         this.appointment_time = appointment_time;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
     }
 
     public boolean isRead() {

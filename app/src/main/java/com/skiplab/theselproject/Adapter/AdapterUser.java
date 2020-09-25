@@ -34,16 +34,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.skiplab.theselproject.AdminEdit;
 import com.skiplab.theselproject.Common.Common;
-import com.skiplab.theselproject.Consultation.BookAppointment;
+import com.skiplab.theselproject.Consultation.BookAppointment1;
 import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.R;
@@ -51,7 +51,6 @@ import com.skiplab.theselproject.Utils.JavaMailAPI;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatMessage;
 import com.skiplab.theselproject.models.ChatRoom;
-import com.skiplab.theselproject.models.MyNotifications;
 import com.skiplab.theselproject.models.Profile;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.notifications.APIService;
@@ -344,7 +343,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                     {
                                         dialog.dismiss();
 
-                                        Intent intent = new Intent(context, BookAppointment.class);
+                                        Intent intent = new Intent(context, BookAppointment1.class);
                                         intent.putExtra("hisUID",hisUID);
                                         intent.putExtra("hisCost",cost);
                                         context.startActivity(intent);
@@ -596,23 +595,23 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                                                                                                         mMessageReference.child(messageId).setValue(message);
 
-                                                                                                                                                        //Create notification
-                                                                                                                                                        MyNotifications myNotifications = new MyNotifications();
-                                                                                                                                                        myNotifications.setCounsellor_id(hisUID);
-                                                                                                                                                        myNotifications.setClient_id(mAuth.getUid());
-                                                                                                                                                        myNotifications.setCategory(category1);
-                                                                                                                                                        myNotifications.setTitle("Instant Session");
-                                                                                                                                                        myNotifications.setContent(hisName.toUpperCase()+", You have a new Instant Session with "+client.getUsername().toUpperCase());
-                                                                                                                                                        myNotifications.setExpiry_date("Expiry date: "+expiryDay.toUpperCase()+", "+expiryDateS);
-                                                                                                                                                        myNotifications.setAppointment_time("");
-                                                                                                                                                        myNotifications.setTimestamp(timestamp);
-                                                                                                                                                        myNotifications.setRead(false);
+                                                                                                                                                        HashMap<String,Object> hashMap = new HashMap<>();
+                                                                                                                                                        hashMap.put("counsellor_id",hisUID);
+                                                                                                                                                        hashMap.put("client_id",mAuth.getUid());
+                                                                                                                                                        hashMap.put("category",category1);
+                                                                                                                                                        hashMap.put("title","Instant Session");
+                                                                                                                                                        hashMap.put("content",hisName.toUpperCase()+", You have a new Instant Session with "+client.getUsername().toUpperCase());
+                                                                                                                                                        hashMap.put("expiry_date","Expiry date: "+expiryDay.toUpperCase()+", "+expiryDateS);
+                                                                                                                                                        hashMap.put("appointment_time","");
+                                                                                                                                                        hashMap.put("timestamp",FieldValue.serverTimestamp());
+                                                                                                                                                        hashMap.put("read",false);
 
                                                                                                                                                         FirebaseFirestore.getInstance().collection("myNotifications")
-                                                                                                                                                                .add(myNotifications)
-                                                                                                                                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                                                                                                                                .document(timestamp)
+                                                                                                                                                                .set(hashMap)
+                                                                                                                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                                                                                                     @Override
-                                                                                                                                                                    public void onSuccess(DocumentReference documentReference) {
+                                                                                                                                                                    public void onSuccess(Void aVoid) {
                                                                                                                                                                         //sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
 
                                                                                                                                                                         sendAdminNotification(mAuth.getUid(), "Instant Session for "+hisName, "Instant Session");
