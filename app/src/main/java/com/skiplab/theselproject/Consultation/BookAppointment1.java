@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -32,6 +33,7 @@ import com.skiplab.theselproject.models.Morning;
 import com.skiplab.theselproject.models.Night;
 
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -69,13 +71,15 @@ public class BookAppointment1 extends AppCompatActivity {
     String five_am = "5:00";
 
     String hisUID, myUID;
-    long hisCost;
+    long hisCost, dateMillis;
 
     String TRUE = "true", FALSE="false";
 
     LocalDate todayDate, expiryDate;
 
-    Calendar selected_date, date1, calendar;
+    Date sd;
+
+    Calendar selected_date, selected_date_in_millis, date1, calendar;
     HorizontalCalendarView horizontalCalendarView;
     SimpleDateFormat simpleDateFormat, simpleDateFormat1;
 
@@ -115,6 +119,13 @@ public class BookAppointment1 extends AppCompatActivity {
                 {
                     date1 = date;
                     selected_date = date1;
+
+                    dateMillis = date.getTimeInMillis();
+
+                    Toast.makeText(mContext, dateMillis+"",Toast.LENGTH_SHORT).show();
+
+
+                    //long date_in_millis = simpleDateFormat.format(date.getTimeInMillis());
                 }
             }
         });
@@ -189,7 +200,10 @@ public class BookAppointment1 extends AppCompatActivity {
 
                                     if (simpleDateFormat1.format(selected_date.getTime()).equals(todayDate.toString()))
                                     {
-                                        Toast.makeText(mContext,simpleDateFormat.format(selected_date.getTime()),Toast.LENGTH_SHORT).show();
+                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                .setMessage("Swipe the calendar to choose a date for your appointment!")
+                                                .create();
+                                        alertDialog.show();
                                     }
                                     else
                                     {
@@ -224,9 +238,10 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     {
                                                                                         Intent intent1 = new Intent(mContext, BookAppointment2.class);
                                                                                         intent1.putExtra("hisUID",hisUID);
-                                                                                        intent1.putExtra("selectedDate", simpleDateFormat.format(selected_date.getTime()));
+                                                                                        intent1.putExtra("selectedDate", dateMillis);
                                                                                         intent1.putExtra("startTime",five_am);
                                                                                         intent1.putExtra("endTime","5:40");
+                                                                                        intent1.putExtra("timeType","am");
                                                                                         intent1.putExtra("hisCost",hisCost);
                                                                                         startActivity(intent1);
                                                                                     }
@@ -239,9 +254,10 @@ public class BookAppointment1 extends AppCompatActivity {
                                                         {
                                                             Intent intent1 = new Intent(mContext, BookAppointment2.class);
                                                             intent1.putExtra("hisUID",hisUID);
-                                                            intent1.putExtra("selectedDate", simpleDateFormat.format(selected_date.getTime()));
+                                                            intent1.putExtra("selectedDate", dateMillis);
                                                             intent1.putExtra("startTime",five_am);
-                                                            intent1.putExtra("endTime","05:40");
+                                                            intent1.putExtra("endTime","5:40");
+                                                            intent1.putExtra("timeType","am");
                                                             intent1.putExtra("hisCost",hisCost);
                                                             startActivity(intent1);
                                                         }
@@ -1345,11 +1361,6 @@ public class BookAppointment1 extends AppCompatActivity {
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
 
         isActivityRunning = true;
-
-        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
-                .setMessage("Swipe the calendar to choose a date for your appointment!")
-                .create();
-        alertDialog.show();
     }
 
     @Override
