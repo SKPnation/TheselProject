@@ -1,5 +1,6 @@
 package com.skiplab.theselproject.Consultation;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -19,19 +22,23 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.Afternoon;
+import com.skiplab.theselproject.models.Appointment;
 import com.skiplab.theselproject.models.Early;
 import com.skiplab.theselproject.models.Evening;
 import com.skiplab.theselproject.models.Morning;
 import com.skiplab.theselproject.models.Night;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import javax.annotation.Nullable;
@@ -42,7 +49,7 @@ import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class BookAppointment1 extends AppCompatActivity {
 
-    private static final String TAG = "BookAppointment";
+    private static final String TAG = "BookAppointment1";
 
     private Context mContext = BookAppointment1.this;
 
@@ -59,6 +66,8 @@ public class BookAppointment1 extends AppCompatActivity {
     private Button nine_pm_btn, ten_pm_btn, eleven_pm_btn;
 
 
+    String five_am = "05:00";
+
     String hisUID, myUID;
     long hisCost;
 
@@ -66,11 +75,9 @@ public class BookAppointment1 extends AppCompatActivity {
 
     LocalDate todayDate, expiryDate;
 
-    Calendar selected_date, date1;
+    Calendar selected_date, date1, calendar;
     HorizontalCalendarView horizontalCalendarView;
     SimpleDateFormat simpleDateFormat;
-
-    String five_am = "", one_pm ="13:00 - 13:40";
 
     public static boolean isActivityRunning;
 
@@ -107,8 +114,6 @@ public class BookAppointment1 extends AppCompatActivity {
                 {
                     date1 = date;
                     selected_date = date1;
-                    Toast.makeText(mContext, simpleDateFormat.format(date1.getTime()), Toast.LENGTH_LONG).show();
-
                 }
             }
         });
@@ -174,107 +179,75 @@ public class BookAppointment1 extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-                                String countryCode = tm.getSimCountryIso().toUpperCase();
-                                Locale loc = new Locale("",countryCode);
-                                String country = loc.getDisplayCountry();
-
-                                LocalDateTime time = null;
                                 LocalDate today = null;
-                                String formattedTime = null;
 
                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                                     today = LocalDate.now();
-                                    time = LocalDateTime.now();
-                                    DateTimeFormatter myFormatTime = DateTimeFormatter.ofPattern("HH:mm");
-                                    formattedTime = time.format(myFormatTime);
 
                                     todayDate = today;
 
-                                    try {
-                                        if (LocalTime.parse(formattedTime).isBefore(LocalTime.parse("15:00")))
-                                            Toast.makeText(mContext, country+": "+formattedTime, Toast.LENGTH_LONG).show();
-                                        else
-                                            Toast.makeText(mContext, country+": NO!!!", Toast.LENGTH_LONG).show();
-                                    }
-                                    catch (Exception e)
+                                    if (simpleDateFormat.format(selected_date.getTime()).equals(todayDate.toString()))
                                     {
-                                        Log.d(TAG, "ERROR: "+e );
+                                        //..
                                     }
-
-                                    /*try {
-                                        if (todayDate.toString().equals(simpleDateFormat.format(date1.getTime())))
-                                        {
-                                            Toast.makeText(mContext, formattedTime, Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                    catch (Exception e)
+                                    else
                                     {
-                                        Log.d(TAG, "ERROR: "+e );
-                                    }*/
-                                }
-                                /*expiryDate = todayDate.plusDays(1);
+                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if(task.getResult().size() > 0)
+                                                        {
+                                                            task.getResult().getQuery()
+                                                                    .get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                            if (task.isSuccessful())
+                                                                            {
+                                                                                for (DocumentSnapshot ds: task.getResult().getDocuments())
+                                                                                {
+                                                                                    Appointment appointment = ds.toObject(Appointment.class);
 
-                                String expiryDateS = expiryDate.toString();
-                                String todayDateS = todayDate.toString();
+                                                                                    if (appointment.getStart_time().equals(five_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                        Toast.makeText(mContext, "ALREADY BOOKED!!!", Toast.LENGTH_SHORT).show();
 
-                                String expiryDay = todayDate.plusDays(1).getDayOfWeek().toString();
+                                                                                    else if (appointment.getStart_time().equals(five_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && appointment.getClient_id().equals(myUID))
+                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
 
-
-                                //five_am_btn.setBackgroundColor(Color.parseColor("#29D300"));
-
-                                String five_am = five_am_btn.getText().toString();
-
-                                if (!LocalDate.parse(expiryDateS).isAfter(LocalDate.parse(todayDateS))){
-                                    Toast.makeText(mContext, "NO: "+expiryDay+", "+expiryDate, Toast.LENGTH_LONG).show();
-                                }
-                                else {
-                                    Toast.makeText(mContext, "YES: "+expiryDay+", "+expiryDate, Toast.LENGTH_LONG).show();
-                                }*/
-
-
-                                /*appointmentDb.whereEqualTo("counsellor_id",hisUID)
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if (task.isSuccessful())
-                                                {
-                                                    if(task.getResult().size() > 0)
-                                                    {
-                                                        Toast.makeText(mContext, "EXISTS!!!", Toast.LENGTH_SHORT).show();
-                                                        *//*task.getResult().getQuery().addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                                            @Override
-                                                            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                                                for (DocumentSnapshot ds: documentSnapshots.getDocuments())
-                                                                {
-                                                                    Appointment appointment = ds.toObject(Appointment.class);
-                                                                    if (appointment.getBooked_time().equals(five_am))
-                                                                    {
-                                                                        //..
-                                                                    }
-                                                                }
-                                                            }
-                                                        });*//*
+                                                                                    else if (!appointment.getStart_time().equals(five_am) && !appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                                                        intent1.putExtra("hisUID",hisUID);
+                                                                                        intent1.putExtra("selectedDate", simpleDateFormat.format(selected_date.getTime()));
+                                                                                        intent1.putExtra("startTime",five_am);
+                                                                                        intent1.putExtra("endTime","05:40");
+                                                                                        intent1.putExtra("hisCost",hisCost);
+                                                                                        startActivity(intent1);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        }
+                                                        else
+                                                        {
+                                                            Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                            intent1.putExtra("hisUID",hisUID);
+                                                            intent1.putExtra("selectedDate", simpleDateFormat.format(selected_date.getTime()));
+                                                            intent1.putExtra("startTime",five_am);
+                                                            intent1.putExtra("endTime","05:40");
+                                                            intent1.putExtra("hisCost",hisCost);
+                                                            startActivity(intent1);
+                                                        }
                                                     }
-                                                    else
-                                                    {
-                                                        //Toast.makeText(mContext, ""+ expiryDate, Toast.LENGTH_LONG).show();
-
-                                                        *//*Appointment appointment = new Appointment();
-                                                        appointment.setClient_id(myUID);
-                                                        appointment.setCounsellor_id(hisUID);
-                                                        appointment.setBooked_time(five_am);
-                                                        appointment.setBooked_date("");
-                                                        appointment.setNum_messages(0);
-                                                        appointment.setTimestamp(timestamp);
-                                                        appointment.setSlot("0");
-                                                        appointment.setAppointment_id(timestamp);
-                                                        appointment.setAbsent(false);*//*
-                                                    }
-                                                }
-                                            }
-                                        });*/
+                                                });
+                                    }
+                                }
 
                             }
                         });

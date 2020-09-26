@@ -316,20 +316,20 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                         String formattedTime = time.format(myFormatTime);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("Consultations at a later time");
-                        builder.setMessage("Book an appointment for a day/time of your choice.");
+                        builder.setTitle("Book Appointment");
+                        builder.setMessage("Book an appointment for a day & time of your choice.");
                         builder.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 try
                                 {
-                                    if (LocalTime.parse(formattedTime).isAfter(LocalTime.parse("20:00")))
+                                    if (LocalTime.parse(formattedTime).isAfter(LocalTime.parse("21:00")))
                                     {
                                         dialog.dismiss();
 
                                         AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                                         builder1.setTitle("Closed!");
-                                        builder1.setMessage("This feature closes at 8PM and re-opens at 12AM.");
+                                        builder1.setMessage("The book appointment feature closes at 8PM and re-opens at 12AM.");
                                         builder1.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {

@@ -5,7 +5,8 @@ public class Appointment {
     private String appointment_id;
     private String timestamp;
     private String booked_date;
-    private String booked_time;
+    private String start_time;
+    private String end_time;
     private String slot;
     private boolean absent;
     private int num_messages;
@@ -13,13 +14,14 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(String counsellor_id, String client_id, String appointment_id, String timestamp, String booked_date, String booked_time, String slot, boolean absent, int num_messages) {
+    public Appointment(String counsellor_id, String client_id, String appointment_id, String timestamp, String booked_date, String start_time, String end_time, String slot, boolean absent, int num_messages) {
         this.counsellor_id = counsellor_id;
         this.client_id = client_id;
         this.appointment_id = appointment_id;
         this.timestamp = timestamp;
         this.booked_date = booked_date;
-        this.booked_time = booked_time;
+        this.start_time = start_time;
+        this.end_time = end_time;
         this.slot = slot;
         this.absent = absent;
         this.num_messages = num_messages;
@@ -65,12 +67,20 @@ public class Appointment {
         this.booked_date = booked_date;
     }
 
-    public String getBooked_time() {
-        return booked_time;
+    public String getStart_time() {
+        return start_time;
     }
 
-    public void setBooked_time(String booked_time) {
-        this.booked_time = booked_time;
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
     }
 
     public String getSlot() {

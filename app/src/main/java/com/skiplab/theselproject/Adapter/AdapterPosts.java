@@ -188,7 +188,6 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
                         .placeholder(R.drawable.default_image)
                         .into(holder.pImageIv);
 
-                //UniversalImageLoader.setImage(pImage, holder.pImageIv, null, "");
             }
             catch (Exception e){
                 Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
