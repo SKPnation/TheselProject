@@ -10,6 +10,7 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -166,43 +168,59 @@ public class BookAppointment2 extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if (checkPermissionFromDevice())
-                {
-                    addToDeviceCalendar(startEventTime, endEventTime,"Thesel Appointment",
-                            new StringBuilder("Appointment from ")
-                                    .append(appointmentDuration)
-                                    .append(" on the ")
-                                    .append(simpleDateFormat.format(selectedDate))
-                                    .append(" with ")
-                                    .append(hisName));
-                }
-                else
-                    requestPermission();*/
 
-                try {
-                    Date start = simpleDateFormat1.parse(startEventTime);
-                    Date end = simpleDateFormat1.parse(endEventTime);
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                final View mView =  LayoutInflater.from(mContext).inflate(R.layout.layout_appointment_warning, null);
 
-                    Intent intent = new Intent(Intent.ACTION_INSERT);
-                    intent.setData(CalendarContract.Events.CONTENT_URI);
+                Button button = mView.findViewById(R.id.btn_ok);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+                        builder1.setTitle("Add Reminder");
+                        builder1.setMessage("Add a reminder to your calendar.");
+                        builder1.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    Date start = simpleDateFormat1.parse(startEventTime);
+                                    Date end = simpleDateFormat1.parse(endEventTime);
 
-                    intent.putExtra(CalendarContract.Events.TITLE, "Thesel Appointment");
-                    intent.putExtra(CalendarContract.Events.DESCRIPTION, "Appointment from "+startEventTime+" - "+endEventTime+" "+timeType
-                            +" on the "+simpleDateFormat.format(selectedDate)+" with "+hisName);
-                    intent.putExtra(CalendarContract.Events.ALL_DAY, false);
-                    intent.putExtra(EXTRA_EVENT_BEGIN_TIME,start.getTime()+"");
-                    intent.putExtra(EXTRA_EVENT_END_TIME, end.getTime()+"");
-                    intent.putExtra(Intent.EXTRA_EMAIL, myEmail+", skiplab.innovation@gmail.com");
-                    intent.putExtra(ACTION_EVENT_REMINDER,true);
+                                    Intent intent = new Intent(Intent.ACTION_INSERT);
+                                    intent.setData(CalendarContract.Events.CONTENT_URI);
 
-                    if(intent.resolveActivity(getPackageManager()) != null){
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(mContext, "You have no calendar app that supports this action", Toast.LENGTH_SHORT).show();
+                                    intent.putExtra(CalendarContract.Events.TITLE, "Thesel Appointment");
+                                    intent.putExtra(CalendarContract.Events.DESCRIPTION, "Appointment from "+startEventTime+" - "+endEventTime+" "+timeType
+                                            +" on the "+simpleDateFormat.format(selectedDate)+" with "+hisName);
+                                    intent.putExtra(CalendarContract.Events.ALL_DAY, false);
+                                    intent.putExtra(EXTRA_EVENT_BEGIN_TIME,start.getTime()+"");
+                                    intent.putExtra(EXTRA_EVENT_END_TIME, end.getTime()+"");
+                                    intent.putExtra(Intent.EXTRA_EMAIL, myEmail+", skiplab.innovation@gmail.com");
+                                    intent.putExtra(ACTION_EVENT_REMINDER,true);
+
+                                    if(intent.resolveActivity(getPackageManager()) != null){
+                                        startActivity(intent);
+                                    }else{
+                                        Toast.makeText(mContext, "You have no calendar app that supports this action", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        builder1.setNegativeButton("SKIP", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        builder1.show();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                });
+
+                builder.setView(mView);
+                builder.show();
 
             }
         });
@@ -362,4 +380,18 @@ public class BookAppointment2 extends AppCompatActivity {
                                     }
                                     }
     */
+
+
+     /*if (checkPermissionFromDevice())
+                {
+                    addToDeviceCalendar(startEventTime, endEventTime,"Thesel Appointment",
+                            new StringBuilder("Appointment from ")
+                                    .append(appointmentDuration)
+                                    .append(" on the ")
+                                    .append(simpleDateFormat.format(selectedDate))
+                                    .append(" with ")
+                                    .append(hisName));
+                }
+                else
+                    requestPermission();*/
 }

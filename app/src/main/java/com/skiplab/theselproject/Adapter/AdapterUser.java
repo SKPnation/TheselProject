@@ -329,7 +329,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                         AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                                         builder1.setTitle("Closed!");
-                                        builder1.setMessage("The book appointment feature closes at 8PM and re-opens at 12AM.");
+                                        builder1.setMessage("The book appointment feature closes at 9PM and re-opens at 12AM.");
                                         builder1.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
