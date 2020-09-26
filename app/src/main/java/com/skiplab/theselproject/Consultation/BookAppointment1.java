@@ -66,7 +66,7 @@ public class BookAppointment1 extends AppCompatActivity {
     private Button nine_pm_btn, ten_pm_btn, eleven_pm_btn;
 
 
-    String five_am = "05:00";
+    String five_am = "5:00";
 
     String hisUID, myUID;
     long hisCost;
@@ -77,7 +77,7 @@ public class BookAppointment1 extends AppCompatActivity {
 
     Calendar selected_date, date1, calendar;
     HorizontalCalendarView horizontalCalendarView;
-    SimpleDateFormat simpleDateFormat;
+    SimpleDateFormat simpleDateFormat, simpleDateFormat1;
 
     public static boolean isActivityRunning;
 
@@ -92,7 +92,8 @@ public class BookAppointment1 extends AppCompatActivity {
         hisUID = intent.getStringExtra("hisUID");
         hisCost = intent.getLongExtra("hisCost",0L);
 
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
         selected_date = Calendar.getInstance();
         selected_date.add(Calendar.DATE,0);
 
@@ -186,9 +187,9 @@ public class BookAppointment1 extends AppCompatActivity {
 
                                     todayDate = today;
 
-                                    if (simpleDateFormat.format(selected_date.getTime()).equals(todayDate.toString()))
+                                    if (simpleDateFormat1.format(selected_date.getTime()).equals(todayDate.toString()))
                                     {
-                                        //..
+                                        Toast.makeText(mContext,simpleDateFormat.format(selected_date.getTime()),Toast.LENGTH_SHORT).show();
                                     }
                                     else
                                     {
@@ -225,7 +226,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                         intent1.putExtra("hisUID",hisUID);
                                                                                         intent1.putExtra("selectedDate", simpleDateFormat.format(selected_date.getTime()));
                                                                                         intent1.putExtra("startTime",five_am);
-                                                                                        intent1.putExtra("endTime","05:40");
+                                                                                        intent1.putExtra("endTime","5:40");
                                                                                         intent1.putExtra("hisCost",hisCost);
                                                                                         startActivity(intent1);
                                                                                     }
