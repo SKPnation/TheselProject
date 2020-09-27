@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,7 +37,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.skiplab.theselproject.R;
+import com.skiplab.theselproject.Utils.JavaMailAPI;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.User;
 
@@ -44,8 +51,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.UUID;
 
 import static android.provider.CalendarContract.ACTION_EVENT_REMINDER;
 import static android.provider.CalendarContract.EXTRA_EVENT_BEGIN_TIME;
@@ -62,16 +71,20 @@ public class BookAppointment2 extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     DatabaseReference usersRef;
+    CollectionReference appointmentsRef;
 
     ImageView hisImageIv;
     TextView hisNameTv, hisCategoryTv, hisCostTv, apptDateTv, apptTimeTv, apptFeeTv;
     Button confirmBtn;
 
     String hisName;
-    String myUID, myEmail;
-    String hisUID, startTime, endTime, timeType;
+    String myUID, myEmail, myName;
+    String hisUID, startTime, endTime, timeType, slot;
     Long selectedDate;
     Long hisCost;
+
+    int wallet;
+    int i = 0;
 
     Locale locale;
     NumberFormat fmt;
@@ -88,6 +101,7 @@ public class BookAppointment2 extends AppCompatActivity {
         setupFirebaseAuth();
 
         usersRef = FirebaseDatabase.getInstance().getReference("users");
+        appointmentsRef = FirebaseFirestore.getInstance().collection("appointments");
 
         locale = new Locale("en", "NG");
         fmt = NumberFormat.getCurrencyInstance(locale);
@@ -97,11 +111,16 @@ public class BookAppointment2 extends AppCompatActivity {
 
         Intent intent = getIntent();
         hisUID = intent.getStringExtra("hisUID");
+        slot = intent.getStringExtra("slot");
+        myName = intent.getStringExtra("myName");
+        wallet = intent.getIntExtra("wallet",0);
         startTime = intent.getStringExtra("startTime");
         endTime = intent.getStringExtra("endTime");
         timeType = intent.getStringExtra("timeType");
         hisCost = intent.getLongExtra("hisCost",0L);
         selectedDate = intent.getLongExtra("selectedDate",1L);
+
+        Toast.makeText(mContext,wallet+"",Toast.LENGTH_SHORT).show();
 
         String appointmentDuration = startTime+"-"+endTime;
 
@@ -176,46 +195,115 @@ public class BookAppointment2 extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-                        builder1.setTitle("Add Reminder");
-                        builder1.setMessage("Add a reminder to your calendar.");
-                        builder1.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                try {
-                                    Date start = simpleDateFormat1.parse(startEventTime);
-                                    Date end = simpleDateFormat1.parse(endEventTime);
 
-                                    Intent intent = new Intent(Intent.ACTION_INSERT);
-                                    intent.setData(CalendarContract.Events.CONTENT_URI);
+                        ProgressDialog pd = new ProgressDialog(mContext);
+                        pd.setMessage("Loading...");
+                        pd.show();
 
-                                    intent.putExtra(CalendarContract.Events.TITLE, "Thesel Appointment");
-                                    intent.putExtra(CalendarContract.Events.DESCRIPTION, "Appointment from "+startEventTime+" - "+endEventTime+" "+timeType
-                                            +" on the "+simpleDateFormat.format(selectedDate)+" with "+hisName);
-                                    intent.putExtra(CalendarContract.Events.ALL_DAY, false);
-                                    intent.putExtra(EXTRA_EVENT_BEGIN_TIME,start.getTime()+"");
-                                    intent.putExtra(EXTRA_EVENT_END_TIME, end.getTime()+"");
-                                    intent.putExtra(Intent.EXTRA_EMAIL, myEmail+", skiplab.innovation@gmail.com");
-                                    intent.putExtra(ACTION_EVENT_REMINDER,true);
+                        long result0 = hisCost/100;
 
-                                    if(intent.resolveActivity(getPackageManager()) != null){
-                                        startActivity(intent);
-                                    }else{
-                                        Toast.makeText(mContext, "You have no calendar app that supports this action", Toast.LENGTH_SHORT).show();
-                                    }
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
+                        if (!(wallet >= (result0)))
+                        {
+                            pd.dismiss();
+
+                            AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                    .setMessage("Insufficient funds!!!")
+                                    .create();
+                            alertDialog.show();
+
+                            i++;
+
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    alertDialog.dismiss();
+                                    startActivity(new Intent(mContext, WalletActivity.class));
+
                                 }
-                            }
-                        });
-                        builder1.setNegativeButton("SKIP", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                            },2000);
+                        }
+                        else
+                        {
+                            long result1 = wallet - result0;
 
-                        builder1.show();
+                            usersRef.child(myUID).child("wallet").setValue(result1);
+
+                            String appointmentId = UUID.randomUUID().toString();
+
+                            HashMap<String, Object> appointmentMap = new HashMap<>();
+                            appointmentMap.put("counsellor_id", hisUID);
+                            appointmentMap.put("client_id", myUID);
+                            appointmentMap.put("appointment_id", appointmentId);
+                            appointmentMap.put("booked_date", simpleDateFormat.format(selectedDate));
+                            appointmentMap.put("start_time", startEventTime);
+                            appointmentMap.put("end_time",endEventTime);
+                            appointmentMap.put("slot",slot);
+                            appointmentMap.put("absent",false);
+                            appointmentMap.put("num_messages",0);
+                            appointmentMap.put("timestamp", FieldValue.serverTimestamp());
+
+                            appointmentsRef.document(appointmentId).set(appointmentMap)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                            JavaMailAPI javaMailAPI = new JavaMailAPI(
+                                                    mContext,
+                                                    "skiplab.innovation@gmail.com",
+                                                    "THESEL CONSULTATION",
+                                                    "Hello "+hisName+","+"\n\n"+"You have an appointment from "+startEventTime+" - "+endEventTime+" "+timeType
+                                                            +" on "+simpleDateFormat.format(selectedDate)+" with "+myName+
+                                                            "\n\n\n"+"Warm Regards,"+"\n"+"Thesel Team.");
+
+                                            javaMailAPI.execute();
+
+                                            pd.dismiss();
+
+                                            AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+                                            builder1.setTitle("Add Reminder");
+                                            builder1.setMessage("Add a reminder to your calendar.");
+                                            builder1.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    try {
+                                                        Date start = simpleDateFormat1.parse(startEventTime);
+                                                        Date end = simpleDateFormat1.parse(endEventTime);
+
+                                                        Intent intent = new Intent(Intent.ACTION_INSERT);
+                                                        intent.setData(CalendarContract.Events.CONTENT_URI);
+
+                                                        intent.putExtra(CalendarContract.Events.TITLE, "Thesel Appointment");
+                                                        intent.putExtra(CalendarContract.Events.DESCRIPTION, "Appointment from "+startEventTime+" - "+endEventTime+" "+timeType
+                                                                +" on "+simpleDateFormat.format(selectedDate)+" with "+hisName);
+                                                        intent.putExtra(CalendarContract.Events.ALL_DAY, false);
+                                                        intent.putExtra(EXTRA_EVENT_BEGIN_TIME,start.getTime()+"");
+                                                        intent.putExtra(EXTRA_EVENT_END_TIME, end.getTime()+"");
+                                                        intent.putExtra(Intent.EXTRA_EMAIL, myEmail+", skiplab.innovation@gmail.com");
+                                                        intent.putExtra(ACTION_EVENT_REMINDER,true);
+
+                                                        if(intent.resolveActivity(getPackageManager()) != null){
+                                                            startActivity(intent);
+                                                        }else{
+                                                            Toast.makeText(mContext, "You have no calendar app that supports this action", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    } catch (ParseException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            });
+                                            builder1.setNegativeButton("SKIP", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    startActivity(new Intent(mContext,ChatRoomsActivity.class));
+                                                }
+                                            });
+
+                                            builder1.show();
+                                        }
+                                    });
+                        }
+
                     }
                 });
 

@@ -1,9 +1,14 @@
 package com.skiplab.theselproject.models;
 
+import com.google.firebase.firestore.ServerTimestamp;
+
+import java.util.Date;
+
 public class Appointment {
+    @ServerTimestamp
+    private Date timestamp;
     private String counsellor_id, client_id;
     private String appointment_id;
-    private String timestamp;
     private String booked_date;
     private String start_time;
     private String end_time;
@@ -14,17 +19,25 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(String counsellor_id, String client_id, String appointment_id, String timestamp, String booked_date, String start_time, String end_time, String slot, boolean absent, int num_messages) {
+    public Appointment(Date timestamp, String counsellor_id, String client_id, String appointment_id, String booked_date, String start_time, String end_time, String slot, boolean absent, int num_messages) {
+        this.timestamp = timestamp;
         this.counsellor_id = counsellor_id;
         this.client_id = client_id;
         this.appointment_id = appointment_id;
-        this.timestamp = timestamp;
         this.booked_date = booked_date;
         this.start_time = start_time;
         this.end_time = end_time;
         this.slot = slot;
         this.absent = absent;
         this.num_messages = num_messages;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getCounsellor_id() {
@@ -49,14 +62,6 @@ public class Appointment {
 
     public void setAppointment_id(String appointment_id) {
         this.appointment_id = appointment_id;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
     }
 
     public String getBooked_date() {

@@ -93,7 +93,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
     String adminUID = "1zNcpaSxviY7GLLRGVQt8ywPla52";
     String expiryDateS, todayDateS, expiryDay;
-    long instant_cost, displayed_instant_cost;
+    long instant_cost, displayed_instant_cost, appt_cost, displayed_appt_cost;
 
     int i = 0;
 
@@ -126,7 +126,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         String category1 = userList.get(position).getCategory1();
         String category2 = userList.get(position).getCategory2();
         String category3 = userList.get(position).getCategory3();
-        Long cost = userList.get(position).getCost();
+        Long hisCost = userList.get(position).getCost();
 
         TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
         String countryCode = tm.getSimCountryIso().toUpperCase();
@@ -309,55 +309,161 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
             public void onClick(View v) {
                 if (Common.isConnectedToTheInternet(context))
                 {
-                    LocalDateTime time = null;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        time = LocalDateTime.now();
-                        DateTimeFormatter myFormatTime = DateTimeFormatter.ofPattern("HH:mm");
-                        String formattedTime = time.format(myFormatTime);
+                    ProgressDialog pd = new ProgressDialog(context);
+                    pd.setMessage("Loading...");
+                    pd.show();
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("Book Appointment");
-                        builder.setMessage("Book an appointment for a day & time of your choice.");
-                        builder.setPositiveButton("NEXT", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                try
-                                {
-                                    if (LocalTime.parse(formattedTime).isAfter(LocalTime.parse("21:00")))
-                                    {
-                                        dialog.dismiss();
+                    mProfileReference.document(hisUID)
+                            .get()
+                            .addOnCompleteListener(task -> {
+                                String appt_duration = task.getResult().toObject(Profile.class).getAppt_duration();
+                                displayed_appt_cost = hisCost / 100;
 
-                                        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-                                        builder1.setTitle("Closed!");
-                                        builder1.setMessage("The book appointment feature closes at 9PM and re-opens at 12AM.");
-                                        builder1.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
+                                pd.dismiss();
 
-                                        builder1.show();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                final View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.layout_book_appointment, null);
+
+                                TextView length = mView.findViewById(R.id.appt_time_tv);
+                                TextView fee_tv = mView.findViewById(R.id.appt_fee_tv);
+                                Locale locale = new Locale("en", "NG");
+                                NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+                                fee_tv.setText(fmt.format(displayed_appt_cost));
+
+                                length.setText(appt_duration+" mins");
+
+                                Button book_btn = mView.findViewById(R.id.book_btn);
+
+                                book_btn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v1) {
+                                        if (Common.isConnectedToTheInternet(context))
+                                        {
+                                            ProgressDialog progressDialog = new ProgressDialog(context);
+                                            progressDialog.setMessage("Loading...");
+                                            progressDialog.show();
+
+                                            usersRef.orderByKey().equalTo(mAuth.getUid())
+                                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            for (DataSnapshot ds: dataSnapshot.getChildren())
+                                                            {
+                                                                User client = ds.getValue(User.class);
+
+                                                                if (client.getIsStaff().equals("false"))
+                                                                {
+                                                                    if (userList.get(position).getOnlineStatus().equals("offline"))
+                                                                    {
+                                                                        progressDialog.dismiss();
+
+                                                                        AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                                .setMessage(hisName+" is offline!")
+                                                                                .create();
+                                                                        alertDialog.show();
+                                                                    }
+                                                                    else if (userList.get(position).equals("deactivated"))
+                                                                    {
+                                                                        progressDialog.dismiss();
+
+                                                                        AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                                .setMessage(hisName+" is unavailable at the moment!")
+                                                                                .create();
+                                                                        alertDialog.show();
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
+                                                                        if (!(wallet >= displayed_appt_cost))
+                                                                        {
+                                                                            progressDialog.dismiss();
+
+                                                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                                    .setMessage("Insufficient funds!!!")
+                                                                                    .create();
+                                                                            alertDialog.show();
+
+                                                                            i++;
+
+                                                                            Handler handler = new Handler();
+                                                                            handler.postDelayed(new Runnable() {
+                                                                                @Override
+                                                                                public void run() {
+                                                                                    alertDialog.dismiss();
+                                                                                    context.startActivity(new Intent(context, WalletActivity.class));
+
+                                                                                }
+                                                                            },2000);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            LocalDateTime time = null;
+                                                                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+                                                                            {
+                                                                                time = LocalDateTime.now();
+                                                                                DateTimeFormatter myFormatTime = DateTimeFormatter.ofPattern("HH:mm");
+                                                                                String formattedTime = time.format(myFormatTime);
+
+                                                                                try
+                                                                                {
+                                                                                    if (LocalTime.parse(formattedTime).isAfter(LocalTime.parse("21:00")))
+                                                                                    {
+                                                                                        progressDialog.dismiss();
+
+                                                                                        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+                                                                                        builder1.setTitle("Closed!");
+                                                                                        builder1.setMessage("The book appointment feature closes at 9PM and re-opens at 12AM.");
+                                                                                        builder1.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                                            @Override
+                                                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                                                dialog.dismiss();
+                                                                                            }
+                                                                                        });
+
+                                                                                        builder1.show();
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        progressDialog.dismiss();
+
+                                                                                        Intent intent = new Intent(context, BookAppointment1.class);
+                                                                                        intent.putExtra("hisUID",hisUID);
+                                                                                        intent.putExtra("hisCost",hisCost);
+                                                                                        context.startActivity(intent);
+                                                                                    }
+                                                                                }
+                                                                                catch (Exception e)
+                                                                                {
+                                                                                    Log.d(TAG, "ERROR: "+e );
+                                                                                }
+
+                                                                                builder.show();
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                            //..
+                                                        }
+                                                    });
+                                        }
+                                        else
+                                        {
+                                            AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                    .setMessage("Please check your internet connection!")
+                                                    .create();
+                                            alertDialog.show();
+                                        }
                                     }
-                                    else
-                                    {
-                                        dialog.dismiss();
+                                });
 
-                                        Intent intent = new Intent(context, BookAppointment1.class);
-                                        intent.putExtra("hisUID",hisUID);
-                                        intent.putExtra("hisCost",cost);
-                                        context.startActivity(intent);
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    Log.d(TAG, "ERROR: "+e );
-                                }
-                            }
-                        });
-
-                        builder.show();
-                    }
+                                builder.setView(mView);
+                                builder.show();
+                            });
                 }
                 else
                 {
@@ -439,7 +545,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                         else
                                                                         {
                                                                             int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
-                                                                            if (!(wallet >= 6000))
+                                                                            if (!(wallet >= displayed_instant_cost))
                                                                             {
                                                                                 AlertDialog alertDialog =new AlertDialog.Builder(context)
                                                                                         .setMessage("Insufficient funds!!!")
@@ -595,20 +701,20 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                                                                                                         mMessageReference.child(messageId).setValue(message);
 
-                                                                                                                                                        HashMap<String,Object> hashMap = new HashMap<>();
-                                                                                                                                                        hashMap.put("counsellor_id",hisUID);
-                                                                                                                                                        hashMap.put("client_id",mAuth.getUid());
-                                                                                                                                                        hashMap.put("category",category1);
-                                                                                                                                                        hashMap.put("title","Instant Session");
-                                                                                                                                                        hashMap.put("content",hisName.toUpperCase()+", You have a new Instant Session with "+client.getUsername().toUpperCase());
-                                                                                                                                                        hashMap.put("expiry_date","Expiry date: "+expiryDay.toUpperCase()+", "+expiryDateS);
-                                                                                                                                                        hashMap.put("appointment_time","");
-                                                                                                                                                        hashMap.put("timestamp",FieldValue.serverTimestamp());
-                                                                                                                                                        hashMap.put("read",false);
+                                                                                                                                                        HashMap<String,Object> myNotificationsMap = new HashMap<>();
+                                                                                                                                                        myNotificationsMap.put("counsellor_id",hisUID);
+                                                                                                                                                        myNotificationsMap.put("client_id",mAuth.getUid());
+                                                                                                                                                        myNotificationsMap.put("category",category1);
+                                                                                                                                                        myNotificationsMap.put("title","Instant Session");
+                                                                                                                                                        myNotificationsMap.put("content",hisName.toUpperCase()+", You have a new Instant Session with "+client.getUsername().toUpperCase());
+                                                                                                                                                        myNotificationsMap.put("expiry_date","Expiry date: "+expiryDay.toUpperCase()+", "+expiryDateS);
+                                                                                                                                                        myNotificationsMap.put("appointment_time","");
+                                                                                                                                                        myNotificationsMap.put("timestamp",FieldValue.serverTimestamp());
+                                                                                                                                                        myNotificationsMap.put("read",false);
 
                                                                                                                                                         FirebaseFirestore.getInstance().collection("myNotifications")
                                                                                                                                                                 .document(timestamp)
-                                                                                                                                                                .set(hashMap)
+                                                                                                                                                                .set(myNotificationsMap)
                                                                                                                                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                                                                                                     @Override
                                                                                                                                                                     public void onSuccess(Void aVoid) {

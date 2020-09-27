@@ -18,6 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -31,6 +36,7 @@ import com.skiplab.theselproject.models.Early;
 import com.skiplab.theselproject.models.Evening;
 import com.skiplab.theselproject.models.Morning;
 import com.skiplab.theselproject.models.Night;
+import com.skiplab.theselproject.models.User;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -57,9 +63,10 @@ public class BookAppointment1 extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private DatabaseReference usersDb;
+
     private CollectionReference earlyDb, morningDb, afternoonDb, eveningDb, nightDb;
     private CollectionReference appointmentDb;
-
 
     private Button five_am_btn, six_am_btn;
     private Button seven_am_btn, eight_am_btn, nine_am_btn, ten_am_btn, eleven_am_btn;
@@ -68,10 +75,13 @@ public class BookAppointment1 extends AppCompatActivity {
     private Button nine_pm_btn, ten_pm_btn, eleven_pm_btn;
 
 
-    String five_am = "5:00";
+    String five_am = "5:00", six_am = "6:00";
+    String seven_am = "7:00", eight_am = "8:00", nine_am = "9:00", ten_am = "10:00", eleven_am = "11:00";
 
-    String hisUID, myUID;
+
+    String hisUID, myUID, myName;
     long hisCost, dateMillis;
+    int wallet;
 
     String TRUE = "true", FALSE="false";
 
@@ -121,11 +131,6 @@ public class BookAppointment1 extends AppCompatActivity {
                     selected_date = date1;
 
                     dateMillis = date.getTimeInMillis();
-
-                    Toast.makeText(mContext, dateMillis+"",Toast.LENGTH_SHORT).show();
-
-
-                    //long date_in_millis = simpleDateFormat.format(date.getTimeInMillis());
                 }
             }
         });
@@ -155,6 +160,7 @@ public class BookAppointment1 extends AppCompatActivity {
         ten_pm_btn = findViewById(R.id.ten_pm_btn);
         eleven_pm_btn = findViewById(R.id.eleven_pm_btn);
 
+        usersDb = FirebaseDatabase.getInstance().getReference("users");
         appointmentDb = FirebaseFirestore.getInstance().collection("appointments");
 
         earlyDb = FirebaseFirestore.getInstance().collection("early");
@@ -227,8 +233,14 @@ public class BookAppointment1 extends AppCompatActivity {
 
                                                                                     if (appointment.getStart_time().equals(five_am) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
-                                                                                        Toast.makeText(mContext, "ALREADY BOOKED!!!", Toast.LENGTH_SHORT).show();
+                                                                                    {
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("The consultant already has an appointment at "+five_am+" on "+simpleDateFormat.format(dateMillis))
+                                                                                                .create();
+                                                                                        alertDialog.show();
 
+                                                                                        five_am_btn.setVisibility(View.GONE);
+                                                                                    }
                                                                                     else if (appointment.getStart_time().equals(five_am) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                         startActivity(new Intent(mContext, ChatRoomsActivity.class));
@@ -238,9 +250,12 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     {
                                                                                         Intent intent1 = new Intent(mContext, BookAppointment2.class);
                                                                                         intent1.putExtra("hisUID",hisUID);
+                                                                                        intent1.putExtra("wallet",wallet);
+                                                                                        intent1.putExtra("myName",myName);
                                                                                         intent1.putExtra("selectedDate", dateMillis);
                                                                                         intent1.putExtra("startTime",five_am);
-                                                                                        intent1.putExtra("endTime","5:40");
+                                                                                        intent1.putExtra("slot","0");
+                                                                                        intent1.putExtra("endTime","5:30");
                                                                                         intent1.putExtra("timeType","am");
                                                                                         intent1.putExtra("hisCost",hisCost);
                                                                                         startActivity(intent1);
@@ -254,9 +269,12 @@ public class BookAppointment1 extends AppCompatActivity {
                                                         {
                                                             Intent intent1 = new Intent(mContext, BookAppointment2.class);
                                                             intent1.putExtra("hisUID",hisUID);
+                                                            intent1.putExtra("wallet",wallet);
+                                                            intent1.putExtra("myName",myName);
                                                             intent1.putExtra("selectedDate", dateMillis);
                                                             intent1.putExtra("startTime",five_am);
-                                                            intent1.putExtra("endTime","5:40");
+                                                            intent1.putExtra("slot","0");
+                                                            intent1.putExtra("endTime","5:30");
                                                             intent1.putExtra("timeType","am");
                                                             intent1.putExtra("hisCost",hisCost);
                                                             startActivity(intent1);
@@ -1380,6 +1398,23 @@ public class BookAppointment1 extends AppCompatActivity {
             if (user != null)
             {
                 Log.d( TAG, "onAuthStateChanged: signed_in: " + user.getUid());
+
+                usersDb.orderByKey().equalTo(myUID)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds: dataSnapshot.getChildren())
+                                {
+                                    wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
+                                    myName = ds.getValue(User.class).getUsername();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                //..
+                            }
+                        });
 
             } else {
                 Log.d( TAG, "onAuthStateChanged: signed_out");
