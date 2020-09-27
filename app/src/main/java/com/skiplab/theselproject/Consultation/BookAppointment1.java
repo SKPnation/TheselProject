@@ -75,8 +75,9 @@ public class BookAppointment1 extends AppCompatActivity {
     private Button nine_pm_btn, ten_pm_btn, eleven_pm_btn;
 
 
-    String five_am = "5:00", six_am = "6:00";
-    String seven_am = "7:00", eight_am = "8:00", nine_am = "9:00", ten_am = "10:00", eleven_am = "11:00";
+    String five_am = "05:00", six_am = "06:00";
+    String seven_am = "07:00", eight_am = "08:00", nine_am = "09:00", ten_am = "10:00", eleven_am = "11:00";
+    String twelve_pm = "12:00", one_pm = "13:00", two_pm = "14:00", three_pm = "15:00", four_pm = "16:00";
 
 
     String hisUID, myUID, myName;
@@ -235,7 +236,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                             && !appointment.getClient_id().equals(myUID))
                                                                                     {
                                                                                         AlertDialog alertDialog =new AlertDialog.Builder(mContext)
-                                                                                                .setMessage("The consultant already has an appointment at "+five_am+" on "+simpleDateFormat.format(dateMillis))
+                                                                                                .setMessage("The consultant already has an appointment at "+five_am+"am on "+simpleDateFormat.format(dateMillis))
                                                                                                 .create();
                                                                                         alertDialog.show();
 
@@ -253,7 +254,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                         intent1.putExtra("wallet",wallet);
                                                                                         intent1.putExtra("myName",myName);
                                                                                         intent1.putExtra("selectedDate", dateMillis);
-                                                                                        intent1.putExtra("startTime",five_am);
+                                                                                        intent1.putExtra("startTime","5:00");
                                                                                         intent1.putExtra("slot","0");
                                                                                         intent1.putExtra("endTime","5:30");
                                                                                         intent1.putExtra("timeType","am");
@@ -272,7 +273,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                                             intent1.putExtra("wallet",wallet);
                                                             intent1.putExtra("myName",myName);
                                                             intent1.putExtra("selectedDate", dateMillis);
-                                                            intent1.putExtra("startTime",five_am);
+                                                            intent1.putExtra("startTime","5:00");
                                                             intent1.putExtra("slot","0");
                                                             intent1.putExtra("endTime","5:30");
                                                             intent1.putExtra("timeType","am");
@@ -290,7 +291,92 @@ public class BookAppointment1 extends AppCompatActivity {
                         six_am_btn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //..
+                                LocalDate today = null;
+
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                    today = LocalDate.now();
+
+                                    todayDate = today;
+
+                                    if (simpleDateFormat1.format(selected_date.getTime()).equals(todayDate.toString()))
+                                    {
+                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                .setMessage("Swipe the calendar to choose a date for your appointment!")
+                                                .create();
+                                        alertDialog.show();
+                                    }
+                                    else
+                                    {
+                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if(task.getResult().size() > 0)
+                                                        {
+                                                            task.getResult().getQuery()
+                                                                    .get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                            if (task.isSuccessful())
+                                                                            {
+                                                                                for (DocumentSnapshot ds: task.getResult().getDocuments())
+                                                                                {
+                                                                                    Appointment appointment = ds.toObject(Appointment.class);
+
+                                                                                    if (appointment.getStart_time().equals(six_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("The consultant already has an appointment at "+six_am+"am on "+simpleDateFormat.format(dateMillis))
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        six_am_btn.setVisibility(View.GONE);
+                                                                                    }
+                                                                                    else if (appointment.getStart_time().equals(six_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && appointment.getClient_id().equals(myUID))
+                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+
+                                                                                    else if (!appointment.getStart_time().equals(six_am) && !appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                                                        intent1.putExtra("hisUID",hisUID);
+                                                                                        intent1.putExtra("wallet",wallet);
+                                                                                        intent1.putExtra("myName",myName);
+                                                                                        intent1.putExtra("selectedDate", dateMillis);
+                                                                                        intent1.putExtra("startTime","6:00");
+                                                                                        intent1.putExtra("slot","0");
+                                                                                        intent1.putExtra("endTime","6:30");
+                                                                                        intent1.putExtra("timeType","am");
+                                                                                        intent1.putExtra("hisCost",hisCost);
+                                                                                        startActivity(intent1);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        }
+                                                        else
+                                                        {
+                                                            Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                            intent1.putExtra("hisUID",hisUID);
+                                                            intent1.putExtra("wallet",wallet);
+                                                            intent1.putExtra("myName",myName);
+                                                            intent1.putExtra("selectedDate", dateMillis);
+                                                            intent1.putExtra("startTime","6:00");
+                                                            intent1.putExtra("slot","0");
+                                                            intent1.putExtra("endTime","6:30");
+                                                            intent1.putExtra("timeType","am");
+                                                            intent1.putExtra("hisCost",hisCost);
+                                                            startActivity(intent1);
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                }
                             }
                         });
                     }
@@ -690,6 +776,466 @@ public class BookAppointment1 extends AppCompatActivity {
                             ten_am_btn.setVisibility(View.GONE);
                             eleven_am_btn.setVisibility(View.GONE);
                         }
+
+                        seven_am_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                LocalDate today = null;
+
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                    today = LocalDate.now();
+
+                                    todayDate = today;
+
+                                    if (simpleDateFormat1.format(selected_date.getTime()).equals(todayDate.toString()))
+                                    {
+                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                .setMessage("Swipe the calendar to choose a date for your appointment!")
+                                                .create();
+                                        alertDialog.show();
+                                    }
+                                    else
+                                    {
+                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if(task.getResult().size() > 0)
+                                                        {
+                                                            task.getResult().getQuery()
+                                                                    .get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                            if (task.isSuccessful())
+                                                                            {
+                                                                                for (DocumentSnapshot ds: task.getResult().getDocuments())
+                                                                                {
+                                                                                    Appointment appointment = ds.toObject(Appointment.class);
+
+                                                                                    if (appointment.getStart_time().equals(seven_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("The consultant already has an appointment at "+seven_am+"am on "+simpleDateFormat.format(dateMillis))
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        seven_am_btn.setVisibility(View.GONE);
+                                                                                    }
+                                                                                    else if (appointment.getStart_time().equals(seven_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && appointment.getClient_id().equals(myUID))
+                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+
+                                                                                    else if (!appointment.getStart_time().equals(seven_am) && !appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                                                        intent1.putExtra("hisUID",hisUID);
+                                                                                        intent1.putExtra("wallet",wallet);
+                                                                                        intent1.putExtra("myName",myName);
+                                                                                        intent1.putExtra("selectedDate", dateMillis);
+                                                                                        intent1.putExtra("startTime","7:00");
+                                                                                        intent1.putExtra("slot","1");
+                                                                                        intent1.putExtra("endTime","7:30");
+                                                                                        intent1.putExtra("timeType","am");
+                                                                                        intent1.putExtra("hisCost",hisCost);
+                                                                                        startActivity(intent1);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        }
+                                                        else
+                                                        {
+                                                            Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                            intent1.putExtra("hisUID",hisUID);
+                                                            intent1.putExtra("wallet",wallet);
+                                                            intent1.putExtra("myName",myName);
+                                                            intent1.putExtra("selectedDate", dateMillis);
+                                                            intent1.putExtra("startTime","7:00");
+                                                            intent1.putExtra("slot","1");
+                                                            intent1.putExtra("endTime","7:30");
+                                                            intent1.putExtra("timeType","am");
+                                                            intent1.putExtra("hisCost",hisCost);
+                                                            startActivity(intent1);
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        });
+
+                        eight_am_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                LocalDate today = null;
+
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                    today = LocalDate.now();
+
+                                    todayDate = today;
+
+                                    if (simpleDateFormat1.format(selected_date.getTime()).equals(todayDate.toString()))
+                                    {
+                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                .setMessage("Swipe the calendar to choose a date for your appointment!")
+                                                .create();
+                                        alertDialog.show();
+                                    }
+                                    else
+                                    {
+                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if(task.getResult().size() > 0)
+                                                        {
+                                                            task.getResult().getQuery()
+                                                                    .get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                            if (task.isSuccessful())
+                                                                            {
+                                                                                for (DocumentSnapshot ds: task.getResult().getDocuments())
+                                                                                {
+                                                                                    Appointment appointment = ds.toObject(Appointment.class);
+
+                                                                                    if (appointment.getStart_time().equals(eight_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("The consultant already has an appointment at "+eight_am+"am on "+simpleDateFormat.format(dateMillis))
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        eight_am_btn.setVisibility(View.GONE);
+                                                                                    }
+                                                                                    else if (appointment.getStart_time().equals(eight_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && appointment.getClient_id().equals(myUID))
+                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+
+                                                                                    else if (!appointment.getStart_time().equals(eight_am) && !appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                                                        intent1.putExtra("hisUID",hisUID);
+                                                                                        intent1.putExtra("wallet",wallet);
+                                                                                        intent1.putExtra("myName",myName);
+                                                                                        intent1.putExtra("selectedDate", dateMillis);
+                                                                                        intent1.putExtra("startTime","8:00");
+                                                                                        intent1.putExtra("slot","1");
+                                                                                        intent1.putExtra("endTime","8:30");
+                                                                                        intent1.putExtra("timeType","am");
+                                                                                        intent1.putExtra("hisCost",hisCost);
+                                                                                        startActivity(intent1);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        }
+                                                        else
+                                                        {
+                                                            Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                            intent1.putExtra("hisUID",hisUID);
+                                                            intent1.putExtra("wallet",wallet);
+                                                            intent1.putExtra("myName",myName);
+                                                            intent1.putExtra("selectedDate", dateMillis);
+                                                            intent1.putExtra("startTime","8:00");
+                                                            intent1.putExtra("slot","1");
+                                                            intent1.putExtra("endTime","8:30");
+                                                            intent1.putExtra("timeType","am");
+                                                            intent1.putExtra("hisCost",hisCost);
+                                                            startActivity(intent1);
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        });
+
+                        nine_am_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                LocalDate today = null;
+
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                    today = LocalDate.now();
+
+                                    todayDate = today;
+
+                                    if (simpleDateFormat1.format(selected_date.getTime()).equals(todayDate.toString()))
+                                    {
+                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                .setMessage("Swipe the calendar to choose a date for your appointment!")
+                                                .create();
+                                        alertDialog.show();
+                                    }
+                                    else
+                                    {
+                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if(task.getResult().size() > 0)
+                                                        {
+                                                            task.getResult().getQuery()
+                                                                    .get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                            if (task.isSuccessful())
+                                                                            {
+                                                                                for (DocumentSnapshot ds: task.getResult().getDocuments())
+                                                                                {
+                                                                                    Appointment appointment = ds.toObject(Appointment.class);
+
+                                                                                    if (appointment.getStart_time().equals(nine_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("The consultant already has an appointment at "+nine_am+"am on "+simpleDateFormat.format(dateMillis))
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        nine_am_btn.setVisibility(View.GONE);
+                                                                                    }
+                                                                                    else if (appointment.getStart_time().equals(nine_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && appointment.getClient_id().equals(myUID))
+                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+
+                                                                                    else if (!appointment.getStart_time().equals(nine_am) && !appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                                                        intent1.putExtra("hisUID",hisUID);
+                                                                                        intent1.putExtra("wallet",wallet);
+                                                                                        intent1.putExtra("myName",myName);
+                                                                                        intent1.putExtra("selectedDate", dateMillis);
+                                                                                        intent1.putExtra("startTime","9:00");
+                                                                                        intent1.putExtra("slot","1");
+                                                                                        intent1.putExtra("endTime","9:30");
+                                                                                        intent1.putExtra("timeType","am");
+                                                                                        intent1.putExtra("hisCost",hisCost);
+                                                                                        startActivity(intent1);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        }
+                                                        else
+                                                        {
+                                                            Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                            intent1.putExtra("hisUID",hisUID);
+                                                            intent1.putExtra("wallet",wallet);
+                                                            intent1.putExtra("myName",myName);
+                                                            intent1.putExtra("selectedDate", dateMillis);
+                                                            intent1.putExtra("startTime","9:00");
+                                                            intent1.putExtra("slot","1");
+                                                            intent1.putExtra("endTime","9:30");
+                                                            intent1.putExtra("timeType","am");
+                                                            intent1.putExtra("hisCost",hisCost);
+                                                            startActivity(intent1);
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        });
+
+                        ten_am_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                LocalDate today = null;
+
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                    today = LocalDate.now();
+
+                                    todayDate = today;
+
+                                    if (simpleDateFormat1.format(selected_date.getTime()).equals(todayDate.toString()))
+                                    {
+                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                .setMessage("Swipe the calendar to choose a date for your appointment!")
+                                                .create();
+                                        alertDialog.show();
+                                    }
+                                    else
+                                    {
+                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if(task.getResult().size() > 0)
+                                                        {
+                                                            task.getResult().getQuery()
+                                                                    .get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                            if (task.isSuccessful())
+                                                                            {
+                                                                                for (DocumentSnapshot ds: task.getResult().getDocuments())
+                                                                                {
+                                                                                    Appointment appointment = ds.toObject(Appointment.class);
+
+                                                                                    if (appointment.getStart_time().equals(ten_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("The consultant already has an appointment at "+ten_am+"am on "+simpleDateFormat.format(dateMillis))
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        ten_am_btn.setVisibility(View.GONE);
+                                                                                    }
+                                                                                    else if (appointment.getStart_time().equals(ten_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && appointment.getClient_id().equals(myUID))
+                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+
+                                                                                    else if (!appointment.getStart_time().equals(ten_am) && !appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                                                        intent1.putExtra("hisUID",hisUID);
+                                                                                        intent1.putExtra("wallet",wallet);
+                                                                                        intent1.putExtra("myName",myName);
+                                                                                        intent1.putExtra("selectedDate", dateMillis);
+                                                                                        intent1.putExtra("startTime","10:00");
+                                                                                        intent1.putExtra("slot","1");
+                                                                                        intent1.putExtra("endTime","10:30");
+                                                                                        intent1.putExtra("timeType","am");
+                                                                                        intent1.putExtra("hisCost",hisCost);
+                                                                                        startActivity(intent1);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        }
+                                                        else
+                                                        {
+                                                            Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                            intent1.putExtra("hisUID",hisUID);
+                                                            intent1.putExtra("wallet",wallet);
+                                                            intent1.putExtra("myName",myName);
+                                                            intent1.putExtra("selectedDate", dateMillis);
+                                                            intent1.putExtra("startTime","10:00");
+                                                            intent1.putExtra("slot","1");
+                                                            intent1.putExtra("endTime","10:30");
+                                                            intent1.putExtra("timeType","am");
+                                                            intent1.putExtra("hisCost",hisCost);
+                                                            startActivity(intent1);
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        });
+
+                        eleven_am_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                LocalDate today = null;
+
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                    today = LocalDate.now();
+
+                                    todayDate = today;
+
+                                    if (simpleDateFormat1.format(selected_date.getTime()).equals(todayDate.toString()))
+                                    {
+                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                .setMessage("Swipe the calendar to choose a date for your appointment!")
+                                                .create();
+                                        alertDialog.show();
+                                    }
+                                    else
+                                    {
+                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if(task.getResult().size() > 0)
+                                                        {
+                                                            task.getResult().getQuery()
+                                                                    .get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                            if (task.isSuccessful())
+                                                                            {
+                                                                                for (DocumentSnapshot ds: task.getResult().getDocuments())
+                                                                                {
+                                                                                    Appointment appointment = ds.toObject(Appointment.class);
+
+                                                                                    if (appointment.getStart_time().equals(eleven_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("The consultant already has an appointment at "+eleven_am+"am on "+simpleDateFormat.format(dateMillis))
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        eleven_am_btn.setVisibility(View.GONE);
+                                                                                    }
+                                                                                    else if (appointment.getStart_time().equals(eleven_am) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && appointment.getClient_id().equals(myUID))
+                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+
+                                                                                    else if (!appointment.getStart_time().equals(eleven_am) && !appointment.getCounsellor_id().equals(hisUID)
+                                                                                            && !appointment.getClient_id().equals(myUID))
+                                                                                    {
+                                                                                        Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                                                        intent1.putExtra("hisUID",hisUID);
+                                                                                        intent1.putExtra("wallet",wallet);
+                                                                                        intent1.putExtra("myName",myName);
+                                                                                        intent1.putExtra("selectedDate", dateMillis);
+                                                                                        intent1.putExtra("startTime","11:00");
+                                                                                        intent1.putExtra("slot","1");
+                                                                                        intent1.putExtra("endTime","11:30");
+                                                                                        intent1.putExtra("timeType","am");
+                                                                                        intent1.putExtra("hisCost",hisCost);
+                                                                                        startActivity(intent1);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        }
+                                                        else
+                                                        {
+                                                            Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                            intent1.putExtra("hisUID",hisUID);
+                                                            intent1.putExtra("wallet",wallet);
+                                                            intent1.putExtra("myName",myName);
+                                                            intent1.putExtra("selectedDate", dateMillis);
+                                                            intent1.putExtra("startTime","11:00");
+                                                            intent1.putExtra("slot","1");
+                                                            intent1.putExtra("endTime","11:30");
+                                                            intent1.putExtra("timeType","am");
+                                                            intent1.putExtra("hisCost",hisCost);
+                                                            startActivity(intent1);
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        });
                     }
                 });
 
@@ -1089,6 +1635,104 @@ public class BookAppointment1 extends AppCompatActivity {
                             three_pm_btn.setVisibility(View.GONE);
                             four_pm_btn.setVisibility(View.GONE);
                         }
+
+
+                        twelve_pm_btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                eleven_am_btn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        LocalDate today = null;
+
+                                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                            today = LocalDate.now();
+
+                                            todayDate = today;
+
+                                            if (simpleDateFormat1.format(selected_date.getTime()).equals(todayDate.toString()))
+                                            {
+                                                AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                        .setMessage("Swipe the calendar to choose a date for your appointment!")
+                                                        .create();
+                                                alertDialog.show();
+                                            }
+                                            else
+                                            {
+                                                appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                                        .get()
+                                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                if(task.getResult().size() > 0)
+                                                                {
+                                                                    task.getResult().getQuery()
+                                                                            .get()
+                                                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                                @Override
+                                                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                                    if (task.isSuccessful())
+                                                                                    {
+                                                                                        for (DocumentSnapshot ds: task.getResult().getDocuments())
+                                                                                        {
+                                                                                            Appointment appointment = ds.toObject(Appointment.class);
+
+                                                                                            if (appointment.getStart_time().equals(twelve_pm) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                                    && !appointment.getClient_id().equals(myUID))
+                                                                                            {
+                                                                                                AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                        .setMessage("The consultant already has an appointment at "+twelve_pm+"am on "+simpleDateFormat.format(dateMillis))
+                                                                                                        .create();
+                                                                                                alertDialog.show();
+
+                                                                                                twelve_pm_btn.setVisibility(View.GONE);
+                                                                                            }
+                                                                                            else if (appointment.getStart_time().equals(twelve_pm) && appointment.getCounsellor_id().equals(hisUID)
+                                                                                                    && appointment.getClient_id().equals(myUID))
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+
+                                                                                            else if (!appointment.getStart_time().equals(twelve_pm) && !appointment.getCounsellor_id().equals(hisUID)
+                                                                                                    && !appointment.getClient_id().equals(myUID))
+                                                                                            {
+                                                                                                Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                                                                intent1.putExtra("hisUID",hisUID);
+                                                                                                intent1.putExtra("wallet",wallet);
+                                                                                                intent1.putExtra("myName",myName);
+                                                                                                intent1.putExtra("selectedDate", dateMillis);
+                                                                                                intent1.putExtra("startTime","12:00");
+                                                                                                intent1.putExtra("slot","2");
+                                                                                                intent1.putExtra("endTime","12:30");
+                                                                                                intent1.putExtra("timeType","am");
+                                                                                                intent1.putExtra("hisCost",hisCost);
+                                                                                                startActivity(intent1);
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            });
+                                                                }
+                                                                else
+                                                                {
+                                                                    Intent intent1 = new Intent(mContext, BookAppointment2.class);
+                                                                    intent1.putExtra("hisUID",hisUID);
+                                                                    intent1.putExtra("wallet",wallet);
+                                                                    intent1.putExtra("myName",myName);
+                                                                    intent1.putExtra("selectedDate", dateMillis);
+                                                                    intent1.putExtra("startTime","12:00");
+                                                                    intent1.putExtra("slot","2");
+                                                                    intent1.putExtra("endTime","12:30");
+                                                                    intent1.putExtra("timeType","am");
+                                                                    intent1.putExtra("hisCost",hisCost);
+                                                                    startActivity(intent1);
+                                                                }
+                                                            }
+                                                        });
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
 
