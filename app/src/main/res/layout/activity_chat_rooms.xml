@@ -97,13 +97,13 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/recycler_instants"
             android:layout_below="@id/title_instant_session_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:scrollbars="horizontal"
-            tools:listitem="@layout/layout_chatroom_listitem" />
+            tools:listitem="@layout/instant_session_listitem" />
 
     </RelativeLayout>
 
@@ -117,6 +117,7 @@
         android:background="@drawable/grey_border">
 
         <LinearLayout
+            android:id="@+id/title_appt_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -143,6 +144,15 @@
                 android:visibility="gone"/>
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_appt"
+            android:layout_below="@id/title_appt_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:scrollbars="horizontal"
+            tools:listitem="@layout/appointment_listitem" />
 
     </RelativeLayout>
 

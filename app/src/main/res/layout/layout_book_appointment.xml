@@ -114,14 +114,13 @@
                             android:text="Length"/>
 
                         <TextView
-                            android:id="@+id/appt_time_tv"
+                            android:id="@+id/appt_duration_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:textColor="@android:color/black"
                             android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                            android:textSize="20sp"
-                            android:text="30 mins"/>
+                            android:textSize="20sp" />
 
                     </LinearLayout>
 

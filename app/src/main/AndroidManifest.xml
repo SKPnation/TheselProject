@@ -25,7 +25,9 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Consultation.BookAppointment2"></activity>
+        <activity android:name=".Consultation.AppointmentChatActivity"></activity>
+        <activity android:name=".TimeDayAlreadyChosen" />
+        <activity android:name=".Consultation.BookAppointment2" />
         <activity android:name=".AvailabilityEdit" />
         <activity android:name=".Home.ConsultationNotificationActivity" />
         <activity android:name=".RealtimeDbEdit" />

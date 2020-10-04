@@ -13,13 +13,14 @@ public class Appointment {
     private String start_time;
     private String end_time;
     private String slot;
+    private String timeType;
     private boolean absent;
-    private int num_messages;
+    private long num_messages;
 
     public Appointment() {
     }
 
-    public Appointment(Date timestamp, String counsellor_id, String client_id, String appointment_id, String booked_date, String start_time, String end_time, String slot, boolean absent, int num_messages) {
+    public Appointment(Date timestamp, String counsellor_id, String client_id, String appointment_id, String booked_date, String start_time, String end_time, String slot, String timeType, boolean absent, long num_messages) {
         this.timestamp = timestamp;
         this.counsellor_id = counsellor_id;
         this.client_id = client_id;
@@ -28,6 +29,7 @@ public class Appointment {
         this.start_time = start_time;
         this.end_time = end_time;
         this.slot = slot;
+        this.timeType = timeType;
         this.absent = absent;
         this.num_messages = num_messages;
     }
@@ -96,6 +98,14 @@ public class Appointment {
         this.slot = slot;
     }
 
+    public String getTimeType() {
+        return timeType;
+    }
+
+    public void setTimeType(String timeType) {
+        this.timeType = timeType;
+    }
+
     public boolean isAbsent() {
         return absent;
     }
@@ -104,11 +114,11 @@ public class Appointment {
         this.absent = absent;
     }
 
-    public int getNum_messages() {
+    public long getNum_messages() {
         return num_messages;
     }
 
-    public void setNum_messages(int num_messages) {
+    public void setNum_messages(long num_messages) {
         this.num_messages = num_messages;
     }
 }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,7 +46,9 @@ import com.skiplab.theselproject.AdminEdit;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.BookAppointment1;
 import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
+import com.skiplab.theselproject.Consultation.ConsultantsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
+import com.skiplab.theselproject.Questionnaire.SixthQuestionnaire;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.JavaMailAPI;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
@@ -122,6 +125,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         String hisUID = userList.get(position).getUid();
         String hisEmail = userList.get(position).getEmail();
         String hisName = userList.get(position).getUsername();
+        String hisStatus = userList.get(position).getOnlineStatus();
         String hisLocation = userList.get(position).getAddress();
         String category1 = userList.get(position).getCategory1();
         String category2 = userList.get(position).getCategory2();
@@ -145,7 +149,14 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         }
 
         if (userList.get(position).getOnlineStatus().equals("online"))
+        {
             holder.onlineIv.setVisibility(View.VISIBLE);
+        }
+        else if (userList.get(position).getOnlineStatus().equals("deactivated"))
+        {
+            holder.itemView.setVisibility(View.GONE);
+        }
+
 
         try {
             UniversalImageLoader.setImage(userList.get(position).getProfile_photo(), holder.mAvatarIv, null, "");
@@ -307,6 +318,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         holder.scheduleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (Common.isConnectedToTheInternet(context))
                 {
                     ProgressDialog pd = new ProgressDialog(context);
@@ -324,8 +336,9 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                                 final View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.layout_book_appointment, null);
 
-                                TextView length = mView.findViewById(R.id.appt_time_tv);
+                                TextView length = mView.findViewById(R.id.appt_duration_tv);
                                 TextView fee_tv = mView.findViewById(R.id.appt_fee_tv);
+
                                 Locale locale = new Locale("en", "NG");
                                 NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
                                 fee_tv.setText(fmt.format(displayed_appt_cost));
@@ -406,7 +419,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                                 try
                                                                                 {
-                                                                                    if (LocalTime.parse(formattedTime).isAfter(LocalTime.parse("21:00")))
+                                                                                    if (LocalTime.parse(formattedTime).isAfter(LocalTime.parse("20:00")))
                                                                                     {
                                                                                         progressDialog.dismiss();
 
@@ -437,7 +450,6 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                     Log.d(TAG, "ERROR: "+e );
                                                                                 }
 
-                                                                                builder.show();
                                                                             }
                                                                         }
                                                                     }
@@ -463,6 +475,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                 builder.setView(mView);
                                 builder.show();
+
                             });
                 }
                 else
@@ -499,6 +512,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                     final View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.layout_instant_consultation, null);
 
                                     TextView fee_tv = mView.findViewById(R.id.instant_fee_tv);
+
                                     Locale locale = new Locale("en", "NG");
                                     NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
                                     fee_tv.setText(fmt.format(displayed_instant_cost));
@@ -636,6 +650,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                         JavaMailAPI javaMailAPI = new JavaMailAPI(
                                                                                                                                                 context,
                                                                                                                                                 "skiplab.innovation@gmail.com",
+                                                                                                                                                "ayomideseaz@gmail.com",
                                                                                                                                                 "THESEL CONSULTATION",
                                                                                                                                                 "Hello "+hisName+","+"\n\n"+client.getUsername().toUpperCase()+" just paid for a 1week Instant Session with you on the Thesel platform."+
                                                                                                                                                         "\n\n\n"+"Warm Regards,"+"\n"+"Thesel Team.");

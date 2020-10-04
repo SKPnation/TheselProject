@@ -8,32 +8,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.skiplab.theselproject.Adapter.AdapterNotification;
-import com.skiplab.theselproject.Adapter.ChatroomListAdapter;
 import com.skiplab.theselproject.Adapter.MyNotificationAdapter;
-import com.skiplab.theselproject.Interface.INotificationLoadListener;
 import com.skiplab.theselproject.R;
-import com.skiplab.theselproject.models.ChatRoom;
 import com.skiplab.theselproject.models.MyNotifications;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 public class ConsultationNotificationActivity extends AppCompatActivity {
 

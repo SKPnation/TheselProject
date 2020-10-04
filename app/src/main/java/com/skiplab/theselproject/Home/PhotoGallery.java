@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.anstrontechnologies.corehelper.AnstronCoreHelper;
+//import com.anstrontechnologies.corehelper.AnstronCoreHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -71,7 +71,7 @@ public class PhotoGallery extends Fragment {
     FirebaseAuth mAuth;
     StorageReference storageRef;
     DatabaseReference usersRef, galleryRef;
-    AnstronCoreHelper coreHelper;
+    //AnstronCoreHelper coreHelper;
 
 
     public PhotoGallery() {
@@ -90,7 +90,7 @@ public class PhotoGallery extends Fragment {
         usersRef = FirebaseDatabase.getInstance().getReference("users");
         galleryRef = FirebaseDatabase.getInstance().getReference("gallery");
         galleryRef.keepSynced(true);
-        coreHelper = new AnstronCoreHelper(getActivity());
+        //coreHelper = new AnstronCoreHelper(getActivity());
 
         closeBtn = view.findViewById(R.id.closeBtn);
         addBtn = view.findViewById(R.id.addtoGallery);
@@ -148,7 +148,7 @@ public class PhotoGallery extends Fragment {
         startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == IMAGE_PICK_GALLERY_CODE && resultCode == RESULT_OK && data!=null){
             //image is picked from gallery, get uri of the image
@@ -212,7 +212,7 @@ public class PhotoGallery extends Fragment {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
     private void setupGridView() {
         Log.d(TAG, "setupGridView: Setting up image grid.");

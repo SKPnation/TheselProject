@@ -2,6 +2,7 @@ package com.skiplab.theselproject.Consultation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -26,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.skiplab.theselproject.Adapter.AdapterUser;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.Home.SelectCategory;
+import com.skiplab.theselproject.Questionnaire.SixthQuestionnaire;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.User;
 
@@ -122,4 +124,13 @@ public class ConsultantsActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    /*public void openBookFragment1() {
+        recyclerView.setVisibility(View.GONE);
+        BookingFragment1 bookingFragment1 = new BookingFragment1();
+        //sixthQuestionnaire.setArguments(b);
+        FragmentTransaction bf1 = getSupportFragmentManager().beginTransaction();
+        bf1.replace(R.id.content, bookingFragment1);
+        bf1.commit();
+    }*/
 }

@@ -16,22 +16,19 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,7 +47,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-//import com.skiplab.theselproject.Adapter.AdapterChat;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -62,7 +58,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.skiplab.theselproject.Adapter.AdapterChat;
-import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatMessage;
@@ -91,11 +86,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class ChatActivity extends AppCompatActivity {
+public class AppointmentChatActivity extends AppCompatActivity {
 
-    Context mContext = ChatActivity.this;
+    Context mContext = AppointmentChatActivity.this;
 
-    private static final String TAG = "ChatActivity";
+    private static final String TAG = "AppointmentChatActivity";
 
     private static final int REQUEST_PERMISSION_CODE = 1000;
 
@@ -116,10 +111,15 @@ public class ChatActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView;
     CircleImageView profileIv;
-    TextView nameTv, countDownTv;
     EditText messageEt;
-    Button mButtonStart, mButtonThanks;
     ImageButton sendBtn, attachBtn, recordBtn;
+
+    TextView nameTv, mTextViewCountDown;
+    Button mButtonStart;
+    private long mStartTimeInMillis;
+    private long mTimeLeftInMillis;
+    private long mEndTime;
+    private boolean mTimerRunning;
 
     private ProgressDialog progressDialog;
 
@@ -131,21 +131,18 @@ public class ChatActivity extends AppCompatActivity {
     //firebase
     FirebaseDatabase firebaseDatabase;
     DatabaseReference usersRef, mMessageReference;
-    CollectionReference mChatroomReference, mProfileReference;
+    CollectionReference  mProfileReference, mAppointmentReference;
 
     private CountDownTimer mCountDownTimer;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private boolean mTimerRunning;
     public static boolean isActivityRunning;
 
-    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
-
-    String hisUID;
-    String myUid, myName;
+    String hisUID, hisName;
+    String myUid;
     String hisImage;
-    String chatroomID;
+    String appointmentID;
 
     APIService apiService;
     boolean notify = false;
@@ -156,44 +153,25 @@ public class ChatActivity extends AppCompatActivity {
     MediaRecorder mediaRecorder;
     String pathSave = "";
 
-    SpannableString ss_thanks;
-    ForegroundColorSpan fcsBlack;
-    String thanks = "THANKS";
-
     int i = 0;
     int num_messages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
-
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        usersRef = firebaseDatabase.getReference("users");
+        setContentView(R.layout.activity_appointment_chat);
 
         setupFirebaseAuth();
 
         final Intent intent = getIntent();
         hisUID = intent.getStringExtra("hisUID");
-        chatroomID = intent.getStringExtra("chatroomID");
-        myName = intent.getStringExtra("myName");
+        appointmentID = intent.getStringExtra("appointmentID");
+        hisName = intent.getStringExtra("hisName");
 
-        ss_thanks = new SpannableString(thanks);
-        fcsBlack = new ForegroundColorSpan(Color.BLACK);
-        ss_thanks.setSpan(fcsBlack, 0,5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
-        mChatroomReference = FirebaseFirestore.getInstance().collection("chatrooms");
-        mMessageReference = FirebaseDatabase.getInstance().getReference("chatroom_messages");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        usersRef = firebaseDatabase.getReference("users");
         mProfileReference = FirebaseFirestore.getInstance().collection("profiles");
-
-        //init views
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("");
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait...");
+        mAppointmentReference = FirebaseFirestore.getInstance().collection("appointments");
 
         //init permissions arrays
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -202,9 +180,8 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.chat_recylerView);
         profileIv = findViewById(R.id.profileIv);
         nameTv = findViewById(R.id.nameTv);
-        countDownTv = findViewById(R.id.text_view_countdown);
+        mTextViewCountDown = findViewById(R.id.text_view_countdown);
         mButtonStart = findViewById(R.id.button_start_pause);
-        mButtonThanks = findViewById(R.id.button_thanks);
         messageEt = findViewById(R.id.messageEt);
         sendBtn = findViewById(R.id.sendBtn);
         attachBtn = findViewById(R.id.attachBtn);
@@ -220,155 +197,35 @@ public class ChatActivity extends AppCompatActivity {
         //create api service
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
-        /*mButtonStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Common.isConnectedToTheInternet(mContext))
-                {
-                    if (mTimerRunning){
-                        mButtonStart.setVisibility(View.GONE);
-                    } else {
-                        usersRef.orderByKey().equalTo(myUid)
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot ds: dataSnapshot.getChildren())
-                                        {
-                                            User user = ds.getValue(User.class);
+        usersRef.orderByKey().equalTo(myUid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds: dataSnapshot.getChildren())
+                        {
+                            User user = ds.getValue(User.class);
 
-                                            if (user.getIsStaff().equals("false"))
-                                            {
-                                                int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
-                                                int result = wallet - 1500;
-
-                                                usersRef.child(myUid).child("wallet").setValue(result);
-
-                                                mProfileReference.document(hisUID)
-                                                        .get()
-                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                if (task.isSuccessful())
-                                                                {
-                                                                    Profile profile = task.getResult().toObject(Profile.class);
-                                                                    HashMap<String,Object> hashMap = new HashMap<>();
-                                                                    hashMap.put("num_of_payments", profile.getNum_of_payments()+1);
-
-                                                                    mProfileReference.document(hisUID).set(hashMap, SetOptions.merge());
-                                                                }
-                                                            }
-                                                        });
-
-                                                startTimer();
-
-                                                i++;
-
-                                                Handler handler = new Handler();
-                                                handler.postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
-                                                                .setMessage("You have 5 minutes left!")
-                                                                .create();
-                                                        alertDialog.show();
-                                                    }
-                                                }, 600000);
-
-                                                Toast.makeText(mContext,"Deducted successfully!",Toast.LENGTH_SHORT).show();
-
+                            if (user.getIsStaff().equals("false"))
+                            {
+                                mProfileReference.document(hisUID)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                String appt_duration = task.getResult().toObject(Profile.class).getAppt_duration();
+                                                long millisInput = (Long.parseLong(appt_duration)+10) * 60000;
+                                                setTime(millisInput);
                                             }
-                                            else
-                                            {
-                                                startTimer();
-
-                                                i++;
-
-                                                Handler handler = new Handler();
-                                                handler.postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
-                                                                .setMessage("You have 5 minutes left!")
-                                                                .create();
-                                                        alertDialog.show();
-                                                    }
-                                                }, 600000);
-                                            }
-
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        //..
-                                    }
-                                });
-
+                                        });
+                            }
+                        }
                     }
-                }
-                else
-                {
-                    AlertDialog alertDialog =new AlertDialog.Builder(mContext)
-                            .setMessage("Please check your internet connection")
-                            .create();
-                    alertDialog.show();
-                }
 
-            }
-        });*/
-
-        mButtonThanks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                usersRef.orderByKey().equalTo(myUid)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds: dataSnapshot.getChildren())
-                                {
-                                    User user = ds.getValue(User.class);
-                                    if (user.getIsStaff().equals("false"))
-                                    {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                                        builder.setMessage("Are you satisfied with the consultation?");
-
-                                        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                String message = "Thanks, I'm satisfied with the consultation.";
-
-                                                sendMessage(message);
-                                            }
-                                        });
-
-                                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-
-                                        builder.show();
-                                    }
-                                    else
-                                    {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                                        builder.setMessage("This button can only be used by the client!");
-
-                                        builder.show();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-            }
-        });
-
-        updateCountDownText();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        //..
+                    }
+                });
 
         attachBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -378,7 +235,7 @@ public class ChatActivity extends AppCompatActivity {
                     showImagePickDialog();
                 }
                 else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setMessage("Double tap the start button.");
 
                     builder.show();
@@ -403,7 +260,7 @@ public class ChatActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                         builder.setMessage("Recording...");
                         builder.setCancelable(false);
                         builder.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
@@ -417,7 +274,7 @@ public class ChatActivity extends AppCompatActivity {
                         builder.show();
                     }
                     else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                         builder.setMessage("Double tap the start button.");
 
                         builder.show();
@@ -438,17 +295,17 @@ public class ChatActivity extends AppCompatActivity {
                     String message = messageEt.getText().toString().trim();
 
                     if (TextUtils.isEmpty(message)){
-                        Toast.makeText(ChatActivity.this, "Cannot send an empty message", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Cannot send an empty message", Toast.LENGTH_SHORT).show();
                     } else {
                         sendMessage(message);
 
-                        Toast.makeText(ChatActivity.this, "Wait for a reply...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Wait for a reply...", Toast.LENGTH_SHORT).show();
                     }
                     //reset edittext after sending message
                     messageEt.setText("");
                 }
                 else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setMessage("Double tap the start button.");
 
                     builder.show();
@@ -461,7 +318,6 @@ public class ChatActivity extends AppCompatActivity {
         getRecepientDetails();
         readMessages();
     }
-
 
 
     private void getRecepientDetails() {
@@ -485,15 +341,14 @@ public class ChatActivity extends AppCompatActivity {
                                     Log.d(TAG, "ERROR: "+e);
                                 }
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                                 builder.setCancelable(false);
                                 builder.setTitle("PLEASE READ THIS!");
                                 builder.setMessage("1. You have 15 MINUTES to say what's on your mind!\n\n"
                                         +"2. The moment you start the timer, #1500 will be deducted from your THESEL WALLET!\n\n"
                                         +"3. Check back to see the consultant's reply to your messages during his/her counselling hours!\n\n"
-                                        +"4. Click the '"+ss_thanks+"' button if you are satisfied with the consultation!\n\n"
-                                        +"5. This ONGOING SESSION will end if you do not reply the counsellor's message within 24 HOURS!\n\n"
-                                        +"6. EXCHANGE OF PHONE NUMBERS AND EMAIL ADDRESSES ARE NOT ALLOWED!!!");
+                                        +"4. This ONGOING SESSION will end if you do not reply the counsellor's message within 24 HOURS!\n\n"
+                                        +"5. EXCHANGE OF PHONE NUMBERS AND EMAIL ADDRESSES ARE NOT ALLOWED!!!");
                                 builder.setPositiveButton("BEGIN", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -515,7 +370,7 @@ public class ChatActivity extends AppCompatActivity {
                                     Log.d(TAG, "ERROR: "+e);
                                 }
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                                 builder.setCancelable(false);
                                 builder.setTitle("PLEASE READ THIS!");
                                 builder.setMessage("1. Try not to give very short replies. Provide enough possible solutions to the client's problems!\n\n"
@@ -552,14 +407,14 @@ public class ChatActivity extends AppCompatActivity {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender_id", myUid);
         hashMap.put("receiver_id", hisUID);
-        hashMap.put("chatroom_id", chatroomID);
+        hashMap.put("chatroom_id", appointmentID);
         hashMap.put("message", message);
         hashMap.put("timestamp", timestamp);
         hashMap.put("type", "text");
 
         mMessageReference.push().setValue(hashMap);
 
-        mChatroomReference.document(chatroomID)
+        mAppointmentReference.document(appointmentID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -568,14 +423,14 @@ public class ChatActivity extends AppCompatActivity {
                             ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("num_messages",chatRoom.getNum_messages()+1);
-                            mChatroomReference.document(chatroomID).set(hashMap, SetOptions.merge());
+                            mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
                         }
                     }
                 });
 
         if (notify)
         {
-            //sendNotification(hisUID, myName, message);
+            sendNotification(hisUID, hisName, message);
         }
 
     }
@@ -596,7 +451,7 @@ public class ChatActivity extends AppCompatActivity {
                             }
 
                             //adapter
-                            adapterChat = new AdapterChat(ChatActivity.this, chatList, hisImage);
+                            adapterChat = new AdapterChat(mContext, chatList, hisImage);
                             adapterChat.notifyDataSetChanged();
                             recyclerView.setAdapter(adapterChat);
                         }
@@ -672,14 +527,14 @@ public class ChatActivity extends AppCompatActivity {
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("sender_id", myUid);
                             hashMap.put("receiver_id", hisUID);
-                            hashMap.put("chatroom_id",chatroomID);
+                            hashMap.put("chatroom_id",appointmentID);
                             hashMap.put("message", downloadUri);
                             hashMap.put("timestamp", timeStamp);
                             hashMap.put("type", "audio");
 
                             databaseReference.child("chatroom_messages").push().setValue(hashMap);
 
-                            mChatroomReference.document(chatroomID)
+                            mAppointmentReference.document(appointmentID)
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                         @Override
@@ -688,7 +543,7 @@ public class ChatActivity extends AppCompatActivity {
                                                 ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
                                                 HashMap<String, Object> hashMap = new HashMap<>();
                                                 hashMap.put("num_messages",chatRoom.getNum_messages()+1);
-                                                mChatroomReference.document(chatroomID).set(hashMap, SetOptions.merge());
+                                                mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
                                             }
                                         }
                                     });
@@ -703,7 +558,7 @@ public class ChatActivity extends AppCompatActivity {
 
                                     if (notify){
                                         progressDialog.dismiss();
-                                        //sendNotification(hisUID, user.getUsername(), "Sent you a recording...");
+                                        sendNotification(hisUID, user.getUsername(), "Sent you a recording...");
                                     }
                                     notify = false;
                                 }
@@ -720,7 +575,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
 
                 progressDialog.dismiss();
-                Toast.makeText(ChatActivity.this, "Failed!!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Failed!!!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -795,14 +650,14 @@ public class ChatActivity extends AppCompatActivity {
                                 HashMap<String, Object> hashMap = new HashMap<>();
                                 hashMap.put("sender_id", myUid);
                                 hashMap.put("receiver_id", hisUID);
-                                hashMap.put("chatroom_id", chatroomID);
+                                hashMap.put("chatroom_id", appointmentID);
                                 hashMap.put("message", downloadUri);
                                 hashMap.put("timestamp", timeStamp);
                                 hashMap.put("type", "image");
 
                                 databaseReference.child("chatroom_messages").push().setValue(hashMap);
 
-                                mChatroomReference.document(chatroomID)
+                                mAppointmentReference.document(appointmentID)
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                             @Override
@@ -811,7 +666,7 @@ public class ChatActivity extends AppCompatActivity {
                                                     ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
                                                     HashMap<String, Object> hashMap = new HashMap<>();
                                                     hashMap.put("num_messages",chatRoom.getNum_messages()+1);
-                                                    mChatroomReference.document(chatroomID).set(hashMap, SetOptions.merge());
+                                                    mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
                                                 }
                                             }
                                         });
@@ -825,7 +680,7 @@ public class ChatActivity extends AppCompatActivity {
 
                                         if (notify){
                                             progressDialog.dismiss();
-                                            //sendNotification(hisUID, user.getUsername(), "Sent you a picture...");
+                                            sendNotification(hisUID, user.getUsername(), "Sent you a picture...");
                                         }
                                         notify = false;
                                     }
@@ -917,7 +772,7 @@ public class ChatActivity extends AppCompatActivity {
                     }
                     else {
                         //camera or gallery or both permissions denied
-                        Toast.makeText(ChatActivity.this, "Camera & Storage permissions are necessary...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Camera & Storage permissions are necessary...", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -931,7 +786,7 @@ public class ChatActivity extends AppCompatActivity {
                     }
                     else {
                         //gallery permissions denied
-                        Toast.makeText(ChatActivity.this, "Storage permissions are necessary...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "Storage permissions are necessary...", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -967,51 +822,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-    private void startTimer() {
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis = millisUntilFinished;
-                updateCountDownText();
-            }
-
-            @Override
-            public void onFinish() {
-                mTimerRunning = false;
-                mButtonStart.setVisibility(View.GONE);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                builder.setMessage("TIME'S UP!!!");
-                builder.show();
-
-                i++;
-
-                Handler handler1 = new Handler();
-                handler1.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 2000);
-            }
-
-        }.start();
-
-        mTimerRunning = true;
-    }
-
-    private void updateCountDownText() {
-        int minutes = (int) (mTimeLeftInMillis / 6000) / 10;
-        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
-
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-
-        countDownTv.setText(timeLeftFormatted);
-
-    }
-
-
-    /*private void sendNotification(String hisUID, String myName, String message) {
+    private void sendNotification(String hisUID, String myName, String message) {
         CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
         allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -1038,8 +849,67 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
-    }*/
+    }
 
+
+
+    private void setTime(long milliseconds) {
+        mStartTimeInMillis = milliseconds;
+        setTimer();
+    }
+
+    private void setTimer() {
+        mTimeLeftInMillis = mStartTimeInMillis;
+        updateCountDownText();
+        updateWatchInterface();
+    }
+
+    private void updateCountDownText() {
+        int hours = (int) (mTimeLeftInMillis / 1000) / 3600;
+        int minutes = (int) ((mTimeLeftInMillis / 1000) % 3600) / 60;
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+        String timeLeftFormatted;
+        if (hours > 0) {
+            timeLeftFormatted = String.format(Locale.getDefault(),
+                    "%d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            timeLeftFormatted = String.format(Locale.getDefault(),
+                    "%02d:%02d", minutes, seconds);
+        }
+        mTextViewCountDown.setText(timeLeftFormatted);
+    }
+
+    private void updateWatchInterface() {
+        if (mTimerRunning) {
+            //mButtonStartPause.setText("Pause");
+            mButtonStart.setVisibility(View.GONE);
+        } else {
+            mButtonStart.setText("Start");
+            if (mTimeLeftInMillis < 1000) {
+                mButtonStart.setVisibility(View.INVISIBLE);
+            } else {
+                mButtonStart.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private void startTimer() {
+        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+            @Override
+            public void onFinish() {
+                mTimerRunning = false;
+                updateWatchInterface();
+            }
+        }.start();
+        mTimerRunning = true;
+        updateWatchInterface();
+    }
 
     @Override
     public void onStart() {
@@ -1047,6 +917,25 @@ public class ChatActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
 
         isActivityRunning = true;
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        mStartTimeInMillis = prefs.getLong("startTimeInMillis", 600000);
+        mTimeLeftInMillis = prefs.getLong("millisLeft", mStartTimeInMillis);
+        mTimerRunning = prefs.getBoolean("timerRunning", false);
+        updateCountDownText();
+        updateWatchInterface();
+        if (mTimerRunning) {
+            mEndTime = prefs.getLong("endTime", 0);
+            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+            if (mTimeLeftInMillis < 0) {
+                mTimeLeftInMillis = 0;
+                mTimerRunning = false;
+                updateCountDownText();
+                updateWatchInterface();
+            } else {
+                startTimer();
+            }
+        }
     }
 
     @Override
@@ -1056,6 +945,17 @@ public class ChatActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
         }
         isActivityRunning = false;
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("startTimeInMillis", mStartTimeInMillis);
+        editor.putLong("millisLeft", mTimeLeftInMillis);
+        editor.putBoolean("timerRunning", mTimerRunning);
+        editor.putLong("endTime", mEndTime);
+        editor.apply();
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
     }
 
     private void setupFirebaseAuth() {
@@ -1063,10 +963,8 @@ public class ChatActivity extends AppCompatActivity {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             myUid = user.getUid();
 
-            if (user != null)
-            {
+            if (user != null) {
                 Log.d( TAG, "onAuthStateChanged: signed_in: " + user.getUid());
-
             } else {
                 Log.d( TAG, "onAuthStateChanged: signed_out");
             }
@@ -1075,24 +973,4 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exitByBackKey();
-
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    private void exitByBackKey() {
-        AlertDialog alertbox = new AlertDialog.Builder(this)
-                .setTitle("DON'T DO THAT!")
-                .setMessage("Wait till the time is up")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).show();
-    }
 }

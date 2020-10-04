@@ -16,16 +16,17 @@ import javax.mail.internet.MimeMessage;
 
 public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
 
-    public static final  String EMAIL = "coffeeline9@gmail.com";
+    public static final String EMAIL = "coffeeline9@gmail.com";
 
     private Context context;
 
     private Session session;
-    private String email, subject, message;
+    private String email1, email2, subject, message;
 
-    public JavaMailAPI(Context context, String email, String subject, String message) {
+    public JavaMailAPI(Context context, String email1, String email2, String subject, String message) {
         this.context = context;
-        this.email = email;
+        this.email1 = email1;
+        this.email2 = email2;
         this.subject = subject;
         this.message = message;
     }
@@ -48,7 +49,8 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
         MimeMessage mimeMessage = new MimeMessage(session);
         try {
             mimeMessage.setFrom(new InternetAddress(EMAIL));
-            mimeMessage.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(email)));
+            mimeMessage.addRecipients(Message.RecipientType.CC,
+                    InternetAddress.parse(email1+","+email2));
             mimeMessage.setSubject(subject);
             mimeMessage.setText(message);
             Transport.send(mimeMessage);

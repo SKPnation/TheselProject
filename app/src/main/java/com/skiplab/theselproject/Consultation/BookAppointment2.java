@@ -120,8 +120,6 @@ public class BookAppointment2 extends AppCompatActivity {
         hisCost = intent.getLongExtra("hisCost",0L);
         selectedDate = intent.getLongExtra("selectedDate",1L);
 
-        Toast.makeText(mContext,wallet+"",Toast.LENGTH_SHORT).show();
-
         String appointmentDuration = startTime+"-"+endTime;
 
         String[] convertTime = appointmentDuration.split("-");
@@ -219,7 +217,6 @@ public class BookAppointment2 extends AppCompatActivity {
                                 public void run() {
                                     alertDialog.dismiss();
                                     startActivity(new Intent(mContext, WalletActivity.class));
-
                                 }
                             },2000);
                         }
@@ -241,6 +238,7 @@ public class BookAppointment2 extends AppCompatActivity {
                             appointmentMap.put("slot",slot);
                             appointmentMap.put("absent",false);
                             appointmentMap.put("num_messages",0);
+                            appointmentMap.put("timeType",timeType);
                             appointmentMap.put("timestamp", FieldValue.serverTimestamp());
 
                             appointmentsRef.document(appointmentId).set(appointmentMap)
@@ -251,6 +249,7 @@ public class BookAppointment2 extends AppCompatActivity {
                                             JavaMailAPI javaMailAPI = new JavaMailAPI(
                                                     mContext,
                                                     "skiplab.innovation@gmail.com",
+                                                    "ayomideseaz@gmail.com",
                                                     "THESEL CONSULTATION",
                                                     "Hello "+hisName+","+"\n\n"+"You have an appointment from "+startEventTime+" - "+endEventTime+" "+timeType
                                                             +" on "+simpleDateFormat.format(selectedDate)+" with "+myName+
@@ -270,20 +269,23 @@ public class BookAppointment2 extends AppCompatActivity {
                                                         Date start = simpleDateFormat1.parse(startEventTime);
                                                         Date end = simpleDateFormat1.parse(endEventTime);
 
-                                                        Intent intent = new Intent(Intent.ACTION_INSERT);
-                                                        intent.setData(CalendarContract.Events.CONTENT_URI);
+                                                        Intent intent0 = new Intent(Intent.ACTION_INSERT);
+                                                        intent0.setData(CalendarContract.Events.CONTENT_URI);
 
-                                                        intent.putExtra(CalendarContract.Events.TITLE, "Thesel Appointment");
-                                                        intent.putExtra(CalendarContract.Events.DESCRIPTION, "Appointment from "+startEventTime+" - "+endEventTime+" "+timeType
+                                                        intent0.putExtra(CalendarContract.Events.TITLE, "Thesel Appointment");
+                                                        intent0.putExtra(CalendarContract.Events.DESCRIPTION, "Appointment from "+startEventTime+" - "+endEventTime+" "+timeType
                                                                 +" on "+simpleDateFormat.format(selectedDate)+" with "+hisName);
-                                                        intent.putExtra(CalendarContract.Events.ALL_DAY, false);
-                                                        intent.putExtra(EXTRA_EVENT_BEGIN_TIME,start.getTime()+"");
-                                                        intent.putExtra(EXTRA_EVENT_END_TIME, end.getTime()+"");
-                                                        intent.putExtra(Intent.EXTRA_EMAIL, myEmail+", skiplab.innovation@gmail.com");
-                                                        intent.putExtra(ACTION_EVENT_REMINDER,true);
+                                                        intent0.putExtra(CalendarContract.Events.ALL_DAY, false);
+                                                        intent0.putExtra(EXTRA_EVENT_BEGIN_TIME,start.getTime()+"");
+                                                        intent0.putExtra(EXTRA_EVENT_END_TIME, end.getTime()+"");
+                                                        intent0.putExtra(Intent.EXTRA_EMAIL, myEmail+", skiplab.innovation@gmail.com");
+                                                        intent0.putExtra(ACTION_EVENT_REMINDER,true);
 
-                                                        if(intent.resolveActivity(getPackageManager()) != null){
-                                                            startActivity(intent);
+                                                        intent0.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                                        if(intent0.resolveActivity(getPackageManager()) != null){
+                                                            startActivity(intent0);
+                                                            finish();
                                                         }else{
                                                             Toast.makeText(mContext, "You have no calendar app that supports this action", Toast.LENGTH_SHORT).show();
                                                         }
@@ -295,7 +297,10 @@ public class BookAppointment2 extends AppCompatActivity {
                                             builder1.setNegativeButton("SKIP", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    startActivity(new Intent(mContext,ChatRoomsActivity.class));
+                                                    Intent intent1 = new Intent(mContext, ChatRoomsActivity.class);
+                                                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    startActivity(intent1);
+                                                    finish();
                                                 }
                                             });
 

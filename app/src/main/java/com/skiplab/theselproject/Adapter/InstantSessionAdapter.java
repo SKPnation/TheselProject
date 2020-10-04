@@ -3,7 +3,6 @@ package com.skiplab.theselproject.Adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -29,7 +27,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.ChatActivity;
 import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
-import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
@@ -37,13 +34,11 @@ import com.skiplab.theselproject.models.ChatRoom;
 import com.skiplab.theselproject.models.User;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
-public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapter.ViewHolder>{
+public class InstantSessionAdapter extends RecyclerView.Adapter<InstantSessionAdapter.ViewHolder>{
 
-    private static final String TAG = "ChatroomListAdapter";
+    private static final String TAG = "InstantSessionAdapter";
 
     Context context;
     List<ChatRoom> chatRoomList;
@@ -53,7 +48,7 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
 
     LocalDate todayDate;
 
-    public ChatroomListAdapter(Context context, List<ChatRoom> chatRoomList) {
+    public InstantSessionAdapter(Context context, List<ChatRoom> chatRoomList) {
         this.context = context;
         this.chatRoomList = chatRoomList;
         mAuth = FirebaseAuth.getInstance();
@@ -64,7 +59,7 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_chatroom_listitem, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.instant_session_listitem, parent, false);
 
         return new ViewHolder(view);
     }
@@ -76,12 +71,12 @@ public class ChatroomListAdapter extends RecyclerView.Adapter<ChatroomListAdapte
         String clientUID = chatRoomList.get(position).getClient_id();
         String counsellorID = chatRoomList.get(position).getCounsellor_id();
         String timestamp = chatRoomList.get(position).getTimestamp();
-        long chatroom_messages = chatRoomList.get(position).getNum_messages();
+        long num_messages = chatRoomList.get(position).getNum_messages();
         String expiryDAY = chatRoomList.get(position).getExpiryDay();
         String expiryDATE = chatRoomList.get(position).getExpiryDate();
 
         //set the number of chat messages
-        String chatMessagesString = chatroom_messages + " message(s)";
+        String chatMessagesString = num_messages + " message(s)";
 
         //set number of chatroom messages
         holder.expiryDayTv.setText(expiryDAY+", ");

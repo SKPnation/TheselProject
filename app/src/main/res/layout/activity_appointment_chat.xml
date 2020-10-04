@@ -6,10 +6,10 @@
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/profile_coverphoto2"
+    android:background="@drawable/main_background"
     android:backgroundTint="#6C7A89"
     android:backgroundTintMode="multiply"
-    tools:context=".Consultation.ChatActivity">
+    tools:context=".Consultation.AppointmentChatActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -60,37 +60,24 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:textAlignment="center"
-                        android:text="7 DAYS"
-                        android:textColor="@android:color/white"
+                        android:text="00:00"
+                        android:textColor="#0F8EBE"
                         android:textSize="25sp" />
 
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/button_start_pause"
-                    android:layout_toLeftOf="@id/button_thanks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:layout_centerVertical="true"
-                    android:textSize="14sp"
-                    android:textColor="#fff"
-                    android:text="START" />
-
-                <Button
-                    android:id="@+id/button_thanks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#0F8EBE"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="5dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:textSize="14sp"
                     android:textColor="#fff"
-                    android:text="THANKS" />
+                    android:text="START" />
 
             </RelativeLayout>
 
