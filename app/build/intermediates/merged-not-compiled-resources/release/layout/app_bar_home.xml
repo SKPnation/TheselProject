@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="#F2F2F2"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <RelativeLayout
@@ -24,8 +24,8 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/drawer_icon"
-                    android:src="@drawable/thesel_logo2"
+                    android:id="@+id/thesel_logo"
+                    android:src="@drawable/thesel_logo"
                     android:layout_marginRight="25dp"
                     android:layout_centerVertical="true"
                     android:layout_width="30dp"
@@ -36,38 +36,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/drawer_icon"
-                    android:src="@drawable/thesel_logo"
+                    android:layout_toRightOf="@id/thesel_logo"
                     android:paddingRight="30dp"
-                    android:text="Thesel"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
-                    android:textColor="#fff"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="25sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
+                <ImageView
+                    android:id="@+id/videosBtn"
+                    android:tint="@color/colorPrimary"
+                    android:src="@drawable/ic_video_library"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="20dp"
                     android:layout_centerVertical="true"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/reportBtn"
-                        android:src="@drawable/ic_report"
-                        android:layout_width="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"/>
-
-                    <ImageView
-                        android:id="@+id/optionsToolbar"
-                        android:src="@drawable/ic_options"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"/>
-
-                </LinearLayout>
+                    android:visibility="gone"
+                    />
 
             </RelativeLayout>
 

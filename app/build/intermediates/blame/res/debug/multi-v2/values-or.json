@@ -4,24 +4,7 @@
             "outputFile": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-or/values-or.xml",
             "map": [
                 {
-                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e91594602c73eba9f0c6fb1745d43dba/core-1.1.0/res/values-or/values-or.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "33",
-                        "startColumns": "4",
-                        "startOffsets": "3290",
-                        "endColumns": "100",
-                        "endOffsets": "3386"
-                    }
-                },
-                {
-                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/values-or/values-or.xml",
+                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/values-or/values-or.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e51dec294affbadfcddbf9b32da9618c/navigation-ui-2.2.2/res/values-or/values-or.xml",
+                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a290312412f77c94f15a374f174cd6cf/navigation-ui-2.2.2/res/values-or/values-or.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -55,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0b1014f85cf96bd0c2b6d777e25c7ae8/jetified-firebase-messaging-17.0.0/res/values-or/values.xml",
+                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8c78aed7ad2700d56623bdef624a5b27/jetified-firebase-messaging-17.0.0/res/values-or/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -69,6 +52,23 @@
                         "startOffsets": "2856",
                         "endColumns": "106",
                         "endOffsets": "2958"
+                    }
+                },
+                {
+                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1d8cfff3f5d58b170acc7b9981fbe16b/core-1.5.0-alpha04/res/values-or/values-or.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "33",
+                        "startColumns": "4",
+                        "startOffsets": "3290",
+                        "endColumns": "100",
+                        "endOffsets": "3386"
                     }
                 }
             ]

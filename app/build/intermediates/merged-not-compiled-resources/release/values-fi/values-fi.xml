@@ -45,22 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Avaa puhelimessa"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Kirjaudu sisään"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Kirjaudu Google-tilille"</string>
+    <string name="exo_controls_fastforward_description">Kelaa eteenpäin</string>
+    <string name="exo_controls_fullscreen_description">Koko näytön tila</string>
+    <string name="exo_controls_next_description">Seuraava kappale</string>
+    <string name="exo_controls_pause_description">Keskeytä</string>
+    <string name="exo_controls_play_description">Toista</string>
+    <string name="exo_controls_previous_description">Edellinen kappale</string>
+    <string name="exo_controls_repeat_all_description">Toista kaikki uudelleen</string>
+    <string name="exo_controls_repeat_off_description">Ei uudelleentoistoa</string>
+    <string name="exo_controls_repeat_one_description">Toista yksi uudelleen</string>
+    <string name="exo_controls_rewind_description">Kelaa taaksepäin</string>
+    <string name="exo_controls_shuffle_off_description">Satunnaistoisto ei käytössä</string>
+    <string name="exo_controls_shuffle_on_description">Satunnaistoisto käytössä</string>
+    <string name="exo_controls_stop_description">Lopeta</string>
+    <string name="exo_controls_vr_description">VR-tila</string>
+    <string name="exo_download_completed">Lataus valmis</string>
+    <string name="exo_download_description">Lataa</string>
+    <string name="exo_download_downloading">Ladataan</string>
+    <string name="exo_download_failed">Lataus epäonnistui</string>
+    <string name="exo_download_notification_channel_name">Lataukset</string>
+    <string name="exo_download_removing">Poistetaan latauksia</string>
+    <string name="exo_item_list">%1$s, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Mt/s</string>
+    <string name="exo_track_mono">Mono</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">Vaihtoehtoinen</string>
+    <string name="exo_track_role_closed_captions">Tekstitykset</string>
+    <string name="exo_track_role_commentary">Kommenttiraita</string>
+    <string name="exo_track_role_supplementary">Lisämateriaali</string>
+    <string name="exo_track_selection_auto">Automaattinen</string>
+    <string name="exo_track_selection_none">–</string>
+    <string name="exo_track_selection_title_audio">Ääni</string>
+    <string name="exo_track_selection_title_text">Teksti</string>
+    <string name="exo_track_selection_title_video">Video</string>
+    <string name="exo_track_stereo">Stereo</string>
+    <string name="exo_track_surround">Surround-ääni</string>
+    <string name="exo_track_surround_5_point_1">5.1-surround-ääni</string>
+    <string name="exo_track_surround_7_point_1">7.1-surround-ääni</string>
+    <string name="exo_track_unknown">Tuntematon</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Muut"</string>
-    <string name="mdtp_date_v1_monthyear">LLLL yyyy</string>
-    <string name="mdtp_date_v2_daymonthyear">ccc dd. MMM</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"Päiväruudukko kuukausittain"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"<ns1:g id="KEY">%1$s</ns1:g> poistettiin"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"Valmis"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"Tuntien ympyränmuotoinen liukusäädin"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"<ns1:g id="ITEM">%1$s</ns1:g> on valittu"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"Minuuttien ympyränmuotoinen liukusäädin"</string>
-    <string name="mdtp_next_month_arrow_description">Seuraava kuukausi</string>
-    <string name="mdtp_previous_month_arrow_description">Edellinen kuukausi</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"Valitse kuukausi ja päivä"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"Valitse tunnit"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"Valitse minuutit"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"Valitse vuosi"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"Vuosiluettelo"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"Siirry ylös"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"Avaa navigoinnin vetopaneeli"</string>
     <string msgid="368094699078615544" name="s1">"Tallenna kuva"</string>
@@ -71,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"Myönnetäänkö mainokselle oikeus luoda kalenteritapahtuma?"</string>
     <string msgid="7163549807207034258" name="s7">"Testimainos"</string>
     <string msgid="730395136688082741" name="search_menu_title">"Haku"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

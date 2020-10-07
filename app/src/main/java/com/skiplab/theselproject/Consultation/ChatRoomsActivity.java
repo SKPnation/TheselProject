@@ -35,7 +35,7 @@ import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.Home.SelectCategory;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.models.Appointment;
-import com.skiplab.theselproject.models.ChatRoom;
+import com.skiplab.theselproject.models.InstantSession;
 import com.skiplab.theselproject.models.User;
 
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
 
     LinearLayoutManager linearLayoutManager1, linearLayoutManager2;
 
-    List<ChatRoom> chatroomList;
+    List<InstantSession> chatroomList;
     List<Appointment> appointmentList;
 
     ProgressBar mProgressBar;
@@ -74,7 +74,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         usersRef = FirebaseDatabase.getInstance().getReference("users");
-        chatroomRef = FirebaseFirestore.getInstance().collection("chatrooms");
+        chatroomRef = FirebaseFirestore.getInstance().collection("instantSessions");
         appointmentRef = FirebaseFirestore.getInstance().collection("appointments");
 
         mProgressBar = findViewById(R.id.progressBar);
@@ -132,9 +132,6 @@ public class ChatRoomsActivity extends AppCompatActivity {
                                 public void onClick(View v) {
                                     if (ds.getValue(User.class).getIsStaff().equals("false"))
                                     {
-                                        Intent intent = new Intent(mContext, SelectCategory.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
                                         finish();
                                     }
                                     else if (ds.getValue(User.class).getIsStaff().equals("true"))
@@ -178,11 +175,11 @@ public class ChatRoomsActivity extends AppCompatActivity {
                                         chatroomList.clear();
                                         for (DocumentSnapshot ds: queryDocumentSnapshots.getDocuments() )
                                         {
-                                            ChatRoom chatRoom = ds.toObject(ChatRoom.class);
+                                            InstantSession instantSession = ds.toObject(InstantSession.class);
 
                                             mProgressBar.setVisibility(View.GONE);
 
-                                            chatroomList.add(chatRoom);
+                                            chatroomList.add(instantSession);
 
                                         }
                                         instantSessionAdapter = new InstantSessionAdapter(mContext, chatroomList);
@@ -194,7 +191,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
                             else
                             {
                                 mProgressBar.setVisibility(View.GONE);
-                                hintText.setText("No Consultation!");
+                                hintText.setText(" ");
                             }
                         }
                     }
@@ -218,11 +215,11 @@ public class ChatRoomsActivity extends AppCompatActivity {
                                         chatroomList.clear();
                                         for (DocumentSnapshot ds: queryDocumentSnapshots.getDocuments() )
                                         {
-                                            ChatRoom chatRoom = ds.toObject(ChatRoom.class);
+                                            InstantSession instantSession = ds.toObject(InstantSession.class);
 
                                             mProgressBar.setVisibility(View.GONE);
 
-                                            chatroomList.add(chatRoom);
+                                            chatroomList.add(instantSession);
 
                                         }
                                         instantSessionAdapter = new InstantSessionAdapter(mContext, chatroomList);
@@ -234,7 +231,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
                             else
                             {
                                 mProgressBar.setVisibility(View.GONE);
-                                hintText.setText("No Consultation!");
+                                hintText.setText(" ");
                             }
 
 
@@ -276,7 +273,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
                             else
                             {
                                 mProgressBar.setVisibility(View.GONE);
-                                hintText.setText("No Consultation!");
+                                hintText.setText(" ");
                             }
                         }
                     }
@@ -316,7 +313,7 @@ public class ChatRoomsActivity extends AppCompatActivity {
                             else
                             {
                                 mProgressBar.setVisibility(View.GONE);
-                                hintText.setText("No Consultation!");
+                                hintText.setText(" ");
                             }
                         }
                     }
@@ -335,9 +332,6 @@ public class ChatRoomsActivity extends AppCompatActivity {
                         {
                             if (ds.getValue(User.class).getIsStaff().equals("false"))
                             {
-                                Intent intent = new Intent(mContext, SelectCategory.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
                                 finish();
                             }
                             else if (ds.getValue(User.class).getIsStaff().equals("true"))

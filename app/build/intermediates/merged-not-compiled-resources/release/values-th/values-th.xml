@@ -45,20 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"เปิดบนโทรศัพท์"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"ลงชื่อเข้าใช้"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"ลงชื่อเข้าใช้ด้วย Google"</string>
+    <string name="exo_controls_fastforward_description">กรอไปข้างหน้า</string>
+    <string name="exo_controls_fullscreen_description">โหมดเต็มหน้าจอ</string>
+    <string name="exo_controls_next_description">แทร็กถัดไป</string>
+    <string name="exo_controls_pause_description">หยุด</string>
+    <string name="exo_controls_play_description">เล่น</string>
+    <string name="exo_controls_previous_description">แทร็กก่อนหน้า</string>
+    <string name="exo_controls_repeat_all_description">เล่นซ้ำทั้งหมด</string>
+    <string name="exo_controls_repeat_off_description">ไม่เล่นซ้ำ</string>
+    <string name="exo_controls_repeat_one_description">เล่นซ้ำเพลงเดียว</string>
+    <string name="exo_controls_rewind_description">กรอกลับ</string>
+    <string name="exo_controls_shuffle_off_description">ปิดการสุ่มเพลงอยู่</string>
+    <string name="exo_controls_shuffle_on_description">เปิดการสุ่มเพลงอยู่</string>
+    <string name="exo_controls_stop_description">หยุด</string>
+    <string name="exo_controls_vr_description">โหมด VR</string>
+    <string name="exo_download_completed">การดาวน์โหลดเสร็จสมบูรณ์</string>
+    <string name="exo_download_description">ดาวน์โหลด</string>
+    <string name="exo_download_downloading">กำลังดาวน์โหลด</string>
+    <string name="exo_download_failed">การดาวน์โหลดล้มเหลว</string>
+    <string name="exo_download_notification_channel_name">ดาวน์โหลด</string>
+    <string name="exo_download_removing">กำลังนำรายการที่ดาวน์โหลดออก</string>
+    <string name="exo_item_list">%1$s, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Mbps</string>
+    <string name="exo_track_mono">โมโน</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">อื่นๆ</string>
+    <string name="exo_track_role_closed_captions">คำบรรยาย</string>
+    <string name="exo_track_role_commentary">ความคิดเห็น</string>
+    <string name="exo_track_role_supplementary">แทร็กเสริม</string>
+    <string name="exo_track_selection_auto">ยานยนต์</string>
+    <string name="exo_track_selection_none">ไม่มี</string>
+    <string name="exo_track_selection_title_audio">เสียง</string>
+    <string name="exo_track_selection_title_text">ข้อความ</string>
+    <string name="exo_track_selection_title_video">วิดีโอ</string>
+    <string name="exo_track_stereo">สเตอริโอ</string>
+    <string name="exo_track_surround">เสียงเซอร์ราวด์</string>
+    <string name="exo_track_surround_5_point_1">ระบบเสียง 5.1 เซอร์ราวด์</string>
+    <string name="exo_track_surround_7_point_1">7.1 เสียงเซอร์ราวด์</string>
+    <string name="exo_track_unknown">ไม่ทราบ</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"เบ็ดเตล็ด"</string>
-    <string name="mdtp_date_v1_monthyear">MMMM yyyy</string>
-    <string name="mdtp_date_v2_daymonthyear">EEE dd MMM</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"ตารางวันที่ของเดือน"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"ลบ <ns1:g id="KEY">%1$s</ns1:g> แล้ว"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"เสร็จสิ้น"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"ตัวเลื่อนหมุนระบุชั่วโมง"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"เลือก <ns1:g id="ITEM">%1$s</ns1:g>"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"ตัวเลื่อนหมุนระบุนาที"</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"เลือกเดือนและวัน"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"เลือกชั่วโมง"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"เลือกนาที"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"เลือกปี"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"รายการปี"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"นำทางขึ้น"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"เปิดลิ้นชักการนำทาง"</string>
     <string msgid="368094699078615544" name="s1">"บันทึกรูปภาพ"</string>
@@ -69,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"อนุญาตให้โฆษณาสร้างกิจกรรมในปฏิทินไหม"</string>
     <string msgid="7163549807207034258" name="s7">"โฆษณาทดสอบ"</string>
     <string msgid="730395136688082741" name="search_menu_title">"ค้นหา"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

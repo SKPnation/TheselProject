@@ -3,6 +3,9 @@ package com.skiplab.theselproject.Adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,15 +29,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.Consultation.AppointmentChatActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.Appointment;
+import com.skiplab.theselproject.models.InstantSession;
 import com.skiplab.theselproject.models.User;
+import com.skiplab.theselproject.notifications.Data;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.ViewHolder>{
@@ -47,12 +60,18 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     LocalDate todayDate;
 
+    SimpleDateFormat simpleDateFormat, simpleDateFormat1;
+
+    int i = 0;
+
     public AppointmentAdapter(Context context, List<Appointment> appointmentList) {
         this.context = context;
         this.appointmentList = appointmentList;
         mAuth = FirebaseAuth.getInstance();
         usersRef = FirebaseDatabase.getInstance().getReference("users");
         mAppointmentReference = FirebaseFirestore.getInstance().collection("appointments");
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        simpleDateFormat1 = new SimpleDateFormat("HH:mm");
     }
 
     @NonNull
@@ -69,11 +88,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         String appointmentID = appointmentList.get(position).getAppointment_id();
         String clientUID = appointmentList.get(position).getClient_id();
         String counsellorID = appointmentList.get(position).getCounsellor_id();
-        String appointmentDate = appointmentList.get(position).getBooked_date();
+        long appointmentDate = appointmentList.get(position).getBooked_date();
         String startTime = appointmentList.get(position).getStart_time();
         String endTime = appointmentList.get(position).getEnd_time();
         String timeType = appointmentList.get(position).getTimeType();
-        //Boolean absent_bool = appointmentList.get(position).isAbsent();
         long num_messages = appointmentList.get(position).getNum_messages();
 
         //set the number of chat messages
@@ -81,109 +99,230 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
         //set number of chatroom messages
         holder.apptDuration.setText(startTime+" - "+endTime+" "+timeType);
-        holder.apptDateTv.setText(appointmentDate);
+        holder.apptDateTv.setText(simpleDateFormat.format(appointmentDate));
         holder.numMessagesTv.setText(chatMessagesString);
 
-        LocalDate today = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            today = LocalDate.now();
+        Date date0 = new Date();
+        Date date1 = new Date();
+        date0.getTime();
+        date1.setTime(appointmentDate);
 
-            todayDate = today;
-            String todayDateS = todayDate.toString();
+        usersRef.orderByKey().equalTo(mAuth.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds:dataSnapshot.getChildren()){
+                            User user = ds.getValue(User.class);
 
-            usersRef.orderByKey().equalTo(mAuth.getUid())
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot ds:dataSnapshot.getChildren()){
-                                User user = ds.getValue(User.class);
+                            if (user.getIsStaff().equals("false"))
+                            {
+                                holder.chatBtn.setText("Join");
 
-                                if (user.getIsStaff().equals("false"))
-                                {
-                                    usersRef.orderByKey().equalTo(counsellorID)
-                                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                    for (DataSnapshot ds :dataSnapshot.getChildren()) {
-                                                        User counsellor = ds.getValue(User.class);
+                                if (appointmentList.get(position).isAbsent())
+                                    holder.absentBtn.setVisibility(View.VISIBLE);
 
-                                                        //set counsellor name
-                                                        holder.hisNameTv.setText(counsellor.getUsername());
-                                                        holder.categoryTv.setText(counsellor.getCategory1());
+                                usersRef.orderByKey().equalTo(counsellorID)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot ds :dataSnapshot.getChildren()) {
+                                                    User counsellor = ds.getValue(User.class);
 
-                                                        //set counsellor dp
-                                                        try {
-                                                            UniversalImageLoader.setImage(counsellor.getProfile_photo(), holder.avaterIv, null, "");
-                                                        } catch (Exception e) {
-                                                            Log.d("ERROR: ", "" + e);
-                                                        }
+                                                    //set counsellor name
+                                                    holder.hisNameTv.setText(counsellor.getUsername());
+                                                    holder.categoryTv.setText(counsellor.getCategory1());
 
-                                                        holder.chatBtn.setOnClickListener(new View.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(View v) {
-                                                                if (Common.isConnectedToTheInternet(context))
-                                                                {
-                                                                    Intent intent = new Intent(context, AppointmentChatActivity.class);
-                                                                    intent.putExtra("hisUID", counsellorID);
-                                                                    intent.putExtra("appointmentID",appointmentID);
-                                                                    intent.putExtra("hisName",counsellor.getUsername());
-                                                                    context.startActivity(intent);
-                                                                }
-                                                                else
+                                                    //set counsellor dp
+                                                    try {
+                                                        UniversalImageLoader.setImage(counsellor.getProfile_photo(), holder.avaterIv, null, "");
+                                                    } catch (Exception e) {
+                                                        Log.d("ERROR: ", "" + e);
+                                                    }
+
+                                                    holder.chatBtn.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            if (Common.isConnectedToTheInternet(context))
+                                                            {
+                                                                if (!appointmentList.get(position).isOpen())
                                                                 {
                                                                     AlertDialog alertDialog =new AlertDialog.Builder(context)
-                                                                            .setMessage("Please check your internet connection!")
+                                                                            .setMessage("Wait for the consultant to begin the session.")
                                                                             .create();
                                                                     alertDialog.show();
                                                                 }
+                                                                else
+                                                                {
+                                                                    if (!appointmentList.get(position).isAbsent())
+                                                                    {
+                                                                        Intent intent = new Intent(context, AppointmentChatActivity.class);
+                                                                        intent.putExtra("hisUID", counsellorID);
+                                                                        intent.putExtra("appointmentID",appointmentID);
+                                                                        intent.putExtra("hisName",counsellor.getUsername());
+                                                                        context.startActivity(intent);
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                                .setMessage("For showing up late, you have been marked as absent and have lost 5% of your Thesel funds.")
+                                                                                .create();
+                                                                        alertDialog.show();
+
+                                                                        holder.absentBtn.setVisibility(View.VISIBLE);
+
+                                                                        i++;
+
+                                                                        Handler handler = new Handler();
+                                                                        handler.postDelayed(new Runnable() {
+                                                                            @Override
+                                                                            public void run() {
+                                                                                Intent intent = new Intent(context, AppointmentChatActivity.class);
+                                                                                intent.putExtra("hisUID", counsellorID);
+                                                                                intent.putExtra("appointmentID",appointmentID);
+                                                                                intent.putExtra("hisName",counsellor.getUsername());
+                                                                                context.startActivity(intent);
+                                                                            }
+                                                                        },5000);
+                                                                    }
+                                                                }
+
+                                                            }
+                                                            else
+                                                            {
+                                                                AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                                        .setMessage("Please check your internet connection!")
+                                                                        .create();
+                                                                alertDialog.show();
+                                                            }
+                                                        }
+                                                    });
+
+
+                                                    if (date0.after(date1))
+                                                    {
+                                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                                        builder.setCancelable(false);
+                                                        builder.setMessage("Your appointment scheduled for "+startTime+" - "+endTime+" "+timeType+" on "+simpleDateFormat.format(appointmentDate)
+                                                                + " with "+counsellor.getUsername()+" has expired.");
+                                                        builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                dialog.dismiss();
+
+                                                                mAppointmentReference.document(appointmentID).delete();
                                                             }
                                                         });
 
-                                                        //Toast.makeText(context,LocalDate.parse(todayDateS)+"",Toast.LENGTH_SHORT).show();
+                                                        builder.show();
+                                                    }
+                                                }
+                                            }
 
-                                                        if (LocalDate.parse(todayDateS).isAfter(LocalDate.parse(appointmentDate)))
-                                                        {
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                //..
+                                            }
+                                        });
+
+
+                            }
+                            else if (user.getIsStaff().equals("true"))
+                            {
+                                holder.chatBtn.setText("Begin");
+
+                                holder.absentBtn.setVisibility(View.VISIBLE);
+
+                                if (appointmentList.get(position).isAbsent())
+                                    holder.absentBtn.setBackgroundColor(Color.parseColor("#0098DB"));
+
+                                usersRef.orderByKey().equalTo(clientUID)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot ds :dataSnapshot.getChildren()) {
+                                                    User client = ds.getValue(User.class);
+
+                                                    //set counsellor name
+                                                    holder.hisNameTv.setText(client.getUsername());
+
+                                                    holder.categoryTv.setText(user.getCategory1());
+
+                                                    holder.absentBtn.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
                                                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                                            builder.setCancelable(false);
-                                                            builder.setMessage("Your appointment scheduled for "+startTime+" - "+endTime+" "+timeType+" on "+appointmentDate
-                                                                    + " with "+counsellor.getUsername()+" has expired.");
-                                                            builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                            builder.setTitle("Has "+client.getUsername()+" been absent for over 10 mins?");
+                                                            builder.setMessage("If YES, "+client.getUsername()+" will lose 5% of his/her Thesel funds");
+                                                            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    mAppointmentReference.document(appointmentID)
+                                                                            .get()
+                                                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                @Override
+                                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                    if (task.isSuccessful()){
+                                                                                        HashMap<String, Object> hashMap = new HashMap<>();
+                                                                                        hashMap.put("absent", true);
+                                                                                        mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
+                                                                                    }
+                                                                                }
+                                                                            });
+                                                                }
+                                                            });
+
+                                                            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialog, int which) {
                                                                     dialog.dismiss();
-
-                                                                    mAppointmentReference.document(appointmentID).delete();
-
-                                                                    //((ChatRoomsActivity)context).finish();
                                                                 }
                                                             });
 
                                                             builder.show();
                                                         }
-                                                    }
-                                                }
+                                                    });
 
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                    //..
+                                                    holder.chatBtn.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            mAppointmentReference.document(appointmentID)
+                                                                    .get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                            if (task.isSuccessful()){
+                                                                                HashMap<String, Object> hashMap = new HashMap<>();
+                                                                                hashMap.put("open", true);
+                                                                                mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
+
+                                                                                Intent intent = new Intent(context, AppointmentChatActivity.class);
+                                                                                intent.putExtra("hisUID", clientUID);
+                                                                                intent.putExtra("appointmentID",appointmentID);
+                                                                                intent.putExtra("hisName",client.getUsername());
+                                                                                context.startActivity(intent);
+                                                                            }
+                                                                        }
+                                                                    });
+                                                        }
+                                                    });
+
                                                 }
-                                            });
-                                }
-                                else if (user.getIsStaff().equals("true"))
-                                {
-                                    /**
-                                     * FOR IF CURRENT USER IS A COUNSELLOR
-                                     * */
-                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                //..
+                                            }
+                                        });
                             }
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            //..
-                        }
-                    });
-        }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        //..
+                    }
+                });
 
         holder.iconTrashIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,13 +334,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mAppointmentReference.document(appointmentID).delete();
-                                /*.addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        //context.startActivity(new Intent(context, DashboardActivity.class));
-                                        Toast.makeText(context,"",Toast.LENGTH_SHORT).show();
-                                    }
-                                });*/
                     }
                 });
                 builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {

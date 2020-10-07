@@ -27,23 +27,46 @@
     <string msgid="2650565705514630347" name="abc_shareactionprovider_share_with">"Share with"</string>
     <string msgid="9009661856846212431" name="abc_shareactionprovider_share_with_application">"Share with <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
     <string msgid="6389460216547290468" name="abc_toolbar_collapse_description">"Collapse"</string>
-    <string name="mdtp_date_v1_monthyear">MMMM yyyy</string>
-    <string name="mdtp_date_v2_daymonthyear">EEE, MMM dd</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"Month grid of days"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"<ns1:g id="KEY">%1$s</ns1:g> deleted"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"Done"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"Hours circular slider"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"<ns1:g id="ITEM">%1$s</ns1:g> selected"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"Minutes circular slider"</string>
-    <string name="mdtp_next_month_arrow_description">Next Month</string>
-    <string name="mdtp_previous_month_arrow_description">Previous Month</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"Select month and day"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"Select hours"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"Select minutes"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"Select year"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"Year list"</string>
+    <string name="exo_controls_fastforward_description">Fast-forward</string>
+    <string name="exo_controls_fullscreen_description">Full-screen mode</string>
+    <string name="exo_controls_next_description">Next track</string>
+    <string name="exo_controls_pause_description">Pause</string>
+    <string name="exo_controls_play_description">Play</string>
+    <string name="exo_controls_previous_description">Previous track</string>
+    <string name="exo_controls_repeat_all_description">Repeat all</string>
+    <string name="exo_controls_repeat_off_description">Repeat none</string>
+    <string name="exo_controls_repeat_one_description">Repeat one</string>
+    <string name="exo_controls_rewind_description">Rewind</string>
+    <string name="exo_controls_shuffle_off_description">Shuffle off</string>
+    <string name="exo_controls_shuffle_on_description">Shuffle on</string>
+    <string name="exo_controls_stop_description">Stop</string>
+    <string name="exo_controls_vr_description">VR mode</string>
+    <string name="exo_download_completed">Download completed</string>
+    <string name="exo_download_description">Download</string>
+    <string name="exo_download_downloading">Downloading</string>
+    <string name="exo_download_failed">Download failed</string>
+    <string name="exo_download_notification_channel_name">Downloads</string>
+    <string name="exo_download_removing">Removing downloads</string>
+    <string name="exo_item_list">%1$s, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Mbps</string>
+    <string name="exo_track_mono">Mono</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">Alternative</string>
+    <string name="exo_track_role_closed_captions">CC</string>
+    <string name="exo_track_role_commentary">Commentary</string>
+    <string name="exo_track_role_supplementary">Supplementary</string>
+    <string name="exo_track_selection_auto">Auto</string>
+    <string name="exo_track_selection_none">None</string>
+    <string name="exo_track_selection_title_audio">Audio</string>
+    <string name="exo_track_selection_title_text">Text</string>
+    <string name="exo_track_selection_title_video">Video</string>
+    <string name="exo_track_stereo">Stereo</string>
+    <string name="exo_track_surround">Surround sound</string>
+    <string name="exo_track_surround_5_point_1">5.1 surround sound</string>
+    <string name="exo_track_surround_7_point_1">7.1 surround sound</string>
+    <string name="exo_track_unknown">Unknown</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"Navigate up"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"Open navigation drawer"</string>
     <string msgid="730395136688082741" name="search_menu_title">"Search"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

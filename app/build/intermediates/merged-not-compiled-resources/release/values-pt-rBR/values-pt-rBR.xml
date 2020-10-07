@@ -56,5 +56,5 @@
     <string msgid="5996672174517137271" name="s6">"Permitir que os anúncios criem um evento na agenda?"</string>
     <string msgid="7163549807207034258" name="s7">"Anúncio de teste"</string>
     <string msgid="730395136688082741" name="search_menu_title">"Pesquisar"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

@@ -53,28 +53,19 @@ import com.google.firebase.database.ValueEventListener;
 //import com.skiplab.theselproject.Adapter.AdapterChat;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.skiplab.theselproject.Adapter.AdapterChat;
-import com.skiplab.theselproject.Common.Common;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatMessage;
-import com.skiplab.theselproject.models.ChatRoom;
-import com.skiplab.theselproject.models.Profile;
+import com.skiplab.theselproject.models.InstantSession;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.notifications.APIService;
 import com.skiplab.theselproject.notifications.Client;
-import com.skiplab.theselproject.notifications.Data;
-import com.skiplab.theselproject.notifications.Response;
-import com.skiplab.theselproject.notifications.Sender;
-import com.skiplab.theselproject.notifications.Token;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -85,11 +76,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import javax.annotation.Nullable;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -158,7 +145,6 @@ public class ChatActivity extends AppCompatActivity {
 
     SpannableString ss_thanks;
     ForegroundColorSpan fcsBlack;
-    String thanks = "THANKS";
 
     int i = 0;
     int num_messages;
@@ -177,10 +163,6 @@ public class ChatActivity extends AppCompatActivity {
         hisUID = intent.getStringExtra("hisUID");
         chatroomID = intent.getStringExtra("chatroomID");
         myName = intent.getStringExtra("myName");
-
-        ss_thanks = new SpannableString(thanks);
-        fcsBlack = new ForegroundColorSpan(Color.BLACK);
-        ss_thanks.setSpan(fcsBlack, 0,5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 
         mChatroomReference = FirebaseFirestore.getInstance().collection("chatrooms");
@@ -565,9 +547,9 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
-                            ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
+                            InstantSession instantSession = task.getResult().toObject(InstantSession.class);
                             HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("num_messages",chatRoom.getNum_messages()+1);
+                            hashMap.put("num_messages", instantSession.getNum_messages()+1);
                             mChatroomReference.document(chatroomID).set(hashMap, SetOptions.merge());
                         }
                     }
@@ -685,9 +667,9 @@ public class ChatActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if (task.isSuccessful()){
-                                                ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
+                                                InstantSession instantSession = task.getResult().toObject(InstantSession.class);
                                                 HashMap<String, Object> hashMap = new HashMap<>();
-                                                hashMap.put("num_messages",chatRoom.getNum_messages()+1);
+                                                hashMap.put("num_messages", instantSession.getNum_messages()+1);
                                                 mChatroomReference.document(chatroomID).set(hashMap, SetOptions.merge());
                                             }
                                         }
@@ -808,9 +790,9 @@ public class ChatActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                 if (task.isSuccessful()){
-                                                    ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
+                                                    InstantSession instantSession = task.getResult().toObject(InstantSession.class);
                                                     HashMap<String, Object> hashMap = new HashMap<>();
-                                                    hashMap.put("num_messages",chatRoom.getNum_messages()+1);
+                                                    hashMap.put("num_messages", instantSession.getNum_messages()+1);
                                                     mChatroomReference.document(chatroomID).set(hashMap, SetOptions.merge());
                                                 }
                                             }

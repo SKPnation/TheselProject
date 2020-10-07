@@ -45,20 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"在手机上打开"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"登录"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"使用 Google 帐号登录"</string>
+    <string name="exo_controls_fastforward_description">快进</string>
+    <string name="exo_controls_fullscreen_description">全屏模式</string>
+    <string name="exo_controls_next_description">下一曲</string>
+    <string name="exo_controls_pause_description">暂停</string>
+    <string name="exo_controls_play_description">播放</string>
+    <string name="exo_controls_previous_description">上一曲</string>
+    <string name="exo_controls_repeat_all_description">全部重复播放</string>
+    <string name="exo_controls_repeat_off_description">不重复播放</string>
+    <string name="exo_controls_repeat_one_description">重复播放一项</string>
+    <string name="exo_controls_rewind_description">快退</string>
+    <string name="exo_controls_shuffle_off_description">随机播放功能已关闭</string>
+    <string name="exo_controls_shuffle_on_description">随机播放功能已开启</string>
+    <string name="exo_controls_stop_description">停止</string>
+    <string name="exo_controls_vr_description">VR 模式</string>
+    <string name="exo_download_completed">下载完毕</string>
+    <string name="exo_download_description">下载</string>
+    <string name="exo_download_downloading">正在下载</string>
+    <string name="exo_download_failed">下载失败</string>
+    <string name="exo_download_notification_channel_name">下载内容</string>
+    <string name="exo_download_removing">正在移除下载内容</string>
+    <string name="exo_item_list">%1$s，%2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Mbps</string>
+    <string name="exo_track_mono">单声道</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">替用轨</string>
+    <string name="exo_track_role_closed_captions">字幕</string>
+    <string name="exo_track_role_commentary">旁白</string>
+    <string name="exo_track_role_supplementary">补充轨</string>
+    <string name="exo_track_selection_auto">自动</string>
+    <string name="exo_track_selection_none">无</string>
+    <string name="exo_track_selection_title_audio">音频</string>
+    <string name="exo_track_selection_title_text">文字</string>
+    <string name="exo_track_selection_title_video">视频</string>
+    <string name="exo_track_stereo">立体声</string>
+    <string name="exo_track_surround">环绕声</string>
+    <string name="exo_track_surround_5_point_1">5.1 环绕声</string>
+    <string name="exo_track_surround_7_point_1">7.1 环绕声</string>
+    <string name="exo_track_unknown">未知</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"其他"</string>
-    <string name="mdtp_date_v1_monthyear">yyyy年M月</string>
-    <string name="mdtp_date_v2_daymonthyear">M月dd日EEE</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"按月份划分的日期网格"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"已删除 <ns1:g id="KEY">%1$s</ns1:g>"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"完成"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"小时转盘"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"已选择 <ns1:g id="ITEM">%1$s</ns1:g>"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"分钟转盘"</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"选择月份和日期"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"选择小时"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"选择分钟"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"选择年份"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"年份列表"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"转到上一层级"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"打开抽屉式导航栏"</string>
     <string msgid="368094699078615544" name="s1">"保存图片"</string>
@@ -69,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"允许广告创建日历活动吗？"</string>
     <string msgid="7163549807207034258" name="s7">"测试广告"</string>
     <string msgid="730395136688082741" name="search_menu_title">"搜索"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

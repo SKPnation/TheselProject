@@ -45,20 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Otevřít v telefonu"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Přihlásit se"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Přihlásit se k účtu Google"</string>
+    <string name="exo_controls_fastforward_description">Rychle vpřed</string>
+    <string name="exo_controls_fullscreen_description">Režim celé obrazovky</string>
+    <string name="exo_controls_next_description">Další skladba</string>
+    <string name="exo_controls_pause_description">Pozastavit</string>
+    <string name="exo_controls_play_description">Přehrát</string>
+    <string name="exo_controls_previous_description">Předchozí skladba</string>
+    <string name="exo_controls_repeat_all_description">Opakovat vše</string>
+    <string name="exo_controls_repeat_off_description">Neopakovat</string>
+    <string name="exo_controls_repeat_one_description">Opakovat jednu</string>
+    <string name="exo_controls_rewind_description">Přetočit zpět</string>
+    <string name="exo_controls_shuffle_off_description">Náhodné přehrávání vypnuto</string>
+    <string name="exo_controls_shuffle_on_description">Náhodné přehrávání zapnuto</string>
+    <string name="exo_controls_stop_description">Zastavit</string>
+    <string name="exo_controls_vr_description">Režim VR</string>
+    <string name="exo_download_completed">Stahování bylo dokončeno</string>
+    <string name="exo_download_description">Stáhnout</string>
+    <string name="exo_download_downloading">Stahování</string>
+    <string name="exo_download_failed">Stažení se nezdařilo</string>
+    <string name="exo_download_notification_channel_name">Stahování</string>
+    <string name="exo_download_removing">Odstraňování staženého obsahu</string>
+    <string name="exo_item_list">%1$s, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Mb/s</string>
+    <string name="exo_track_mono">Mono</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">Alternativní</string>
+    <string name="exo_track_role_closed_captions">Titulky</string>
+    <string name="exo_track_role_commentary">Komentář</string>
+    <string name="exo_track_role_supplementary">Dodatkové</string>
+    <string name="exo_track_selection_auto">Automaticky</string>
+    <string name="exo_track_selection_none">Žádné</string>
+    <string name="exo_track_selection_title_audio">Zvuk</string>
+    <string name="exo_track_selection_title_text">Text</string>
+    <string name="exo_track_selection_title_video">Videa</string>
+    <string name="exo_track_stereo">Stereo</string>
+    <string name="exo_track_surround">Prostorový zvuk</string>
+    <string name="exo_track_surround_5_point_1">Prostorový zvuk 5.1</string>
+    <string name="exo_track_surround_7_point_1">Prostorový zvuk 7.1</string>
+    <string name="exo_track_unknown">Neznámé</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Různé"</string>
-    <string name="mdtp_date_v1_monthyear">LLLL yyyy</string>
-    <string name="mdtp_date_v2_daymonthyear">EEE dd. M.</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"Dny uspořádané po měsících"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"<ns1:g id="KEY">%1$s</ns1:g> smazáno"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"Hotovo"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"Kruhový posuvník hodin"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"Vybrána položka <ns1:g id="ITEM">%1$s</ns1:g>"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"Kruhový posuvník minut"</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"Vyberte měsíc a den"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"Zvolte hodiny"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"Zvolte minuty"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"Vyberte rok"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"Seznam roků"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"Přejít nahoru"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"Otevřít vysouvací panel navigace"</string>
     <string msgid="368094699078615544" name="s1">"Uložení obrázku"</string>
@@ -69,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"Povolit reklamě, aby vytvořila událost kalendáře?"</string>
     <string msgid="7163549807207034258" name="s7">"Zkušební reklama"</string>
     <string msgid="730395136688082741" name="search_menu_title">"Hledat"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

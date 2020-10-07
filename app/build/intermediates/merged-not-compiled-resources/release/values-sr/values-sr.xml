@@ -45,20 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Отвори на телефону"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Пријави ме"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Пријави ме на Google"</string>
+    <string name="exo_controls_fastforward_description">Премотај унапред</string>
+    <string name="exo_controls_fullscreen_description">Режим целог екрана</string>
+    <string name="exo_controls_next_description">Следећа песма</string>
+    <string name="exo_controls_pause_description">Паузирај</string>
+    <string name="exo_controls_play_description">Пусти</string>
+    <string name="exo_controls_previous_description">Претходна песма</string>
+    <string name="exo_controls_repeat_all_description">Понови све</string>
+    <string name="exo_controls_repeat_off_description">Не понављај ниједну</string>
+    <string name="exo_controls_repeat_one_description">Понови једну</string>
+    <string name="exo_controls_rewind_description">Премотај уназад</string>
+    <string name="exo_controls_shuffle_off_description">Насумично пуштање је искључено</string>
+    <string name="exo_controls_shuffle_on_description">Насумично пуштање је укључено</string>
+    <string name="exo_controls_stop_description">Заустави</string>
+    <string name="exo_controls_vr_description">ВР режим</string>
+    <string name="exo_download_completed">Преузимање је завршено</string>
+    <string name="exo_download_description">Преузми</string>
+    <string name="exo_download_downloading">Преузима се</string>
+    <string name="exo_download_failed">Преузимање није успело</string>
+    <string name="exo_download_notification_channel_name">Преузимања</string>
+    <string name="exo_download_removing">Преузимања се уклањају</string>
+    <string name="exo_item_list">%1$s, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Mb/s</string>
+    <string name="exo_track_mono">Моно</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">Алтернативно</string>
+    <string name="exo_track_role_closed_captions">Титл</string>
+    <string name="exo_track_role_commentary">Коментар</string>
+    <string name="exo_track_role_supplementary">Додатно</string>
+    <string name="exo_track_selection_auto">Аутоматски</string>
+    <string name="exo_track_selection_none">Ниједна</string>
+    <string name="exo_track_selection_title_audio">Аудио</string>
+    <string name="exo_track_selection_title_text">Текст</string>
+    <string name="exo_track_selection_title_video">Видео</string>
+    <string name="exo_track_stereo">Стерео</string>
+    <string name="exo_track_surround">Звучни систем</string>
+    <string name="exo_track_surround_5_point_1">Звучни систем 5.1</string>
+    <string name="exo_track_surround_7_point_1">Звучни систем 7.1</string>
+    <string name="exo_track_unknown">Непознато</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Разно"</string>
-    <string name="mdtp_date_v1_monthyear">MMMM yyyy.</string>
-    <string name="mdtp_date_v2_daymonthyear">EEE dd. MMM</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"Приказ дана у месецу у виду мреже"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"Избрисали сте <ns1:g id="KEY">%1$s</ns1:g>"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"Готово"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"Кружни клизач за сате"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"Ставка <ns1:g id="ITEM">%1$s</ns1:g> је изабрана"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"Кружни клизач за минуте"</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"Изаберите месец и дан"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"Изабери сате"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"Изабери минуте"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"Изаберите годину"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"Листа година"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"Идите нагоре"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"Отворите фиоку за навигацију"</string>
     <string msgid="368094699078615544" name="s1">"Чување слике"</string>
@@ -69,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"Желите ли да дозволите да оглас направи догађај у календару?"</string>
     <string msgid="7163549807207034258" name="s7">"Пробни оглас"</string>
     <string msgid="730395136688082741" name="search_menu_title">"Претражите"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

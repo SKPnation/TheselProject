@@ -9,7 +9,7 @@
     android:background="@drawable/profile_coverphoto2"
     android:backgroundTint="#6C7A89"
     android:backgroundTintMode="multiply"
-    tools:context=".ChatActivity">
+    tools:context=".Consultation.ChatActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,8 +35,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_centerVertical="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/default_img" />
+                    android:scaleType="centerCrop"/>
 
                 <LinearLayout
                     android:id="@+id/name_timer_layout"
@@ -50,7 +49,7 @@
                         android:id="@+id/nameTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Username"
+                        android:text=""
                         android:textColor="#fff"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
@@ -69,28 +68,29 @@
 
                 <Button
                     android:id="@+id/button_start_pause"
+                    android:layout_toLeftOf="@id/button_thanks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/name_timer_layout"
-                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerVertical="true"
                     android:textSize="14sp"
-                    android:textColor="@color/colorAccent"
-                    android:text="Start" />
+                    android:textColor="#fff"
+                    android:text="START" />
 
                 <Button
-                    android:id="@+id/reportBtn"
+                    android:id="@+id/button_thanks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/name_timer_layout"
-                    android:layout_gravity="center_vertical"
+                    android:backgroundTint="#0F8EBE"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:textSize="14sp"
-                    android:textColor="@color/colorAccent"
-                    android:visibility="gone"
-                    android:text="Report" />
+                    android:textColor="#fff"
+                    android:text="THANKS" />
 
             </RelativeLayout>
 
@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/chatLayout"
-            android:layout_below="@id/toolbar"/>
+            android:layout_below="@id/toolbar" />
 
         <LinearLayout
             android:id="@+id/chatLayout"

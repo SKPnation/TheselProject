@@ -12,7 +12,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
-        android:background="#fff"
+        android:background="#f2f2f2"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -30,13 +30,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="New Post"
-                    android:textSize="24sp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                    android:textColor="#000000"/>
+                    android:textSize="25sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+                    android:textColor="@color/colorPrimary"/>
 
                 <ImageView
                     android:id="@+id/fowardArrow"
-                    android:src="@drawable/ic_foward_green"
+                    android:src="@drawable/ic_arrow_forward"
+                    android:tint="@color/colorPrimary"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="20dp"
@@ -90,8 +91,8 @@
         android:layout_marginBottom="40dp"
         android:layout_marginLeft="30dp"
         app:backgroundTint="@color/colorAccent"
-        android:visibility="gone"
         app:srcCompat="@drawable/ic_add"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"
+        android:visibility="gone"/>
 
 </RelativeLayout>

@@ -45,20 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Deschideți pe telefon"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Conectați-vă"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Conectați-vă cu Google"</string>
+    <string name="exo_controls_fastforward_description">Derulați rapid înainte</string>
+    <string name="exo_controls_fullscreen_description">Modul Ecran complet</string>
+    <string name="exo_controls_next_description">Următoarea înregistrare</string>
+    <string name="exo_controls_pause_description">Întrerupeți</string>
+    <string name="exo_controls_play_description">Redați</string>
+    <string name="exo_controls_previous_description">Melodia anterioară</string>
+    <string name="exo_controls_repeat_all_description">Repetați-le pe toate</string>
+    <string name="exo_controls_repeat_off_description">Nu repetați niciunul</string>
+    <string name="exo_controls_repeat_one_description">Repetați unul</string>
+    <string name="exo_controls_rewind_description">Derulați înapoi</string>
+    <string name="exo_controls_shuffle_off_description">Redare aleatorie dezactivată</string>
+    <string name="exo_controls_shuffle_on_description">Redare aleatorie activată</string>
+    <string name="exo_controls_stop_description">Opriți</string>
+    <string name="exo_controls_vr_description">Mod RV</string>
+    <string name="exo_download_completed">Descărcarea a fost finalizată</string>
+    <string name="exo_download_description">Descărcați</string>
+    <string name="exo_download_downloading">Se descarcă</string>
+    <string name="exo_download_failed">Descărcarea nu a reușit</string>
+    <string name="exo_download_notification_channel_name">Descărcări</string>
+    <string name="exo_download_removing">Se elimină descărcările</string>
+    <string name="exo_item_list">%1$s, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Mbps</string>
+    <string name="exo_track_mono">Mono</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">Alternativ</string>
+    <string name="exo_track_role_closed_captions">Subtitrări</string>
+    <string name="exo_track_role_commentary">Comentarii</string>
+    <string name="exo_track_role_supplementary">Suplimentar</string>
+    <string name="exo_track_selection_auto">Automat</string>
+    <string name="exo_track_selection_none">Fără</string>
+    <string name="exo_track_selection_title_audio">Audio</string>
+    <string name="exo_track_selection_title_text">Text</string>
+    <string name="exo_track_selection_title_video">Video</string>
+    <string name="exo_track_stereo">Stereo</string>
+    <string name="exo_track_surround">Sunet surround</string>
+    <string name="exo_track_surround_5_point_1">Sunet surround 5.1</string>
+    <string name="exo_track_surround_7_point_1">Sunet surround 7.1</string>
+    <string name="exo_track_unknown">Necunoscut</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Diverse"</string>
-    <string name="mdtp_date_v1_monthyear">MMMM yyyy</string>
-    <string name="mdtp_date_v2_daymonthyear">EEE, dd MMM</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"Afișare pe luni"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"<ns1:g id="KEY">%1$s</ns1:g> a fost șters"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"Terminat"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"Indicator circular ore"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"<ns1:g id="ITEM">%1$s</ns1:g> selectat"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"Indicator circular minute"</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"Selectați luna și ziua"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"Selectați orele"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"Selectați minutele"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"Selectați anul"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"Listă de ani"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"Navigați în sus"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"Deschideți panoul de navigare"</string>
     <string msgid="368094699078615544" name="s1">"Salvați imaginea"</string>
@@ -69,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"Permiteți ca anunțul să creeze un eveniment în calendar?"</string>
     <string msgid="7163549807207034258" name="s7">"Anunț de probă"</string>
     <string msgid="730395136688082741" name="search_menu_title">"Căutați"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

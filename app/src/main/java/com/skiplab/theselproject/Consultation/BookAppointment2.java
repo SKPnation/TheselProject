@@ -38,12 +38,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.JavaMailAPI;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.User;
+import com.skiplab.theselproject.notifications.APIService;
+import com.skiplab.theselproject.notifications.Client;
+import com.skiplab.theselproject.notifications.Data;
+import com.skiplab.theselproject.notifications.Response;
+import com.skiplab.theselproject.notifications.Sender;
+import com.skiplab.theselproject.notifications.Token;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -55,6 +65,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
+
+import javax.annotation.Nullable;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 import static android.provider.CalendarContract.ACTION_EVENT_REMINDER;
 import static android.provider.CalendarContract.EXTRA_EVENT_BEGIN_TIME;
@@ -71,7 +86,7 @@ public class BookAppointment2 extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     DatabaseReference usersRef;
-    CollectionReference appointmentsRef;
+    CollectionReference appointmentsRef, allTokens;
 
     ImageView hisImageIv;
     TextView hisNameTv, hisCategoryTv, hisCostTv, apptDateTv, apptTimeTv, apptFeeTv;
@@ -79,7 +94,7 @@ public class BookAppointment2 extends AppCompatActivity {
 
     String hisName;
     String myUID, myEmail, myName;
-    String hisUID, startTime, endTime, timeType, slot;
+    String hisUID, hisCategory, startTime, endTime, timeType, slot;
     Long selectedDate;
     Long hisCost;
 
@@ -91,6 +106,10 @@ public class BookAppointment2 extends AppCompatActivity {
 
     SimpleDateFormat simpleDateFormat,simpleDateFormat1;
 
+    APIService apiService;
+
+    String adminUID = "1zNcpaSxviY7GLLRGVQt8ywPla52";
+
     public static boolean isActivityRunning;
 
     @Override
@@ -100,8 +119,11 @@ public class BookAppointment2 extends AppCompatActivity {
 
         setupFirebaseAuth();
 
+        apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
+
         usersRef = FirebaseDatabase.getInstance().getReference("users");
         appointmentsRef = FirebaseFirestore.getInstance().collection("appointments");
+        allTokens = FirebaseFirestore.getInstance().collection("tokens");
 
         locale = new Locale("en", "NG");
         fmt = NumberFormat.getCurrencyInstance(locale);
@@ -162,6 +184,8 @@ public class BookAppointment2 extends AppCompatActivity {
                             hisName = ds.getValue(User.class).getUsername();
                             hisNameTv.setText(ds.getValue(User.class).getUsername());
                             hisCategoryTv.setText(ds.getValue(User.class).getCategory1());
+
+                            hisCategory = ds.getValue(User.class).getCategory1();
 
                             try {
                                 UniversalImageLoader.setImage(ds.getValue(User.class).getProfile_photo(), hisImageIv, null, "");
@@ -232,12 +256,13 @@ public class BookAppointment2 extends AppCompatActivity {
                             appointmentMap.put("counsellor_id", hisUID);
                             appointmentMap.put("client_id", myUID);
                             appointmentMap.put("appointment_id", appointmentId);
-                            appointmentMap.put("booked_date", simpleDateFormat.format(selectedDate));
+                            appointmentMap.put("booked_date", selectedDate);
                             appointmentMap.put("start_time", startEventTime);
                             appointmentMap.put("end_time",endEventTime);
                             appointmentMap.put("slot",slot);
                             appointmentMap.put("absent",false);
                             appointmentMap.put("num_messages",0);
+                            appointmentMap.put("open",false);
                             appointmentMap.put("timeType",timeType);
                             appointmentMap.put("timestamp", FieldValue.serverTimestamp());
 
@@ -297,10 +322,36 @@ public class BookAppointment2 extends AppCompatActivity {
                                             builder1.setNegativeButton("SKIP", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    Intent intent1 = new Intent(mContext, ChatRoomsActivity.class);
-                                                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                    startActivity(intent1);
-                                                    finish();
+
+                                                    String timestamp = String.valueOf(System.currentTimeMillis());
+
+                                                    HashMap<String,Object> myNotificationsMap = new HashMap<>();
+                                                    myNotificationsMap.put("counsellor_id",hisUID);
+                                                    myNotificationsMap.put("client_id",myUID);
+                                                    myNotificationsMap.put("category",hisCategory);
+                                                    myNotificationsMap.put("title","New Appointment");
+                                                    myNotificationsMap.put("content",hisName.toUpperCase()+", You have a new Appointment");
+                                                    myNotificationsMap.put("expiry_date",simpleDateFormat.format(selectedDate));
+                                                    myNotificationsMap.put("appointment_time",simpleDateFormat.format(selectedDate)+", "+startEventTime+" - "+endEventTime+" "+timeType);
+                                                    myNotificationsMap.put("timestamp",FieldValue.serverTimestamp());
+                                                    myNotificationsMap.put("read",false);
+
+                                                    FirebaseFirestore.getInstance().collection("myNotifications")
+                                                            .document(timestamp)
+                                                            .set(myNotificationsMap)
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    //sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
+
+                                                                    sendAdminNotification(myUID, "for "+hisName, "New Appointment");
+
+                                                                    Intent intent1 = new Intent(mContext, ChatRoomsActivity.class);
+                                                                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                    startActivity(intent1);
+                                                                    finish();
+                                                                }
+                                                            });
                                                 }
                                             });
 
@@ -430,61 +481,59 @@ public class BookAppointment2 extends AppCompatActivity {
         };
     }
 
-    /*Appointment appointment0 = new Appointment();
-                                                                        appointment0.setClient_id(myUID);
-                                                                        appointment0.setCounsellor_id(hisUID);
-                                                                        appointment0.setBooked_date(simpleDateFormat.format(selected_date.getTime()));
-                                                                        appointment0.setNum_messages(0);
-                                                                        appointment0.setStartTime("05:00")
-                                                                        appointment0.setEndTime("05:40");
-                                                                        appointment0.setTimestamp(timestamp);
-                                                                        appointment0.setSlot("0");
-                                                                        appointment0.setAppointment_id(String chatroomId = UUID.randomUUID().toString(););
-                                                                        appointment0.setAbsent(false);*/
+    private void sendAdminNotification(String clientUID, String body, String title) {
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(clientUID, body, title, adminUID, R.mipmap.ic_launcher3);
 
-    /*
-    LocalDate today = null;
-                                LocalDateTime time = null;
-                                LocalDateTime nowtime;
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
 
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                                    today = LocalDate.now();
-                                    time = LocalDateTime.now();
-
-                                    todayDate = today;
-                                    nowtime = time;
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
 
 
-                                    if (simpleDateFormat.format(selected_date.getTime()).equals(todayDate.toString()))
-                                    {
-                                        calendar = Calendar.getInstance();
-                                        calendar.setTime(selected_date.getTime());
-                                        calendar.add(Calendar.HOUR_OF_DAY,6);
-
-                                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-
-
-                                        if (selected_date.getTime().after(calendar.getTime()))
-                                            Toast.makeText(mContext,"NO!!!",Toast.LENGTH_SHORT).show();
-                                        else
-                                            Toast.makeText(mContext,formatter.format(selected_date.getTime())+": "+formatter.format(calendar.getTime()),Toast.LENGTH_SHORT).show();
-
-
-                                    }
-                                    }
-    */
-
-
-     /*if (checkPermissionFromDevice())
-                {
-                    addToDeviceCalendar(startEventTime, endEventTime,"Thesel Appointment",
-                            new StringBuilder("Appointment from ")
-                                    .append(appointmentDuration)
-                                    .append(" on the ")
-                                    .append(simpleDateFormat.format(selectedDate))
-                                    .append(" with ")
-                                    .append(hisName));
                 }
-                else
-                    requestPermission();*/
+            }
+        });
+    }
+
+    private void sendNotification(String hisUID, String myName, String body) {
+        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                    Token token = new Token(ds1.getString("token"));
+                    Data data = new Data(myUID, body, myName, hisUID, R.mipmap.ic_launcher3);
+
+                    Sender sender = new Sender(data, token.getToken());
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<Response>() {
+                                @Override
+                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                    //..
+                                }
+
+                                @Override
+                                public void onFailure(Call<Response> call, Throwable t) {
+                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+                }
+            }
+        });
+    }
 }

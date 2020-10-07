@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.skiplab.theselproject"
     android:targetSandboxVersion="2"
-    android:versionCode="22"
-    android:versionName="1.8.9.2" >
+    android:versionCode="40"
+    android:versionName="1.9.9.0" >
 
     <uses-sdk
-        android:minSdkVersion="24"
+        android:minSdkVersion="19"
         android:targetSdkVersion="29" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,8 +19,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" /> <!-- Required by older versions of Google Play services to create IID tokens -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -41,14 +42,29 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
+        android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.skiplab.theselproject.Consultation.AppointmentChatActivity" />
+        <activity android:name="com.skiplab.theselproject.TimeDayAlreadyChosen" />
+        <activity android:name="com.skiplab.theselproject.Consultation.BookAppointment2" />
+        <activity android:name="com.skiplab.theselproject.AvailabilityEdit" />
+        <activity android:name="com.skiplab.theselproject.Home.ConsultationNotificationActivity" />
+        <activity android:name="com.skiplab.theselproject.RealtimeDbEdit" />
+        <activity android:name="com.skiplab.theselproject.AdminEdit" />
+        <activity android:name="com.skiplab.theselproject.Consultation.BookAppointment1" />
+        <activity android:name="com.skiplab.theselproject.Consultation.ChatRoomsActivity" />
+        <activity android:name="com.skiplab.theselproject.Consultation.DepositActivity" />
+        <activity android:name="com.skiplab.theselproject.Consultation.WalletActivity" />
+        <activity android:name="com.skiplab.theselproject.Consultation.ChatActivity" />
+        <activity android:name="com.skiplab.theselproject.Consultation.ConsultantsActivity" />
+        <activity android:name="com.skiplab.theselproject.AddPost.SelectMood" />
+        <activity android:name="com.skiplab.theselproject.Home.SelectCategory" />
+        <activity android:name="com.skiplab.theselproject.Home.VideoGallery" />
+        <activity android:name="com.skiplab.theselproject.Activity.NotificationsActivity" />
+        <activity android:name="com.skiplab.theselproject.Home.FullscreenActivity" />
+        <activity android:name="com.skiplab.theselproject.Home.EditVideoActivity" />
         <activity android:name="com.skiplab.theselproject.Questionnaire.QuestionnaireActivity" />
-        <activity android:name="com.skiplab.theselproject.PaymentActivity" />
-        <activity android:name="com.skiplab.theselproject.Profile.RequestsActivity" />
         <activity android:name="com.skiplab.theselproject.SupportActivity" />
-        <activity android:name="com.skiplab.theselproject.LatenessReportActivity" />
-        <activity android:name="com.skiplab.theselproject.Profile.GalleryActivity" />
-        <activity android:name="com.skiplab.theselproject.Profile.MyPostsActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -57,7 +73,6 @@
             android:name="co.paystack.android.PublicKey"
             android:value="pk_live_b52f8dfdae10acd0d8844ac2a135306ac4026c98" />
 
-        <activity android:name="com.skiplab.theselproject.ChatActivity" />
         <activity android:name="com.skiplab.theselproject.Authentication.StaffRegisterActivity" />
         <activity android:name="com.skiplab.theselproject.Authentication.AdminRegisterActivity" />
         <activity android:name="com.skiplab.theselproject.TermsOfService" />
@@ -66,7 +81,7 @@
         <activity android:name="com.skiplab.theselproject.AddPost.CategoryActivity" />
         <activity android:name="com.skiplab.theselproject.AddPost.NewPostActivity" />
         <activity android:name="com.skiplab.theselproject.DashboardActivity" />
-        <activity android:name="com.skiplab.theselproject.Profile.AccountSettingsActivity" />
+        <activity android:name="com.skiplab.theselproject.Settings.AccountSettingsActivity" />
         <activity android:name="com.skiplab.theselproject.Authentication.LoginActivity" />
         <activity android:name="com.skiplab.theselproject.Authentication.RegisterActivity" />
         <activity android:name="com.skiplab.theselproject.Main2Activity" />
@@ -96,24 +111,13 @@
         </service>
 
         <activity
+            android:name="com.karumi.dexter.DexterActivity"
+            android:theme="@style/Dexter.Internal.Theme.Transparent" />
+        <activity
             android:name="pub.devrel.easypermissions.AppSettingsDialogHolderActivity"
             android:exported="false"
             android:label=""
             android:theme="@style/EasyPermissions.Transparent" />
-
-        <receiver
-            android:name="com.allyants.notifyme.BootNotifyMe"
-            android:enabled="true"
-            android:exported="true" />
-        <receiver
-            android:name="com.allyants.notifyme.ActionReceiver"
-            android:enabled="true"
-            android:exported="true" />
-        <receiver
-            android:name="com.allyants.notifyme.DeletePendingIntent"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name="co.paystack.android.ui.PinActivity"
             android:theme="@style/Paystack.Dialog.PinEntry" />

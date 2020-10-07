@@ -1,10 +1,13 @@
-#Wed Jul 08 09:46:22 WAT 2020
+#Wed Oct 07 16:38:05 WAT 2020
+path.3=classes3.dex
 path.2=classes2.dex
 path.1=classes.dex
 path.0=classes.dex
+renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
+base.3=/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/dex/debug/mergeExtDexDebug/out/classes3.dex
 base.2=/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/dex/debug/mergeExtDexDebug/out/classes2.dex
 base.1=/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/dex/debug/mergeProjectDexDebug/out/classes.dex
 base.0=/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/dex/debug/mergeExtDexDebug/out/classes.dex

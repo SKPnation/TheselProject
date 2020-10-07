@@ -45,20 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Открыть на телефоне"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Войти"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Войти через аккаунт Google"</string>
+    <string name="exo_controls_fastforward_description">Перемотать вперед</string>
+    <string name="exo_controls_fullscreen_description">Полноэкранный режим</string>
+    <string name="exo_controls_next_description">Следующий трек</string>
+    <string name="exo_controls_pause_description">Приостановить</string>
+    <string name="exo_controls_play_description">Воспроизвести</string>
+    <string name="exo_controls_previous_description">Предыдущий трек</string>
+    <string name="exo_controls_repeat_all_description">Повторять все</string>
+    <string name="exo_controls_repeat_off_description">Не повторять</string>
+    <string name="exo_controls_repeat_one_description">Повторять трек</string>
+    <string name="exo_controls_rewind_description">Перемотать назад</string>
+    <string name="exo_controls_shuffle_off_description">Перемешивание отключено</string>
+    <string name="exo_controls_shuffle_on_description">Перемешивание включено</string>
+    <string name="exo_controls_stop_description">Остановить</string>
+    <string name="exo_controls_vr_description">VR-режим</string>
+    <string name="exo_download_completed">Скачивание завершено</string>
+    <string name="exo_download_description">Скачать</string>
+    <string name="exo_download_downloading">Скачивание…</string>
+    <string name="exo_download_failed">Ошибка скачивания</string>
+    <string name="exo_download_notification_channel_name">Скачивания</string>
+    <string name="exo_download_removing">Удаление скачанных файлов…</string>
+    <string name="exo_item_list">%1$s, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Мбит/сек</string>
+    <string name="exo_track_mono">Моно</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">Другая запись</string>
+    <string name="exo_track_role_closed_captions">Субтитры</string>
+    <string name="exo_track_role_commentary">Комментарии</string>
+    <string name="exo_track_role_supplementary">Дополнительные материалы</string>
+    <string name="exo_track_selection_auto">Авто</string>
+    <string name="exo_track_selection_none">Нет</string>
+    <string name="exo_track_selection_title_audio">Аудио</string>
+    <string name="exo_track_selection_title_text">Текст</string>
+    <string name="exo_track_selection_title_video">Видео</string>
+    <string name="exo_track_stereo">Стерео</string>
+    <string name="exo_track_surround">Объемный звук</string>
+    <string name="exo_track_surround_5_point_1">Система объемного звука 5.1</string>
+    <string name="exo_track_surround_7_point_1">Система объемного звука 7.1</string>
+    <string name="exo_track_unknown">Неизвестный трек</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Другое"</string>
-    <string name="mdtp_date_v1_monthyear">LLLL yyyy</string>
-    <string name="mdtp_date_v2_daymonthyear">ccc, dd MMM</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"Окно выбора даты"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"Цифра <ns1:g id="KEY">%1$s</ns1:g> удалена"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"Готово"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"Выбор часов на циферблате"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"Выбран элемент <ns1:g id="ITEM">%1$s</ns1:g>"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"Выбор минут на циферблате"</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"Выберите месяц и день"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"Выберите часы"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"Выберите минуты"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"Выберите год"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"Меню выбора года"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"Перейти вверх"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"Открыть панель навигации"</string>
     <string msgid="368094699078615544" name="s1">"Сохранить изображение"</string>
@@ -69,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"Разрешить объявлению создать мероприятие в календаре?"</string>
     <string msgid="7163549807207034258" name="s7">"Тестовое объявление"</string>
     <string msgid="730395136688082741" name="search_menu_title">"Поиск"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">">999"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">">999"</string>
 </resources>

@@ -9,18 +9,19 @@ public class Appointment {
     private Date timestamp;
     private String counsellor_id, client_id;
     private String appointment_id;
-    private String booked_date;
+    private long booked_date;
     private String start_time;
     private String end_time;
     private String slot;
     private String timeType;
     private boolean absent;
+    private boolean open;
     private long num_messages;
 
     public Appointment() {
     }
 
-    public Appointment(Date timestamp, String counsellor_id, String client_id, String appointment_id, String booked_date, String start_time, String end_time, String slot, String timeType, boolean absent, long num_messages) {
+    public Appointment(Date timestamp, String counsellor_id, String client_id, String appointment_id, long booked_date, String start_time, String end_time, String slot, String timeType, boolean absent, boolean open, long num_messages) {
         this.timestamp = timestamp;
         this.counsellor_id = counsellor_id;
         this.client_id = client_id;
@@ -31,6 +32,7 @@ public class Appointment {
         this.slot = slot;
         this.timeType = timeType;
         this.absent = absent;
+        this.open = open;
         this.num_messages = num_messages;
     }
 
@@ -66,11 +68,11 @@ public class Appointment {
         this.appointment_id = appointment_id;
     }
 
-    public String getBooked_date() {
+    public long getBooked_date() {
         return booked_date;
     }
 
-    public void setBooked_date(String booked_date) {
+    public void setBooked_date(long booked_date) {
         this.booked_date = booked_date;
     }
 
@@ -112,6 +114,14 @@ public class Appointment {
 
     public void setAbsent(boolean absent) {
         this.absent = absent;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 
     public long getNum_messages() {

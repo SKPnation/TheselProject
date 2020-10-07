@@ -25,9 +25,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -61,7 +59,7 @@ import com.skiplab.theselproject.Adapter.AdapterChat;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatMessage;
-import com.skiplab.theselproject.models.ChatRoom;
+import com.skiplab.theselproject.models.InstantSession;
 import com.skiplab.theselproject.models.Profile;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.notifications.APIService;
@@ -420,9 +418,9 @@ public class AppointmentChatActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
-                            ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
+                            InstantSession instantSession = task.getResult().toObject(InstantSession.class);
                             HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("num_messages",chatRoom.getNum_messages()+1);
+                            hashMap.put("num_messages", instantSession.getNum_messages()+1);
                             mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
                         }
                     }
@@ -540,9 +538,9 @@ public class AppointmentChatActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if (task.isSuccessful()){
-                                                ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
+                                                InstantSession instantSession = task.getResult().toObject(InstantSession.class);
                                                 HashMap<String, Object> hashMap = new HashMap<>();
-                                                hashMap.put("num_messages",chatRoom.getNum_messages()+1);
+                                                hashMap.put("num_messages", instantSession.getNum_messages()+1);
                                                 mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
                                             }
                                         }
@@ -663,9 +661,9 @@ public class AppointmentChatActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                 if (task.isSuccessful()){
-                                                    ChatRoom chatRoom = task.getResult().toObject(ChatRoom.class);
+                                                    InstantSession instantSession = task.getResult().toObject(InstantSession.class);
                                                     HashMap<String, Object> hashMap = new HashMap<>();
-                                                    hashMap.put("num_messages",chatRoom.getNum_messages()+1);
+                                                    hashMap.put("num_messages", instantSession.getNum_messages()+1);
                                                     mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
                                                 }
                                             }

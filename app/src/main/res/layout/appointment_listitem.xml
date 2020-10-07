@@ -153,7 +153,8 @@
                         android:textSize="15sp"
                         android:textColor="@android:color/black"
                         android:text="ABSENT"
-                        android:layout_alignParentRight="true"/>
+                        android:layout_alignParentRight="true"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
 
@@ -166,7 +167,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textColor="@android:color/white"
-                android:text="Begin"
                 android:layout_alignParentRight="true"
                 android:textAllCaps="false"/>
 

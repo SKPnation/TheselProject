@@ -1,423 +1,435 @@
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:33
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:32
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:234
--keep class androidx.lifecycle.ProcessLifecycleOwnerInitializer { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:121
--keep class co.paystack.android.ui.AuthActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:124
--keep class co.paystack.android.ui.CardActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:118
--keep class co.paystack.android.ui.OtpActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:115
--keep class co.paystack.android.ui.PinActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:106
--keep class com.allyants.notifyme.ActionReceiver { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:102
--keep class com.allyants.notifyme.BootNotifyMe { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:110
--keep class com.allyants.notifyme.DeletePendingIntent { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:215
--keep class com.google.android.gms.ads.AdActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:205
--keep class com.google.android.gms.common.api.GoogleApiActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:163
--keep class com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:177
--keep class com.google.android.gms.measurement.AppMeasurementJobService { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:158
--keep class com.google.android.gms.measurement.AppMeasurementReceiver { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:173
--keep class com.google.android.gms.measurement.AppMeasurementService { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:127
--keep class com.google.firebase.auth.internal.FederatedSignInActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:135
--keep class com.google.firebase.components.ComponentDiscoveryService { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:183
--keep class com.google.firebase.iid.FirebaseInstanceIdReceiver { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:197
--keep class com.google.firebase.iid.FirebaseInstanceIdService { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:150
--keep class com.google.firebase.messaging.FirebaseMessagingService { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:210
--keep class com.google.firebase.provider.FirebaseInitProvider { <init>(); }
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:225
+-keep class androidx.lifecycle.ProcessLifecycleOwnerInitializer { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:112
+-keep class co.paystack.android.ui.AuthActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:115
+-keep class co.paystack.android.ui.CardActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:109
+-keep class co.paystack.android.ui.OtpActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:106
+-keep class co.paystack.android.ui.PinActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:206
+-keep class com.google.android.gms.ads.AdActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:196
+-keep class com.google.android.gms.common.api.GoogleApiActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:154
+-keep class com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:168
+-keep class com.google.android.gms.measurement.AppMeasurementJobService { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:149
+-keep class com.google.android.gms.measurement.AppMeasurementReceiver { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:164
+-keep class com.google.android.gms.measurement.AppMeasurementService { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:118
+-keep class com.google.firebase.auth.internal.FederatedSignInActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:126
+-keep class com.google.firebase.components.ComponentDiscoveryService { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:174
+-keep class com.google.firebase.iid.FirebaseInstanceIdReceiver { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:188
+-keep class com.google.firebase.iid.FirebaseInstanceIdService { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:141
+-keep class com.google.firebase.messaging.FirebaseMessagingService { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:201
+-keep class com.google.firebase.provider.FirebaseInitProvider { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:216
 -keep class com.iceteck.silicompressorr.provider.GenericFileProvider { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:64
--keep class com.skiplab.theselproject.AddPost.CategoryActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:65
--keep class com.skiplab.theselproject.AddPost.NewPostActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:60
--keep class com.skiplab.theselproject.Authentication.AdminRegisterActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:68
--keep class com.skiplab.theselproject.Authentication.LoginActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:51
+-keep class com.skiplab.theselproject.Activity.NotificationsActivity { <init>(); }
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:69
--keep class com.skiplab.theselproject.Authentication.RegisterActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:59
--keep class com.skiplab.theselproject.Authentication.StaffRegisterActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:58
--keep class com.skiplab.theselproject.ChatActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:66
--keep class com.skiplab.theselproject.DashboardActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:47
--keep class com.skiplab.theselproject.LatenessReportActivity { <init>(); }
+-keep class com.skiplab.theselproject.AddPost.CategoryActivity { <init>(); }
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:70
--keep class com.skiplab.theselproject.Main2Activity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:71
--keep class com.skiplab.theselproject.MainActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:44
--keep class com.skiplab.theselproject.PaymentActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:63
--keep class com.skiplab.theselproject.PostDetailActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:62
--keep class com.skiplab.theselproject.PrivacyPolicy { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:67
--keep class com.skiplab.theselproject.Profile.AccountSettingsActivity { <init>(); }
+-keep class com.skiplab.theselproject.AddPost.NewPostActivity { <init>(); }
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:48
--keep class com.skiplab.theselproject.Profile.GalleryActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:49
--keep class com.skiplab.theselproject.Profile.MyPostsActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:45
--keep class com.skiplab.theselproject.Profile.RequestsActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:43
--keep class com.skiplab.theselproject.Questionnaire.QuestionnaireActivity { <init>(); }
+-keep class com.skiplab.theselproject.AddPost.SelectMood { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:65
+-keep class com.skiplab.theselproject.Authentication.AdminRegisterActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:73
+-keep class com.skiplab.theselproject.Authentication.LoginActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:74
+-keep class com.skiplab.theselproject.Authentication.RegisterActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:64
+-keep class com.skiplab.theselproject.Authentication.StaffRegisterActivity { <init>(); }
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:46
+-keep class com.skiplab.theselproject.Consultation.ChatActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:43
+-keep class com.skiplab.theselproject.Consultation.ChatRoomsActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:47
+-keep class com.skiplab.theselproject.Consultation.ConsultantsActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:44
+-keep class com.skiplab.theselproject.Consultation.DepositActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:45
+-keep class com.skiplab.theselproject.Consultation.WalletActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:71
+-keep class com.skiplab.theselproject.DashboardActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:42
+-keep class com.skiplab.theselproject.EditConsultantProfile { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:53
+-keep class com.skiplab.theselproject.Home.EditVideoActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:52
+-keep class com.skiplab.theselproject.Home.FullscreenActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:49
+-keep class com.skiplab.theselproject.Home.SelectCategory { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:50
+-keep class com.skiplab.theselproject.Home.VideoGallery { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:75
+-keep class com.skiplab.theselproject.Main2Activity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:76
+-keep class com.skiplab.theselproject.MainActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:68
+-keep class com.skiplab.theselproject.PostDetailActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:67
+-keep class com.skiplab.theselproject.PrivacyPolicy { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:54
+-keep class com.skiplab.theselproject.Questionnaire.QuestionnaireActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:72
+-keep class com.skiplab.theselproject.Settings.AccountSettingsActivity { <init>(); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:55
 -keep class com.skiplab.theselproject.SupportActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:61
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:66
 -keep class com.skiplab.theselproject.TermsOfService { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:33
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:32
 -keep class com.skiplab.theselproject.Utils.App { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:87
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:92
 -keep class com.skiplab.theselproject.notifications.FirebaseMessaging { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:79
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:84
 -keep class com.skiplab.theselproject.notifications.MyFirebaseInstanceIdService { <init>(); }
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:96
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/merged_manifests/release/AndroidManifest.xml:101
 -keep class pub.devrel.easypermissions.AppSettingsDialogHolderActivity { <init>(); }
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout-watch-v20/abc_alert_dialog_title_material.xml:53
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_alert_dialog_title.xml:41
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_alert_dialog_actions.xml:45
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_alert_dialog.xml:51
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_alert_dialog_title_material.xml:57
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_alert_dialog_material.xml:52
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_alert_dialog_button_bar_material.xml:43
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout-watch-v20/abc_alert_dialog_title_material.xml:53
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_alert_dialog_title.xml:41
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_alert_dialog_actions.xml:45
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_alert_dialog.xml:51
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_alert_dialog_title_material.xml:57
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_alert_dialog_material.xml:52
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_alert_dialog_button_bar_material.xml:43
 -keep class android.widget.Space { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_select_dialog_material.xml:23
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_select_dialog_material.xml:23
 -keep class androidx.appcompat.app.AlertController$RecycleListView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_action_menu_item_layout.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_action_menu_item_layout.xml:17
 -keep class androidx.appcompat.view.menu.ActionMenuItemView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_expanded_menu_layout.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_expanded_menu_layout.xml:17
 -keep class androidx.appcompat.view.menu.ExpandedMenuView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_popup_menu_item_layout.xml:17
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_list_menu_item_layout.xml:17
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_cascading_menu_item_layout.xml:20
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_popup_menu_item_layout.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_list_menu_item_layout.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_cascading_menu_item_layout.xml:20
 -keep class androidx.appcompat.view.menu.ListMenuItemView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_screen_toolbar.xml:27
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_screen_toolbar.xml:27
 -keep class androidx.appcompat.widget.ActionBarContainer { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_screen_toolbar.xml:43
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_action_mode_bar.xml:19
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_screen_toolbar.xml:43
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_action_mode_bar.xml:19
 -keep class androidx.appcompat.widget.ActionBarContextView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_screen_toolbar.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_screen_toolbar.xml:17
 -keep class androidx.appcompat.widget.ActionBarOverlayLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_action_menu_layout.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_action_menu_layout.xml:17
 -keep class androidx.appcompat.widget.ActionMenuView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_activity_chooser_view.xml:19
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_activity_chooser_view.xml:19
 -keep class androidx.appcompat.widget.ActivityChooserView$InnerLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_alert_dialog.xml:17
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_alert_dialog_material.xml:18
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_alert_dialog.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_alert_dialog_material.xml:18
 -keep class androidx.appcompat.widget.AlertDialogLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/card_payment_dialog.xml:154
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_payment.xml:364
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/card_payment_dialog.xml:107
 -keep class androidx.appcompat.widget.AppCompatButton { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/card_payment_dialog.xml:90
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_payment.xml:216
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/card_payment_dialog.xml:43
 -keep class androidx.appcompat.widget.AppCompatEditText { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/card_payment_dialog.xml:137
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_payment.xml:326
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/card_payment_dialog.xml:90
 -keep class androidx.appcompat.widget.AppCompatSpinner { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_alert_dialog_actions.xml:26
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_alert_dialog_button_bar_material.xml:26
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_alert_dialog_actions.xml:26
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_alert_dialog_button_bar_material.xml:26
 -keep class androidx.appcompat.widget.ButtonBarLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_screen_content_include.xml:19
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_screen_content_include.xml:19
 -keep class androidx.appcompat.widget.ContentFrameLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_alert_dialog_title.xml:36
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_alert_dialog_title_material.xml:45
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_alert_dialog_title.xml:36
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_alert_dialog_title_material.xml:45
 -keep class androidx.appcompat.widget.DialogTitle { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_screen_simple_overlay_action_mode.xml:23
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_screen_simple_overlay_action_mode.xml:23
 -keep class androidx.appcompat.widget.FitWindowsFrameLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_screen_simple.xml:17
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_dialog_title_material.xml:22
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_screen_simple.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_dialog_title_material.xml:22
 -keep class androidx.appcompat.widget.FitWindowsLinearLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/card_payment_dialog.xml:128
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_payment.xml:316
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/card_payment_dialog.xml:81
 -keep class androidx.appcompat.widget.LinearLayoutCompat { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_search_view.xml:75
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_search_view.xml:75
 -keep class androidx.appcompat.widget.SearchView$SearchAutoComplete { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout-v26/abc_screen_toolbar.xml:37
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/snippet_top_gallerytoolbar.xml:11
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout-v26/abc_screen_toolbar.xml:37
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/snippet_top_gallerytoolbar.xml:14
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/snippet_top_editprofiletoolbar.xml:9
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/snippet_top_accountsettingtoolbar.xml:9
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_terms_and_conditions.xml:15
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_search.xml:27
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_profile.xml:20
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_privacy_policy.xml:15
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_post.xml:17
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_activity.xml:27
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_my_posts.xml:29
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_about_thesel.xml:18
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/app_bar_home.xml:15
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_wallet.xml:17
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_video_gallery.xml:16
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_terms_of_service.xml:16
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_requests.xml:28
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_select_mood.xml:19
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_select_category.xml:17
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_questionnaire.xml:19
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_privacy_policy.xml:16
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:21
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_payment.xml:16
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_notifications.xml:26
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_new_post.xml:19
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_my_posts.xml:28
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_lateness_report.xml:15
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_edit_video.xml:16
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_deposit.xml:19
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_consultants.xml:26
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_chat_rooms.xml:30
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_chat.xml:22
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_category.xml:19
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_screen_toolbar.xml:36
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_screen_toolbar.xml:36
 -keep class androidx.appcompat.widget.Toolbar { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_screen_simple_overlay_action_mode.xml:32
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_screen_simple.xml:25
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_screen_simple_overlay_action_mode.xml:32
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_screen_simple.xml:25
 -keep class androidx.appcompat.widget.ViewStubCompat { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/d91492587fb5cdf31612dcca5a7709a8/browser-1.0.0/res/layout/browser_actions_context_menu_page.xml:5
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/c4b00c1be4d3981624f2e8507f891f26/browser-1.0.0/res/layout/browser_actions_context_menu_page.xml:5
 -keep class androidx.browser.browseractions.BrowserActionsFallbackMenuView { <init>(...); }
 
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_videos.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_users.xml:2
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_requests.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_posts.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_notification.xml:2
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_lateness_reports.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_comments.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/resend_verification_layout.xml:2
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/request_counsellor_layout.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/native_express_ad_container.xml:2
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_profile.xml:128
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/list_category.xml:2
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/counselling_hours_layout.xml:2
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:32
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/consultant_session_rules.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/card_payment_dialog.xml:2
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:58
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_payment.xml:144
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:77
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_deposit.xml:65
 -keep class androidx.cardview.widget.CardView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e4539f49e317c15c21a59e7134a9e455/jetified-NotifyMe-1.0.1/res/layout/activity_temp.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_support.xml:2
 -keep class androidx.constraintlayout.widget.ConstraintLayout { <init>(...); }
 
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/snippet_top_gallerytoolbar.xml:2
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_photo_gallery.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_edit_profile.xml:2
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/design_bottom_sheet_dialog.xml:26
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/design_bottom_sheet_dialog.xml:26
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/app_bar_home.xml:2
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_gallery.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_account_settings.xml:2
 -keep class androidx.coordinatorlayout.widget.CoordinatorLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_alert_dialog.xml:40
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:39
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_requests.xml:103
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:45
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_my_posts.xml:64
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/53af1f37d65227eb5bcf361cc28c52ea/appcompat-1.1.0/res/layout/abc_alert_dialog_material.xml:41
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_alert_dialog.xml:40
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_my_posts.xml:74
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:100
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_video_gallery.xml:65
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:64
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/layout/abc_alert_dialog_material.xml:41
 -keep class androidx.core.widget.NestedScrollView { <init>(...); }
 
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_home.xml:2
 -keep class androidx.drawerlayout.widget.DrawerLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_calendar_months.xml:18
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_calendar_horizontal.xml:29
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/9da85f9a17415dc070067ce9e672c06e/jetified-ccp-2.1.9/res/layout/layout_picker_dialog.xml:69
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_search.xml:53
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_post.xml:52
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_activity.xml:52
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:43
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_requests.xml:109
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:267
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_my_posts.xml:69
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_calendar_months.xml:18
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_calendar_horizontal.xml:29
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/d1a1641de780850b5fc1fca8ab0ae880/jetified-ccp-2.1.9/res/layout/layout_picker_dialog.xml:69
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_my_posts.xml:79
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:39
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_video_gallery.xml:70
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_select_mood.xml:63
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:290
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_notifications.xml:62
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_lateness_report.xml:39
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_consultants.xml:53
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_chat_rooms.xml:80
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_chat.xml:99
 -keep class androidx.recyclerview.widget.RecyclerView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_search.xml:2
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_profile.xml:2
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_activity.xml:2
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_requests.xml:2
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_my_posts.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:2
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_my_posts.xml:2
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_notifications.xml:2
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_chat.xml:2
 -keep class androidx.swiperefreshlayout.widget.SwipeRefreshLayout { <init>(...); }
 
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/layout_center_viewpager.xml:8
 -keep class androidx.viewpager.widget.ViewPager { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/2f3e0b2bba60056ca62490755dbd4c8d/jetified-pinpad-1.0.1/res/layout/layout_button.xml:2
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/2fe3f578b0d2ce2a23933a70e1aaf9e5/jetified-pinpad-1.0.1/res/layout/layout_button.xml:2
 -keep class co.paystack.android.design.widget.ForegroundRelativeLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/2f3e0b2bba60056ca62490755dbd4c8d/jetified-pinpad-1.0.1/res/layout/layout_pinpad.xml:48
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/2fe3f578b0d2ce2a23933a70e1aaf9e5/jetified-pinpad-1.0.1/res/layout/layout_pinpad.xml:48
 -keep class co.paystack.android.design.widget.PinPadButton { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/res/layout/co_paystack_android____activity_pin.xml:17
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e3a4eeac74472f7266e25b27b7f4cef0/jetified-paystack-3.0.9/res/layout/co_paystack_android____activity_otp.xml:16
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7e3c63777fe1ea41a79b010a6398b2a8/jetified-paystack-3.0.9/res/layout/co_paystack_android____activity_pin.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7e3c63777fe1ea41a79b010a6398b2a8/jetified-paystack-3.0.9/res/layout/co_paystack_android____activity_otp.xml:16
 -keep class co.paystack.android.design.widget.PinPadView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/9da85f9a17415dc070067ce9e672c06e/jetified-ccp-2.1.9/res/layout/layout_picker_dialog.xml:76
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/d1a1641de780850b5fc1fca8ab0ae880/jetified-ccp-2.1.9/res/layout/layout_picker_dialog.xml:76
 -keep class com.futuremind.recyclerviewfastscroll.FastScroller { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:54
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e5d4cefa017fafd61e9c2d44d3107758/exoplayer-ui-2.10.8/res/layout/exo_simple_player_view.xml:18
+-keep class com.google.android.exoplayer2.ui.AspectRatioFrameLayout { <init>(...); }
+
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/custom_controller.xml:92
+-keep class com.google.android.exoplayer2.ui.DefaultTimeBar { <init>(...); }
+
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_videos.xml:48
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_fullscreen.xml:10
+-keep class com.google.android.exoplayer2.ui.PlayerView { <init>(...); }
+
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e5d4cefa017fafd61e9c2d44d3107758/exoplayer-ui-2.10.8/res/layout/exo_simple_player_view.xml:35
+-keep class com.google.android.exoplayer2.ui.SubtitleView { <init>(...); }
+
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e5d4cefa017fafd61e9c2d44d3107758/exoplayer-ui-2.10.8/res/layout/exo_track_selection_dialog.xml:20
+-keep class com.google.android.exoplayer2.ui.TrackSelectionView { <init>(...); }
+
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:114
 -keep class com.google.android.gms.ads.AdView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/snippet_top_gallerytoolbar.xml:6
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/snippet_top_gallerytoolbar.xml:8
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/snippet_top_editprofiletoolbar.xml:4
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/snippet_top_accountsettingtoolbar.xml:4
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_terms_and_conditions.xml:10
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_search.xml:22
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_profile.xml:15
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_privacy_policy.xml:10
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_post.xml:12
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_activity.xml:22
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_my_posts.xml:23
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_about_thesel.xml:10
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/app_bar_home.xml:10
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_wallet.xml:11
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_video_gallery.xml:11
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_terms_of_service.xml:11
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_requests.xml:23
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_select_mood.xml:12
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_select_category.xml:11
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_questionnaire.xml:11
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_privacy_policy.xml:11
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:16
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_payment.xml:11
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_notifications.xml:21
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_new_post.xml:13
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_my_posts.xml:23
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_lateness_report.xml:10
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_edit_video.xml:11
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_deposit.xml:13
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_consultants.xml:20
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_chat_rooms.xml:24
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_category.xml:13
 -keep class com.google.android.material.appbar.AppBarLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/test_toolbar_surface.xml:16
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/test_toolbar_elevation.xml:16
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/test_toolbar_custom_background.xml:16
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/test_toolbar.xml:16
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/test_toolbar_surface.xml:16
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/test_toolbar_elevation.xml:16
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/test_toolbar_custom_background.xml:16
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/test_toolbar.xml:16
 -keep class com.google.android.material.appbar.MaterialToolbar { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_dashboard.xml:19
--keep class com.google.android.material.bottomnavigation.BottomNavigationView { <init>(...); }
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:128
+-keep class com.google.android.material.bottomappbar.BottomAppBar { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_picker_header_fullscreen.xml:36
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_calendar_month_navigation.xml:32
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_picker_header_fullscreen.xml:36
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_calendar_month_navigation.xml:32
 -keep class com.google.android.material.button.MaterialButton { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/test_reflow_chipgroup.xml:25
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/test_action_chip.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/test_reflow_chipgroup.xml:25
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/test_action_chip.xml:17
 -keep class com.google.android.material.chip.Chip { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/test_reflow_chipgroup.xml:19
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/test_reflow_chipgroup.xml:19
 -keep class com.google.android.material.chip.ChipGroup { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_calendar_month.xml:18
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_calendar_month.xml:18
 -keep class com.google.android.material.datepicker.MaterialCalendarGridView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_new_post.xml:85
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:140
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_select_category.xml:75
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_new_post.xml:86
 -keep class com.google.android.material.floatingactionbutton.FloatingActionButton { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/design_bottom_navigation_item.xml:27
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/design_bottom_navigation_item.xml:27
 -keep class com.google.android.material.internal.BaselineLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_picker_header_toggle.xml:18
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/design_text_input_start_icon.xml:18
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/design_text_input_end_icon.xml:18
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_picker_header_toggle.xml:18
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/design_text_input_start_icon.xml:18
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/design_text_input_end_icon.xml:18
 -keep class com.google.android.material.internal.CheckableImageButton { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/design_navigation_item.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/design_navigation_item.xml:17
 -keep class com.google.android.material.internal.NavigationMenuItemView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/design_navigation_menu.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/design_navigation_menu.xml:17
 -keep class com.google.android.material.internal.NavigationMenuView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_layout_snackbar.xml:18
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/design_layout_snackbar.xml:18
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_layout_snackbar.xml:18
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/design_layout_snackbar.xml:18
 -keep class com.google.android.material.snackbar.Snackbar$SnackbarLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_layout_snackbar_include.xml:18
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/design_layout_snackbar_include.xml:18
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_layout_snackbar_include.xml:18
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/design_layout_snackbar_include.xml:18
 -keep class com.google.android.material.snackbar.SnackbarContentLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_picker_text_input_date_range.xml:32
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_picker_text_input_date.xml:31
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_staff_register.xml:54
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_register.xml:39
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_login.xml:36
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_picker_text_input_date_range.xml:32
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_picker_text_input_date.xml:31
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_staff_register.xml:53
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_register.xml:42
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_login.xml:35
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_admin_register.xml:48
 -keep class com.google.android.material.textfield.TextInputEditText { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_picker_text_input_date_range.xml:26
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/mtrl_picker_text_input_date.xml:26
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_picker_text_input_date_range.xml:26
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/mtrl_picker_text_input_date.xml:26
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_staff_register.xml:43
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_register.xml:28
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_register.xml:32
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_login.xml:25
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_admin_register.xml:37
 -keep class com.google.android.material.textfield.TextInputLayout { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/text_view_without_line_height.xml:17
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/text_view_with_theme_line_height.xml:17
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/text_view_with_line_height_from_style.xml:17
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/text_view_with_line_height_from_layout.xml:17
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e6237e593c9bb5837f34475ce79f09f9/material-1.1.0/res/layout/text_view_with_line_height_from_appearance.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/text_view_without_line_height.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/text_view_with_theme_line_height.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/text_view_with_line_height_from_style.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/text_view_with_line_height_from_layout.xml:17
+# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/res/layout/text_view_with_line_height_from_appearance.xml:17
 -keep class com.google.android.material.textview.MaterialTextView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/layout_grid_imageview.xml:8
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_staff_register.xml:86
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_register.xml:74
+-keep class com.hbb20.CountryCodePicker { <init>(...); }
+
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_posts.xml:121
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_chat_right.xml:33
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_chat_left.xml:34
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/layout_grid_imageview.xml:9
 -keep class com.skiplab.theselproject.Utils.SquareImageView { <init>(...); }
 
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout/mdtp_date_picker_selected_date_v2.xml:42
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout/mdtp_date_picker_selected_date.xml:28
--keep class com.wdullaer.materialdatetimepicker.AccessibleLinearLayout { <init>(...); }
-
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout/mdtp_time_header_label.xml:53
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout/mdtp_date_picker_selected_date_v2.xml:29
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout/mdtp_date_picker_selected_date.xml:67
--keep class com.wdullaer.materialdatetimepicker.AccessibleTextView { <init>(...); }
-
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout-land/mdtp_time_title_view_v2.xml:17
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout-land/mdtp_date_picker_header_view_v2.xml:17
--keep class com.wdullaer.materialdatetimepicker.VerticalTextView { <init>(...); }
-
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout/mdtp_date_picker_view_animator_v2.xml:19
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout/mdtp_date_picker_view_animator.xml:19
--keep class com.wdullaer.materialdatetimepicker.date.AccessibleDateAnimator { <init>(...); }
-
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout/mdtp_year_label_text_view.xml:16
--keep class com.wdullaer.materialdatetimepicker.date.TextViewWithCircularIndicator { <init>(...); }
-
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout/mdtp_time_picker_dialog_v2.xml:40
-# Referenced at /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/86f96e5af6393d554a53d4a3501a5558/materialdatetimepicker-4.2.3/res/layout/mdtp_time_picker_dialog.xml:40
--keep class com.wdullaer.materialdatetimepicker.time.RadialPickerLayout { <init>(...); }
-
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/snippet_center_editprofile.xml:16
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_users.xml:17
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_users.xml:32
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_posts.xml:63
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_notification.xml:17
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_comments.xml:17
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_notification.xml:18
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_comments.xml:18
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_chat_right.xml:15
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/row_chat_left.xml:15
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/request_counsellor_layout.xml:30
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/fragment_profile.xml:90
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/content_home.xml:61
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/consultant_col.xml:10
-# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:117
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_post_detail.xml:137
 # Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_chat.xml:33
 -keep class de.hdodenhof.circleimageview.CircleImageView { <init>(...); }
+
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_edit_video.xml:48
+-keepclassmembers class * { *** saveVideo(android.view.View); }
+
+# Referenced at /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/activity_edit_video.xml:83
+-keepclassmembers class * { *** selectVideo(android.view.View); }
 

@@ -45,20 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"פתח בטלפון"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"כניסה"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"‏היכנס באמצעות Google"</string>
+    <string name="exo_controls_fastforward_description">הרצה קדימה</string>
+    <string name="exo_controls_fullscreen_description">מצב מסך מלא</string>
+    <string name="exo_controls_next_description">הרצועה הבאה</string>
+    <string name="exo_controls_pause_description">השהיה</string>
+    <string name="exo_controls_play_description">הפעלה</string>
+    <string name="exo_controls_previous_description">הרצועה הקודמת</string>
+    <string name="exo_controls_repeat_all_description">חזור על הכול</string>
+    <string name="exo_controls_repeat_off_description">אל תחזור על אף פריט</string>
+    <string name="exo_controls_repeat_one_description">חזור על פריט אחד</string>
+    <string name="exo_controls_rewind_description">הרצה אחורה</string>
+    <string name="exo_controls_shuffle_off_description">ההשמעה האקראית מושבתת</string>
+    <string name="exo_controls_shuffle_on_description">ההשמעה האקראית מופעלת</string>
+    <string name="exo_controls_stop_description">הפסקה</string>
+    <string name="exo_controls_vr_description">מצב VR</string>
+    <string name="exo_download_completed">ההורדה הושלמה</string>
+    <string name="exo_download_description">הורדה</string>
+    <string name="exo_download_downloading">ההורדה מתבצעת</string>
+    <string name="exo_download_failed">ההורדה לא הושלמה</string>
+    <string name="exo_download_notification_channel_name">הורדות</string>
+    <string name="exo_download_removing">מסיר הורדות</string>
+    <string name="exo_item_list">%1$s‏, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f מגה סיביות לשנייה</string>
+    <string name="exo_track_mono">מונו</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">חלופי</string>
+    <string name="exo_track_role_closed_captions">כתוביות</string>
+    <string name="exo_track_role_commentary">פרשנות</string>
+    <string name="exo_track_role_supplementary">משלים</string>
+    <string name="exo_track_selection_auto">אוטומטי</string>
+    <string name="exo_track_selection_none">ללא</string>
+    <string name="exo_track_selection_title_audio">אודיו</string>
+    <string name="exo_track_selection_title_text">טקסט</string>
+    <string name="exo_track_selection_title_video">סרטון</string>
+    <string name="exo_track_stereo">סטריאו</string>
+    <string name="exo_track_surround">סראונד</string>
+    <string name="exo_track_surround_5_point_1">סראונד 5.1</string>
+    <string name="exo_track_surround_7_point_1">סראונד 7.1</string>
+    <string name="exo_track_unknown">לא ידוע</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"שונות"</string>
-    <string name="mdtp_date_v1_monthyear">MMMM yyyy</string>
-    <string name="mdtp_date_v2_daymonthyear">EEE, dd בMMM</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"בחירת ימים בחודש בתצוגת רשת"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"<ns1:g id="KEY">%1$s</ns1:g> נמחק"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"בוצע"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"מחוון שעות מעגלי"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"בחרת <ns1:g id="ITEM">%1$s</ns1:g>"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"מחוון דקות מעגלי"</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"בחר חודש ויום"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"בחר שעות"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"בחר דקות"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"בחר שנה"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"רשימת שנים"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"ניווט למעלה"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"פתיחת חלונית ההזזה לניווט"</string>
     <string msgid="368094699078615544" name="s1">"שמור את התמונה"</string>
@@ -69,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"האם לאפשר למודעה ליצור אירוע ביומן?"</string>
     <string msgid="7163549807207034258" name="s7">"מודעת בדיקה"</string>
     <string msgid="730395136688082741" name="search_menu_title">"חיפוש"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

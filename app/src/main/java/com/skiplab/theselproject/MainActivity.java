@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -25,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,23 +52,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*Date todayDate = new Date();
+        todayDate.getTime();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.d(TAG, "EXPIRED "+todayDate.toInstant().plusMillis(604800000).toEpochMilli());
+        }*/
+
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     getPackageName(),
                     PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
+            for (Signature signature : info.signatures)
+            {
                 MessageDigest messageDigest = MessageDigest.getInstance("SHA");
                 messageDigest.update(signature.toByteArray());
                 Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
             }
         }
-        catch (PackageManager.NameNotFoundException e) {
-
+        catch (Exception e)
+        {
+            Log.d(TAG, "Error: "+e);
         }
-        catch (NoSuchAlgorithmException e) {
-
-        }
-
         //Now the listener will be actively listening for changes in the authentication state
         setupFirebaseAuth();
 

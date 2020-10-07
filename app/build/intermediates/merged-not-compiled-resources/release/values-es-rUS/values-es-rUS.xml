@@ -45,20 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Abrir en el teléfono"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Acceder"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Acceder con Google"</string>
+    <string name="exo_controls_fastforward_description">Avanzar</string>
+    <string name="exo_controls_fullscreen_description">Modo de pantalla completa</string>
+    <string name="exo_controls_next_description">Pista siguiente</string>
+    <string name="exo_controls_pause_description">Pausar</string>
+    <string name="exo_controls_play_description">Reproducir</string>
+    <string name="exo_controls_previous_description">Pista anterior</string>
+    <string name="exo_controls_repeat_all_description">Repetir todo</string>
+    <string name="exo_controls_repeat_off_description">No repetir</string>
+    <string name="exo_controls_repeat_one_description">Repetir uno</string>
+    <string name="exo_controls_rewind_description">Retroceder</string>
+    <string name="exo_controls_shuffle_off_description">Reprod. aleatoria desactivada</string>
+    <string name="exo_controls_shuffle_on_description">Reprod. aleatoria activada</string>
+    <string name="exo_controls_stop_description">Detener</string>
+    <string name="exo_controls_vr_description">Modo RV</string>
+    <string name="exo_download_completed">Se completó la descarga</string>
+    <string name="exo_download_description">Descargar</string>
+    <string name="exo_download_downloading">Descargando</string>
+    <string name="exo_download_failed">No se pudo descargar</string>
+    <string name="exo_download_notification_channel_name">Descargas</string>
+    <string name="exo_download_removing">Quitando descargas</string>
+    <string name="exo_item_list">%1$s, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Mbps</string>
+    <string name="exo_track_mono">Mono</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">Alternativa</string>
+    <string name="exo_track_role_closed_captions">CC</string>
+    <string name="exo_track_role_commentary">Comentarios</string>
+    <string name="exo_track_role_supplementary">Complementaria</string>
+    <string name="exo_track_selection_auto">Automática</string>
+    <string name="exo_track_selection_none">Ninguna</string>
+    <string name="exo_track_selection_title_audio">Audio</string>
+    <string name="exo_track_selection_title_text">Texto</string>
+    <string name="exo_track_selection_title_video">Video</string>
+    <string name="exo_track_stereo">Estéreo</string>
+    <string name="exo_track_surround">Sonido envolvente</string>
+    <string name="exo_track_surround_5_point_1">Sonido envolvente 5.1</string>
+    <string name="exo_track_surround_7_point_1">Sonido envolvente 7.1</string>
+    <string name="exo_track_unknown">Desconocido</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Varios"</string>
-    <string name="mdtp_date_v1_monthyear">MMMM \'de\' yyyy</string>
-    <string name="mdtp_date_v2_daymonthyear">EEE dd \'de\' MMM</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"Cuadrícula mensual de días"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"<ns1:g id="KEY">%1$s</ns1:g> borrado"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"Listo"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"Control deslizante circular de horas"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"<ns1:g id="ITEM">%1$s</ns1:g> seleccionado"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"Control deslizante circular de minutos"</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"Seleccionar mes y día"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"Seleccionar horas"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"Seleccionar minutos"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"Seleccionar año"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"Lista de años"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"Navegar hacia arriba"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"Abrir panel lateral de navegación"</string>
     <string msgid="368094699078615544" name="s1">"Guardar imagen"</string>
@@ -69,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"¿Quieres permitir que el anuncio cree un evento de calendario?"</string>
     <string msgid="7163549807207034258" name="s7">"Anuncio de prueba"</string>
     <string msgid="730395136688082741" name="search_menu_title">"Buscar"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

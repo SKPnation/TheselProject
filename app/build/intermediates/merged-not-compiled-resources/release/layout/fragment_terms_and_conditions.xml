@@ -5,7 +5,7 @@
     android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile.TermsAndConditions">
+    tools:context=".Settings.TermsAndConditions">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -20,9 +20,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageView
+                    android:id="@+id/backArrow"
+                    android:src="@drawable/ic_back"
+                    android:tint="@android:color/white"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    />
+
                 <TextView
                     android:id="@+id/usernameTv"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/backArrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

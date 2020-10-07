@@ -8,10 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -69,12 +71,13 @@ public class BookAppointment1 extends AppCompatActivity {
     private CollectionReference earlyDb, morningDb, afternoonDb, eveningDb, nightDb;
     private CollectionReference appointmentDb;
 
+    private ImageView closeBtn;
+
     private Button five_am_btn, six_am_btn;
     private Button seven_am_btn, eight_am_btn, nine_am_btn, ten_am_btn, eleven_am_btn;
     private Button twelve_pm_btn, one_pm_btn, two_pm_btn, three_pm_btn, four_pm_btn;
     private Button five_pm_btn, six_pm_btn, seven_pm_btn, eight_pm_btn;
     private Button nine_pm_btn, ten_pm_btn, eleven_pm_btn;
-
 
     String five_am = "05:00", six_am = "06:00";
     String seven_am = "07:00", eight_am = "08:00", nine_am = "09:00", ten_am = "10:00", eleven_am = "11:00";
@@ -96,6 +99,8 @@ public class BookAppointment1 extends AppCompatActivity {
     Calendar selected_date, selected_date_in_millis, date1, calendar;
     HorizontalCalendarView horizontalCalendarView;
     SimpleDateFormat simpleDateFormat, simpleDateFormat1;
+
+    int i = 0;
 
     public static boolean isActivityRunning;
 
@@ -139,6 +144,14 @@ public class BookAppointment1 extends AppCompatActivity {
             }
         });
 
+        closeBtn = findViewById(R.id.closeBtn);
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         five_am_btn = findViewById(R.id.five_am_btn);
         six_am_btn = findViewById(R.id.six_am_btn);
@@ -221,7 +234,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -307,7 +320,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(five_am) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(five_am) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -365,7 +391,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -451,7 +477,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(six_am) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(six_am) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -905,7 +944,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -991,7 +1030,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(seven_am) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(seven_am) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -1048,7 +1100,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -1134,7 +1186,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(eight_am) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(eight_am) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -1191,7 +1256,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -1277,7 +1342,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(nine_am) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(nine_am) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -1334,7 +1412,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -1420,7 +1498,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(ten_am) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(ten_am) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -1477,7 +1568,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -1563,7 +1654,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(eleven_am) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(eleven_am) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -2020,7 +2124,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -2106,7 +2210,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(twelve_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(twelve_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -2163,7 +2280,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -2249,7 +2366,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(one_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(one_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -2306,7 +2436,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -2392,7 +2522,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(two_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(two_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -2449,7 +2592,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -2535,7 +2678,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(three_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(two_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -2592,7 +2748,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -2678,7 +2834,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(four_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(four_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -2921,7 +3090,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -3007,7 +3176,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(five_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(five_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -3064,7 +3246,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -3150,7 +3332,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(six_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(six_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -3207,7 +3402,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -3293,7 +3488,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(seven_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(seven_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -3350,7 +3558,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -3436,7 +3644,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(eight_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(eight_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -3475,6 +3696,7 @@ public class BookAppointment1 extends AppCompatActivity {
                         });
                     }
                 });
+
 
 
         nightDb.document(hisUID)
@@ -3587,7 +3809,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -3673,7 +3895,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(nine_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(nine_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -3730,7 +3965,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -3816,7 +4051,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(ten_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(ten_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))
@@ -3873,7 +4121,7 @@ public class BookAppointment1 extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        appointmentDb.whereEqualTo("booked_date",simpleDateFormat.format(selected_date.getTime()))
+                                        appointmentDb.whereEqualTo("booked_date",selected_date.getTime().toInstant().toEpochMilli())
                                                 .get()
                                                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -3959,7 +4207,20 @@ public class BookAppointment1 extends AppCompatActivity {
                                                                                     else if (appointment.getStart_time().equals(eleven_pm) && !appointment.getCounsellor_id().equals(hisUID)
                                                                                             && appointment.getClient_id().equals(myUID))
                                                                                     {
-                                                                                        startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                        i++;
+
+                                                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                                                                                                .setMessage("You already have an appointment scheduled for the selected time and date.")
+                                                                                                .create();
+                                                                                        alertDialog.show();
+
+                                                                                        Handler handler = new Handler();
+                                                                                        handler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                startActivity(new Intent(mContext, ChatRoomsActivity.class));
+                                                                                            }
+                                                                                        },5000);
                                                                                     }
                                                                                     else if (appointment.getStart_time().equals(eleven_pm) && appointment.getCounsellor_id().equals(hisUID)
                                                                                             && !appointment.getClient_id().equals(myUID))

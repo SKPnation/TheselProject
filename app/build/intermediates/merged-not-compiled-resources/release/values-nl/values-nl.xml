@@ -45,22 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Openen op telefoon"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Inloggen"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Inloggen met Google"</string>
+    <string name="exo_controls_fastforward_description">Vooruitspoelen</string>
+    <string name="exo_controls_fullscreen_description">Modus \'Volledig scherm\'</string>
+    <string name="exo_controls_next_description">Volgende track</string>
+    <string name="exo_controls_pause_description">Pauzeren</string>
+    <string name="exo_controls_play_description">Afspelen</string>
+    <string name="exo_controls_previous_description">Vorige track</string>
+    <string name="exo_controls_repeat_all_description">Alles herhalen</string>
+    <string name="exo_controls_repeat_off_description">Niets herhalen</string>
+    <string name="exo_controls_repeat_one_description">Eén herhalen</string>
+    <string name="exo_controls_rewind_description">Terugspoelen</string>
+    <string name="exo_controls_shuffle_off_description">Shuffle uit</string>
+    <string name="exo_controls_shuffle_on_description">Shuffle aan</string>
+    <string name="exo_controls_stop_description">Stoppen</string>
+    <string name="exo_controls_vr_description">VR-modus</string>
+    <string name="exo_download_completed">Downloaden voltooid</string>
+    <string name="exo_download_description">Downloaden</string>
+    <string name="exo_download_downloading">Downloaden</string>
+    <string name="exo_download_failed">Downloaden mislukt</string>
+    <string name="exo_download_notification_channel_name">Downloads</string>
+    <string name="exo_download_removing">Downloads verwijderen</string>
+    <string name="exo_item_list">%1$s, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Mbps</string>
+    <string name="exo_track_mono">Mono</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">Alternatief</string>
+    <string name="exo_track_role_closed_captions">CC</string>
+    <string name="exo_track_role_commentary">Commentaar</string>
+    <string name="exo_track_role_supplementary">Aanvullend</string>
+    <string name="exo_track_selection_auto">Auto</string>
+    <string name="exo_track_selection_none">Geen</string>
+    <string name="exo_track_selection_title_audio">Audio</string>
+    <string name="exo_track_selection_title_text">Tekst</string>
+    <string name="exo_track_selection_title_video">Video</string>
+    <string name="exo_track_stereo">Stereo</string>
+    <string name="exo_track_surround">Surround sound</string>
+    <string name="exo_track_surround_5_point_1">5.1 surroundgeluid</string>
+    <string name="exo_track_surround_7_point_1">7.1 surroundgeluid</string>
+    <string name="exo_track_unknown">Onbekend</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Overige"</string>
-    <string name="mdtp_date_v1_monthyear">MMMM yyyy</string>
-    <string name="mdtp_date_v2_daymonthyear">EEE dd MMM</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"Maandraster van dagen"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"<ns1:g id="KEY">%1$s</ns1:g> verwijderd"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"Gereed"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"Ronde schuifregelaar voor uren"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"<ns1:g id="ITEM">%1$s</ns1:g> geselecteerd"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"Ronde schuifregelaar voor minuten"</string>
-    <string name="mdtp_next_month_arrow_description">Volgende Maand</string>
-    <string name="mdtp_previous_month_arrow_description">Vorige Maand</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"Maand en dag selecteren"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"Uren selecteren"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"Minuten selecteren"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"Jaar selecteren"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"Jaarlijst"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"Omhoog navigeren"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"Zijmenu openen"</string>
     <string msgid="368094699078615544" name="s1">"Afbeelding opslaan"</string>
@@ -71,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"Advertentie toestaan om een agenda-afspraak te maken?"</string>
     <string msgid="7163549807207034258" name="s7">"Testadvertentie"</string>
     <string msgid="730395136688082741" name="search_menu_title">"Zoeken"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

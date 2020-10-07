@@ -45,20 +45,45 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Megnyitás a telefonon"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Bejelentkezés"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Bejelentkezés Google-fiókkal"</string>
+    <string name="exo_controls_fastforward_description">Előretekerés</string>
+    <string name="exo_controls_fullscreen_description">Teljes képernyős mód</string>
+    <string name="exo_controls_next_description">Következő szám</string>
+    <string name="exo_controls_pause_description">Szüneteltetés</string>
+    <string name="exo_controls_play_description">Lejátszás</string>
+    <string name="exo_controls_previous_description">Előző szám</string>
+    <string name="exo_controls_repeat_all_description">Összes szám ismétlése</string>
+    <string name="exo_controls_repeat_off_description">Nincs ismétlés</string>
+    <string name="exo_controls_repeat_one_description">Egy szám ismétlése</string>
+    <string name="exo_controls_rewind_description">Visszatekerés</string>
+    <string name="exo_controls_shuffle_off_description">Keverés kikapcsolva</string>
+    <string name="exo_controls_shuffle_on_description">Keverés bekapcsolva</string>
+    <string name="exo_controls_stop_description">Leállítás</string>
+    <string name="exo_controls_vr_description">VR-mód</string>
+    <string name="exo_download_completed">A letöltés befejeződött</string>
+    <string name="exo_download_description">Letöltés</string>
+    <string name="exo_download_downloading">Letöltés folyamatban</string>
+    <string name="exo_download_failed">Nem sikerült a letöltés</string>
+    <string name="exo_download_notification_channel_name">Letöltések</string>
+    <string name="exo_download_removing">Letöltések törlése folyamatban</string>
+    <string name="exo_item_list">%1$s, %2$s</string>
+    <string name="exo_track_bitrate">%1$.2f Mbps</string>
+    <string name="exo_track_mono">Monó</string>
+    <string name="exo_track_resolution">%1$d × %2$d</string>
+    <string name="exo_track_role_alternate">Alternatív</string>
+    <string name="exo_track_role_closed_captions">Felirat</string>
+    <string name="exo_track_role_commentary">Kommentár</string>
+    <string name="exo_track_role_supplementary">Kiegészítő</string>
+    <string name="exo_track_selection_auto">Automatikus</string>
+    <string name="exo_track_selection_none">Nincs</string>
+    <string name="exo_track_selection_title_audio">Hang</string>
+    <string name="exo_track_selection_title_text">Szöveg</string>
+    <string name="exo_track_selection_title_video">Videó</string>
+    <string name="exo_track_stereo">Sztereó</string>
+    <string name="exo_track_surround">Térhatású hangzás</string>
+    <string name="exo_track_surround_5_point_1">5.1-es térhatású hangzás</string>
+    <string name="exo_track_surround_7_point_1">7.1-es térhatású hangzás</string>
+    <string name="exo_track_unknown">Ismeretlen</string>
     <string msgid="4133737464567140336" name="fcm_fallback_notification_channel_label">"Egyéb"</string>
-    <string name="mdtp_date_v1_monthyear">yyyy. MMMM</string>
-    <string name="mdtp_date_v2_daymonthyear">MMM dd., EEE</string>
-    <string msgid="3968620852217927702" name="mdtp_day_picker_description">"Napok havi leosztásban"</string>
-    <string msgid="6908431551612331381" name="mdtp_deleted_key">"A(z) <ns1:g id="KEY">%1$s</ns1:g> érték törölve"</string>
-    <string msgid="7007948707597430919" name="mdtp_done_label">"Kész"</string>
-    <string msgid="7586639618712934060" name="mdtp_hour_picker_description">"óra kör alakú csúszkája"</string>
-    <string msgid="2674929164900463786" name="mdtp_item_is_selected">"<ns1:g id="ITEM">%1$s</ns1:g> kiválasztva"</string>
-    <string msgid="6024811202872705251" name="mdtp_minute_picker_description">"perc kör alakú csúszkája"</string>
-    <string msgid="3973338219107019769" name="mdtp_select_day">"Válassza ki a hónapot és a napot"</string>
-    <string msgid="7651068754188418859" name="mdtp_select_hours">"Óra kiválasztása"</string>
-    <string msgid="8327182090226828481" name="mdtp_select_minutes">"Perc kiválasztása"</string>
-    <string msgid="2603330600102539372" name="mdtp_select_year">"Válassza ki az évet"</string>
-    <string msgid="6963340404644587098" name="mdtp_year_picker_description">"Évek listája"</string>
     <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"Navigálás felfelé"</string>
     <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"Navigációs fiók kinyitása"</string>
     <string msgid="368094699078615544" name="s1">"Kép mentése"</string>
@@ -69,5 +94,5 @@
     <string msgid="5996672174517137271" name="s6">"Engedélyezi a hirdetés számára naptáresemény létrehozását?"</string>
     <string msgid="7163549807207034258" name="s7">"Teszthirdetés"</string>
     <string msgid="730395136688082741" name="search_menu_title">"Keresés"</string>
-    <string msgid="8106346172024741305" name="status_bar_notification_info_overflow">"999+"</string>
+    <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>
