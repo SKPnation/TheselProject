@@ -60,7 +60,7 @@ public class EditProfileFragment extends Fragment {
     private static final int STORAGE_REQUEST_CODE = 200;
     private static final int IMAGE_PICK_GALLERY_CODE = 400;
 
-    private ImageView backBtn, saveBtn;
+    private ImageView backBtn, saveBtn, referralShareBtn;
     private ImageView mProfilePhoto;
     private TextView changPhotoTv;
     private EditText uNameEt, mAgeEt, mBioEt, mEmail, mPhone;
@@ -109,10 +109,29 @@ public class EditProfileFragment extends Fragment {
         mPhone = view.findViewById(R.id.display_phone);
         backBtn = view.findViewById(R.id.backArrow);
         saveBtn = view.findViewById(R.id.saveBtn);
+        referralShareBtn = view.findViewById(R.id.referral_share_btn);
         changPhotoTv = view.findViewById(R.id.changeProfilePhoto);
 
         mEmail.setFocusable(false);
         mEmail.setFocusableInTouchMode(false);
+
+        referralShareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setData( Uri.parse( "mailto:" ) );
+                intent.setType( "text/plain" );
+
+                //intent.putExtra( Intent.EXTRA_SUBJECT, "THESEL APP" );
+                //put message of email in intent
+                intent.putExtra( Intent.EXTRA_TEXT, "I'm on Thesel, a therapeutic tele-counselling platform. Install the app to join the Thesel community. Find peace with Thesel."+"\n"+"https://play.google.com/store/apps/details?id=com.skiplab.theselproject" );
+
+                if (Common.isConnectedToTheInternet( getActivity() ))
+                    startActivity(Intent.createChooser(intent, "Share using"));
+                else
+                    Toast.makeText(getActivity(), "Please check your internet connection!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

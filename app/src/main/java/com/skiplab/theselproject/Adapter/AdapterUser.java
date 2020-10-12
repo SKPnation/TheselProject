@@ -669,7 +669,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                                                                                             JavaMailAPI javaMailAPI = new JavaMailAPI(
                                                                                                                                                     context,
-                                                                                                                                                    "skiplab.innovation@gmail.com",
+                                                                                                                                                    "contact@thesel.com.ng",
                                                                                                                                                     hisEmail,
                                                                                                                                                     "THESEL CONSULTATION",
                                                                                                                                                     "Hello "+hisName+","+"\n\n"+client.getUsername().toUpperCase()+" just paid for an Instant Session [a One Week Session] with you on the Thesel platform."+

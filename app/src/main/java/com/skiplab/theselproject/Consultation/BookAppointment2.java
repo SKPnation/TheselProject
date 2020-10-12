@@ -287,7 +287,7 @@ public class BookAppointment2 extends AppCompatActivity {
 
                                             JavaMailAPI javaMailAPI = new JavaMailAPI(
                                                     mContext,
-                                                    "skiplab.innovation@gmail.com",
+                                                    "contact@thesel.com.ng",
                                                     hisEmail,
                                                     "THESEL CONSULTATION",
                                                     "Hello "+hisName.toUpperCase()+","+"\n\n"+"You have an appointment from "+startEventTime+" - "+endEventTime+" "+timeType

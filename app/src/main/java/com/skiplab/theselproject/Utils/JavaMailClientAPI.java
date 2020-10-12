@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 
 public class JavaMailClientAPI extends AsyncTask<Void, Void, Void> {
 
-    public static final String EMAIL = "coffeeline9@gmail.com";
+    public static final String EMAIL = "skiplab.innovation@gmail.com";
 
     private Context context;
 
@@ -41,7 +41,7 @@ public class JavaMailClientAPI extends AsyncTask<Void, Void, Void> {
 
         session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EMAIL, "dwcqckylgqngqoxr");
+                return new PasswordAuthentication(EMAIL, "aaaaaa@123");
             }
         });
 
