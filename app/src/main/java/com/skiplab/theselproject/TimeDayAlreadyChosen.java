@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,7 @@ public class TimeDayAlreadyChosen extends AppCompatActivity {
 
     DatabaseReference usersRef;
 
-    ImageView profileIv;
+    ImageView profileIv, closeBtn;
     TextView hisNameTv;
     TextView hisMessageTv;
 
@@ -63,6 +64,14 @@ public class TimeDayAlreadyChosen extends AppCompatActivity {
         profileIv = findViewById(R.id.profileIv);
         hisNameTv = findViewById(R.id.hisName);
         hisMessageTv = findViewById(R.id.messageTv);
+        closeBtn = findViewById(R.id.closeBtn);
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         usersRef = FirebaseDatabase.getInstance().getReference("users");
 

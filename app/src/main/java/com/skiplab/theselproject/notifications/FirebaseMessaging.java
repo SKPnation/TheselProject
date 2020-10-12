@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.skiplab.theselproject.Consultation.ChatActivity;
+import com.skiplab.theselproject.Consultation.InstantChatActivity;
 import com.skiplab.theselproject.DashboardActivity;
 
 
@@ -121,7 +121,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
     private boolean isApplicationInForeground(){
         //check all the activities to see if any of them are running
-        boolean isActivityRunning = ChatActivity.isActivityRunning;
+        boolean isActivityRunning = InstantChatActivity.isActivityRunning;
 
         if(isActivityRunning) {
             Log.d(TAG, "isApplicationInForeground: application is in foreground.");

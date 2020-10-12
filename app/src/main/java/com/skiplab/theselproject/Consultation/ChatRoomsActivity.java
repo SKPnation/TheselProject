@@ -132,12 +132,12 @@ public class ChatRoomsActivity extends AppCompatActivity {
                                 public void onClick(View v) {
                                     if (ds.getValue(User.class).getIsStaff().equals("false"))
                                     {
-                                        finish();
+                                        Intent intent = new Intent(mContext, SelectCategory.class);
+                                        startActivity(intent);
                                     }
                                     else if (ds.getValue(User.class).getIsStaff().equals("true"))
                                     {
-                                        Intent intent = new Intent(mContext, DashboardActivity.class);
-                                        startActivity(intent);
+                                        finish();
                                     }
                                 }
                             });
@@ -332,12 +332,12 @@ public class ChatRoomsActivity extends AppCompatActivity {
                         {
                             if (ds.getValue(User.class).getIsStaff().equals("false"))
                             {
-                                finish();
+                                Intent intent = new Intent(mContext, SelectCategory.class);
+                                startActivity(intent);
                             }
                             else if (ds.getValue(User.class).getIsStaff().equals("true"))
                             {
-                                Intent intent = new Intent(mContext, DashboardActivity.class);
-                                startActivity(intent);
+                                finish();
                             }
                         }
                     }

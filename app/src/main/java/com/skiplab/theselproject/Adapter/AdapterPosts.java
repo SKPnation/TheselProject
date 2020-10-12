@@ -152,9 +152,32 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                //..
             }
         });
+
+        usersRef.orderByKey().equalTo(myUid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds: dataSnapshot.getChildren())
+                        {
+                            User user = ds.getValue(User.class);
+                            if (user.getIsStaff().equals("false") || user.getIsStaff().equals("true"))
+                            {
+                                if (!uid.equals(myUid))
+                                {
+                                    holder.moreBtn.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        //..
+                    }
+                });
 
         //set likes for each post
         setLikes(holder, pId);

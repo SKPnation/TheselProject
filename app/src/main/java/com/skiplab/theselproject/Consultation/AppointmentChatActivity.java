@@ -58,6 +58,7 @@ import com.google.firebase.storage.UploadTask;
 import com.skiplab.theselproject.Adapter.AdapterChat;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
+import com.skiplab.theselproject.models.Appointment;
 import com.skiplab.theselproject.models.ChatMessage;
 import com.skiplab.theselproject.models.InstantSession;
 import com.skiplab.theselproject.models.Profile;
@@ -110,10 +111,10 @@ public class AppointmentChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     CircleImageView profileIv;
     EditText messageEt;
+    Button mButtonRate, mButtonStart;
     ImageButton sendBtn, attachBtn, recordBtn;
-
     TextView nameTv, mTextViewCountDown;
-    Button mButtonStart;
+
     private long mStartTimeInMillis;
     private long mTimeLeftInMillis;
     private long mEndTime;
@@ -150,6 +151,8 @@ public class AppointmentChatActivity extends AppCompatActivity {
 
     MediaRecorder mediaRecorder;
     String pathSave = "";
+    String appt_duration, timeLeftFormatted;
+    long millisInput;
 
     int i = 0;
     int num_messages;
@@ -170,6 +173,7 @@ public class AppointmentChatActivity extends AppCompatActivity {
         usersRef = firebaseDatabase.getReference("users");
         mProfileReference = FirebaseFirestore.getInstance().collection("profiles");
         mAppointmentReference = FirebaseFirestore.getInstance().collection("appointments");
+        mMessageReference = FirebaseDatabase.getInstance().getReference("chatroom_messages");
 
         //init permissions arrays
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -179,7 +183,8 @@ public class AppointmentChatActivity extends AppCompatActivity {
         profileIv = findViewById(R.id.profileIv);
         nameTv = findViewById(R.id.nameTv);
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
-        mButtonStart = findViewById(R.id.button_start_pause);
+        mButtonStart = findViewById(R.id.start_btn);
+        mButtonRate = findViewById(R.id.rate_btn);
         messageEt = findViewById(R.id.messageEt);
         sendBtn = findViewById(R.id.sendBtn);
         attachBtn = findViewById(R.id.attachBtn);
@@ -195,56 +200,58 @@ public class AppointmentChatActivity extends AppCompatActivity {
         //create api service
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
-        usersRef.orderByKey().equalTo(myUid)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds: dataSnapshot.getChildren())
-                        {
-                            User user = ds.getValue(User.class);
-
-                            if (user.getIsStaff().equals("false"))
-                            {
-                                mProfileReference.document(hisUID)
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                String appt_duration = task.getResult().toObject(Profile.class).getAppt_duration();
-                                                long millisInput = (Long.parseLong(appt_duration)+10) * 60000;
-                                                setTime(millisInput);
-                                            }
-                                        });
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        //..
-                    }
-                });
+        mButtonStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mTimerRunning) {
+                    //pauseTimer();
+                } else {
+                    startTimer();
+                }
+            }
+        });
 
         attachBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTimerRunning)
-                {
-                    showImagePickDialog();
-                }
-                else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setMessage("Double tap the start button.");
+                usersRef.orderByKey().equalTo(myUid)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds: dataSnapshot.getChildren())
+                                {
+                                    User user = ds.getValue(User.class);
+                                    if (user.getIsStaff().equals("true"))
+                                    {
+                                        if (mTimerRunning) {
+                                            showImagePickDialog();
+                                        }
+                                        else {
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                            builder.setMessage("Click the start button.");
 
-                    builder.show();
-                }
+                                            builder.show();
+                                        }
+                                    }
+                                    else
+                                        showImagePickDialog();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                //..
+                            }
+                        });
             }
         });
 
         recordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkPermissionFromDevice())
+                Toast.makeText(mContext,"Oops! Error. Try again later",Toast.LENGTH_SHORT).show();
+
+                /*if (checkPermissionFromDevice())
                 {
                     if (mTimerRunning)
                     {
@@ -273,13 +280,13 @@ public class AppointmentChatActivity extends AppCompatActivity {
                     }
                     else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                        builder.setMessage("Double tap the start button.");
+                        builder.setMessage("Click the start button.");
 
                         builder.show();
                     }
                 }
                 else
-                    requestPermission();
+                    requestPermission();*/
 
             }
         });
@@ -288,26 +295,54 @@ public class AppointmentChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 notify = true;
-                if (mTimerRunning)
-                {
-                    String message = messageEt.getText().toString().trim();
+                usersRef.orderByKey().equalTo(myUid)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds: dataSnapshot.getChildren())
+                                {
+                                    User user = ds.getValue(User.class);
+                                    if (user.getIsStaff().equals("true"))
+                                    {
+                                        if (mTimerRunning)
+                                        {
+                                            String message = messageEt.getText().toString().trim();
 
-                    if (TextUtils.isEmpty(message)){
-                        Toast.makeText(mContext, "Cannot send an empty message", Toast.LENGTH_SHORT).show();
-                    } else {
-                        sendMessage(message);
+                                            if (TextUtils.isEmpty(message)){
+                                                Toast.makeText(mContext, "Cannot send an empty message", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                sendMessage(message);
+                                            }
+                                            //reset edittext after sending message
+                                            messageEt.setText("");
+                                        }
+                                        else{
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                            builder.setMessage("Click the start button.");
 
-                        Toast.makeText(mContext, "Wait for a reply...", Toast.LENGTH_SHORT).show();
-                    }
-                    //reset edittext after sending message
-                    messageEt.setText("");
-                }
-                else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setMessage("Double tap the start button.");
+                                            builder.show();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        String message = messageEt.getText().toString().trim();
 
-                    builder.show();
-                }
+                                        if (TextUtils.isEmpty(message)){
+                                            Toast.makeText(mContext, "Cannot send an empty message", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            sendMessage(message);
+                                        }
+                                        //reset edittext after sending message
+                                        messageEt.setText("");
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                //..
+                            }
+                        });
 
             }
         });
@@ -332,6 +367,8 @@ public class AppointmentChatActivity extends AppCompatActivity {
                                 nameTv.setText(user.getUsername());
                                 hisImage = user.getProfile_photo();
 
+                                mButtonStart.setVisibility(View.GONE);
+
                                 try {
                                     UniversalImageLoader.setImage(hisImage, profileIv, null, "");
                                 }
@@ -339,28 +376,16 @@ public class AppointmentChatActivity extends AppCompatActivity {
                                     Log.d(TAG, "ERROR: "+e);
                                 }
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                                builder.setCancelable(false);
-                                builder.setTitle("PLEASE READ THIS!");
-                                builder.setMessage("1. You have 15 MINUTES to say what's on your mind!\n\n"
-                                        +"2. The moment you start the timer, #1500 will be deducted from your THESEL WALLET!\n\n"
-                                        +"3. Check back to see the consultant's reply to your messages during his/her counselling hours!\n\n"
-                                        +"4. This ONGOING SESSION will end if you do not reply the counsellor's message within 24 HOURS!\n\n"
-                                        +"5. EXCHANGE OF PHONE NUMBERS AND EMAIL ADDRESSES ARE NOT ALLOWED!!!");
-                                builder.setPositiveButton("BEGIN", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder.show();
-
+                                millisInput = (Long.parseLong("30")+10) * 60000;
+                                setTime(millisInput);
                             }
                             else if (user.getIsStaff().equals("false"))
                             {
                                 nameTv.setText(user.getUsername());
                                 hisImage = user.getProfile_photo();
 
+                                mButtonRate.setVisibility(View.GONE);
+
                                 try {
                                     UniversalImageLoader.setImage(hisImage, profileIv, null, "");
                                 }
@@ -368,25 +393,8 @@ public class AppointmentChatActivity extends AppCompatActivity {
                                     Log.d(TAG, "ERROR: "+e);
                                 }
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                                builder.setCancelable(false);
-                                builder.setTitle("PLEASE READ THIS!");
-                                builder.setMessage("1. Try not to give very short replies. Provide enough possible solutions to the client's problems!\n\n"
-                                        +"2. You can be speaking with the same client for days until he/she is satisfied with your counselling." +
-                                        " During the process, other users will not be allowed to consult you!\n\n"
-                                        +"3. Delete the session when the client is satisfied with the consultation.\n\n"
-                                        +"4. Your CHAT HISTORY with that client will still be available on the database for future " +
-                                        "consultations.\n\n"
-                                        +"5. Delete the session if you don't get a reply within 24HOURS!\n\n"
-                                        +"6. EXCHANGE OF PHONE NUMBERS AND EMAIL ADDRESSES ARE NOT ALLOWED!!!");
-                                builder.setPositiveButton("BEGIN", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder.show();
-
+                                millisInput = (Long.parseLong("30")+10) * 60000;
+                                setTime(millisInput);
                             }
 
                         }
@@ -394,7 +402,7 @@ public class AppointmentChatActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        //...
                     }
                 });
     }
@@ -418,9 +426,9 @@ public class AppointmentChatActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
-                            InstantSession instantSession = task.getResult().toObject(InstantSession.class);
+                            Appointment appointment = task.getResult().toObject(Appointment.class);
                             HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("num_messages", instantSession.getNum_messages()+1);
+                            hashMap.put("num_messages", appointment.getNum_messages()+1);
                             mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
                         }
                     }
@@ -538,9 +546,9 @@ public class AppointmentChatActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             if (task.isSuccessful()){
-                                                InstantSession instantSession = task.getResult().toObject(InstantSession.class);
+                                                Appointment appointment = task.getResult().toObject(Appointment.class);
                                                 HashMap<String, Object> hashMap = new HashMap<>();
-                                                hashMap.put("num_messages", instantSession.getNum_messages()+1);
+                                                hashMap.put("num_messages", appointment.getNum_messages()+1);
                                                 mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
                                             }
                                         }
@@ -615,8 +623,8 @@ public class AppointmentChatActivity extends AppCompatActivity {
     private void sendImageMessage(Uri image_uri) {
         notify = true;
 
-        progressDialog.setMessage("Sending image...");
-        progressDialog.show();
+        /*progressDialog.setMessage("Sending image...");
+        progressDialog.show();*/
 
         final String timeStamp = ""+System.currentTimeMillis();
 
@@ -634,7 +642,7 @@ public class AppointmentChatActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             //image uploaded
-                            progressDialog.dismiss();
+                            //progressDialog.dismiss();
                             //get url of uploaded image
                             Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                             while (!uriTask.isSuccessful());
@@ -660,10 +668,11 @@ public class AppointmentChatActivity extends AppCompatActivity {
                                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                if (task.isSuccessful()){
-                                                    InstantSession instantSession = task.getResult().toObject(InstantSession.class);
+                                                if (task.isSuccessful())
+                                                {
+                                                    Appointment appointment = task.getResult().toObject(Appointment.class);
                                                     HashMap<String, Object> hashMap = new HashMap<>();
-                                                    hashMap.put("num_messages", instantSession.getNum_messages()+1);
+                                                    hashMap.put("num_messages", appointment.getNum_messages()+1);
                                                     mAppointmentReference.document(appointmentID).set(hashMap, SetOptions.merge());
                                                 }
                                             }
@@ -677,7 +686,7 @@ public class AppointmentChatActivity extends AppCompatActivity {
                                         User user = new User();
 
                                         if (notify){
-                                            progressDialog.dismiss();
+                                           // progressDialog.dismiss();
                                             sendNotification(hisUID, user.getUsername(), "Sent you a picture...");
                                         }
                                         notify = false;
@@ -866,7 +875,6 @@ public class AppointmentChatActivity extends AppCompatActivity {
         int hours = (int) (mTimeLeftInMillis / 1000) / 3600;
         int minutes = (int) ((mTimeLeftInMillis / 1000) % 3600) / 60;
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
-        String timeLeftFormatted;
         if (hours > 0) {
             timeLeftFormatted = String.format(Locale.getDefault(),
                     "%d:%02d:%02d", hours, minutes, seconds);
@@ -878,17 +886,49 @@ public class AppointmentChatActivity extends AppCompatActivity {
     }
 
     private void updateWatchInterface() {
-        if (mTimerRunning) {
-            //mButtonStartPause.setText("Pause");
-            mButtonStart.setVisibility(View.GONE);
-        } else {
-            mButtonStart.setText("Start");
-            if (mTimeLeftInMillis < 1000) {
-                mButtonStart.setVisibility(View.INVISIBLE);
-            } else {
-                mButtonStart.setVisibility(View.VISIBLE);
-            }
-        }
+        usersRef.orderByChild("uid").equalTo(myUid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds: dataSnapshot.getChildren())
+                        {
+                            User user = ds.getValue(User.class);
+                            if (user.getIsStaff().equals("true"))
+                            {
+                                if (mTimerRunning) {
+                                    //mButtonStartPause.setText("Pause");
+                                    mButtonStart.setVisibility(View.GONE);
+                                } else {
+                                    //mButtonStart.setText("Start");
+                                    if (mTimeLeftInMillis < 1000) {
+                                        mButtonStart.setVisibility(View.GONE);
+                                    } else {
+                                        mButtonStart.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (mTimerRunning) {
+                                    //mButtonStartPause.setText("Pause");
+                                    mButtonStart.setVisibility(View.GONE);
+                                } else {
+                                    //mButtonStart.setText("Start");
+                                    if (mTimeLeftInMillis < 1000) {
+                                        mButtonStart.setVisibility(View.GONE);
+                                    } else {
+                                        //mButtonStart.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 
     private void startTimer() {
@@ -916,7 +956,7 @@ public class AppointmentChatActivity extends AppCompatActivity {
 
         isActivityRunning = true;
 
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        /*SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         mStartTimeInMillis = prefs.getLong("startTimeInMillis", 600000);
         mTimeLeftInMillis = prefs.getLong("millisLeft", mStartTimeInMillis);
         mTimerRunning = prefs.getBoolean("timerRunning", false);
@@ -933,18 +973,18 @@ public class AppointmentChatActivity extends AppCompatActivity {
             } else {
                 startTimer();
             }
-        }
+        }*/
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
+        if (mAuthListener != null)  {
             FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
         }
         isActivityRunning = false;
 
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        /*SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("startTimeInMillis", mStartTimeInMillis);
         editor.putLong("millisLeft", mTimeLeftInMillis);
@@ -953,10 +993,11 @@ public class AppointmentChatActivity extends AppCompatActivity {
         editor.apply();
         if (mCountDownTimer != null) {
             mCountDownTimer.cancel();
-        }
+        }*/
     }
 
-    private void setupFirebaseAuth() {
+    private void setupFirebaseAuth()
+    {
         mAuthListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             myUid = user.getUid();
@@ -967,8 +1008,6 @@ public class AppointmentChatActivity extends AppCompatActivity {
                 Log.d( TAG, "onAuthStateChanged: signed_out");
             }
         };
-
-
     }
 
 }

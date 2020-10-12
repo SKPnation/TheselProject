@@ -102,10 +102,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.apptDateTv.setText(simpleDateFormat.format(appointmentDate));
         holder.numMessagesTv.setText(chatMessagesString);
 
-        Date date0 = new Date();
+        /*Date date0 = new Date();
         Date date1 = new Date();
         date0.getTime();
-        date1.setTime(appointmentDate);
+        date1.setTime(appointmentDate);*/
 
         usersRef.orderByKey().equalTo(mAuth.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -196,25 +196,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                                                             }
                                                         }
                                                     });
-
-
-                                                    if (date0.after(date1))
-                                                    {
-                                                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                                        builder.setCancelable(false);
-                                                        builder.setMessage("Your appointment scheduled for "+startTime+" - "+endTime+" "+timeType+" on "+simpleDateFormat.format(appointmentDate)
-                                                                + " with "+counsellor.getUsername()+" has expired.");
-                                                        builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-                                                                dialog.dismiss();
-
-                                                                mAppointmentReference.document(appointmentID).delete();
-                                                            }
-                                                        });
-
-                                                        builder.show();
-                                                    }
                                                 }
                                             }
 

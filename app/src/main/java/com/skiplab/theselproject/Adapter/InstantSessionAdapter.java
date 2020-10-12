@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.skiplab.theselproject.Common.Common;
-import com.skiplab.theselproject.Consultation.ChatActivity;
+import com.skiplab.theselproject.Consultation.InstantChatActivity;
 import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.DashboardActivity;
 import com.skiplab.theselproject.R;
@@ -128,7 +128,7 @@ public class InstantSessionAdapter extends RecyclerView.Adapter<InstantSessionAd
                                                         public void onClick(View v) {
                                                             if (Common.isConnectedToTheInternet(context))
                                                             {
-                                                                Intent intent = new Intent(context, ChatActivity.class);
+                                                                Intent intent = new Intent(context, InstantChatActivity.class);
                                                                 intent.putExtra("hisUID", counsellorID);
                                                                 intent.putExtra("chatroomID",instantSessionID);
                                                                 intent.putExtra("myName",counsellor.getUsername());
@@ -199,7 +199,7 @@ public class InstantSessionAdapter extends RecyclerView.Adapter<InstantSessionAd
                                                         public void onClick(View v) {
                                                             if (Common.isConnectedToTheInternet(context))
                                                             {
-                                                                Intent intent = new Intent(context, ChatActivity.class);
+                                                                Intent intent = new Intent(context, InstantChatActivity.class);
                                                                 intent.putExtra("hisUID", clientUID);
                                                                 intent.putExtra("chatroomID",instantSessionID);
                                                                 intent.putExtra("myName",client.getUsername());

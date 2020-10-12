@@ -44,7 +44,7 @@
 
                 <FrameLayout
                     android:id="@+id/consult_notify_layout"
-                    android:layout_toLeftOf="@id/moreBtn"
+                    android:layout_toLeftOf="@id/optionsToolbar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
@@ -77,7 +77,7 @@
                 </FrameLayout>
 
                 <ImageView
-                    android:id="@+id/moreBtn"
+                    android:id="@+id/optionsToolbar"
                     android:src="@drawable/ic_options"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

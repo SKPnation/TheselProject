@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.skiplab.theselproject.Adapter.SectionsStatePagerAdapter;
-import com.skiplab.theselproject.Home.PhotoGallery;
 import com.skiplab.theselproject.R;
 
 import java.util.ArrayList;
@@ -58,7 +57,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
         pagerAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new EditProfileFragment(), "Edit Profile"); //fragment 0
         pagerAdapter.addFragment(new MyPostsFragment(), "My Posts"); //fragment 1
-        pagerAdapter.addFragment(new PhotoGallery(), "Thesel Gallery"); //fragment 2
         pagerAdapter.addFragment(new AboutThesel(), "About Thesel"); //fragment 3
         pagerAdapter.addFragment(new PrivacyPolicyFragment(),"Privacy Policy"); //fragment 4
         pagerAdapter.addFragment(new TermsAndConditions(), "Terms And Conditions"); //fragment 5
@@ -72,7 +70,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
         ArrayList<String> options = new ArrayList<>();
         options.add("Edit Profile");
         options.add("My Posts");
-        options.add("Thesel Gallery");
         options.add("About Thesel");
         options.add("Privacy Policy");
         options.add("Terms & Conditions");

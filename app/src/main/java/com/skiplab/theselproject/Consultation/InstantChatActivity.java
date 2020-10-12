@@ -1,6 +1,7 @@
 package com.skiplab.theselproject.Consultation;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -53,7 +54,10 @@ import com.google.firebase.database.ValueEventListener;
 //import com.skiplab.theselproject.Adapter.AdapterChat;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -66,6 +70,10 @@ import com.skiplab.theselproject.models.InstantSession;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.notifications.APIService;
 import com.skiplab.theselproject.notifications.Client;
+import com.skiplab.theselproject.notifications.Data;
+import com.skiplab.theselproject.notifications.Response;
+import com.skiplab.theselproject.notifications.Sender;
+import com.skiplab.theselproject.notifications.Token;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -73,18 +81,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
 
-public class ChatActivity extends AppCompatActivity {
+public class InstantChatActivity extends AppCompatActivity {
 
-    Context mContext = ChatActivity.this;
+    Context mContext = InstantChatActivity.this;
 
-    private static final String TAG = "ChatActivity";
+    private static final String TAG = "InstantChatActivity";
 
-    private static final int REQUEST_PERMISSION_CODE = 1000;
+    private static final int REQUEST_RECORD_AUDIO = 0;
 
     private static final long START_TIME_IN_MILLIS = 900000;
 
@@ -103,9 +111,9 @@ public class ChatActivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView;
     CircleImageView profileIv;
-    TextView nameTv, countDownTv;
+    TextView nameTv;
     EditText messageEt;
-    Button mButtonStart, mButtonThanks;
+    Button mButtonRate;
     ImageButton sendBtn, attachBtn, recordBtn;
 
     private ProgressDialog progressDialog;
@@ -137,6 +145,8 @@ public class ChatActivity extends AppCompatActivity {
     APIService apiService;
     boolean notify = false;
 
+    boolean isRecording = false;
+
     //image picked will be saved in this uri
     Uri image_uri = null;
 
@@ -152,12 +162,14 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_instant_chat);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         usersRef = firebaseDatabase.getReference("users");
 
         setupFirebaseAuth();
+
+        mediaRecorder = new MediaRecorder();
 
         final Intent intent = getIntent();
         hisUID = intent.getStringExtra("hisUID");
@@ -165,7 +177,7 @@ public class ChatActivity extends AppCompatActivity {
         myName = intent.getStringExtra("myName");
 
 
-        mChatroomReference = FirebaseFirestore.getInstance().collection("chatrooms");
+        mChatroomReference = FirebaseFirestore.getInstance().collection("instantSessions");
         mMessageReference = FirebaseDatabase.getInstance().getReference("chatroom_messages");
         mProfileReference = FirebaseFirestore.getInstance().collection("profiles");
 
@@ -184,9 +196,7 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.chat_recylerView);
         profileIv = findViewById(R.id.profileIv);
         nameTv = findViewById(R.id.nameTv);
-        countDownTv = findViewById(R.id.text_view_countdown);
-        mButtonStart = findViewById(R.id.button_start_pause);
-        mButtonThanks = findViewById(R.id.button_thanks);
+        mButtonRate = findViewById(R.id.rate_btn);
         messageEt = findViewById(R.id.messageEt);
         sendBtn = findViewById(R.id.sendBtn);
         attachBtn = findViewById(R.id.attachBtn);
@@ -202,249 +212,77 @@ public class ChatActivity extends AppCompatActivity {
         //create api service
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
-        /*mButtonStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Common.isConnectedToTheInternet(mContext))
-                {
-                    if (mTimerRunning){
-                        mButtonStart.setVisibility(View.GONE);
-                    } else {
-                        usersRef.orderByKey().equalTo(myUid)
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot ds: dataSnapshot.getChildren())
-                                        {
-                                            User user = ds.getValue(User.class);
-
-                                            if (user.getIsStaff().equals("false"))
-                                            {
-                                                int wallet = Integer.parseInt(ds.child("wallet").getValue().toString());
-                                                int result = wallet - 1500;
-
-                                                usersRef.child(myUid).child("wallet").setValue(result);
-
-                                                mProfileReference.document(hisUID)
-                                                        .get()
-                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                if (task.isSuccessful())
-                                                                {
-                                                                    Profile profile = task.getResult().toObject(Profile.class);
-                                                                    HashMap<String,Object> hashMap = new HashMap<>();
-                                                                    hashMap.put("num_of_payments", profile.getNum_of_payments()+1);
-
-                                                                    mProfileReference.document(hisUID).set(hashMap, SetOptions.merge());
-                                                                }
-                                                            }
-                                                        });
-
-                                                startTimer();
-
-                                                i++;
-
-                                                Handler handler = new Handler();
-                                                handler.postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
-                                                                .setMessage("You have 5 minutes left!")
-                                                                .create();
-                                                        alertDialog.show();
-                                                    }
-                                                }, 600000);
-
-                                                Toast.makeText(mContext,"Deducted successfully!",Toast.LENGTH_SHORT).show();
-
-                                            }
-                                            else
-                                            {
-                                                startTimer();
-
-                                                i++;
-
-                                                Handler handler = new Handler();
-                                                handler.postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        AlertDialog alertDialog =new AlertDialog.Builder(mContext)
-                                                                .setMessage("You have 5 minutes left!")
-                                                                .create();
-                                                        alertDialog.show();
-                                                    }
-                                                }, 600000);
-                                            }
-
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        //..
-                                    }
-                                });
-
-                    }
-                }
-                else
-                {
-                    AlertDialog alertDialog =new AlertDialog.Builder(mContext)
-                            .setMessage("Please check your internet connection")
-                            .create();
-                    alertDialog.show();
-                }
-
-            }
-        });*/
-
-        mButtonThanks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                usersRef.orderByKey().equalTo(myUid)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot ds: dataSnapshot.getChildren())
-                                {
-                                    User user = ds.getValue(User.class);
-                                    if (user.getIsStaff().equals("false"))
-                                    {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                                        builder.setMessage("Are you satisfied with the consultation?");
-
-                                        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                String message = "Thanks, I'm satisfied with the consultation.";
-
-                                                sendMessage(message);
-                                            }
-                                        });
-
-                                        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-
-                                        builder.show();
-                                    }
-                                    else
-                                    {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                                        builder.setMessage("This button can only be used by the client!");
-
-                                        builder.show();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-            }
-        });
-
-        updateCountDownText();
-
         attachBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTimerRunning)
-                {
-                    showImagePickDialog();
-                }
-                else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                    builder.setMessage("Double tap the start button.");
-
-                    builder.show();
-                }
+                showImagePickDialog();
             }
         });
 
         recordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkPermissionFromDevice())
+                Toast.makeText(mContext,"Oops! Error. Try again later",Toast.LENGTH_SHORT).show();
+                /*if (checkPermissionFromDevice())
                 {
-                    if (mTimerRunning)
-                    {
-                        pathSave = Environment.getExternalStorageDirectory()
-                                .getAbsolutePath()+"/"
-                                + UUID.randomUUID().toString()+"_audio_record.3gp";
-                        setupMediaRecorder();
-                        try {
-                            mediaRecorder.prepare();
-                            mediaRecorder.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                    pathSave = Environment.getExternalStorageDirectory()
+                            .getAbsolutePath()+"/"
+                            + UUID.randomUUID().toString()+"_audio_record.3gp";
+                    setupMediaRecorder();
+                    try {
+                        mediaRecorder.prepare();
+                        mediaRecorder.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setMessage("Recording...");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            stopRecording();
                         }
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                        builder.setMessage("Recording...");
-                        builder.setCancelable(false);
-                        builder.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                stopRecording();
-                            }
-                        });
+                    });
 
-                        builder.show();
-                    }
-                    else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                        builder.setMessage("Double tap the start button.");
-
-                        builder.show();
-                    }
+                    builder.show();
                 }
                 else
-                    requestPermission();
+                    requestPermission();*/
 
             }
         });
+
+
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 notify = true;
-                if (mTimerRunning)
-                {
-                    String message = messageEt.getText().toString().trim();
+                String message = messageEt.getText().toString().trim();
 
-                    if (TextUtils.isEmpty(message)){
-                        Toast.makeText(ChatActivity.this, "Cannot send an empty message", Toast.LENGTH_SHORT).show();
-                    } else {
-                        sendMessage(message);
-
-                        Toast.makeText(ChatActivity.this, "Wait for a reply...", Toast.LENGTH_SHORT).show();
-                    }
-                    //reset edittext after sending message
-                    messageEt.setText("");
+                if (TextUtils.isEmpty(message)){
+                    Toast.makeText(InstantChatActivity.this, "Cannot send an empty message", Toast.LENGTH_SHORT).show();
+                } else {
+                    sendMessage(message);
                 }
-                else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                    builder.setMessage("Double tap the start button.");
-
-                    builder.show();
-                }
+                //reset edittext after sending message
+                messageEt.setText("");
 
             }
         });
 
-
         getRecepientDetails();
         readMessages();
     }
-
-
+    private void setupMediaRecorder() {
+        mediaRecorder = new MediaRecorder();
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        mediaRecorder.setOutputFile(pathSave);
+    }
 
     private void getRecepientDetails() {
         usersRef.orderByKey().equalTo(hisUID)
@@ -467,8 +305,7 @@ public class ChatActivity extends AppCompatActivity {
                                     Log.d(TAG, "ERROR: "+e);
                                 }
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                                builder.setCancelable(false);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(InstantChatActivity.this);
                                 builder.setTitle("PLEASE READ THIS!");
                                 builder.setMessage("1. You have 15 MINUTES to say what's on your mind!\n\n"
                                         +"2. The moment you start the timer, #1500 will be deducted from your THESEL WALLET!\n\n"
@@ -482,13 +319,15 @@ public class ChatActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                     }
                                 });
-                                builder.show();
+                                //builder.show();
 
                             }
                             else if (user.getIsStaff().equals("false"))
                             {
                                 nameTv.setText(user.getUsername());
                                 hisImage = user.getProfile_photo();
+
+                                mButtonRate.setVisibility(View.GONE);
 
                                 try {
                                     UniversalImageLoader.setImage(hisImage, profileIv, null, "");
@@ -497,8 +336,7 @@ public class ChatActivity extends AppCompatActivity {
                                     Log.d(TAG, "ERROR: "+e);
                                 }
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                                builder.setCancelable(false);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(InstantChatActivity.this);
                                 builder.setTitle("PLEASE READ THIS!");
                                 builder.setMessage("1. Try not to give very short replies. Provide enough possible solutions to the client's problems!\n\n"
                                         +"2. You can be speaking with the same client for days until he/she is satisfied with your counselling." +
@@ -514,7 +352,7 @@ public class ChatActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                     }
                                 });
-                                builder.show();
+                                //builder.show();
 
                             }
 
@@ -523,7 +361,7 @@ public class ChatActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        //...
                     }
                 });
     }
@@ -557,7 +395,7 @@ public class ChatActivity extends AppCompatActivity {
 
         if (notify)
         {
-            //sendNotification(hisUID, myName, message);
+            sendNotification(hisUID, myName, message);
         }
 
     }
@@ -578,7 +416,7 @@ public class ChatActivity extends AppCompatActivity {
                             }
 
                             //adapter
-                            adapterChat = new AdapterChat(ChatActivity.this, chatList, hisImage);
+                            adapterChat = new AdapterChat(InstantChatActivity.this, chatList, hisImage);
                             adapterChat.notifyDataSetChanged();
                             recyclerView.setAdapter(adapterChat);
                         }
@@ -591,19 +429,11 @@ public class ChatActivity extends AppCompatActivity {
                 });
     }
 
-    private void setupMediaRecorder() {
-        mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        mediaRecorder.setOutputFile(pathSave);
-    }
-
     private void requestPermission() {
         ActivityCompat.requestPermissions(this,new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.RECORD_AUDIO
-        },REQUEST_PERMISSION_CODE);
+        },REQUEST_RECORD_AUDIO);
     }
 
     private boolean checkPermissionFromDevice() {
@@ -614,7 +444,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void stopRecording() {
-        mediaRecorder.stop();
+        //mediaRecorder.stop();
         mediaRecorder.release();
 
         uploadAudio();
@@ -626,10 +456,10 @@ public class ChatActivity extends AppCompatActivity {
 
         String timeStamp = ""+System.currentTimeMillis();
 
-        String fileNameAndPath = "Audio/"+"audio.mp3"+timeStamp;
+
 
         StorageReference mStorage = FirebaseStorage.getInstance().getReference();
-        StorageReference filePath = mStorage.child(fileNameAndPath);
+        StorageReference filePath = mStorage.child("Audio").child("audio.mp3"+timeStamp);
 
         Uri uri = Uri.fromFile(new File(pathSave));
 
@@ -685,7 +515,7 @@ public class ChatActivity extends AppCompatActivity {
 
                                     if (notify){
                                         progressDialog.dismiss();
-                                        //sendNotification(hisUID, user.getUsername(), "Sent you a recording...");
+                                        sendNotification(hisUID, user.getUsername(), "Sent you a recording...");
                                     }
                                     notify = false;
                                 }
@@ -702,7 +532,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
 
                 progressDialog.dismiss();
-                Toast.makeText(ChatActivity.this, "Failed!!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Failed!!!", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -899,7 +729,7 @@ public class ChatActivity extends AppCompatActivity {
                     }
                     else {
                         //camera or gallery or both permissions denied
-                        Toast.makeText(ChatActivity.this, "Camera & Storage permissions are necessary...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InstantChatActivity.this, "Camera & Storage permissions are necessary...", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -913,12 +743,12 @@ public class ChatActivity extends AppCompatActivity {
                     }
                     else {
                         //gallery permissions denied
-                        Toast.makeText(ChatActivity.this, "Storage permissions are necessary...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InstantChatActivity.this, "Storage permissions are necessary...", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
             break;
-            case REQUEST_PERMISSION_CODE:
+            case REQUEST_RECORD_AUDIO:
             {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     Toast.makeText(this,"Permission Granted", Toast.LENGTH_SHORT).show();
@@ -938,89 +768,47 @@ public class ChatActivity extends AppCompatActivity {
                 image_uri = data.getData();
 
                 sendImageMessage(image_uri);
-
             }
             else if (requestCode == IMAGE_PICK_CAMERA_CODE){
                 //image is picked from camera, get uri of the image
                 sendImageMessage(image_uri);
             }
+            else if (requestCode == REQUEST_RECORD_AUDIO){
+                //.
+            }
+        }
+        else if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(this, "Audio was not recorded", Toast.LENGTH_SHORT).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
 
-    private void startTimer() {
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis = millisUntilFinished;
-                updateCountDownText();
-            }
-
-            @Override
-            public void onFinish() {
-                mTimerRunning = false;
-                mButtonStart.setVisibility(View.GONE);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                builder.setMessage("TIME'S UP!!!");
-                builder.show();
-
-                i++;
-
-                Handler handler1 = new Handler();
-                handler1.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 2000);
-            }
-
-        }.start();
-
-        mTimerRunning = true;
-    }
-
-    private void updateCountDownText() {
-        int minutes = (int) (mTimeLeftInMillis / 6000) / 10;
-        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
-
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-
-        countDownTv.setText(timeLeftFormatted);
-
-    }
-
-
-    /*private void sendNotification(String hisUID, String myName, String message) {
+    private void sendNotification(String hisUID, String myName, String message) {
         CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
-        allTokens.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
-                    Token token = new Token(ds1.getString("token"));
-                    Data data = new Data(myUid, message, myName, hisUID, R.mipmap.ic_launcher3);
+        allTokens.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+                Token token = new Token(ds1.getString("token"));
+                Data data = new Data(myUid, message, myName, hisUID, R.mipmap.ic_launcher3);
 
-                    Sender sender = new Sender(data, token.getToken());
-                    apiService.sendNotification(sender)
-                            .enqueue(new Callback<Response>() {
-                                @Override
-                                public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                                    //..
-                                }
+                Sender sender = new Sender(data, token.getToken());
+                apiService.sendNotification(sender)
+                        .enqueue(new Callback<Response>() {
+                            @Override
+                            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                                //..
+                            }
 
-                                @Override
-                                public void onFailure(Call<Response> call, Throwable t) {
-                                    //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
-                                }
-                            });
+                            @Override
+                            public void onFailure(Call<Response> call, Throwable t) {
+                                //Toast.makeText(context, "FAILED REQUEST!!!", Toast.LENGTH_LONG).show();
+                            }
+                        });
 
 
-                }
             }
         });
-    }*/
+    }
 
 
     @Override
@@ -1055,26 +843,5 @@ public class ChatActivity extends AppCompatActivity {
         };
 
 
-    }
-
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exitByBackKey();
-
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    private void exitByBackKey() {
-        AlertDialog alertbox = new AlertDialog.Builder(this)
-                .setTitle("DON'T DO THAT!")
-                .setMessage("Wait till the time is up")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).show();
     }
 }

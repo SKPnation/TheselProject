@@ -25,7 +25,8 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Consultation.AppointmentChatActivity"></activity>
+        <activity android:name=".Home.PhotoGalleryActivity" />
+        <activity android:name=".Consultation.AppointmentChatActivity" />
         <activity android:name=".TimeDayAlreadyChosen" />
         <activity android:name=".Consultation.BookAppointment2" />
         <activity android:name=".AvailabilityEdit" />
@@ -36,7 +37,7 @@
         <activity android:name=".Consultation.ChatRoomsActivity" />
         <activity android:name=".Consultation.DepositActivity" />
         <activity android:name=".Consultation.WalletActivity" />
-        <activity android:name=".Consultation.ChatActivity" />
+        <activity android:name=".Consultation.InstantChatActivity" />
         <activity android:name=".Consultation.ConsultantsActivity" />
         <activity android:name=".AddPost.SelectMood" />
         <activity android:name=".Home.SelectCategory" />

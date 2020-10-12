@@ -49,6 +49,7 @@ import com.skiplab.theselproject.Consultation.ChatRoomsActivity;
 import com.skiplab.theselproject.Consultation.WalletActivity;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.JavaMailAPI;
+import com.skiplab.theselproject.Utils.JavaMailClientAPI;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.ChatMessage;
 import com.skiplab.theselproject.models.InstantSession;
@@ -423,7 +424,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                                 try
                                                                                 {
-                                                                                    if (LocalTime.parse(formattedTime).isAfter(LocalTime.parse("20:00")))
+                                                                                    if (LocalTime.parse(formattedTime).isAfter(LocalTime.parse("21:00")))
                                                                                     {
                                                                                         progressDialog.dismiss();
 
@@ -468,9 +469,12 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                             }
                                             else
                                             {
-
+                                                AlertDialog alertDialog =new AlertDialog.Builder(context)
+                                                        .setTitle("Upgrade your OS")
+                                                        .setMessage("To use this feature, your Android OS must be 8.0 and above!")
+                                                        .create();
+                                                alertDialog.show();
                                             }
-
                                         }
                                         else
                                         {
@@ -666,12 +670,21 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                             JavaMailAPI javaMailAPI = new JavaMailAPI(
                                                                                                                                                     context,
                                                                                                                                                     "skiplab.innovation@gmail.com",
-                                                                                                                                                    "ayomideseaz@gmail.com",
+                                                                                                                                                    hisEmail,
                                                                                                                                                     "THESEL CONSULTATION",
-                                                                                                                                                    "Hello "+hisName+","+"\n\n"+client.getUsername().toUpperCase()+" just paid for an Instant Session [7days] with you on the Thesel platform."+
-                                                                                                                                                            "\n\n\n"+"Warm Regards,"+"\n"+"Thesel Team.");
+                                                                                                                                                    "Hello "+hisName+","+"\n\n"+client.getUsername().toUpperCase()+" just paid for an Instant Session [a One Week Session] with you on the Thesel platform."+
+                                                                                                                                                            "\n\n\n"+"Thesel Team.");
 
                                                                                                                                             javaMailAPI.execute();
+
+                                                                                                                                            JavaMailClientAPI javaMailClientAPI = new JavaMailClientAPI(
+                                                                                                                                                    context,
+                                                                                                                                                    mAuth.getCurrentUser().getEmail(),
+                                                                                                                                                    "THESEL CONSULTATION",
+                                                                                                                                                    "Hello "+client.getUsername().toUpperCase()+","+"\n\n"+" You just paid for an Instant Session [a One Week Session] with "+hisName.toUpperCase()+" on the Thesel platform."+
+                                                                                                                                                            "\n\n\n"+"Thesel Team.");
+
+                                                                                                                                            javaMailClientAPI.execute();
 
                                                                                                                                             String timestamp = String.valueOf(System.currentTimeMillis());
 
@@ -737,7 +750,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                                                                                                         @Override
                                                                                                                                                                         public void onSuccess(Void aVoid) {
-                                                                                                                                                                            //sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
+                                                                                                                                                                            sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
 
                                                                                                                                                                             sendAdminNotification(mAuth.getUid(), "Instant Session for "+hisName, "Instant Session");
 
@@ -799,7 +812,6 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Toast.makeText(context,"Profile Query Failed: "+e,Toast.LENGTH_SHORT).show();
-
                                     }
                                 });
                     }

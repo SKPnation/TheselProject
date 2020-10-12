@@ -28,7 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,8 +46,10 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.skiplab.theselproject.R;
 import com.skiplab.theselproject.Utils.JavaMailAPI;
+import com.skiplab.theselproject.Utils.JavaMailClientAPI;
 import com.skiplab.theselproject.Utils.UniversalImageLoader;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.notifications.APIService;
@@ -86,13 +90,13 @@ public class BookAppointment2 extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     DatabaseReference usersRef;
-    CollectionReference appointmentsRef, allTokens;
+    CollectionReference appointmentsRef, allTokens, mProfileReference;
 
-    ImageView hisImageIv;
+    ImageView hisImageIv, closeBtn;
     TextView hisNameTv, hisCategoryTv, hisCostTv, apptDateTv, apptTimeTv, apptFeeTv;
     Button confirmBtn;
 
-    String hisName;
+    String hisName, hisEmail;
     String myUID, myEmail, myName;
     String hisUID, hisCategory, startTime, endTime, timeType, slot;
     Long selectedDate;
@@ -124,6 +128,7 @@ public class BookAppointment2 extends AppCompatActivity {
         usersRef = FirebaseDatabase.getInstance().getReference("users");
         appointmentsRef = FirebaseFirestore.getInstance().collection("appointments");
         allTokens = FirebaseFirestore.getInstance().collection("tokens");
+        mProfileReference = FirebaseFirestore.getInstance().collection("profiles");
 
         locale = new Locale("en", "NG");
         fmt = NumberFormat.getCurrencyInstance(locale);
@@ -174,6 +179,14 @@ public class BookAppointment2 extends AppCompatActivity {
         apptTimeTv = findViewById(R.id.appt_time_tv);
         apptFeeTv = findViewById(R.id.appt_fee_tv);
         confirmBtn = findViewById(R.id.confirm_button);
+        closeBtn = findViewById(R.id.closeBtn);
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         usersRef.orderByKey().equalTo(hisUID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -181,6 +194,7 @@ public class BookAppointment2 extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren())
                         {
+                            hisEmail = ds.getValue(User.class).getEmail();
                             hisName = ds.getValue(User.class).getUsername();
                             hisNameTv.setText(ds.getValue(User.class).getUsername());
                             hisCategoryTv.setText(ds.getValue(User.class).getCategory1());
@@ -274,13 +288,39 @@ public class BookAppointment2 extends AppCompatActivity {
                                             JavaMailAPI javaMailAPI = new JavaMailAPI(
                                                     mContext,
                                                     "skiplab.innovation@gmail.com",
-                                                    "ayomideseaz@gmail.com",
+                                                    hisEmail,
                                                     "THESEL CONSULTATION",
-                                                    "Hello "+hisName+","+"\n\n"+"You have an appointment from "+startEventTime+" - "+endEventTime+" "+timeType
-                                                            +" on "+simpleDateFormat.format(selectedDate)+" with "+myName+
-                                                            "\n\n\n"+"Warm Regards,"+"\n"+"Thesel Team.");
+                                                    "Hello "+hisName.toUpperCase()+","+"\n\n"+"You have an appointment from "+startEventTime+" - "+endEventTime+" "+timeType
+                                                            +" on "+simpleDateFormat.format(selectedDate)+" with "+myName.toUpperCase()+
+                                                            "\n\n\n"+"Thesel Team.");
 
                                             javaMailAPI.execute();
+
+                                            JavaMailClientAPI javaMailClientAPI = new JavaMailClientAPI(
+                                                    mContext,
+                                                    myEmail,
+                                                    "THESEL CONSULTATION",
+                                                    "Hello "+myName.toUpperCase()+","+"\n\n"+"You have an appointment from "+startEventTime+" - "+endEventTime+" "+timeType
+                                                            +" on "+simpleDateFormat.format(selectedDate)+" with "+hisName.toUpperCase()+
+                                                            "\n\n\n"+"Thesel Team.");
+
+                                            javaMailClientAPI.execute();
+
+                                            mProfileReference.document(hisUID)
+                                                    .get()
+                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task3) {
+                                                            if (task3.getResult().exists())
+                                                            {
+                                                                long appointments = task3.getResult().getLong("appointments");
+                                                                HashMap<String, Object> hashMap = new HashMap<>();
+                                                                hashMap.put("appointments",appointments+1);
+
+                                                                mProfileReference.document(hisUID).set(hashMap, SetOptions.merge());
+                                                            }
+                                                        }
+                                                    });
 
                                             pd.dismiss();
 
@@ -290,6 +330,31 @@ public class BookAppointment2 extends AppCompatActivity {
                                             builder1.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
+                                                    String timestamp = String.valueOf(System.currentTimeMillis());
+
+                                                    HashMap<String,Object> myNotificationsMap = new HashMap<>();
+                                                    myNotificationsMap.put("counsellor_id",hisUID);
+                                                    myNotificationsMap.put("client_id",myUID);
+                                                    myNotificationsMap.put("category",hisCategory);
+                                                    myNotificationsMap.put("title","New Appointment");
+                                                    myNotificationsMap.put("content",hisName.toUpperCase()+", You have a new Appointment");
+                                                    myNotificationsMap.put("expiry_date",simpleDateFormat.format(selectedDate));
+                                                    myNotificationsMap.put("appointment_time",simpleDateFormat.format(selectedDate)+", "+startEventTime+" - "+endEventTime+" "+timeType);
+                                                    myNotificationsMap.put("timestamp",FieldValue.serverTimestamp());
+                                                    myNotificationsMap.put("read",false);
+
+                                                    FirebaseFirestore.getInstance().collection("myNotifications")
+                                                            .document(timestamp)
+                                                            .set(myNotificationsMap)
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    sendNotification(hisUID, myName, "NEW CONSULTATION!!!");
+
+                                                                    sendAdminNotification(myUID, "for "+hisName, "New Appointment");
+                                                                }
+                                                            });
+
                                                     try {
                                                         Date start = simpleDateFormat1.parse(startEventTime);
                                                         Date end = simpleDateFormat1.parse(endEventTime);
@@ -342,7 +407,7 @@ public class BookAppointment2 extends AppCompatActivity {
                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
-                                                                    //sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
+                                                                    sendNotification(hisUID, myName, "NEW CONSULTATION!!!");
 
                                                                     sendAdminNotification(myUID, "for "+hisName, "New Appointment");
 

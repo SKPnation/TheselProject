@@ -8,5 +8,6 @@
     <color name="colorTransparentWhite">#E1EFEA</color>
 
     <color name="dividerColor">#fff</color>
+    <color name="recorder_bg">#1FA000</color>
 </resources>
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.core.widget.NestedScrollView;
@@ -23,7 +24,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -235,6 +238,14 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getActivity(), SelectMood.class));
             }
         });*/
+
+
+        optionsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMoreOptions(optionsBtn);
+            }
+        });
 
         share_post_et.addTextChangedListener(new TextWatcher() {
             @Override
@@ -501,7 +512,32 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void initNotificationUpdate() {
+    private void showMoreOptions(ImageView optionsBtn)
+    {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), optionsBtn, Gravity.END);
+
+        popupMenu.getMenu().add(Menu.NONE,0,0, "Video library");
+        popupMenu.getMenu().add(Menu.NONE,1,0, "Thesel gallery");
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if (id==0){
+                    startActivity(new Intent(getActivity(), VideoGallery.class));
+                }
+                else if (id==1) {
+                    startActivity(new Intent(getActivity(), PhotoGalleryActivity.class));
+                }
+                return false;
+            }
+        });
+        //show menu
+        popupMenu.show();
+    }
+
+    private void initNotificationUpdate()
+    {
         myNotificationDb
                 .whereEqualTo("counsellor_id",myUid)
                 .get()
@@ -536,7 +572,8 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    private void loadPosts() {
+    private void loadPosts()
+    {
         Query queryPosts = postDb.orderByChild("pCategory").equalTo(selCategory);
         //get all data from this reference
         queryPosts.addValueEventListener(new ValueEventListener() {
@@ -566,7 +603,8 @@ public class HomeFragment extends Fragment {
 
 
 
-    private void loadConsultants() {
+    private void loadConsultants()
+    {
         Query querySelCategory = userDb.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid());
         querySelCategory.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -622,8 +660,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void setupDrawer() {
-
+    private void setupDrawer()
+    {
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(),mDrawerLayout,R.string.open,R.string.close)
         {
             @Override
@@ -640,7 +678,6 @@ public class HomeFragment extends Fragment {
         };
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
     }
 
     @Override
