@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2" xmlns:ns2="http://schemas.android.com/tools">
+    <array name="av_colors">
+        <item>@color/av_color4</item>
+        <item>@color/av_color3</item>
+        <item>@color/av_color2</item>
+        <item>@color/av_color1</item>
+    </array>
     <string-array name="categories">
         <item>Relationship</item>
         <item>Addiction</item>
@@ -16,6 +22,7 @@
         <item> </item>
     </string-array>
     <string-array name="costs">
+        <item>150000</item>
         <item>300000</item>
         <item>600000</item>
         <item>900000</item>
@@ -307,6 +314,11 @@
     <color name="accent_material_light">@color/material_deep_teal_500</color>
     <color name="androidx_core_ripple_material_light">#1f000000</color>
     <color name="androidx_core_secondary_text_default_material_light">#8a000000</color>
+    <color name="av_color1">#f7b09e</color>
+    <color name="av_color2">#f0979b</color>
+    <color name="av_color3">#e36a97</color>
+    <color name="av_color4">#bc428b</color>
+    <color name="av_color_bg">#8f367c</color>
     <color name="background_floating_material_dark">@color/material_grey_800</color>
     <color name="background_floating_material_light">@android:color/white</color>
     <color name="background_material_dark">@color/material_grey_850</color>
@@ -426,6 +438,7 @@
     <color name="pstck_pinpad_default_pin_indicator_empty_color">#E0E0E0</color>
     <color name="pstck_pinpad_default_pin_indicator_filled_color">#C4C4C4</color>
     <color name="pstck_pinpad_default_prompt_textcolor">#D0D0D0</color>
+    <color name="recorder_bg">#1FA000</color>
     <color name="ripple_material_dark">#33ffffff</color>
     <color name="ripple_material_light">#1f000000</color>
     <color name="secondary_text_default_material_dark">#b3ffffff</color>
@@ -440,6 +453,9 @@
     <color name="test">#221224</color>
     <color name="tooltip_background_dark">#e6616161</color>
     <color name="tooltip_background_light">#e6FFFFFF</color>
+    <dimen name="aar_bubble_size">30dp</dimen>
+    <dimen name="aar_footer_height">200dp</dimen>
+    <dimen name="aar_wave_height">60dp</dimen>
     <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
     <dimen name="abc_action_bar_content_inset_with_nav">72dp</dimen>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
@@ -967,6 +983,11 @@
     <item quantity="one"><ns1:g id="count">%d</ns1:g> new notification</item>
     <item quantity="other"><ns1:g id="count">%d</ns1:g> new notifications</item>
   </plurals>
+    <string name="JM_pwd">dwcqckylgqngqoxr</string>
+    <string name="aar_paused">Paused</string>
+    <string name="aar_playing">Playing</string>
+    <string name="aar_recording">Recording</string>
+    <string name="aar_save">Save</string>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_up_description">Navigate up</string>
     <string name="abc_action_menu_overflow_description">More options</string>
@@ -1000,9 +1021,11 @@
     <string name="aboutHearme4">The founding of Thesel was inspired by our personal battle experiences. </string>
     <string name="aboutHearme5">It is hope inspiring to know that you are not alone. </string>
     <string name="aboutHearme6">We have created a platform on which you can connect with experts and like-minded supportive people in the Thesel Community, on whose experience and knowledge you can leverage, to overcome your challenges. Overcoming yours, you are properly positioned to, in turn, help others </string>
-    <string name="app_name">Thesel</string>
+    <string name="app_name" translatable="false">Thesel</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="av_app_name">Audio Visualization</string>
     <string name="banner_ad_unit_id">ca-app-pub-4813843298673497/2056271486</string>
+    <string name="book_appt_hint"><![CDATA[Book an appointment for a day & time of your choice.]]></string>
     <string name="bottom_sheet_behavior" translatable="false">com.google.android.material.bottomsheet.BottomSheetBehavior</string>
     <string name="character_counter_content_description">Characters entered %1$d of %2$d</string>
     <string name="character_counter_overflowed_content_description">Character limit exceeded %1$d of %2$d</string>
@@ -3094,6 +3117,14 @@ This Service does not use these “cookies” explicitly. However, the app may u
     <style name="CardView.Light">
         <item name="cardBackgroundColor">@color/cardview_light_background</item>
     </style>
+    <style name="Dexter.Internal.Theme.Transparent" parent="android:Theme">
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowIsFloating">true</item>
+    <item name="android:backgroundDimEnabled">false</item>
+  </style>
     <style name="EasyPermissions" parent="Theme.AppCompat.Light.DarkActionBar"/>
     <style name="EasyPermissions.Transparent" parent="EasyPermissions">
         <item name="android:windowIsTranslucent">true</item>
@@ -6469,6 +6500,7 @@ This Service does not use these “cookies” explicitly. However, the app may u
     <declare-styleable name="FragmentNavigator">
         <attr name="android:name"/>
     </declare-styleable>
+    <declare-styleable name="GLAudioVisualizationView"><attr format="integer" name="av_wavesCount"/><attr format="reference" name="av_wavesColors"/><attr format="dimension" name="av_wavesHeight"/><attr format="dimension" name="av_wavesFooterHeight"/><attr format="dimension" name="av_bubblesSize"/><attr format="boolean" name="av_bubblesRandomizeSizes"/><attr format="integer" name="av_bubblesPerLayer"/><attr format="integer" name="av_layersCount"/><attr format="color|reference" name="av_backgroundColor"/></declare-styleable>
     <declare-styleable name="GradientColor">
         <!-- Start color of the gradient. -->
         <attr name="android:startColor"/>
@@ -6513,6 +6545,7 @@ This Service does not use these “cookies” explicitly. However, the app may u
         <!-- The current color for the offset inside the gradient. -->
         <attr name="android:color"/>
     </declare-styleable>
+    <declare-styleable name="HorizontalCalendarView"><attr format="color" name="textColorNormal"/><attr format="color" name="colorTopText"/><attr format="color" name="colorMiddleText"/><attr format="color" name="colorBottomText"/><attr format="color" name="textColorSelected"/><attr format="color" name="colorTopTextSelected"/><attr format="color" name="colorMiddleTextSelected"/><attr format="color" name="colorBottomTextSelected"/><attr format="reference" name="selectedDateBackground"/><attr format="color" name="selectorColor"/><attr format="dimension" name="sizeTopText"/><attr format="dimension" name="sizeMiddleText"/><attr format="dimension" name="sizeBottomText"/></declare-styleable>
     <declare-styleable name="Insets">
     <!-- Just adding the parameter that we need for now. We can add others if we need them, but
          ideally we'll be able to use https://github.com/chrisbanes/insetter once it's ready. -->

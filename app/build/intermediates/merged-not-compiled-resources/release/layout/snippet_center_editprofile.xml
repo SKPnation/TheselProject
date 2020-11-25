@@ -12,8 +12,32 @@
             android:background="#ffffff"
             android:padding="20dp">
 
+            <RelativeLayout
+                android:id="@+id/referrel_link_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/referrel_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="REFER A FRIEND "
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"/>
+
+                <ImageView
+                    android:id="@+id/referral_share_btn"
+                    android:src="@drawable/ic_share"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_below="@id/referrel_link_layout"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:id="@+id/profile_photo"

@@ -12,16 +12,6 @@
         android:icon="@drawable/ic_notifications"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/nav_post"
-        android:title="Post"
-        android:icon="@drawable/ic_post"
-        app:showAsAction="ifRoom"/>
-
-    <item android:id="@+id/nav_videos"
-        android:title="Video library"
-        android:icon="@drawable/ic_video_library"
-        app:showAsAction="ifRoom"/>
-
     <item android:id="@+id/nav_settings"
         android:title="Settings"
         android:icon="@drawable/ic_settings"

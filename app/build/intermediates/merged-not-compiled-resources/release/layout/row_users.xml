@@ -71,7 +71,7 @@
             android:text=""
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="#005F28"
             android:layout_marginTop="2dp"
             android:visibility="visible"/>
 
@@ -113,11 +113,12 @@
             android:visibility="gone"/>
 
         <LinearLayout
+            android:id="@+id/buttons_linear_layout"
             android:layout_below="@id/costTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <ImageButton
                 android:id="@+id/profileBtn"
@@ -130,14 +131,24 @@
                 android:src="@drawable/ic_profile_white"/>
 
             <ImageButton
-                android:id="@+id/timeBtn"
+                android:id="@+id/scheduleBtn"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="2dp"
                 android:background="@drawable/customrequestbtnstyle"
-                android:src="@drawable/ic_access_time"/>
+                android:src="@drawable/ic_schedule"/>
+
+            <ImageButton
+                android:id="@+id/instantBtn"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="2dp"
+                android:background="@drawable/customrequestbtnstyle"
+                android:src="@drawable/ic_access_time" />
 
         </LinearLayout>
 

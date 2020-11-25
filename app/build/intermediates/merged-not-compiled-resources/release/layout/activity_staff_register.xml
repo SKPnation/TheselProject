@@ -201,7 +201,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Put in your convenient counselling hours during the day and night. Ensure you are available during your counselling hours."
+                android:text="Put in your convenient counselling hours. Ensure you are available during your counselling hours for consultation appointments."
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/colorAccent"/>
@@ -279,7 +279,7 @@
                         android:id="@+id/workText2"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:text="Night"
+                        android:text="Evening"
                         android:textStyle="bold"
                         android:textColor="#fff"
                         android:layout_centerVertical="true"

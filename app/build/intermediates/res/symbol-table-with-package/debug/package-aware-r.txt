@@ -62,6 +62,8 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array age_months
+array av_colors
 array categories
 array costs
 array months
@@ -130,6 +132,15 @@ attr autoSizeStepGranularity
 attr autoSizeTextType
 attr auto_show
 attr auto_submit
+attr av_backgroundColor
+attr av_bubblesPerLayer
+attr av_bubblesRandomizeSizes
+attr av_bubblesSize
+attr av_layersCount
+attr av_wavesColors
+attr av_wavesCount
+attr av_wavesFooterHeight
+attr av_wavesHeight
 attr background
 attr backgroundColor
 attr backgroundInsetBottom
@@ -958,6 +969,11 @@ color accent_material_dark
 color accent_material_light
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
+color av_color1
+color av_color2
+color av_color3
+color av_color4
+color av_color_bg
 color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
@@ -1143,6 +1159,7 @@ color pstck_pinpad_default_button_textcolor
 color pstck_pinpad_default_pin_indicator_empty_color
 color pstck_pinpad_default_pin_indicator_filled_color
 color pstck_pinpad_default_prompt_textcolor
+color recorder_bg
 color ripple_material_dark
 color ripple_material_light
 color secondary_text_default_material_dark
@@ -1161,6 +1178,9 @@ color test_mtrl_calendar_day
 color test_mtrl_calendar_day_selected
 color tooltip_background_dark
 color tooltip_background_light
+dimen aar_bubble_size
+dimen aar_footer_height
+dimen aar_wave_height
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
 dimen abc_action_bar_default_height_material
@@ -1539,6 +1559,13 @@ dimen tooltip_precise_anchor_threshold
 dimen tooltip_vertical_padding
 dimen tooltip_y_offset_non_touch
 dimen tooltip_y_offset_touch
+drawable aar_ic_check
+drawable aar_ic_clear
+drawable aar_ic_pause
+drawable aar_ic_play
+drawable aar_ic_rec
+drawable aar_ic_restart
+drawable aar_ic_stop
 drawable abc_ab_share_pack_mtrl_alpha
 drawable abc_action_bar_item_background_material
 drawable abc_btn_borderless_material
@@ -2037,6 +2064,7 @@ drawable ic_search
 drawable ic_send_message
 drawable ic_send_post
 drawable ic_settings
+drawable ic_share
 drawable ic_sign_out
 drawable ic_username
 drawable ic_video_library
@@ -2223,8 +2251,6 @@ id adjust_height
 id adjust_width
 id afternoon_cv
 id afternoon_header
-id ageEt
-id age_layout
 id alertTitle
 id all
 id alphabet_text
@@ -2233,6 +2259,7 @@ id appBarLayout
 id appNameIv
 id app_name
 id appointments_btn
+id appointments_tv
 id appt_count
 id appt_date_cv
 id appt_date_tv
@@ -2253,6 +2280,7 @@ id balance_tv
 id bankTv
 id barrier
 id beginning
+id birth_date_tv
 id blocking
 id body_tv
 id book_btn
@@ -2271,8 +2299,6 @@ id btnConfirmSignout
 id btn_ok
 id buttonPanel
 id button_perform_transaction
-id button_start_pause
-id button_thanks
 id buttons_linear_layout
 id cAvatarIv
 id cLikesTv
@@ -2344,6 +2370,7 @@ id dayTv
 id decor_content_parent
 id default_activity_button
 id deposit_btn
+id description_tv
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -2493,6 +2520,8 @@ id img_dismiss
 id info
 id instantBtn
 id instant_fee_tv
+id instant_session_cost_tv
+id instant_sessions_tv
 id instants_btn
 id invisible
 id isSeenTv
@@ -2671,6 +2700,7 @@ id pstck_pinpad__indicator_layout
 id pstck_pinpad__prompt
 id radio
 id radio_btn
+id rate_btn
 id realtime_db_btn
 id recordBtn
 id recyclerView
@@ -2682,6 +2712,9 @@ id recycler_moods
 id recycler_notification
 id recycler_posts
 id recycler_view
+id referral_share_btn
+id referrel_link_layout
+id referrel_tv
 id reg_agreementTv
 id relLayout1
 id relLayout2
@@ -2698,7 +2731,6 @@ id rl_holder
 id rl_query_holder
 id rl_title
 id rounded
-id rulesLayout
 id saveBtn
 id saveVideo
 id save_non_transition_alpha
@@ -2770,6 +2802,7 @@ id standard
 id start
 id startTimeEt1
 id startTimeEt2
+id start_btn
 id start_instant_btn
 id status_bar_latest_event_content
 id status_tv
@@ -2826,7 +2859,6 @@ id timeTv
 id timestampTv
 id title
 id titleDividerNoCustom
-id titleTv
 id title_appt_layout
 id title_instant_session
 id title_instant_session_layout
@@ -2956,7 +2988,6 @@ layout activity_availability_edit
 layout activity_book_appointment1
 layout activity_book_appointment2
 layout activity_category
-layout activity_chat
 layout activity_chat_rooms
 layout activity_consultants
 layout activity_consultation_notification
@@ -2964,14 +2995,17 @@ layout activity_dashboard
 layout activity_deposit
 layout activity_edit_video
 layout activity_fullscreen
+layout activity_instant_chat
 layout activity_lateness_report
 layout activity_login
 layout activity_main
 layout activity_main2
 layout activity_new_post
 layout activity_notifications
+layout activity_photo_gallery
 layout activity_post_detail
 layout activity_privacy_policy
+layout activity_profile_edit
 layout activity_questionnaire
 layout activity_realtime_db_edit
 layout activity_register
@@ -2995,7 +3029,6 @@ layout co_paystack_android____activity_otp
 layout co_paystack_android____activity_pin
 layout consultant_col
 layout consultant_profile
-layout consultant_session_rules
 layout content_home
 layout counselling_hours_layout
 layout custom_controller
@@ -3033,7 +3066,6 @@ layout fragment_fourth_questionnaire
 layout fragment_home
 layout fragment_my_posts
 layout fragment_nineth_questionnaire
-layout fragment_photo_gallery
 layout fragment_privacy_policy
 layout fragment_second_questionnaire
 layout fragment_seventh_questionnaire
@@ -3146,6 +3178,7 @@ mipmap ic_launcher_round
 plurals mtrl_badge_content_description
 raw a_new_lang_template
 raw arabic
+raw av_workaround_1min
 raw bengali
 raw chinese_simplified
 raw chinese_traditional
@@ -3168,6 +3201,10 @@ raw swedish
 raw turkish
 raw ukrainian
 string JM_pwd
+string aar_paused
+string aar_playing
+string aar_recording
+string aar_save
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description
@@ -3203,6 +3240,7 @@ string aboutHearme5
 string aboutHearme6
 string app_name
 string appbar_scrolling_view_behavior
+string av_app_name
 string banner_ad_unit_id
 string book_appt_hint
 string bottom_sheet_behavior
@@ -3275,13 +3313,8 @@ string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string fastscroll__app_name
 string fcm_fallback_notification_channel_label
-string fifthCounsellorRule
-string fifthRule
 string firebaseCrashlytics
 string firebase_database_url
-string firstCounsellorRule
-string fourthCounsellorRule
-string fourthRule
 string gcm_defaultSenderId
 string googleFirebaseAnalytics
 string googlePlayServices
@@ -3361,6 +3394,7 @@ string pstck_pinpad__num_7
 string pstck_pinpad__num_8
 string pstck_pinpad__num_9
 string rationale_ask_again
+string revenue_doc_path
 string s1
 string s2
 string s3
@@ -3370,11 +3404,7 @@ string s6
 string s7
 string search_hint
 string search_menu_title
-string secondCounsellorRule
-string secondRule
 string select_country
-string seventhCounsellorRule
-string sixthCounsellorRule
 string staffNameEt
 string status_bar_notification_info_overflow
 string termsofservice1
@@ -3390,8 +3420,6 @@ string termsofservice6
 string termsofservice7
 string termsofservice8
 string termsofservice9
-string thirdCounsellorRule
-string thirdRule
 string title_settings_dialog
 style AlertDialog
 style AlertDialog_AppCompat
@@ -4153,6 +4181,7 @@ styleable ForegroundView foreground foregroundGravity foregroundInsidePadding
 styleable Fragment android_name android_id android_tag
 styleable FragmentContainerView android_name android_tag
 styleable FragmentNavigator android_name
+styleable GLAudioVisualizationView av_backgroundColor av_bubblesPerLayer av_bubblesRandomizeSizes av_bubblesSize av_layersCount av_wavesColors av_wavesCount av_wavesFooterHeight av_wavesHeight
 styleable GradientColor android_startColor android_endColor android_type android_centerX android_centerY android_gradientRadius android_tileMode android_centerColor android_startX android_startY android_endX android_endY
 styleable GradientColorItem android_color android_offset
 styleable HorizontalCalendarView colorBottomText colorBottomTextSelected colorMiddleText colorMiddleTextSelected colorTopText colorTopTextSelected selectedDateBackground selectorColor sizeBottomText sizeMiddleText sizeTopText textColorNormal textColorSelected
