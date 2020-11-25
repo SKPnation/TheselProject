@@ -569,6 +569,7 @@ public class BookAppointment2 extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
+
                     Token token = new Token(ds1.getString("token"));
                     Data data = new Data(clientUID, body, title, adminUID, R.mipmap.ic_launcher3);
 
