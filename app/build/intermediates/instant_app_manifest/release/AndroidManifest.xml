@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.skiplab.theselproject"
     android:targetSandboxVersion="2"
-    android:versionCode="40"
-    android:versionName="1.9.9.0" >
+    android:versionCode="42"
+    android:versionName="1.9.9.2" >
 
     <uses-sdk
-        android:minSdkVersion="23"
+        android:minSdkVersion="21"
         android:targetSdkVersion="29" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,6 +20,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" /> <!-- Required by older versions of Google Play services to create IID tokens -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -40,11 +42,20 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.skiplab.theselproject.EditConsultantProfile" />
+        <activity android:name="com.skiplab.theselproject.ProfileEdit" />
+        <activity android:name="com.skiplab.theselproject.Home.PhotoGalleryActivity" />
+        <activity android:name="com.skiplab.theselproject.Consultation.AppointmentChatActivity" />
+        <activity android:name="com.skiplab.theselproject.TimeDayAlreadyChosen" />
+        <activity android:name="com.skiplab.theselproject.Consultation.BookAppointment2" />
+        <activity android:name="com.skiplab.theselproject.AvailabilityEdit" />
+        <activity android:name="com.skiplab.theselproject.Home.ConsultationNotificationActivity" />
+        <activity android:name="com.skiplab.theselproject.RealtimeDbEdit" />
+        <activity android:name="com.skiplab.theselproject.AdminEdit" />
+        <activity android:name="com.skiplab.theselproject.Consultation.BookAppointment1" />
         <activity android:name="com.skiplab.theselproject.Consultation.ChatRoomsActivity" />
         <activity android:name="com.skiplab.theselproject.Consultation.DepositActivity" />
         <activity android:name="com.skiplab.theselproject.Consultation.WalletActivity" />
-        <activity android:name="com.skiplab.theselproject.Consultation.ChatActivity" />
+        <activity android:name="com.skiplab.theselproject.Consultation.InstantChatActivity" />
         <activity android:name="com.skiplab.theselproject.Consultation.ConsultantsActivity" />
         <activity android:name="com.skiplab.theselproject.AddPost.SelectMood" />
         <activity android:name="com.skiplab.theselproject.Home.SelectCategory" />
@@ -99,6 +110,9 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name="com.karumi.dexter.DexterActivity"
+            android:theme="@style/Dexter.Internal.Theme.Transparent" />
         <activity
             android:name="pub.devrel.easypermissions.AppSettingsDialogHolderActivity"
             android:exported="false"

@@ -1,18 +1,20 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-86:12
-INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-86:12
-INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-86:12
-INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-86:12
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-97:12
+INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-97:12
+INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-97:12
+INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-97:12
 MERGED from [androidx.navigation:navigation-ui:2.2.2] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a290312412f77c94f15a374f174cd6cf/navigation-ui-2.2.2/AndroidManifest.xml:17:1-24:12
+MERGED from [com.karumi:dexter:5.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/758d865846df19f90fe21a5ba1bccd35/jetified-dexter-5.0.0/AndroidManifest.xml:17:1-32:12
 MERGED from [com.google.android.material:material:1.2.0-alpha02] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/AndroidManifest.xml:17:1-24:12
 MERGED from [pub.devrel:easypermissions:0.4.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a0cdd3e93497cc8795e7514bfaed32d1/jetified-easypermissions-0.4.0/AndroidManifest.xml:2:1-19:12
-MERGED from [com.github.abhidiwakar:AnstronCoreHelper:1.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e5ab919318f66f5cb10ab9fda828421f/AnstronCoreHelper-1.1/AndroidManifest.xml:2:1-11:12
 MERGED from [co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7e3c63777fe1ea41a79b010a6398b2a8/jetified-paystack-3.0.9/AndroidManifest.xml:2:1-26:12
+MERGED from [com.cleveroad:audiovisualization:1.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7390bf57d69719c86d243ec4b9a63503/jetified-audiovisualization-1.0.0/AndroidManifest.xml:2:1-12:12
 MERGED from [com.hbb20:ccp:2.1.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/d1a1641de780850b5fc1fca8ab0ae880/jetified-ccp-2.1.9/AndroidManifest.xml:2:1-17:12
 MERGED from [com.futuremind.recyclerfastscroll:fastscroll:0.2.5] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/4ff53e0756f768e09cfbd77f82a02b85/jetified-fastscroll-0.2.5/AndroidManifest.xml:2:1-13:12
 MERGED from [co.paystack.android.design.widget:pinpad:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/2fe3f578b0d2ce2a23933a70e1aaf9e5/jetified-pinpad-1.0.1/AndroidManifest.xml:2:1-15:12
 MERGED from [androidx.appcompat:appcompat:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [devs.mulham.horizontalcalendar:horizontalcalendar:1.3.4] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/562bc9c30b73030c0fbc389a26eac89f/jetified-horizontalcalendar-1.3.4/AndroidManifest.xml:2:1-14:12
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0fb23b9596c5afe6851a9c176ebd3d0c/constraintlayout-1.1.3/AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.firebase:firebase-config:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a3d9aee892607f76289302a6ebd4b88a/jetified-firebase-config-16.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.firebase:firebase-auth:16.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/3bc6a38cf76fa552b52eb6b84f1b2fba/jetified-firebase-auth-16.0.1/AndroidManifest.xml:17:1-38:12
@@ -53,7 +55,7 @@ MERGED from [com.jaredrummler:material-spinner:1.3.1] /Users/ayomideajayi/.gradl
 MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/d21b42df8a2f9ff1d0a04a29292ef038/glide-4.11.0/AndroidManifest.xml:2:1-12:12
 MERGED from [com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f08dd9907296156098a7dd1bd7d031fa/jetified-silicompressor-2.2.3/AndroidManifest.xml:2:1-29:12
 MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/35bf28f1c026f9cb806ef0d83089f8e9/com.amulyakhare.textdrawable-1.0.1/AndroidManifest.xml:2:1-14:12
-MERGED from [androidx.core:core-ktx:1.5.0-alpha03] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/c390e656d91018f5321d6e1e4c7e03ab/core-ktx-1.5.0-alpha03/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.core:core-ktx:1.5.0-alpha04] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/3e6106418fa3a4a1ea3b929e65e5bae9/core-ktx-1.5.0-alpha04/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f24fe636d49a597089621e22da51ab0a/lifecycle-viewmodel-ktx-2.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.exoplayer:exoplayer:2.10.8] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/38e6957d114898cadc6183b2a252527b/exoplayer-2.10.8/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.exoplayer:exoplayer-dash:2.10.8] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/469bfa3991a6b734c40a159eb2c5d6f3/exoplayer-dash-2.10.8/AndroidManifest.xml:17:1-24:12
@@ -61,6 +63,7 @@ MERGED from [com.google.android.exoplayer:exoplayer-hls:2.10.8] /Users/ayomideaj
 MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.10.8] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/448864e216268b3fd08a9ec15b8fc482/exoplayer-smoothstreaming-2.10.8/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.exoplayer:exoplayer-ui:2.10.8] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e5d4cefa017fafd61e9c2d44d3107758/exoplayer-ui-2.10.8/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.exoplayer:exoplayer-core:2.10.8] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/ceeca615e724625169361a83b5c50de0/jetified-exoplayer-core-2.10.8/AndroidManifest.xml:17:1-26:12
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:2:1-19:12
 MERGED from [androidx.browser:browser:1.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/c4b00c1be4d3981624f2e8507f891f26/browser-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e0171026829e603ecfd2c3f4cb8716f4/legacy-support-core-ui-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/63314649c3421c5f45054c107b6c9661/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -87,7 +90,7 @@ MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/ayom
 MERGED from [androidx.navigation:navigation-runtime:2.2.2] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/21bbb1f07d2792aa1b531a90e173d295/navigation-runtime-2.2.2/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.activity:activity:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/4f87dbeeb8b7c7da1255c6da91a9ee8b/activity-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.navigation:navigation-common:2.2.2] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0f89558cdb97e23ff30c08f8e78ca0f1/navigation-common-2.2.2/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.core:core:1.5.0-alpha03] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/330ca1f4680887a6d86b86b09d5c6aa5/core-1.5.0-alpha03/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.core:core:1.5.0-alpha04] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1d8cfff3f5d58b170acc7b9981fbe16b/core-1.5.0-alpha04/AndroidManifest.xml:17:1-26:12
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/406dd862914cb80b2153a5211dea5979/lifecycle-runtime-2.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/ca12bd7c975346259f9d1dc9fcd5480f/lifecycle-livedata-2.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/b67073b47712d30693dd6a338add8b75/lifecycle-viewmodel-savedstate-2.2.0/AndroidManifest.xml:17:1-24:12
@@ -106,20 +109,20 @@ MERGED from [io.michaelrocks:libphonenumber-android:8.8.5] /Users/ayomideajayi/.
 MERGED from [com.google.firebase:protolite-well-known-types:15.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/d5b8e7e7ef30eb0477331186f2316978/protolite-well-known-types-15.0.0/AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.android.gms:play-services-ads-base:15.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/fc6e95e55cd62ac558144e9ea601278f/play-services-ads-base-15.0.1/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.gms:play-services-measurement-base:15.0.4] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/ceb48ff2064d7ae2ce31a46fdb58fd79/play-services-measurement-base-15.0.4/AndroidManifest.xml:17:1-24:12
-INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-86:12
-INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-86:12
-INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-86:12
+INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-97:12
+INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-97:12
+INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-97:12
 	package
 		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:3:5-40
 		INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-86:12
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-97:12
 		INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-86:12
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:1-97:12
 		INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:2:11-69
@@ -161,6 +164,8 @@ MERGED from [com.google.android.exoplayer:exoplayer-core:2.10.8] /Users/ayomidea
 		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:6:22-76
 uses-permission#android.permission.RECORD_AUDIO
 ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:7:5-71
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:9:5-71
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:9:5-71
 	android:name
 		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:7:22-68
 uses-permission#android.permission.READ_PHONE_STATE
@@ -179,12 +184,16 @@ uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:11:5-80
 MERGED from [com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f08dd9907296156098a7dd1bd7d031fa/jetified-silicompressor-2.2.3/AndroidManifest.xml:11:5-80
 MERGED from [com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f08dd9907296156098a7dd1bd7d031fa/jetified-silicompressor-2.2.3/AndroidManifest.xml:11:5-80
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:11:5-80
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:11:5-80
 	android:name
 		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:11:22-77
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:12:5-81
 MERGED from [com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f08dd9907296156098a7dd1bd7d031fa/jetified-silicompressor-2.2.3/AndroidManifest.xml:12:5-81
 MERGED from [com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f08dd9907296156098a7dd1bd7d031fa/jetified-silicompressor-2.2.3/AndroidManifest.xml:12:5-81
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:10:5-81
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:10:5-81
 	android:name
 		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:12:22-78
 uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
@@ -201,8 +210,18 @@ MERGED from [co.paystack.android.design.widget:pinpad:1.0.1] /Users/ayomideajayi
 MERGED from [co.paystack.android.design.widget:pinpad:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/2fe3f578b0d2ce2a23933a70e1aaf9e5/jetified-pinpad-1.0.1/AndroidManifest.xml:11:5-66
 	android:name
 		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:15:22-63
+uses-permission#android.permission.WRITE_CALENDAR
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:16:5-73
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:16:22-70
+uses-permission#android.permission.READ_CALENDAR
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:17:5-72
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:17:22-69
 application
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:17:5-84:19
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:19:5-95:19
+MERGED from [com.karumi:dexter:5.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/758d865846df19f90fe21a5ba1bccd35/jetified-dexter-5.0.0/AndroidManifest.xml:26:5-30:19
+MERGED from [com.karumi:dexter:5.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/758d865846df19f90fe21a5ba1bccd35/jetified-dexter-5.0.0/AndroidManifest.xml:26:5-30:19
 MERGED from [com.google.android.material:material:1.2.0-alpha02] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.2.0-alpha02] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/AndroidManifest.xml:22:5-20
 MERGED from [pub.devrel:easypermissions:0.4.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a0cdd3e93497cc8795e7514bfaed32d1/jetified-easypermissions-0.4.0/AndroidManifest.xml:11:5-17:19
@@ -215,6 +234,8 @@ MERGED from [com.futuremind.recyclerfastscroll:fastscroll:0.2.5] /Users/ayomidea
 MERGED from [com.futuremind.recyclerfastscroll:fastscroll:0.2.5] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/4ff53e0756f768e09cfbd77f82a02b85/jetified-fastscroll-0.2.5/AndroidManifest.xml:11:5-20
 MERGED from [co.paystack.android.design.widget:pinpad:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/2fe3f578b0d2ce2a23933a70e1aaf9e5/jetified-pinpad-1.0.1/AndroidManifest.xml:13:5-20
 MERGED from [co.paystack.android.design.widget:pinpad:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/2fe3f578b0d2ce2a23933a70e1aaf9e5/jetified-pinpad-1.0.1/AndroidManifest.xml:13:5-20
+MERGED from [devs.mulham.horizontalcalendar:horizontalcalendar:1.3.4] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/562bc9c30b73030c0fbc389a26eac89f/jetified-horizontalcalendar-1.3.4/AndroidManifest.xml:11:5-12:19
+MERGED from [devs.mulham.horizontalcalendar:horizontalcalendar:1.3.4] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/562bc9c30b73030c0fbc389a26eac89f/jetified-horizontalcalendar-1.3.4/AndroidManifest.xml:11:5-12:19
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0fb23b9596c5afe6851a9c176ebd3d0c/constraintlayout-1.1.3/AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0fb23b9596c5afe6851a9c176ebd3d0c/constraintlayout-1.1.3/AndroidManifest.xml:9:5-20
 MERGED from [com.google.firebase:firebase-config:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a3d9aee892607f76289302a6ebd4b88a/jetified-firebase-config-16.0.0/AndroidManifest.xml:22:5-20
@@ -269,10 +290,12 @@ MERGED from [com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideaja
 MERGED from [com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f08dd9907296156098a7dd1bd7d031fa/jetified-silicompressor-2.2.3/AndroidManifest.xml:14:5-27:19
 MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/35bf28f1c026f9cb806ef0d83089f8e9/com.amulyakhare.textdrawable-1.0.1/AndroidManifest.xml:12:5-20
 MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/35bf28f1c026f9cb806ef0d83089f8e9/com.amulyakhare.textdrawable-1.0.1/AndroidManifest.xml:12:5-20
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:13:5-17:19
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:13:5-17:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/36a6b7df4011036ec31be8155c37ce8e/lifecycle-process-2.2.0/AndroidManifest.xml:24:5-30:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/36a6b7df4011036ec31be8155c37ce8e/lifecycle-process-2.2.0/AndroidManifest.xml:24:5-30:19
-MERGED from [androidx.core:core:1.5.0-alpha03] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/330ca1f4680887a6d86b86b09d5c6aa5/core-1.5.0-alpha03/AndroidManifest.xml:24:5-89
-MERGED from [androidx.core:core:1.5.0-alpha03] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/330ca1f4680887a6d86b86b09d5c6aa5/core-1.5.0-alpha03/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.5.0-alpha04] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1d8cfff3f5d58b170acc7b9981fbe16b/core-1.5.0-alpha04/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.5.0-alpha04] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1d8cfff3f5d58b170acc7b9981fbe16b/core-1.5.0-alpha04/AndroidManifest.xml:24:5-89
 MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f1ee5c2a71ef512f5ab2bc1d13606cb5/gifdecoder-4.11.0/AndroidManifest.xml:9:5-20
 MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f1ee5c2a71ef512f5ab2bc1d13606cb5/gifdecoder-4.11.0/AndroidManifest.xml:9:5-20
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/9413ac4614da76b1abed9dacbbfefcde/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
@@ -282,195 +305,233 @@ MERGED from [com.google.android.gms:play-services-ads-base:15.0.1] /Users/ayomid
 MERGED from [com.google.android.gms:play-services-measurement-base:15.0.4] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/ceb48ff2064d7ae2ce31a46fdb58fd79/play-services-measurement-base-15.0.4/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-measurement-base:15.0.4] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/ceb48ff2064d7ae2ce31a46fdb58fd79/play-services-measurement-base-15.0.4/AndroidManifest.xml:22:5-20
 	android:appComponentFactory
-		ADDED from [androidx.core:core:1.5.0-alpha03] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/330ca1f4680887a6d86b86b09d5c6aa5/core-1.5.0-alpha03/AndroidManifest.xml:24:18-86
+		ADDED from [androidx.core:core:1.5.0-alpha04] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1d8cfff3f5d58b170acc7b9981fbe16b/core-1.5.0-alpha04/AndroidManifest.xml:24:18-86
 	android:supportsRtl
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:24:9-35
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:26:9-35
 	android:label
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:22:9-41
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:24:9-41
 	android:hardwareAccelerated
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:20:9-44
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:22:9-44
 	android:largeHeap
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:23:9-33
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:25:9-33
 	android:icon
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:21:9-44
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:23:9-44
 	android:allowBackup
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:19:9-35
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:21:9-35
 	android:theme
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:25:9-40
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:27:9-40
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:18:9-34
-activity#com.skiplab.theselproject.EditConsultantProfile
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:26:9-59
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:20:9-34
+activity#com.skiplab.theselproject.ProfileEdit
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:9-58
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:26:19-56
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:19-46
+activity#com.skiplab.theselproject.Home.PhotoGalleryActivity
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:29:9-63
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:29:19-60
+activity#com.skiplab.theselproject.Consultation.AppointmentChatActivity
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:30:9-74
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:30:19-71
+activity#com.skiplab.theselproject.TimeDayAlreadyChosen
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:31:9-58
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:31:19-55
+activity#com.skiplab.theselproject.Consultation.BookAppointment2
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:32:9-67
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:32:19-64
+activity#com.skiplab.theselproject.AvailabilityEdit
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:33:9-54
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:33:19-51
+activity#com.skiplab.theselproject.Home.ConsultationNotificationActivity
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:34:9-75
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:34:19-72
+activity#com.skiplab.theselproject.RealtimeDbEdit
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:35:9-52
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:35:19-49
+activity#com.skiplab.theselproject.AdminEdit
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:36:9-47
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:36:19-44
+activity#com.skiplab.theselproject.Consultation.BookAppointment1
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:37:9-67
+	android:name
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:37:19-64
 activity#com.skiplab.theselproject.Consultation.ChatRoomsActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:27:9-68
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:38:9-68
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:27:19-65
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:38:19-65
 activity#com.skiplab.theselproject.Consultation.DepositActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:9-66
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:39:9-66
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:19-63
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:39:19-63
 activity#com.skiplab.theselproject.Consultation.WalletActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:29:9-65
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:40:9-65
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:29:19-62
-activity#com.skiplab.theselproject.Consultation.ChatActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:30:9-63
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:40:19-62
+activity#com.skiplab.theselproject.Consultation.InstantChatActivity
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:41:9-70
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:30:19-60
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:41:19-67
 activity#com.skiplab.theselproject.Consultation.ConsultantsActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:31:9-70
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:42:9-70
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:31:19-67
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:42:19-67
 activity#com.skiplab.theselproject.AddPost.SelectMood
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:32:9-56
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:43:9-56
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:32:19-53
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:43:19-53
 activity#com.skiplab.theselproject.Home.SelectCategory
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:33:9-57
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:44:9-57
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:33:19-54
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:44:19-54
 activity#com.skiplab.theselproject.Home.VideoGallery
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:34:9-55
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:45:9-55
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:34:19-52
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:45:19-52
 activity#com.skiplab.theselproject.Activity.NotificationsActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:35:9-68
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:46:9-68
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:35:19-65
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:46:19-65
 activity#com.skiplab.theselproject.Home.FullscreenActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:36:9-61
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:47:9-61
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:36:19-58
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:47:19-58
 activity#com.skiplab.theselproject.Home.EditVideoActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:37:9-60
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:48:9-60
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:37:19-57
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:48:19-57
 activity#com.skiplab.theselproject.Questionnaire.QuestionnaireActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:38:9-73
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:49:9-73
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:38:19-70
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:49:19-70
 activity#com.skiplab.theselproject.SupportActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:39:9-53
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:50:9-53
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:39:19-50
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:50:19-50
 meta-data#com.google.android.gms.ads.APPLICATION_ID
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:41:9-43:70
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:52:9-54:70
 	android:value
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:43:13-67
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:54:13-67
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:42:13-69
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:53:13-69
 meta-data#co.paystack.android.PublicKey
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:44:9-46:80
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:55:9-57:80
 	android:value
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:46:13-77
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:57:13-77
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:45:13-57
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:56:13-57
 activity#com.skiplab.theselproject.Authentication.StaffRegisterActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:48:9-74
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:59:9-74
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:48:19-71
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:59:19-71
 activity#com.skiplab.theselproject.Authentication.AdminRegisterActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:49:9-74
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:60:9-74
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:49:19-71
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:60:19-71
 activity#com.skiplab.theselproject.TermsOfService
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:50:9-52
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:61:9-52
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:50:19-49
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:61:19-49
 activity#com.skiplab.theselproject.PrivacyPolicy
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:51:9-51
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:62:9-51
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:51:19-48
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:62:19-48
 activity#com.skiplab.theselproject.PostDetailActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:52:9-56
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:63:9-56
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:52:19-53
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:63:19-53
 activity#com.skiplab.theselproject.AddPost.CategoryActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:53:9-62
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:64:9-62
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:53:19-59
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:64:19-59
 activity#com.skiplab.theselproject.AddPost.NewPostActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:54:9-61
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:65:9-61
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:54:19-58
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:65:19-58
 activity#com.skiplab.theselproject.DashboardActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:55:9-55
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:66:9-55
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:55:19-52
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:66:19-52
 activity#com.skiplab.theselproject.Settings.AccountSettingsActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:56:9-70
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:67:9-70
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:56:19-67
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:67:19-67
 activity#com.skiplab.theselproject.Authentication.LoginActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:57:9-66
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:68:9-66
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:57:19-63
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:68:19-63
 activity#com.skiplab.theselproject.Authentication.RegisterActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:58:9-69
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:69:9-69
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:58:19-66
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:69:19-66
 activity#com.skiplab.theselproject.Main2Activity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:59:9-51
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:70:9-51
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:59:19-48
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:70:19-48
 activity#com.skiplab.theselproject.MainActivity
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:60:9-66:20
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:71:9-77:20
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:60:19-47
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:71:19-47
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:61:13-65:29
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:72:13-76:29
 action#android.intent.action.MAIN
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:62:17-69
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:73:17-69
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:62:25-66
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:73:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:64:17-77
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:75:17-77
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:64:27-74
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:75:27-74
 service#com.skiplab.theselproject.notifications.MyFirebaseInstanceIdService
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:68:9-75:19
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:79:9-86:19
 	android:enabled
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:70:13-35
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:81:13-35
 	android:exported
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:71:13-36
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:82:13-36
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:69:13-70
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:80:13-70
 intent-filter#action:name:com.google.firebase.INSTANCE_ID_SERVICE
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:72:13-74:29
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:83:13-85:29
 action#com.google.firebase.INSTANCE_ID_SERVICE
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:73:17-82
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:84:17-82
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:73:25-79
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:84:25-79
 service#com.skiplab.theselproject.notifications.FirebaseMessaging
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:76:9-83:19
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:87:9-94:19
 	android:enabled
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:78:13-35
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:89:13-35
 	android:exported
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:79:13-36
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:90:13-36
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:77:13-60
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:88:13-60
 intent-filter#action:name:com.google.firebase.MESSAGING_EVENT
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:80:13-82:29
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:91:13-93:29
 action#com.google.firebase.MESSAGING_EVENT
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:81:17-78
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:92:17-78
 	android:name
-		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:81:25-75
+		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:92:25-75
 uses-sdk
 INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
 INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
 MERGED from [androidx.navigation:navigation-ui:2.2.2] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a290312412f77c94f15a374f174cd6cf/navigation-ui-2.2.2/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.navigation:navigation-ui:2.2.2] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a290312412f77c94f15a374f174cd6cf/navigation-ui-2.2.2/AndroidManifest.xml:20:5-22:41
+MERGED from [com.karumi:dexter:5.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/758d865846df19f90fe21a5ba1bccd35/jetified-dexter-5.0.0/AndroidManifest.xml:22:5-24:41
+MERGED from [com.karumi:dexter:5.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/758d865846df19f90fe21a5ba1bccd35/jetified-dexter-5.0.0/AndroidManifest.xml:22:5-24:41
 MERGED from [com.google.android.material:material:1.2.0-alpha02] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.material:material:1.2.0-alpha02] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5058efcc7e333e01b590427faad83f0c/material-1.2.0-alpha02/AndroidManifest.xml:20:5-44
 MERGED from [pub.devrel:easypermissions:0.4.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a0cdd3e93497cc8795e7514bfaed32d1/jetified-easypermissions-0.4.0/AndroidManifest.xml:7:5-9:41
 MERGED from [pub.devrel:easypermissions:0.4.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a0cdd3e93497cc8795e7514bfaed32d1/jetified-easypermissions-0.4.0/AndroidManifest.xml:7:5-9:41
-MERGED from [com.github.abhidiwakar:AnstronCoreHelper:1.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e5ab919318f66f5cb10ab9fda828421f/AnstronCoreHelper-1.1/AndroidManifest.xml:7:5-9:41
-MERGED from [com.github.abhidiwakar:AnstronCoreHelper:1.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e5ab919318f66f5cb10ab9fda828421f/AnstronCoreHelper-1.1/AndroidManifest.xml:7:5-9:41
 MERGED from [co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7e3c63777fe1ea41a79b010a6398b2a8/jetified-paystack-3.0.9/AndroidManifest.xml:7:5-9:41
 MERGED from [co.paystack.android:paystack:3.0.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7e3c63777fe1ea41a79b010a6398b2a8/jetified-paystack-3.0.9/AndroidManifest.xml:7:5-9:41
+MERGED from [com.cleveroad:audiovisualization:1.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7390bf57d69719c86d243ec4b9a63503/jetified-audiovisualization-1.0.0/AndroidManifest.xml:8:5-10:41
+MERGED from [com.cleveroad:audiovisualization:1.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/7390bf57d69719c86d243ec4b9a63503/jetified-audiovisualization-1.0.0/AndroidManifest.xml:8:5-10:41
 MERGED from [com.hbb20:ccp:2.1.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/d1a1641de780850b5fc1fca8ab0ae880/jetified-ccp-2.1.9/AndroidManifest.xml:7:5-9:41
 MERGED from [com.hbb20:ccp:2.1.9] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/d1a1641de780850b5fc1fca8ab0ae880/jetified-ccp-2.1.9/AndroidManifest.xml:7:5-9:41
 MERGED from [com.futuremind.recyclerfastscroll:fastscroll:0.2.5] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/4ff53e0756f768e09cfbd77f82a02b85/jetified-fastscroll-0.2.5/AndroidManifest.xml:7:5-9:41
@@ -479,6 +540,8 @@ MERGED from [co.paystack.android.design.widget:pinpad:1.0.1] /Users/ayomideajayi
 MERGED from [co.paystack.android.design.widget:pinpad:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/2fe3f578b0d2ce2a23933a70e1aaf9e5/jetified-pinpad-1.0.1/AndroidManifest.xml:7:5-9:41
 MERGED from [androidx.appcompat:appcompat:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.appcompat:appcompat:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [devs.mulham.horizontalcalendar:horizontalcalendar:1.3.4] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/562bc9c30b73030c0fbc389a26eac89f/jetified-horizontalcalendar-1.3.4/AndroidManifest.xml:7:5-9:41
+MERGED from [devs.mulham.horizontalcalendar:horizontalcalendar:1.3.4] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/562bc9c30b73030c0fbc389a26eac89f/jetified-horizontalcalendar-1.3.4/AndroidManifest.xml:7:5-9:41
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0fb23b9596c5afe6851a9c176ebd3d0c/constraintlayout-1.1.3/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0fb23b9596c5afe6851a9c176ebd3d0c/constraintlayout-1.1.3/AndroidManifest.xml:5:5-7:41
 MERGED from [com.google.firebase:firebase-config:16.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a3d9aee892607f76289302a6ebd4b88a/jetified-firebase-config-16.0.0/AndroidManifest.xml:20:5-44
@@ -559,8 +622,8 @@ MERGED from [com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideaja
 MERGED from [com.iceteck.silicompressorr:silicompressor:2.2.3] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f08dd9907296156098a7dd1bd7d031fa/jetified-silicompressor-2.2.3/AndroidManifest.xml:7:5-9:41
 MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/35bf28f1c026f9cb806ef0d83089f8e9/com.amulyakhare.textdrawable-1.0.1/AndroidManifest.xml:8:5-10:41
 MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/35bf28f1c026f9cb806ef0d83089f8e9/com.amulyakhare.textdrawable-1.0.1/AndroidManifest.xml:8:5-10:41
-MERGED from [androidx.core:core-ktx:1.5.0-alpha03] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/c390e656d91018f5321d6e1e4c7e03ab/core-ktx-1.5.0-alpha03/AndroidManifest.xml:5:5-7:41
-MERGED from [androidx.core:core-ktx:1.5.0-alpha03] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/c390e656d91018f5321d6e1e4c7e03ab/core-ktx-1.5.0-alpha03/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.core:core-ktx:1.5.0-alpha04] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/3e6106418fa3a4a1ea3b929e65e5bae9/core-ktx-1.5.0-alpha04/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.core:core-ktx:1.5.0-alpha04] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/3e6106418fa3a4a1ea3b929e65e5bae9/core-ktx-1.5.0-alpha04/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f24fe636d49a597089621e22da51ab0a/lifecycle-viewmodel-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/f24fe636d49a597089621e22da51ab0a/lifecycle-viewmodel-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.exoplayer:exoplayer:2.10.8] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/38e6957d114898cadc6183b2a252527b/exoplayer-2.10.8/AndroidManifest.xml:20:5-22:41
@@ -575,6 +638,8 @@ MERGED from [com.google.android.exoplayer:exoplayer-ui:2.10.8] /Users/ayomideaja
 MERGED from [com.google.android.exoplayer:exoplayer-ui:2.10.8] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e5d4cefa017fafd61e9c2d44d3107758/exoplayer-ui-2.10.8/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.exoplayer:exoplayer-core:2.10.8] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/ceeca615e724625169361a83b5c50de0/jetified-exoplayer-core-2.10.8/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.exoplayer:exoplayer-core:2.10.8] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/ceeca615e724625169361a83b5c50de0/jetified-exoplayer-core-2.10.8/AndroidManifest.xml:20:5-22:41
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.kailashdabhi:om-recorder:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/520dde0411b4c6b2441115c71674ec3d/om-recorder-1.1.0/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.browser:browser:1.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/c4b00c1be4d3981624f2e8507f891f26/browser-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.browser:browser:1.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/c4b00c1be4d3981624f2e8507f891f26/browser-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/e0171026829e603ecfd2c3f4cb8716f4/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
@@ -627,8 +692,8 @@ MERGED from [androidx.activity:activity:1.1.0] /Users/ayomideajayi/.gradle/cache
 MERGED from [androidx.activity:activity:1.1.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/4f87dbeeb8b7c7da1255c6da91a9ee8b/activity-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.navigation:navigation-common:2.2.2] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0f89558cdb97e23ff30c08f8e78ca0f1/navigation-common-2.2.2/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.navigation:navigation-common:2.2.2] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/0f89558cdb97e23ff30c08f8e78ca0f1/navigation-common-2.2.2/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.core:core:1.5.0-alpha03] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/330ca1f4680887a6d86b86b09d5c6aa5/core-1.5.0-alpha03/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.core:core:1.5.0-alpha03] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/330ca1f4680887a6d86b86b09d5c6aa5/core-1.5.0-alpha03/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.5.0-alpha04] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1d8cfff3f5d58b170acc7b9981fbe16b/core-1.5.0-alpha04/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.5.0-alpha04] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1d8cfff3f5d58b170acc7b9981fbe16b/core-1.5.0-alpha04/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/406dd862914cb80b2153a5211dea5979/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/406dd862914cb80b2153a5211dea5979/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.2.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/ca12bd7c975346259f9d1dc9fcd5480f/lifecycle-livedata-2.2.0/AndroidManifest.xml:20:5-22:41
@@ -677,6 +742,12 @@ INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src
 		INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
 		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml
+activity#com.karumi.dexter.DexterActivity
+ADDED from [com.karumi:dexter:5.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/758d865846df19f90fe21a5ba1bccd35/jetified-dexter-5.0.0/AndroidManifest.xml:27:9-29:72
+	android:theme
+		ADDED from [com.karumi:dexter:5.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/758d865846df19f90fe21a5ba1bccd35/jetified-dexter-5.0.0/AndroidManifest.xml:29:13-69
+	android:name
+		ADDED from [com.karumi:dexter:5.0.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/758d865846df19f90fe21a5ba1bccd35/jetified-dexter-5.0.0/AndroidManifest.xml:28:13-60
 activity#pub.devrel.easypermissions.AppSettingsDialogHolderActivity
 ADDED from [pub.devrel:easypermissions:0.4.0] /Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a0cdd3e93497cc8795e7514bfaed32d1/jetified-easypermissions-0.4.0/AndroidManifest.xml:12:9-16:66
 	android:label
