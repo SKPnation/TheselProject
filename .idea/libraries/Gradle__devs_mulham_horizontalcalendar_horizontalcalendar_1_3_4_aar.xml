@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: devs.mulham.horizontalcalendar:horizontalcalendar:1.3.4@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/562bc9c30b73030c0fbc389a26eac89f/jetified-horizontalcalendar-1.3.4/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/562bc9c30b73030c0fbc389a26eac89f/jetified-horizontalcalendar-1.3.4/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1833aad677727890ccde5aaef521dc65/jetified-horizontalcalendar-1.3.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1833aad677727890ccde5aaef521dc65/jetified-horizontalcalendar-1.3.4/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/devs.mulham.horizontalcalendar/horizontalcalendar/1.3.4/4a413b39be66e78ba30985791ed6ce996c3279fb/horizontalcalendar-1.3.4-javadoc.jar!/" />

@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: co.paystack.android:paystack:3.0.9@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7e3c63777fe1ea41a79b010a6398b2a8/jetified-paystack-3.0.9/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7e3c63777fe1ea41a79b010a6398b2a8/jetified-paystack-3.0.9/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/535e2a39d2cdbd93c539da6080997592/jetified-paystack-3.0.9/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/535e2a39d2cdbd93c539da6080997592/jetified-paystack-3.0.9/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
