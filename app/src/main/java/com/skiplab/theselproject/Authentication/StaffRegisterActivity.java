@@ -209,7 +209,7 @@ public class StaffRegisterActivity extends AppCompatActivity {
                             User user = new User();
                             user.setUsername( username );
                             user.setEmail(email);
-                            user.setPhone( phone );
+                            /*user.setPhone( phone );
                             user.setProfile_photo( "" );
                             user.setUid( FirebaseAuth.getInstance().getCurrentUser().getUid() );
                             user.setBio("Edit this bio from the account settings...");
@@ -220,7 +220,7 @@ public class StaffRegisterActivity extends AppCompatActivity {
                             user.setPosts(0);
                             user.setSelectedCategory("");
                             user.setDayTime(startTime1+" - "+endTime1);
-                            user.setNightTime(startTime2+" - "+endTime2);
+                            user.setNightTime(startTime2+" - "+endTime2);*/
 
                             FirebaseDatabase.getInstance().getReference("users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())

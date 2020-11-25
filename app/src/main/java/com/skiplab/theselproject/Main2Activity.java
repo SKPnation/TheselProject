@@ -110,13 +110,9 @@ public class Main2Activity extends AppCompatActivity {
                         final String staffPwd = staffPassword.getText().toString();
 
                         if(TextUtils.isEmpty(staffPwd) || !staffPwd.equals("rexi?007"))
-                        {
                             Toast.makeText( mContext, "Wrong code", Toast.LENGTH_SHORT).show();
-                        }
                         else
-                        {
                             startActivity(new Intent(mContext, StaffRegisterActivity.class) );
-                        }
                     }
                 });
                 builder.show();

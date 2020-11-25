@@ -26,7 +26,7 @@ public class AdminEdit extends AppCompatActivity {
 
     TextView hisNameTv;
     Button realtimeDbBtn;
-    Button availabilityBtn;
+    Button availabilityBtn, profileBtn;
     ImageView closeBtn;
 
     DatabaseReference usersRef;
@@ -44,6 +44,7 @@ public class AdminEdit extends AppCompatActivity {
         hisNameTv = findViewById(R.id.hisName);
         realtimeDbBtn = findViewById(R.id.realtime_db_btn);
         availabilityBtn = findViewById(R.id.availability_btn);
+        profileBtn = findViewById(R.id.profiles_btn);
         closeBtn = findViewById(R.id.closeBtn);
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -88,5 +89,15 @@ public class AdminEdit extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ProfileEdit.class);
+                intent.putExtra("hisUID",hisUID);
+                startActivity(intent);
+            }
+        });
+
     }
 }

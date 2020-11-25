@@ -220,7 +220,11 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
         holder.mHeartWhite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int pLikes = Integer.parseInt(postList.get(position).getpLikes());
+                AlertDialog alertDialog = new AlertDialog.Builder(context)
+                        .setMessage("This application is under maintenance.")
+                        .create();
+                alertDialog.show();
+                /*final int pLikes = Integer.parseInt(postList.get(position).getpLikes());
                 mProcessLike = true;
                 //get id of the post clicked
                 final String postIde = postList.get(position).getpId();
@@ -266,7 +270,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         //..
                     }
-                });
+                });*/
             }
         });
 
@@ -274,16 +278,24 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
         holder.commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, PostDetailActivity.class);
+                AlertDialog alertDialog = new AlertDialog.Builder(context)
+                        .setMessage("This application is under maintenance.")
+                        .create();
+                alertDialog.show();
+                /*Intent intent = new Intent(context, PostDetailActivity.class);
                 intent.putExtra("postId", pId);
-                context.startActivity(intent);
+                context.startActivity(intent);*/
             }
         });
 
         holder.moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMoreOptions(holder.moreBtn, uid, myUid, pId, pImage);
+                AlertDialog alertDialog = new AlertDialog.Builder(context)
+                        .setMessage("This application is under maintenance.")
+                        .create();
+                alertDialog.show();
+                //showMoreOptions(holder.moreBtn, uid, myUid, pId, pImage);
             }
         });
     }
@@ -637,19 +649,27 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (mProcessLike){
                             if (dataSnapshot.child(postIde).hasChild(myUid)){
+                                AlertDialog alertDialog = new AlertDialog.Builder(context)
+                                        .setMessage("This application is under maintenance.")
+                                        .create();
+                                alertDialog.show();
                                 //Already liked. So remove like
-                                postsRef.child(postIde).child("pLikes").setValue( ""+(pLikes-1));
+                                /*postsRef.child(postIde).child("pLikes").setValue( ""+(pLikes-1));
                                 likesRef.child(postIde).child(myUid).removeValue();
-                                mProcessLike=false;
+                                mProcessLike=false;*/
                             }
                             else {
-                                String timestamp = ""+System.currentTimeMillis();
+                                AlertDialog alertDialog = new AlertDialog.Builder(context)
+                                        .setMessage("This application is under maintenance.")
+                                        .create();
+                                alertDialog.show();
+                                /*String timestamp = ""+System.currentTimeMillis();
                                 //not liked, like it
                                 postsRef.child(postIde).child("pLikes").setValue( ""+(pLikes+1));
                                 likesRef.child(postIde).child(myUid).setValue("Liked");
                                 ((DashboardActivity)context).sendNotification(postIde,
                                         postList.get(getAdapterPosition()).getUid());
-                                mProcessLike=false;
+                                mProcessLike=false;*/
 
                             }
                         }

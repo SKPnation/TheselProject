@@ -1,34 +1,40 @@
 package com.skiplab.theselproject.models;
 
 public class User {
-    String uid, username, email, phone, age, profile_photo, bio, isStaff, address, accountNumber, bank, dayTime, nightTime, category1,  category2, category3, onlineStatus, selectedCategory, messaging_token;
-    long cost, posts;
+    String uid, username, email, phone_number, date_created, profile_photo, bio;
+    String location, acc_number, bank_name, day_time, night_time, category_one,  category_two, category_three, online_status;
+    String selectedCategory, messaging_token, isStaff;
+    long day_of_birth, month_of_birth, year_of_birth, posts;
+    boolean everify;
 
     public User() {
     }
 
-    public User(String uid, String username, String email, String phone, String age, String profile_photo, String bio, String isStaff, String address, String accountNumber, String bank, String dayTime, String nightTime, String category1, String category2, String category3, String onlineStatus, String selectedCategory, String messaging_token, long cost, long posts) {
+    public User(String uid, String username, String email, String phone_number, String date_created, String profile_photo, String bio, String location, String acc_number, String bank_name, String day_time, String night_time, String category_one, String category_two, String category_three, String online_status, String selectedCategory, String messaging_token, String isStaff, long day_of_birth, long month_of_birth, long year_of_birth, long posts, boolean everify) {
         this.uid = uid;
         this.username = username;
         this.email = email;
-        this.phone = phone;
-        this.age = age;
+        this.phone_number = phone_number;
+        this.date_created = date_created;
         this.profile_photo = profile_photo;
         this.bio = bio;
-        this.isStaff = isStaff;
-        this.address = address;
-        this.accountNumber = accountNumber;
-        this.bank = bank;
-        this.dayTime = dayTime;
-        this.nightTime = nightTime;
-        this.category1 = category1;
-        this.category2 = category2;
-        this.category3 = category3;
-        this.onlineStatus = onlineStatus;
+        this.location = location;
+        this.acc_number = acc_number;
+        this.bank_name = bank_name;
+        this.day_time = day_time;
+        this.night_time = night_time;
+        this.category_one = category_one;
+        this.category_two = category_two;
+        this.category_three = category_three;
+        this.online_status = online_status;
         this.selectedCategory = selectedCategory;
         this.messaging_token = messaging_token;
-        this.cost = cost;
+        this.isStaff = isStaff;
+        this.day_of_birth = day_of_birth;
+        this.month_of_birth = month_of_birth;
+        this.year_of_birth = year_of_birth;
         this.posts = posts;
+        this.everify = everify;
     }
 
     public String getUid() {
@@ -55,20 +61,20 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhone_number() {
+        return phone_number;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
     }
 
-    public String getAge() {
-        return age;
+    public String getDate_created() {
+        return date_created;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setDate_created(String date_created) {
+        this.date_created = date_created;
     }
 
     public String getProfile_photo() {
@@ -87,84 +93,76 @@ public class User {
         this.bio = bio;
     }
 
-    public String getIsStaff() {
-        return isStaff;
+    public String getLocation() {
+        return location;
     }
 
-    public void setIsStaff(String isStaff) {
-        this.isStaff = isStaff;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAcc_number() {
+        return acc_number;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAcc_number(String acc_number) {
+        this.acc_number = acc_number;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public String getBank_name() {
+        return bank_name;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setBank_name(String bank_name) {
+        this.bank_name = bank_name;
     }
 
-    public String getBank() {
-        return bank;
+    public String getDay_time() {
+        return day_time;
     }
 
-    public void setBank(String bank) {
-        this.bank = bank;
+    public void setDay_time(String day_time) {
+        this.day_time = day_time;
     }
 
-    public String getDayTime() {
-        return dayTime;
+    public String getNight_time() {
+        return night_time;
     }
 
-    public void setDayTime(String dayTime) {
-        this.dayTime = dayTime;
+    public void setNight_time(String night_time) {
+        this.night_time = night_time;
     }
 
-    public String getNightTime() {
-        return nightTime;
+    public String getCategory_one() {
+        return category_one;
     }
 
-    public void setNightTime(String nightTime) {
-        this.nightTime = nightTime;
+    public void setCategory_one(String category_one) {
+        this.category_one = category_one;
     }
 
-    public String getCategory1() {
-        return category1;
+    public String getCategory_two() {
+        return category_two;
     }
 
-    public void setCategory1(String category1) {
-        this.category1 = category1;
+    public void setCategory_two(String category_two) {
+        this.category_two = category_two;
     }
 
-    public String getCategory2() {
-        return category2;
+    public String getCategory_three() {
+        return category_three;
     }
 
-    public void setCategory2(String category2) {
-        this.category2 = category2;
+    public void setCategory_three(String category_three) {
+        this.category_three = category_three;
     }
 
-    public String getCategory3() {
-        return category3;
+    public String getOnline_status() {
+        return online_status;
     }
 
-    public void setCategory3(String category3) {
-        this.category3 = category3;
-    }
-
-    public String getOnlineStatus() {
-        return onlineStatus;
-    }
-
-    public void setOnlineStatus(String onlineStatus) {
-        this.onlineStatus = onlineStatus;
+    public void setOnline_status(String online_status) {
+        this.online_status = online_status;
     }
 
     public String getSelectedCategory() {
@@ -183,12 +181,36 @@ public class User {
         this.messaging_token = messaging_token;
     }
 
-    public long getCost() {
-        return cost;
+    public String getIsStaff() {
+        return isStaff;
     }
 
-    public void setCost(long cost) {
-        this.cost = cost;
+    public void setIsStaff(String isStaff) {
+        this.isStaff = isStaff;
+    }
+
+    public long getDay_of_birth() {
+        return day_of_birth;
+    }
+
+    public void setDay_of_birth(long day_of_birth) {
+        this.day_of_birth = day_of_birth;
+    }
+
+    public long getMonth_of_birth() {
+        return month_of_birth;
+    }
+
+    public void setMonth_of_birth(long month_of_birth) {
+        this.month_of_birth = month_of_birth;
+    }
+
+    public long getYear_of_birth() {
+        return year_of_birth;
+    }
+
+    public void setYear_of_birth(long year_of_birth) {
+        this.year_of_birth = year_of_birth;
     }
 
     public long getPosts() {
@@ -197,5 +219,13 @@ public class User {
 
     public void setPosts(long posts) {
         this.posts = posts;
+    }
+
+    public boolean isEverify() {
+        return everify;
+    }
+
+    public void setEverify(boolean everify) {
+        this.everify = everify;
     }
 }

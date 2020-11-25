@@ -130,7 +130,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
                                                     //set counsellor name
                                                     holder.hisNameTv.setText(counsellor.getUsername());
-                                                    holder.categoryTv.setText(counsellor.getCategory1());
+                                                    holder.categoryTv.setText(counsellor.getCategory_one());
 
                                                     //set counsellor dp
                                                     try {
@@ -226,7 +226,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                                                     //set counsellor name
                                                     holder.hisNameTv.setText(client.getUsername());
 
-                                                    holder.categoryTv.setText(user.getCategory1());
+                                                    holder.categoryTv.setText(user.getCategory_one());
 
                                                     holder.absentBtn.setOnClickListener(new View.OnClickListener() {
                                                         @Override

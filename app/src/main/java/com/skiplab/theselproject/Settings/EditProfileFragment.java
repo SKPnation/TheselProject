@@ -457,10 +457,10 @@ public class EditProfileFragment extends Fragment {
                     //mProgressBar.setVisibility(View.GONE);
 
                     uNameEt.setText( user.getUsername() );
-                    mAgeEt.setText(user.getAge());
+                    //mAgeEt.setText(user.getAge());
                     mBioEt.setText(user.getBio());
                     mEmail.setText(user.getEmail());
-                    mPhone.setText(user.getPhone());
+                    //mPhone.setText(user.getPhone());
 
                     try {
                         UniversalImageLoader.setImage(user.getProfile_photo(), mProfilePhoto, null, "");

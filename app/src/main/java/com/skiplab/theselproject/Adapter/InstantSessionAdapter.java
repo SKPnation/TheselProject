@@ -113,7 +113,7 @@ public class InstantSessionAdapter extends RecyclerView.Adapter<InstantSessionAd
 
                                                     //set counsellor name
                                                     holder.hisNameTv.setText(counsellor.getUsername());
-                                                    holder.categoryTv.setText(counsellor.getCategory1());
+                                                    holder.categoryTv.setText(counsellor.getCategory_one());
 
                                                     //set counsellor dp
                                                     try {
@@ -184,7 +184,7 @@ public class InstantSessionAdapter extends RecyclerView.Adapter<InstantSessionAd
 
                                                     //set counsellor name
                                                     holder.hisNameTv.setText(client.getUsername());
-                                                    holder.categoryTv.setText(user.getCategory1());
+                                                    holder.categoryTv.setText(user.getCategory_one());
 
                                                     //set counsellor dp
                                                     try {

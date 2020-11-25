@@ -55,6 +55,23 @@
                     }
                 },
                 {
+                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1d8cfff3f5d58b170acc7b9981fbe16b/core-1.5.0-alpha04/res/values-km/values-km.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "96",
+                        "startColumns": "4",
+                        "startOffsets": "9118",
+                        "endColumns": "100",
+                        "endOffsets": "9214"
+                    }
+                },
+                {
                     "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/a290312412f77c94f15a374f174cd6cf/navigation-ui-2.2.2/res/values-km/values-km.xml",
                     "from": {
                         "startLines": "2,3",
@@ -69,23 +86,6 @@
                         "startOffsets": "8173,8278",
                         "endColumns": "104,104",
                         "endOffsets": "8273,8378"
-                    }
-                },
-                {
-                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/330ca1f4680887a6d86b86b09d5c6aa5/core-1.5.0-alpha03/res/values-km/values-km.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "96",
-                        "startColumns": "4",
-                        "startOffsets": "9118",
-                        "endColumns": "100",
-                        "endOffsets": "9214"
                     }
                 },
                 {

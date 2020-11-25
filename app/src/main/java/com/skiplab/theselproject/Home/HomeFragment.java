@@ -207,8 +207,8 @@ public class HomeFragment extends Fragment {
 
 
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Career", "Low self-esteem",
-                "Family", "Anxiety", "Pregnancy", "Business", "Weight Loss", "Fitness", "Helpful Tips", "#COVID19 NIGERIA"};
+        items = new String[]{"Relationship", "Addiction", "Depression", "Parenting", "Career", "Self-Esteem", "Disabilities", "Hopes",
+                "Family", "Anxiety", "Pregnancy", "Religion", "Business", "Weight Loss", "Fitness", "Grief", "Bullying", "Education", "Music", "Helpful Tips"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(), R.layout.list_item, R.id.listItem, items);
         listView.setAdapter(adapter);
@@ -221,23 +221,23 @@ public class HomeFragment extends Fragment {
             if (selectedItem.equals(selCategory)){
                 //..
             }
+            else if (selCategory.equals("Relationship") ||selCategory.equals("#COVID19 NIGERIA") || selCategory.equals("Low self-esteem"))
+            {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
             else {
-                currentUserRef.child("selectedCategory").setValue(selectedItem);
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                        .setMessage("This application is under maintenance.")
+                        .create();
+                alertDialog.show();
+                /*currentUserRef.child("selectedCategory").setValue(selectedItem);
                 Intent intent = new Intent(getActivity(), DashboardActivity.class);
                 startActivity(intent);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                getActivity().finish();
+                getActivity().finish();*/
             }
 
         });
-
-
-        /*addPostBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SelectMood.class));
-            }
-        });*/
 
 
         optionsBtn.setOnClickListener(new View.OnClickListener() {
@@ -250,7 +250,11 @@ public class HomeFragment extends Fragment {
         share_post_et.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                startActivity(new Intent(getActivity(), SelectMood.class));
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                        .setMessage("This application is under maintenance.")
+                        .create();
+                alertDialog.show();
+                //startActivity(new Intent(getActivity(), SelectMood.class));
                 // TODO Auto-generated method stub
             }
 
@@ -270,24 +274,25 @@ public class HomeFragment extends Fragment {
         share_post_et.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                startActivity(new Intent(getActivity(), SelectMood.class));
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                        .setMessage("This application is under maintenance.")
+                        .create();
+                alertDialog.show();
+                //startActivity(new Intent(getActivity(), SelectMood.class));
                 return false;
             }
         });
-
-        /*videosBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), VideoGallery.class));
-            }
-        });*/
 
         bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_menu:
-                        mDrawerLayout.openDrawer(GravityCompat.START);
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                                .setMessage("This application is under maintenance.")
+                                .create();
+                        alertDialog.show();
+                        //mDrawerLayout.openDrawer(GravityCompat.START);
 
                         break;
                     case R.id.nav_notifications:
@@ -298,8 +303,10 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void run() {
                                 if (i == 1){
-
-                                    startActivity(new Intent(getActivity(), NotificationsActivity.class));
+                                    AlertDialog.Builder builder  = new AlertDialog.Builder(getActivity());
+                                    builder.setMessage("This application is under maintenance.");
+                                    builder.show();
+                                    //startActivity(new Intent(getActivity(), NotificationsActivity.class));
 
                                 } else if (i == 2){
                                     Log.d(TAG, "IconDoubleClick: Double tap");
@@ -317,8 +324,11 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void run() {
                                 if (i == 1){
-
-                                    startActivity(new Intent(getActivity(), AccountSettingsActivity.class));
+                                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                                            .setMessage("This application is under maintenance.")
+                                            .create();
+                                    alertDialog.show();
+                                    //startActivity(new Intent(getActivity(), AccountSettingsActivity.class));
 
                                 } else if (i == 2){
                                     Log.d(TAG, "IconDoubleClick: Double tap");
@@ -384,14 +394,18 @@ public class HomeFragment extends Fragment {
                                 public void onClick(View v) {
                                     if (Common.isConnectedToTheInternet(getContext()))
                                     {
-                                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+                                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                                                .setMessage("This application is under maintenance.")
+                                                .create();
+                                        alertDialog.show();
+                                        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
                                         {
                                             if (user.getIsStaff().equals("false"))
                                             {
-                                            /*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                            *//*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                                     .setMessage("The private consultation feature is currently undergoing an upgrade")
                                                     .create();
-                                            alertDialog.show();*/
+                                            alertDialog.show();*//*
                                                 if (!ds.hasChild("wallet")){
                                                     DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
                                                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -409,10 +423,10 @@ public class HomeFragment extends Fragment {
                                             else if (user.getIsStaff().equals("true"))
                                             {
                                                 startActivity(new Intent(getActivity(), ChatRoomsActivity.class));
-                                            /*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                            *//*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                                     .setMessage("The private consultation feature is currently undergoing an upgrade")
                                                     .create();
-                                            alertDialog.show();*/
+                                            alertDialog.show();*//*
                                             }
                                             else
                                             {
@@ -427,7 +441,7 @@ public class HomeFragment extends Fragment {
                                                     .setMessage("To use this feature, your Android OS must be 8.0 and above!")
                                                     .create();
                                             alertDialog.show();
-                                        }
+                                        }*/
                                     }
                                     else
                                     {
@@ -446,14 +460,18 @@ public class HomeFragment extends Fragment {
                                 public void onClick(View v) {
                                     if (Common.isConnectedToTheInternet(getContext()))
                                     {
-                                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+                                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                                                .setMessage("This application is under maintenance.")
+                                                .create();
+                                        alertDialog.show();
+                                        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
                                         {
                                             if (user.getIsStaff().equals("false"))
                                             {
-                                            /*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                                            *//*AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                                                     .setMessage("The private consultation feature is currently undergoing an upgrade")
                                                     .create();
-                                            alertDialog.show();*/
+                                            alertDialog.show();*//*
                                                 if (!ds.hasChild("wallet")){
                                                     DatabaseReference currentUserRef = FirebaseDatabase.getInstance().getReference("users")
                                                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -479,7 +497,7 @@ public class HomeFragment extends Fragment {
                                                     .setMessage("To use this feature, your Android OS must be 8.0 and above!")
                                                     .create();
                                             alertDialog.show();
-                                        }
+                                        }*/
                                     }
                                     else
                                     {
@@ -502,7 +520,11 @@ public class HomeFragment extends Fragment {
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),ConsultationNotificationActivity.class));
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                        .setMessage("This application is under maintenance.")
+                        .create();
+                alertDialog.show();
+                //startActivity(new Intent(getActivity(),ConsultationNotificationActivity.class));
             }
         });
 

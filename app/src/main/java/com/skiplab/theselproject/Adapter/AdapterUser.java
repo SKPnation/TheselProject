@@ -85,6 +85,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
     Context context;
     List<User> userList;
+    List<Profile> profileList;
     FirebaseAuth mAuth;
     DatabaseReference usersRef;
 
@@ -130,12 +131,12 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
         String hisUID = userList.get(position).getUid();
         String hisEmail = userList.get(position).getEmail();
         String hisName = userList.get(position).getUsername();
-        String hisStatus = userList.get(position).getOnlineStatus();
-        String hisLocation = userList.get(position).getAddress();
-        String category1 = userList.get(position).getCategory1();
-        String category2 = userList.get(position).getCategory2();
-        String category3 = userList.get(position).getCategory3();
-        Long hisCost = userList.get(position).getCost();
+        String hisStatus = userList.get(position).getOnline_status();
+        String hisLocation = userList.get(position).getLocation();
+        String category1 = userList.get(position).getCategory_one();
+        String category2 = userList.get(position).getCategory_two();
+        String category3 = userList.get(position).getCategory_three();
+        Long hisCost = profileList.get(position).getAppointment_cost();
 
         TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
         String countryCode = tm.getSimCountryIso().toUpperCase();
@@ -153,11 +154,11 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
             holder.scheduleBtn.setVisibility(View.GONE);
         }
 
-        if (userList.get(position).getOnlineStatus().equals("online"))
+        if (userList.get(position).getOnline_status().equals("online"))
         {
             holder.onlineIv.setVisibility(View.VISIBLE);
         }
-        else if (userList.get(position).getOnlineStatus().equals("deactivated"))
+        else if (userList.get(position).getOnline_status().equals("deactivated"))
         {
             holder.itemView.setVisibility(View.GONE);
         }
@@ -373,7 +374,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                     if (client.getIsStaff().equals("false"))
                                                                     {
-                                                                        if (userList.get(position).getOnlineStatus().equals("offline"))
+                                                                        if (userList.get(position).getOnline_status().equals("offline"))
                                                                         {
                                                                             progressDialog.dismiss();
 
@@ -562,7 +563,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                         if (client.getIsStaff().equals("false"))
                                                                         {
-                                                                            if (userList.get(position).getOnlineStatus().equals("offline"))
+                                                                            if (userList.get(position).getOnline_status().equals("offline"))
                                                                             {
                                                                                 pd2.dismiss();
 
@@ -710,6 +711,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                             message.setType("text");
                                                                                                                                             message.setChatroom_id(chatroomId);
 
+
                                                                                                                                             mProfileReference.document(hisUID)
                                                                                                                                                     .get()
                                                                                                                                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -721,7 +723,26 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                                                 HashMap<String, Object> hashMap = new HashMap<>();
                                                                                                                                                                 hashMap.put("instants",instants+1);
 
-                                                                                                                                                                mProfileReference.document(hisUID).set(hashMap, SetOptions.merge());
+                                                                                                                                                                mProfileReference.document(hisUID).set(hashMap, SetOptions.merge())
+                                                                                                                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                                                                                                    @Override
+                                                                                                                                                                    public void onSuccess(Void aVoid) {
+
+                                                                                                                                                                        FirebaseFirestore.getInstance().collection("revenue")
+                                                                                                                                                                                .document(context.getString(R.string.revenue_doc_path))
+                                                                                                                                                                                .get()
+                                                                                                                                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                                                                                                                    @Override
+                                                                                                                                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                                                                                                                        long revenue = task.getResult().getLong("total_revenue");
+                                                                                                                                                                                        HashMap<String, Object> hashMap1 = new HashMap<>();
+                                                                                                                                                                                        hashMap1.put("total_revenue",revenue+displayed_instant_cost);
+                                                                                                                                                                                        FirebaseFirestore.getInstance().collection("revenue").document(context.getString(R.string.revenue_doc_path)).set(hashMap1, SetOptions.merge());
+                                                                                                                                                                                    }
+                                                                                                                                                                                });
+
+                                                                                                                                                                    }
+                                                                                                                                                                });
                                                                                                                                                             }
                                                                                                                                                         }
                                                                                                                                                     });

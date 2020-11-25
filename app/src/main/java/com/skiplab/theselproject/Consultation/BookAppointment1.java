@@ -96,8 +96,7 @@ public class BookAppointment1 extends AppCompatActivity {
 
     Date sd;
 
-    Calendar selected_date, selected_date_in_millis, date1, calendar;
-    HorizontalCalendarView horizontalCalendarView;
+    Calendar selected_date, date1;
     SimpleDateFormat simpleDateFormat, simpleDateFormat1;
 
     int i = 0;
@@ -125,7 +124,7 @@ public class BookAppointment1 extends AppCompatActivity {
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.DATE,7);
 
-        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(this,R.id.calendar_view)
+        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendar_view)
                 .range(startDate,endDate)
                 .datesNumberOnScreen(1)
                 .mode(HorizontalCalendar.Mode.DAYS)

@@ -129,11 +129,11 @@ public class AdminRegisterActivity extends AppCompatActivity {
                             user.setUsername( email.substring( 0, email.indexOf( "@" ) ) );
                             user.setEmail(email);
                             user.setProfile_photo("");
-                            user.setPhone("1");
+                            //user.setPhone("1");
                             user.setUid( mAuth.getCurrentUser().getUid() );
                             user.setBio("Edit this bio from the account settings...");
                             user.setIsStaff("admin");
-                            user.setOnlineStatus("online");
+                            //user.setOnlineStatus("online");
                             user.setPosts(0);
                             user.setSelectedCategory("");
 

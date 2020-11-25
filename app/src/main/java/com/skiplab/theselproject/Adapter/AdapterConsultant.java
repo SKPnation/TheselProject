@@ -65,7 +65,11 @@ public class AdapterConsultant extends RecyclerView.Adapter<AdapterConsultant.Vi
         holder.mAvatarIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+                AlertDialog alertDialog = new AlertDialog.Builder(context)
+                        .setMessage("This application is under maintenance.")
+                        .create();
+                alertDialog.show();
+                /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
                 {
                     usersRef.orderByKey().equalTo(mAuth.getUid())
                             .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -79,15 +83,15 @@ public class AdapterConsultant extends RecyclerView.Adapter<AdapterConsultant.Vi
                                             intent.putExtra("hisUID",hisUID);
                                             context.startActivity(intent);
 
-                                            Log.d("hisEmail: ",consultantList.get(position).getEmail() );
+                                            Log.d("hisImage: ",consultantList.get(position).getProfile_photo());
                                         }
                                         else
                                         {
-                                        /*AlertDialog alertDialog = new AlertDialog.Builder(context)
-                                                .setMessage("The private consultation feature is currently undergoing an upgrade")
-                                                .create();
-                                        alertDialog.show();*/
-                                            context.startActivity(new Intent(context, SelectCategory.class));
+                                            AlertDialog alertDialog = new AlertDialog.Builder(context)
+                                                    .setMessage("This application is under maintenance.")
+                                                    .create();
+                                            alertDialog.show();
+                                            //ontext.startActivity(new Intent(context, SelectCategory.class));
                                         }
                                     }
                                 }
@@ -105,7 +109,7 @@ public class AdapterConsultant extends RecyclerView.Adapter<AdapterConsultant.Vi
                             .setMessage("To use this feature, your Android OS must be 8.0 and above!")
                             .create();
                     alertDialog.show();
-                }
+                }*/
 
             }
         });

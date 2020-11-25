@@ -305,7 +305,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             User user1 = ds.getValue(User.class);
-                            if (user1.getOnlineStatus().equals("deactivated"))
+                            /*if (user1.getOnlineStatus().equals("deactivated"))
                             {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 builder.setMessage(user1.getUsername()+", your account has been deactivated.");
@@ -319,7 +319,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent( LoginActivity.this, DashboardActivity.class );
                                 startActivity( intent );
                                 finish();
-                            }
+                            }*/
                         }
                     }
 

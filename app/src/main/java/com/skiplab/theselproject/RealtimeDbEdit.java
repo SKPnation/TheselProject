@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class RealtimeDbEdit extends AppCompatActivity {
     Context mContext = RealtimeDbEdit.this;
 
     TextView hisNameTv, emailTv, phoneTv, countryTv, categoryOne, categoryTwo, categoryThree, statusTv;
-    TextView costTv, dayTv, nightTv, bankTv, accountNum;
+    TextView costTv, dayTv, nightTv, bankTv, accountNumTv;
     ImageView saveBtn, backBtn;
 
     DatabaseReference usersRef;
@@ -63,7 +64,7 @@ public class RealtimeDbEdit extends AppCompatActivity {
         dayTv = findViewById(R.id.dayTv);
         nightTv = findViewById(R.id.nightTv);
         bankTv = findViewById(R.id.bankTv);
-        accountNum = findViewById(R.id.acc_num_Tv);
+        accountNumTv = findViewById(R.id.acc_num_Tv);
         statusTv = findViewById(R.id.status_tv);
         saveBtn = findViewById(R.id.saveBtn);
         backBtn = findViewById(R.id.backArrow);
@@ -82,9 +83,10 @@ public class RealtimeDbEdit extends AppCompatActivity {
                         for (DataSnapshot ds: dataSnapshot.getChildren())
                         {
                             User user = ds.getValue(User.class);
+
                             hisNameTv.setText(user.getUsername());
                             emailTv.setText(user.getEmail());
-                            phoneTv.setText(user.getPhone());
+                            /*phoneTv.setText(user.getPhone());
                             statusTv.setText(user.getOnlineStatus());
                             countryTv.setText(user.getAddress());
                             categoryOne.setText(user.getCategory1());
@@ -94,7 +96,103 @@ public class RealtimeDbEdit extends AppCompatActivity {
                             dayTv.setText(user.getDayTime());
                             nightTv.setText(user.getNightTime());
                             bankTv.setText(user.getBank());
-                            accountNum.setText(user.getAccountNumber());
+                            accountNumTv.setText(user.getAccountNumber());*/
+
+                            dayTv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                    builder.setTitle("Day Time");
+
+                                    final EditText dayTimeEt = new EditText(mContext);
+                                    dayTimeEt.setSingleLine(true);
+
+                                    dayTimeEt.setHint("5:00 am - 4:45 pm");
+                                    //dayTimeEt.setText(user.getDayTime());
+                                    builder.setView(dayTimeEt);
+
+                                    builder.setPositiveButton("SET", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            final String dayTime = dayTimeEt.getText().toString();
+                                            dayTv.setText(dayTime);
+                                        }
+                                    });
+                                    builder.show();
+                                }
+                            });
+
+                            nightTv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                    builder.setTitle("Evening Time");
+
+                                    final EditText eveningTimeEt = new EditText(mContext);
+                                    eveningTimeEt.setSingleLine(true);
+
+                                    eveningTimeEt.setHint("5:00 pm - 11:45 pm");
+                                    //eveningTimeEt.setText(user.getNightTime());
+                                    builder.setView(eveningTimeEt);
+
+                                    builder.setPositiveButton("SET", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            final String eveningTime = eveningTimeEt.getText().toString();
+                                            nightTv.setText(eveningTime);
+                                        }
+                                    });
+                                    builder.show();
+                                }
+                            });
+
+                            bankTv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                    builder.setTitle("Bank Name");
+
+                                    final EditText bankEt = new EditText(mContext);
+                                    bankEt.setSingleLine(true);
+
+                                    bankEt.setHint("bank name");
+                                    //bankEt.setText(user.getBank());
+                                    builder.setView(bankEt);
+
+                                    builder.setPositiveButton("SET", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            final String bankName = bankEt.getText().toString();
+                                            bankTv.setText(bankName);
+                                        }
+                                    });
+                                    builder.show();
+                                }
+                            });
+
+                            accountNumTv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                    builder.setTitle("Account Number");
+
+                                    final EditText accNumEt = new EditText(mContext);
+                                    accNumEt.setSingleLine(true);
+
+                                    accNumEt.setHint("account number");
+                                    //accNumEt.setText(user.getAccountNumber());
+                                    builder.setView(accNumEt);
+
+                                    builder.setPositiveButton("SET", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            final String accountNum = accNumEt.getText().toString();
+                                            accountNumTv.setText(accountNum);
+                                        }
+                                    });
+                                    builder.show();
+                                }
+                            });
                         }
                     }
 
@@ -177,7 +275,7 @@ public class RealtimeDbEdit extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
-                builder.setTitle("Select Category");
+                builder.setTitle("Select Cost");
                 builder.setItems(costs, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -201,7 +299,7 @@ public class RealtimeDbEdit extends AppCompatActivity {
                 String daytime = dayTv.getText().toString();
                 String nighttime = nightTv.getText().toString();
                 String bank = bankTv.getText().toString();
-                String accountNo = accountNum.getText().toString();
+                String accountNo = accountNumTv.getText().toString();
 
                 HashMap<String, Object> userMap = new HashMap<>();
                 userMap.put("cost", Long.parseLong(cost));

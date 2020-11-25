@@ -176,7 +176,9 @@ public class DepositActivity extends AppCompatActivity {
                                         }
                                         else
                                         {
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                            usersRef.child(mAuth.getCurrentUser().getUid()).child("wallet").setValue(result);
+
+                                            /*AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                                             View mView =  LayoutInflater.from(v.getRootView().getContext()).inflate(R.layout.card_payment_dialog, null);
 
                                             etEmail = mView.findViewById(R.id.et_main_email);
@@ -202,7 +204,7 @@ public class DepositActivity extends AppCompatActivity {
                                             });
 
                                             builder.setView(mView);
-                                            builder.show();
+                                            builder.show();*/
                                         }
 
                                     }

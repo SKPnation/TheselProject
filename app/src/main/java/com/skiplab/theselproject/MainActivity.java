@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
@@ -26,6 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,11 +56,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*Date todayDate = new Date();
-        todayDate.getTime();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Log.d(TAG, "EXPIRED "+todayDate.toInstant().plusMillis(604800000).toEpochMilli());
-        }*/
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setMessage("This application is under maintenance.")
+                .create();
 
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         {
             Log.d(TAG, "Error: "+e);
         }
+
         //Now the listener will be actively listening for changes in the authentication state
         setupFirebaseAuth();
 

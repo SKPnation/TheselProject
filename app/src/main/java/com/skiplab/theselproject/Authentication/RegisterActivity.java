@@ -3,10 +3,13 @@ package com.skiplab.theselproject.Authentication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -15,6 +18,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,16 +35,26 @@ import com.skiplab.theselproject.PrivacyPolicy;
 import com.skiplab.theselproject.models.User;
 import com.skiplab.theselproject.R;
 
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "RegisterActivity";
 
     private Context mContext;
     private TextInputEditText mEmail, mPassword, mConfirmPwd, mAge;
-    private TextView mAgreementTv;
+    private TextView mAgreementTv, mBirthDateTv;
     private EditText mPhone;
     private Button btnRegister;
     private CountryCodePicker ccp;
+    private DatePickerDialog datePickerDialog;
+    private DatePickerDialog.OnDateSetListener dateSetListener;
 
     private FirebaseAuth mAuth;
 
@@ -49,7 +63,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String text = "By clicking register, you are indicating that you have read and agreed to the Terms of Service and Privacy Policy";
     private String email, phone, password, confirmPwd;
-    private int age;
+    private int age, birth_year, birth_month, birth_day;
+    private int yearI, dayOfMonthI;
+    private String monthS, dayOfMonthS, dateOfBirth;
+    private String eDate;
 
     public static boolean isActivityRunning;
 
@@ -67,10 +84,19 @@ public class RegisterActivity extends AppCompatActivity {
         mPhone =  findViewById(R.id.phoneEt);
         mPassword =  findViewById(R.id.passwordEt);
         mConfirmPwd = findViewById(R.id.confirmPwdEt);
-        mAge = findViewById(R.id.ageEt);
+        mBirthDateTv = findViewById(R.id.birth_date_tv);
 
         ccp = findViewById(R.id.ccp);
         ccp.registerCarrierNumberEditText(mPhone);
+
+        Calendar calendar = Calendar.getInstance();
+        birth_year = calendar.get(Calendar.YEAR);
+        birth_month = calendar.get(Calendar.MONTH);
+        birth_day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        eDate = simpleDateFormat.format(Calendar.getInstance().getTime());
+
 
         mAgreementTv = findViewById(R.id.reg_agreementTv);
         SpannableString ss = new SpannableString(text);
@@ -94,6 +120,71 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        mBirthDateTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog = new DatePickerDialog(
+                        mContext,android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        dateSetListener,birth_year,birth_month,birth_day);
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
+                datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.WHITE);
+                datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE);
+            }
+        });
+
+        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                birth_month = month + 1;
+                yearI = year;
+                dayOfMonthI = dayOfMonth;
+
+                if (birth_month < 10 && dayOfMonthI < 10){
+                    monthS = "0"+birth_month;
+                    dayOfMonthS = "0"+dayOfMonthI;
+                    dateOfBirth = dayOfMonthS+"-"+monthS+"-"+yearI;
+                    mBirthDateTv.setText(dateOfBirth);
+                }
+                else if (dayOfMonthI < 10){
+                    dayOfMonthS = "0"+dayOfMonthI;
+                    dateOfBirth = dayOfMonthS+"-"+birth_month+"-"+yearI;
+                    mBirthDateTv.setText(dateOfBirth);
+                }
+                else if (birth_month < 10){
+                    monthS = "0"+birth_month;
+                    dateOfBirth = dayOfMonthI+"-"+monthS+"-"+yearI;
+                    mBirthDateTv.setText(dateOfBirth);
+                }
+                else
+                {
+                    dateOfBirth = dayOfMonthI+"-"+birth_month+"-"+yearI;
+                    mBirthDateTv.setText(dateOfBirth);
+                }
+
+                try {
+                    Date date1 = simpleDateFormat.parse(dateOfBirth);
+                    Date date2 = simpleDateFormat.parse(eDate);
+
+                    long startDate = date1.getTime();
+                    long endDate = date2.getTime();
+
+                    if (startDate <= endDate)
+                    {
+                        Period period = new Period(startDate, endDate, PeriodType.yearMonthDay());
+                        age = period.getYears();
+
+                        Toast.makeText(mContext, ""+age,Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        };
+
         btnRegister = (Button) findViewById(R.id.signUpBtn);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -103,12 +194,6 @@ public class RegisterActivity extends AppCompatActivity {
                 phone = ccp.getFullNumberWithPlus();
                 password = mPassword.getText().toString();
                 confirmPwd = mConfirmPwd.getText().toString();
-                try{
-                    age = Integer.parseInt(mAge.getText().toString());
-
-                } catch(NumberFormatException ex){ // handle your exception
-
-                }
 
                 //validate
                 if (email.isEmpty()){
@@ -141,16 +226,23 @@ public class RegisterActivity extends AppCompatActivity {
                 else if (!password.equals(confirmPwd)){
                     Toast.makeText(mContext, "Your passwords don't match, please verify", Toast.LENGTH_SHORT).show();
                 }
-                else if (mAge.getText().toString().isEmpty()){
-                    mAge.setError("Your age is required");
-                    mAge.setFocusable(true);
+                else if (mBirthDateTv.getText().toString().isEmpty()){
+                    mBirthDateTv.setError("Date of birth is required");
+                    mBirthDateTv.setFocusable(true);
                 }
-                else if (!(age >= 16)){
-                    mAge.setError("User must be 16 or older");
-                    mAge.setFocusable(true);
+                else if (age < 16)
+                {
+                    AlertDialog alertDialog =new AlertDialog.Builder(mContext)
+                            .setMessage("You must be 16 or older")
+                            .create();
+                    alertDialog.show();
+
+                    mBirthDateTv.setError("You must be 16 or older");
+                    mBirthDateTv.setFocusable(true);
                 }
                 else{
-                    registerUser(email, phone, password, confirmPwd, age);
+                    Toast.makeText(mContext, "Successfully", Toast.LENGTH_SHORT).show();
+                    registerUser(email, phone, password);
                 }
             }
         });
@@ -184,7 +276,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void registerUser(final String email, String phone, String password, String confirmPwd, final int age) {
+    private void registerUser(final String email, String phone, String password) {
         progressDialog.setMessage("Registering user...");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -200,18 +292,25 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.d( TAG, "onComplete: AuthState: " + mAuth.getCurrentUser()
                                     .getUid());
 
+                            String timestamp = String.valueOf(System.currentTimeMillis());
+
                             User user = new User();
-                            user.setUsername( email.substring( 0, email.indexOf( "@" ) ) );
-                            user.setProfile_photo( "" );
-                            user.setEmail(email);
-                            user.setPhone(phone);
                             user.setUid( FirebaseAuth.getInstance().getCurrentUser().getUid() );
+                            user.setUsername( email.substring( 0, email.indexOf( "@" ) ) );
+                            user.setEmail(email);
+                            user.setPhone_number(phone);
+                            user.setProfile_photo( "" );
                             user.setBio("Edit this bio from the account settings...");
+                            user.setDate_created("");
                             user.setIsStaff("false");
-                            user.setAge(String.valueOf(age+" years old"));
-                            user.setOnlineStatus("online");
+                            user.setOnline_status("offline");
                             user.setSelectedCategory("");
+                            user.setDay_of_birth(dayOfMonthI);
+                            user.setMonth_of_birth(birth_month);
+                            user.setYear_of_birth(yearI);
                             user.setPosts(0);
+                            user.setEverify(false);
+                            user.setDate_created(timestamp);
 
                             FirebaseDatabase.getInstance().getReference("users")
                                     .child(mAuth.getCurrentUser().getUid())

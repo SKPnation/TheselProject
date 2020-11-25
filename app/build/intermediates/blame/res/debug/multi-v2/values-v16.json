@@ -4,7 +4,7 @@
             "outputFile": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1d8cfff3f5d58b170acc7b9981fbe16b/core-1.5.0-alpha04/res/values-v16/values-v16.xml",
+                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/9c0c724ca20210d63ca3d0f500331a5e/core-1.5.0-alpha05/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5d3a224cdffd00d6ab3cdbb4f7b813ef/appcompat-1.1.0/res/values-v16/values-v16.xml",
+                    "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/b8565c52e8980457b24ee1ce6eaeed52/appcompat-1.1.0/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

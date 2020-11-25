@@ -91,7 +91,6 @@
 
             </LinearLayout>
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_layout"
                 android:layout_width="match_parent"
@@ -140,29 +139,18 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/age_layout"
+            <TextView
+                android:id="@+id/birth_date_tv"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="15dp"
-                android:textColorHint="#aaa"
-                android:textColorHighlight="#aaa"
+                android:layout_height="60dp"
+                android:layout_weight="1"
                 android:background="@drawable/customedittextstyle"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ageEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="#fff"
-                    android:textSize="20sp"
-                    android:hint="Age"
-                    android:background="@android:color/transparent"
-                    android:singleLine="true"
-                    android:inputType="number" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
+                android:hint="Date of Birth"
+                android:textSize="20sp"
+                android:textColorHint="#aaa"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"/>
 
             <Button
                 android:id="@+id/signUpBtn"

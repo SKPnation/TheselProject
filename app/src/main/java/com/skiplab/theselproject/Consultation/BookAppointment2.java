@@ -197,16 +197,16 @@ public class BookAppointment2 extends AppCompatActivity {
                             hisEmail = ds.getValue(User.class).getEmail();
                             hisName = ds.getValue(User.class).getUsername();
                             hisNameTv.setText(ds.getValue(User.class).getUsername());
-                            hisCategoryTv.setText(ds.getValue(User.class).getCategory1());
+                            hisCategoryTv.setText(ds.getValue(User.class).getCategory_one());
 
-                            hisCategory = ds.getValue(User.class).getCategory1();
+                            hisCategory = ds.getValue(User.class).getCategory_one();
 
                             try {
                                 UniversalImageLoader.setImage(ds.getValue(User.class).getProfile_photo(), hisImageIv, null, "");
                             }
                             catch (Exception e){
                                 Log.d("ERROR: ", ""+e);
-                            }
+                             }
                         }
                     }
 
@@ -285,7 +285,7 @@ public class BookAppointment2 extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
 
-                                            JavaMailAPI javaMailAPI = new JavaMailAPI(
+                                            /*JavaMailAPI javaMailAPI = new JavaMailAPI(
                                                     mContext,
                                                     "contact@thesel.com.ng",
                                                     hisEmail,
@@ -304,7 +304,7 @@ public class BookAppointment2 extends AppCompatActivity {
                                                             +" on "+simpleDateFormat.format(selectedDate)+" with "+hisName.toUpperCase()+
                                                             "\n\n\n"+"Thesel Team.");
 
-                                            javaMailClientAPI.execute();
+                                            javaMailClientAPI.execute();*/
 
                                             mProfileReference.document(hisUID)
                                                     .get()
@@ -317,7 +317,25 @@ public class BookAppointment2 extends AppCompatActivity {
                                                                 HashMap<String, Object> hashMap = new HashMap<>();
                                                                 hashMap.put("appointments",appointments+1);
 
-                                                                mProfileReference.document(hisUID).set(hashMap, SetOptions.merge());
+                                                                mProfileReference.document(hisUID).set(hashMap, SetOptions.merge())
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+
+                                                                        FirebaseFirestore.getInstance().collection("revenue")
+                                                                                .document(getString(R.string.revenue_doc_path))
+                                                                                .get()
+                                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                                    @Override
+                                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                        long revenue = task.getResult().getLong("total_revenue");
+                                                                                        HashMap<String, Object> hashMap1 = new HashMap<>();
+                                                                                        hashMap1.put("total_revenue",revenue+(hisCost/100));
+                                                                                        FirebaseFirestore.getInstance().collection("revenue").document(getString(R.string.revenue_doc_path)).set(hashMap1, SetOptions.merge());
+                                                                                    }
+                                                                                });
+                                                                    }
+                                                                });
                                                             }
                                                         }
                                                     });
@@ -330,7 +348,7 @@ public class BookAppointment2 extends AppCompatActivity {
                                             builder1.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    String timestamp = String.valueOf(System.currentTimeMillis());
+                                                    /*String timestamp = String.valueOf(System.currentTimeMillis());
 
                                                     HashMap<String,Object> myNotificationsMap = new HashMap<>();
                                                     myNotificationsMap.put("counsellor_id",hisUID);
@@ -381,14 +399,14 @@ public class BookAppointment2 extends AppCompatActivity {
                                                         }
                                                     } catch (ParseException e) {
                                                         e.printStackTrace();
-                                                    }
+                                                    }*/
                                                 }
                                             });
                                             builder1.setNegativeButton("SKIP", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
 
-                                                    String timestamp = String.valueOf(System.currentTimeMillis());
+                                                    /*String timestamp = String.valueOf(System.currentTimeMillis());
 
                                                     HashMap<String,Object> myNotificationsMap = new HashMap<>();
                                                     myNotificationsMap.put("counsellor_id",hisUID);
@@ -416,7 +434,7 @@ public class BookAppointment2 extends AppCompatActivity {
                                                                     startActivity(intent1);
                                                                     finish();
                                                                 }
-                                                            });
+                                                            });*/
                                                 }
                                             });
 
