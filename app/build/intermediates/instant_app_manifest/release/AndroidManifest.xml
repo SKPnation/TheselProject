@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.skiplab.theselproject"
     android:targetSandboxVersion="2"
-    android:versionCode="42"
-    android:versionName="1.9.9.2" >
+    android:versionCode="44"
+    android:versionName="1.9.9.4" >
 
     <uses-sdk
         android:minSdkVersion="21"

@@ -118,7 +118,7 @@
 
             <ImageButton
                 android:id="@+id/recordBtn"
-                android:src="@drawable/ic_mic"
+                android:src="@drawable/ic_mic_black"
                 android:background="@null"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center_vertical"

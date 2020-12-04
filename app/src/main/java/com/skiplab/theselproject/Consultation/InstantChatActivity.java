@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -26,6 +27,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -33,10 +35,13 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,9 +83,13 @@ import com.skiplab.theselproject.notifications.Token;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -107,6 +116,9 @@ public class InstantChatActivity extends AppCompatActivity {
     String[] cameraPermissions;
     String[] storagePermissions;
 
+    private MediaRecorder mediaRecorder;
+    private String recordFile = "";
+
     //views from xml
     Toolbar toolbar;
     RecyclerView recyclerView;
@@ -132,9 +144,6 @@ public class InstantChatActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private boolean mTimerRunning;
-    public static boolean isActivityRunning;
-
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
     String hisUID;
@@ -145,12 +154,9 @@ public class InstantChatActivity extends AppCompatActivity {
     APIService apiService;
     boolean notify = false;
 
-    boolean isRecording = false;
-
     //image picked will be saved in this uri
     Uri image_uri = null;
 
-    MediaRecorder mediaRecorder;
     String pathSave = "";
 
     SpannableString ss_thanks;
@@ -159,11 +165,16 @@ public class InstantChatActivity extends AppCompatActivity {
     int i = 0;
     int num_messages;
 
+    private Boolean isRecording = false;
+
+
+    public static boolean isActivityRunning;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instant_chat);
-
         firebaseDatabase = FirebaseDatabase.getInstance();
         usersRef = firebaseDatabase.getReference("users");
 
@@ -192,7 +203,6 @@ public class InstantChatActivity extends AppCompatActivity {
         //init permissions arrays
         cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
         recyclerView = findViewById(R.id.chat_recylerView);
         profileIv = findViewById(R.id.profileIv);
         nameTv = findViewById(R.id.nameTv);
@@ -219,37 +229,70 @@ public class InstantChatActivity extends AppCompatActivity {
             }
         });
 
+        recordBtn = findViewById(R.id.recordBtn);
+
         recordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext,"Oops! Error. Try again later",Toast.LENGTH_SHORT).show();
-                /*if (checkPermissionFromDevice())
+                //Toast.makeText(mContext,"Oops! Error. Try again later",Toast.LENGTH_SHORT).show();
+                if (checkPermissionFromDevice())
                 {
-                    pathSave = Environment.getExternalStorageDirectory()
-                            .getAbsolutePath()+"/"
-                            + UUID.randomUUID().toString()+"_audio_record.3gp";
-                    setupMediaRecorder();
-                    try {
-                        mediaRecorder.prepare();
-                        mediaRecorder.start();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setMessage("Recording...");
-                    builder.setCancelable(false);
-                    builder.setPositiveButton("STOP", new DialogInterface.OnClickListener() {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+                    final View mView =  LayoutInflater.from(mContext).inflate(R.layout.recording_dialog, null);
+
+                    ImageView record_btn = mView.findViewById(R.id.record_btn);
+                    TextView record_file_name = mView.findViewById(R.id.record_filename);
+                    Chronometer timer = mView.findViewById(R.id.record_timer);
+
+                    record_btn.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            stopRecording();
+                        public void onClick(View v) {
+                            if (isRecording)
+                            {
+                                //Stop Recording
+                                stopRecording(timer, record_file_name);
+                                record_btn.setImageDrawable(getResources().getDrawable(R.drawable.ic_mic_black, null));
+                                isRecording = false;
+                            }
+                            else
+                            {
+                                startRecording(timer, record_file_name);
+                                record_btn.setImageDrawable(getResources().getDrawable(R.drawable.ic_mic_blue, null));
+                                isRecording = true;
+                            }
                         }
                     });
 
-                    builder.show();
+                    alertDialog.setPositiveButton("SEND", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (recordFile.isEmpty())
+                            {
+                                Toast.makeText(mContext,"Press the mic button to start recording",Toast.LENGTH_SHORT).show();
+                                //stopRecording(timer, record_file_name);
+                            }
+                            else
+                            {
+                                if (isRecording)
+                                {
+                                    AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                                            .setMessage("Press the mic button to stop recording")
+                                            .create();
+                                    alertDialog.show();
+                                }
+                                else
+                                    uploadAudio();
+                            }
+                        }
+                    });
+
+
+                    alertDialog.setView(mView).show();
+
+
                 }
                 else
-                    requestPermission();*/
+                    requestPermission();
 
             }
         });
@@ -276,13 +319,37 @@ public class InstantChatActivity extends AppCompatActivity {
         getRecepientDetails();
         readMessages();
     }
-    private void setupMediaRecorder() {
+
+    private void startRecording(Chronometer timer, TextView filenameTv) {
+        timer.setBase(SystemClock.elapsedRealtime());
+        timer.start();
+        String recordPath  = mContext.getExternalFilesDir("/").getAbsolutePath();
+        SimpleDateFormat formatter  = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss" , Locale.CANADA);
+        Date now  = new Date();
+        recordFile= "Recording..." + UUID.randomUUID().toString().substring(0,4)+"_"+formatter.format(now) + ".mp3";
+        filenameTv.setText("Recording, File Name : " + recordFile);
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        mediaRecorder.setOutputFile(pathSave);
+        mediaRecorder.setOutputFile(recordPath + "/" + recordFile);
+        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        try {
+            mediaRecorder.prepare();
+        }catch (IOException e ){
+            e.printStackTrace();
+        }
+        mediaRecorder.start();
     }
+
+
+    private void stopRecording(Chronometer timer, TextView filenameTv) {
+        timer.stop();
+        filenameTv.setText("Recording Stopped, File Saved : " + recordFile);
+        mediaRecorder.stop();
+        mediaRecorder.release();
+        mediaRecorder = null;
+    }
+
 
     private void getRecepientDetails() {
         usersRef.orderByKey().equalTo(hisUID)
@@ -338,21 +405,14 @@ public class InstantChatActivity extends AppCompatActivity {
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(InstantChatActivity.this);
                                 builder.setTitle("PLEASE READ THIS!");
-                                builder.setMessage("1. Try not to give very short replies. Provide enough possible solutions to the client's problems!\n\n"
-                                        +"2. You can be speaking with the same client for days until he/she is satisfied with your counselling." +
-                                        " During the process, other users will not be allowed to consult you!\n\n"
-                                        +"3. Delete the session when the client is satisfied with the consultation.\n\n"
-                                        +"4. Your CHAT HISTORY with that client will still be available on the database for future " +
-                                        "consultations.\n\n"
-                                        +"5. Delete the session if you don't get a reply within 24HOURS!\n\n"
-                                        +"6. EXCHANGE OF PHONE NUMBERS AND EMAIL ADDRESSES ARE NOT ALLOWED!!!");
+                                builder.setMessage("EXCHANGE OF PHONE NUMBERS AND EMAIL ADDRESSES ARE NOT ALLOWED!!!");
                                 builder.setPositiveButton("BEGIN", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
                                     }
                                 });
-                                //builder.show();
+                                builder.show();
 
                             }
 
@@ -395,7 +455,7 @@ public class InstantChatActivity extends AppCompatActivity {
 
         if (notify)
         {
-            sendNotification(hisUID, myName, message);
+            //sendNotification(hisUID, myName, message);
         }
 
     }
@@ -515,7 +575,7 @@ public class InstantChatActivity extends AppCompatActivity {
 
                                     if (notify){
                                         progressDialog.dismiss();
-                                        sendNotification(hisUID, user.getUsername(), "Sent you a recording...");
+                                        //sendNotification(hisUID, user.getUsername(), "Sent you a recording...");
                                     }
                                     notify = false;
                                 }
@@ -725,7 +785,7 @@ public class InstantChatActivity extends AppCompatActivity {
                     boolean writeStorageAccepted = grantResults[1]==PackageManager.PERMISSION_GRANTED;
                     if (cameraAccepted && writeStorageAccepted){
                         //both permission granted
-                        pickFromCamera();
+                        //pickFromCamera();
                     }
                     else {
                         //camera or gallery or both permissions denied
@@ -739,7 +799,7 @@ public class InstantChatActivity extends AppCompatActivity {
                     boolean writeStorageAccepted = grantResults[0]==PackageManager.PERMISSION_GRANTED;
                     if (writeStorageAccepted){
                         //storage permission granted
-                        pickFromGallery();
+                        //pickFromGallery();
                     }
                     else {
                         //gallery permissions denied
@@ -784,7 +844,7 @@ public class InstantChatActivity extends AppCompatActivity {
     }
 
 
-    private void sendNotification(String hisUID, String myName, String message) {
+    /*private void sendNotification(String hisUID, String myName, String message) {
         CollectionReference allTokens = FirebaseFirestore.getInstance().collection("tokens");
         allTokens.addSnapshotListener((queryDocumentSnapshots, e) -> {
             for (DocumentSnapshot ds1 : queryDocumentSnapshots.getDocuments()){
@@ -808,25 +868,7 @@ public class InstantChatActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
-
-        isActivityRunning = true;
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
-        }
-        isActivityRunning = false;
-    }
+    }*/
 
     private void setupFirebaseAuth() {
         mAuthListener = firebaseAuth -> {
@@ -843,5 +885,22 @@ public class InstantChatActivity extends AppCompatActivity {
         };
 
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
+
+        isActivityRunning = true;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        /*if (mAuthListener != null) {
+            FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
+        }*/
+        isActivityRunning = false;
     }
 }

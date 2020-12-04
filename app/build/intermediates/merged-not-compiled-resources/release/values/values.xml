@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2" xmlns:ns2="http://schemas.android.com/tools">
+    <string-array name="age_months">
+        <item>Month</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
     <array name="av_colors">
         <item>@color/av_color4</item>
         <item>@color/av_color3</item>
@@ -1096,13 +1111,8 @@
     <string name="fab_transformation_sheet_behavior" translatable="false">com.google.android.material.transformation.FabTransformationSheetBehavior</string>
     <string name="fastscroll__app_name">RecyclerViewFastScroll</string>
     <string name="fcm_fallback_notification_channel_label">Miscellaneous</string>
-    <string name="fifthCounsellorRule">5.  Exchange of phone numbers and emails is NOT ALLOWED on this app. If you do so, your account will be DEACTIVATED.</string>
-    <string name="fifthRule">4. Exchange of phone numbers and emails is NOT ALLOWED on this app. If you do so, your account will be DEACTIVATED.</string>
     <string name="firebaseCrashlytics"><a href="https://firebase.google.com/terms/crashlytics">Firebase Crashlytics</a></string>
     <string name="firebase_database_url" translatable="false">https://theselproject-b32d7.firebaseio.com</string>
-    <string name="firstCounsellorRule">1.  A Session lasts for 45 minutes. Therefore, make sure you are in a comfortable position and ensure your PHONE BATTERY LIFE is sufficient enough for an hour session.</string>
-    <string name="fourthCounsellorRule">4.  The EMPTY button is used to remove your client from the seat at the end of a session, to allow other users send you requests.</string>
-    <string name="fourthRule">3. Please do not request for another counsellor immediately after a session has ended. Wait for 30minutes, then, you can send a request. </string>
     <string name="gcm_defaultSenderId" translatable="false">932869224192</string>
     <string name="googleFirebaseAnalytics"><a href="https://firebase.google.com/terms/analytics">Google Analytics for Firebase</a></string>
     <string name="googlePlayServices"><a href="https://play.google.com/">Google Play Services</a></string>
@@ -1188,6 +1198,7 @@ This Service does not use these “cookies” explicitly. However, the app may u
     <string name="pstck_pinpad__num_8">8</string>
     <string name="pstck_pinpad__num_9">9</string>
     <string name="rationale_ask_again">This app may not work correctly without the requested permissions. Open the app settings screen to modify app permissions.</string>
+    <string name="revenue_doc_path">3XBSIkt4LE2g53HtZvUh</string>
     <string name="s1">Save image</string>
     <string name="s2">"Allow Ad to store image in Picture gallery?"</string>
     <string name="s3">Accept</string>
@@ -1197,11 +1208,7 @@ This Service does not use these “cookies” explicitly. However, the app may u
     <string name="s7">Test Ad</string>
     <string name="search_hint">Search...</string>
     <string name="search_menu_title">Search</string>
-    <string name="secondCounsellorRule">2.  If your phone goes off during a session, make sure you tap the EMPTY button when your phone comes back on.</string>
-    <string name="secondRule">1. A Session lasts for 45 minutes. Therefore, make sure you are in a comfortable position and ensure your PHONE BATTERY LIFE is sufficient enough for an hour session. </string>
     <string name="select_country">Select a county</string>
-    <string name="seventhCounsellorRule">7. You can leave the session if a user has not replied your message 30 minutes after the beginning of the session.</string>
-    <string name="sixthCounsellorRule">6.  As a counsellor, by tapping the LEAVE session button, your session will end completely. </string>
     <string name="staffNameEt"><![CDATA[First & Last name]]></string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <string name="termsofservice1">By downloading or using the app, these terms will automatically apply to you – you should make sure therefore that you read them carefully before using the app. You’re not allowed to copy, or modify the app, any part of the app, or our trademarks in any way. You’re not allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other languages, or make derivative versions. The app itself, and all the trade marks, copyright, database rights and other intellectual property rights related to it, still belong to Thesel.</string>
@@ -1217,8 +1224,6 @@ This Service does not use these “cookies” explicitly. However, the app may u
     <string name="termsofservice7">If you’re using the app outside of an area with Wi-Fi, you should remember that your terms of the agreement with your mobile network provider will still apply. As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the app, or other third party charges. In using the app, you’re accepting responsibility for any such charges, including roaming data charges if you use the app outside of your home territory (i.e. region or country) without turning off data roaming. If you are not the bill payer for the device on which you’re using the app, please be aware that we assume that you have received permission from the bill payer for using the app.</string>
     <string name="termsofservice8">Along the same lines, Thesel cannot always take responsibility for the way you use the app i.e. You need to make sure that your device stays charged – if it runs out of battery and you can’t turn it on to avail the Service, Thesel cannot accept responsibility.</string>
     <string name="termsofservice9">With respect to Thesel’s responsibility for your use of the app, when you’re using the app, it’s important to bear in mind that although we endeavour to ensure that it is updated and correct at all times, we do rely on third parties to provide information to us so that we can make it available to you. Thesel accepts no liability for any loss, direct or indirect, you experience as a result of relying wholly on this functionality of the app.</string>
-    <string name="thirdCounsellorRule">3.  Only use the second rule if your timer runs out before your phone comes back on.</string>
-    <string name="thirdRule">2. Make sure you have a GOOD INTERNET CONNECTION for a smooth and successful session. </string>
     <string name="title_settings_dialog">Permissions Required</string>
     <style name="AlertDialog" parent="Base.Theme.AppCompat.Light.Dialog"/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>

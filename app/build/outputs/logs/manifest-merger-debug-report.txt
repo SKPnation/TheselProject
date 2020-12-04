@@ -323,7 +323,7 @@ MERGED from [com.google.android.gms:play-services-measurement-base:15.0.4] /User
 	android:name
 		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:20:9-34
 activity#com.skiplab.theselproject.ProfileEdit
-ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:9-58
+ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:9-49
 	android:name
 		ADDED from /Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:19-46
 activity#com.skiplab.theselproject.Home.PhotoGalleryActivity

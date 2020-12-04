@@ -221,10 +221,6 @@ public class HomeFragment extends Fragment {
             if (selectedItem.equals(selCategory)){
                 //..
             }
-            else if (selCategory.equals("Relationship") ||selCategory.equals("#COVID19 NIGERIA") || selCategory.equals("Low self-esteem"))
-            {
-                mDrawerLayout.openDrawer(GravityCompat.START);
-            }
             else {
                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
                         .setMessage("This application is under maintenance.")
@@ -373,8 +369,21 @@ public class HomeFragment extends Fragment {
                                 mProgressBar.setVisibility(View.GONE);
                                 i++;
 
-                                Handler handler1 = new Handler();
-                                handler1.postDelayed(new Runnable() {
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mDrawerLayout.openDrawer(GravityCompat.START);
+                                    }
+                                }, 1000);
+                            }
+                            else if (selCategory.equals("#COVID19 NIGERIA") || selCategory.equals("Low self-esteem"))
+                            {
+                                mProgressBar.setVisibility(View.GONE);
+                                i++;
+
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         mDrawerLayout.openDrawer(GravityCompat.START);

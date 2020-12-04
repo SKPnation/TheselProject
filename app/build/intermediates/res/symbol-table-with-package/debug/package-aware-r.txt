@@ -2034,7 +2034,8 @@ drawable ic_lock
 drawable ic_menu
 drawable ic_menu_arrow_down_black_24dp
 drawable ic_menu_arrow_up_black_24dp
-drawable ic_mic
+drawable ic_mic_black
+drawable ic_mic_blue
 drawable ic_more
 drawable ic_more_white
 drawable ic_mtrl_checked_circle
@@ -2235,6 +2236,7 @@ id action_menu_presenter
 id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
+id action_save
 id action_text
 id actions
 id activity_chooser_view_content
@@ -2703,6 +2705,9 @@ id radio_btn
 id rate_btn
 id realtime_db_btn
 id recordBtn
+id record_btn
+id record_filename
+id record_timer
 id recyclerView
 id recycler_appt
 id recycler_consultants
@@ -3141,6 +3146,7 @@ layout notification_template_media
 layout notification_template_media_custom
 layout notification_template_part_chronometer
 layout notification_template_part_time
+layout recording_dialog
 layout resend_verification_layout
 layout row_chat_left
 layout row_chat_right
@@ -3169,6 +3175,7 @@ layout text_view_with_line_height_from_layout
 layout text_view_with_line_height_from_style
 layout text_view_with_theme_line_height
 layout text_view_without_line_height
+menu aar_audio_recorder
 menu bottom_nav_menu
 menu home_menu
 mipmap ic_launcher

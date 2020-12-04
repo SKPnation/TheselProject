@@ -668,7 +668,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
 
                                                                                                                                             usersRef.child(mAuth.getUid()).child("wallet").setValue(result);
 
-                                                                                                                                            JavaMailAPI javaMailAPI = new JavaMailAPI(
+                                                                                                                                            /*JavaMailAPI javaMailAPI = new JavaMailAPI(
                                                                                                                                                     context,
                                                                                                                                                     "contact@thesel.com.ng",
                                                                                                                                                     hisEmail,
@@ -685,7 +685,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                                     "Hello "+client.getUsername().toUpperCase()+","+"\n\n"+" You just paid for an Instant Session [a One Week Session] with "+hisName.toUpperCase()+" on the Thesel platform."+
                                                                                                                                                             "\n\n\n"+"Thesel Team.");
 
-                                                                                                                                            javaMailClientAPI.execute();
+                                                                                                                                            javaMailClientAPI.execute();*/
 
                                                                                                                                             String timestamp = String.valueOf(System.currentTimeMillis());
 
@@ -712,7 +712,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                             message.setChatroom_id(chatroomId);
 
 
-                                                                                                                                            mProfileReference.document(hisUID)
+                                                                                                                                            /*mProfileReference.document(hisUID)
                                                                                                                                                     .get()
                                                                                                                                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                                                                                                                         @Override
@@ -745,7 +745,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                                                 });
                                                                                                                                                             }
                                                                                                                                                         }
-                                                                                                                                                    });
+                                                                                                                                                    });*/
 
                                                                                                                                             mInstantSessionReference.document(chatroomId).set(instantSession)
                                                                                                                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -771,9 +771,9 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.UserViewHolder
                                                                                                                                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                                                                                                                         @Override
                                                                                                                                                                         public void onSuccess(Void aVoid) {
-                                                                                                                                                                            sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
+                                                                                                                                                                            //sendNotification(hisUID, client.getUsername(), "NEW CONSULTATION!!!");
 
-                                                                                                                                                                            sendAdminNotification(mAuth.getUid(), "Instant Session for "+hisName, "Instant Session");
+                                                                                                                                                                            //sendAdminNotification(mAuth.getUid(), "Instant Session for "+hisName, "Instant Session");
 
                                                                                                                                                                             context.startActivity(new Intent(context, ChatRoomsActivity.class));
                                                                                                                                                                         }

@@ -62,6 +62,7 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array age_months
 array av_colors
 array categories
 array costs
@@ -2250,8 +2251,6 @@ id adjust_height
 id adjust_width
 id afternoon_cv
 id afternoon_header
-id ageEt
-id age_layout
 id alertTitle
 id all
 id alphabet_text
@@ -2281,6 +2280,7 @@ id balance_tv
 id bankTv
 id barrier
 id beginning
+id birth_date_tv
 id blocking
 id body_tv
 id book_btn
@@ -2731,7 +2731,6 @@ id rl_holder
 id rl_query_holder
 id rl_title
 id rounded
-id rulesLayout
 id saveBtn
 id saveVideo
 id save_non_transition_alpha
@@ -2860,7 +2859,6 @@ id timeTv
 id timestampTv
 id title
 id titleDividerNoCustom
-id titleTv
 id title_appt_layout
 id title_instant_session
 id title_instant_session_layout
@@ -3031,7 +3029,6 @@ layout co_paystack_android____activity_otp
 layout co_paystack_android____activity_pin
 layout consultant_col
 layout consultant_profile
-layout consultant_session_rules
 layout content_home
 layout counselling_hours_layout
 layout custom_controller
@@ -3316,13 +3313,8 @@ string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string fastscroll__app_name
 string fcm_fallback_notification_channel_label
-string fifthCounsellorRule
-string fifthRule
 string firebaseCrashlytics
 string firebase_database_url
-string firstCounsellorRule
-string fourthCounsellorRule
-string fourthRule
 string gcm_defaultSenderId
 string googleFirebaseAnalytics
 string googlePlayServices
@@ -3402,6 +3394,7 @@ string pstck_pinpad__num_7
 string pstck_pinpad__num_8
 string pstck_pinpad__num_9
 string rationale_ask_again
+string revenue_doc_path
 string s1
 string s2
 string s3
@@ -3411,11 +3404,7 @@ string s6
 string s7
 string search_hint
 string search_menu_title
-string secondCounsellorRule
-string secondRule
 string select_country
-string seventhCounsellorRule
-string sixthCounsellorRule
 string staffNameEt
 string status_bar_notification_info_overflow
 string termsofservice1
@@ -3431,8 +3420,6 @@ string termsofservice6
 string termsofservice7
 string termsofservice8
 string termsofservice9
-string thirdCounsellorRule
-string thirdRule
 string title_settings_dialog
 style AlertDialog
 style AlertDialog_AppCompat

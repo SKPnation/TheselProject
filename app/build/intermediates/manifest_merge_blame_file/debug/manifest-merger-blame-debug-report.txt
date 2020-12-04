@@ -1,8 +1,8 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.skiplab.theselproject"
-4    android:versionCode="43"
-5    android:versionName="1.9.9.3" >
+4    android:versionCode="44"
+5    android:versionName="1.9.9.4" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
@@ -93,7 +93,7 @@
 45        android:theme="@style/AppTheme" >
 45-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:27:9-40
 46        <activity android:name="com.skiplab.theselproject.ProfileEdit" />
-46-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:9-58
+46-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:9-49
 46-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:28:19-46
 47        <activity android:name="com.skiplab.theselproject.Home.PhotoGalleryActivity" />
 47-->/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/AndroidManifest.xml:29:9-63

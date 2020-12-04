@@ -241,8 +241,7 @@ public class RegisterActivity extends AppCompatActivity {
                     mBirthDateTv.setFocusable(true);
                 }
                 else{
-                    Toast.makeText(mContext, "Successfully", Toast.LENGTH_SHORT).show();
-                    registerUser(email, phone, password);
+                    //registerUser(email, phone, password);
                 }
             }
         });

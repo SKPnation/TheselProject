@@ -74,7 +74,12 @@ public class Main2Activity extends AppCompatActivity {
         userBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                        .setMessage("This application is under maintenance.")
+                        .create();
+                alertDialog.show();
+
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setMessage("Do not register as a user if you are a counsellor");
                 builder.show();
 
@@ -86,7 +91,7 @@ public class Main2Activity extends AppCompatActivity {
                     public void run() {
                         startActivity(new Intent(mContext, RegisterActivity.class) );
                     }
-                }, 3000);
+                }, 3000);*/
 
 
             }
@@ -95,7 +100,11 @@ public class Main2Activity extends AppCompatActivity {
         counsellorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                        .setMessage("This application is under maintenance.")
+                        .create();
+                alertDialog.show();
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("Thesel Consultants ");
 
                 final EditText staffPassword = new EditText(mContext);
@@ -115,7 +124,7 @@ public class Main2Activity extends AppCompatActivity {
                             startActivity(new Intent(mContext, StaffRegisterActivity.class) );
                     }
                 });
-                builder.show();
+                builder.show();*/
             }
         });
 
