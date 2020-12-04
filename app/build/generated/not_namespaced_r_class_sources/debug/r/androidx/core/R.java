@@ -62,18 +62,18 @@ public final class R {
     public static final class drawable {
         private drawable() {}
 
-        public static final int notification_action_background = 0x7f08021e;
-        public static final int notification_bg = 0x7f08021f;
-        public static final int notification_bg_low = 0x7f080220;
-        public static final int notification_bg_low_normal = 0x7f080221;
-        public static final int notification_bg_low_pressed = 0x7f080222;
-        public static final int notification_bg_normal = 0x7f080223;
-        public static final int notification_bg_normal_pressed = 0x7f080224;
-        public static final int notification_icon_background = 0x7f080225;
-        public static final int notification_template_icon_bg = 0x7f080226;
-        public static final int notification_template_icon_low_bg = 0x7f080227;
-        public static final int notification_tile_bg = 0x7f080228;
-        public static final int notify_panel_notification_icon_bg = 0x7f080229;
+        public static final int notification_action_background = 0x7f08021f;
+        public static final int notification_bg = 0x7f080220;
+        public static final int notification_bg_low = 0x7f080221;
+        public static final int notification_bg_low_normal = 0x7f080222;
+        public static final int notification_bg_low_pressed = 0x7f080223;
+        public static final int notification_bg_normal = 0x7f080224;
+        public static final int notification_bg_normal_pressed = 0x7f080225;
+        public static final int notification_icon_background = 0x7f080226;
+        public static final int notification_template_icon_bg = 0x7f080227;
+        public static final int notification_template_icon_low_bg = 0x7f080228;
+        public static final int notification_tile_bg = 0x7f080229;
+        public static final int notify_panel_notification_icon_bg = 0x7f08022a;
     }
     public static final class id {
         private id() {}
@@ -114,38 +114,38 @@ public final class R {
         public static final int action_container = 0x7f09006d;
         public static final int action_divider = 0x7f09006f;
         public static final int action_image = 0x7f090070;
-        public static final int action_text = 0x7f090076;
-        public static final int actions = 0x7f090077;
-        public static final int async = 0x7f090098;
-        public static final int blocking = 0x7f0900a4;
-        public static final int chronometer = 0x7f0900d8;
-        public static final int dialog_button = 0x7f090103;
-        public static final int forever = 0x7f090162;
-        public static final int icon = 0x7f090184;
-        public static final int icon_group = 0x7f090185;
-        public static final int info = 0x7f090190;
-        public static final int italic = 0x7f090199;
-        public static final int line1 = 0x7f0901a6;
-        public static final int line3 = 0x7f0901a7;
-        public static final int normal = 0x7f0901f8;
-        public static final int notification_background = 0x7f0901fa;
-        public static final int notification_main_column = 0x7f0901fb;
-        public static final int notification_main_column_container = 0x7f0901fc;
-        public static final int right_icon = 0x7f09025f;
-        public static final int right_side = 0x7f090260;
-        public static final int tag_accessibility_actions = 0x7f0902b8;
-        public static final int tag_accessibility_clickable_spans = 0x7f0902b9;
-        public static final int tag_accessibility_heading = 0x7f0902ba;
-        public static final int tag_accessibility_pane_title = 0x7f0902bb;
-        public static final int tag_screen_reader_focusable = 0x7f0902bc;
-        public static final int tag_state_description = 0x7f0902bd;
-        public static final int tag_transition_group = 0x7f0902be;
-        public static final int tag_unhandled_key_event_manager = 0x7f0902bf;
-        public static final int tag_unhandled_key_listeners = 0x7f0902c0;
-        public static final int text = 0x7f0902c6;
-        public static final int text2 = 0x7f0902c7;
-        public static final int time = 0x7f0902e1;
-        public static final int title = 0x7f0902e4;
+        public static final int action_text = 0x7f090077;
+        public static final int actions = 0x7f090078;
+        public static final int async = 0x7f090099;
+        public static final int blocking = 0x7f0900a5;
+        public static final int chronometer = 0x7f0900d9;
+        public static final int dialog_button = 0x7f090104;
+        public static final int forever = 0x7f090163;
+        public static final int icon = 0x7f090185;
+        public static final int icon_group = 0x7f090186;
+        public static final int info = 0x7f090191;
+        public static final int italic = 0x7f09019a;
+        public static final int line1 = 0x7f0901a7;
+        public static final int line3 = 0x7f0901a8;
+        public static final int normal = 0x7f0901f9;
+        public static final int notification_background = 0x7f0901fb;
+        public static final int notification_main_column = 0x7f0901fc;
+        public static final int notification_main_column_container = 0x7f0901fd;
+        public static final int right_icon = 0x7f090263;
+        public static final int right_side = 0x7f090264;
+        public static final int tag_accessibility_actions = 0x7f0902bc;
+        public static final int tag_accessibility_clickable_spans = 0x7f0902bd;
+        public static final int tag_accessibility_heading = 0x7f0902be;
+        public static final int tag_accessibility_pane_title = 0x7f0902bf;
+        public static final int tag_screen_reader_focusable = 0x7f0902c0;
+        public static final int tag_state_description = 0x7f0902c1;
+        public static final int tag_transition_group = 0x7f0902c2;
+        public static final int tag_unhandled_key_event_manager = 0x7f0902c3;
+        public static final int tag_unhandled_key_listeners = 0x7f0902c4;
+        public static final int text = 0x7f0902ca;
+        public static final int text2 = 0x7f0902cb;
+        public static final int time = 0x7f0902e5;
+        public static final int title = 0x7f0902e8;
     }
     public static final class integer {
         private integer() {}

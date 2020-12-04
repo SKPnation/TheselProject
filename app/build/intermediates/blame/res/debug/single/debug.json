@@ -400,6 +400,10 @@
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/2f9af8815c95d70664dfa9a8da530a06/jetified-play-services-base-15.0.1/res/drawable-xxhdpi-v4/common_google_signin_btn_text_dark_normal_background.9.png"
     },
     {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-xhdpi_ic_mic_blue.png.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-xhdpi/ic_mic_blue.png"
+    },
+    {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable_abc_btn_radio_material_anim.xml.flat",
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/b8565c52e8980457b24ee1ce6eaeed52/appcompat-1.1.0/res/drawable/abc_btn_radio_material_anim.xml"
     },
@@ -996,6 +1000,10 @@
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/b8565c52e8980457b24ee1ce6eaeed52/appcompat-1.1.0/res/drawable-hdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/menu_aar_audio_recorder.xml.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/menu/aar_audio_recorder.xml"
+    },
+    {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable_ic_email.xml.flat",
         "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable/ic_email.xml"
     },
@@ -1014,6 +1022,10 @@
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-ldpi_wallet_background.png.flat",
         "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-ldpi/wallet_background.png"
+    },
+    {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_mic_black.png.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-mdpi/ic_mic_black.png"
     },
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/layout_abc_popup_menu_header_item_layout.xml.flat",
@@ -1298,6 +1310,10 @@
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/color-v21_abc_btn_colored_borderless_text_material.xml.flat",
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/b8565c52e8980457b24ee1ce6eaeed52/appcompat-1.1.0/res/color-v21/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-anydpi_ic_mic_black.xml.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-anydpi/ic_mic_black.xml"
     },
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable_ic_photo_library.xml.flat",
@@ -1888,6 +1904,10 @@
         "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/list_item.xml"
     },
     {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_mic_blue.png.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-xxhdpi/ic_mic_blue.png"
+    },
+    {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_exo_notification_small_icon.png.flat",
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8768143de92965b0618dfa62effb6a04/exoplayer-ui-2.10.8/res/drawable-xxhdpi-v4/exo_notification_small_icon.png"
     },
@@ -2024,6 +2044,10 @@
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/5ed735ebf0b676f14c27cf8e9f4eb19f/material-1.2.0-alpha02/res/color/mtrl_chip_background_color.xml"
     },
     {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-anydpi_ic_mic_blue.xml.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-anydpi/ic_mic_blue.xml"
+    },
+    {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_abc_list_focused_holo.9.png.flat",
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/b8565c52e8980457b24ee1ce6eaeed52/appcompat-1.1.0/res/drawable-xxhdpi-v4/abc_list_focused_holo.9.png"
     },
@@ -2078,6 +2102,10 @@
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/anim_abc_popup_exit.xml.flat",
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/b8565c52e8980457b24ee1ce6eaeed52/appcompat-1.1.0/res/anim/abc_popup_exit.xml"
+    },
+    {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_mic_black.png.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-hdpi/ic_mic_black.png"
     },
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-nodpi-v4_flag_belize.png.flat",
@@ -2948,6 +2976,10 @@
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1833aad677727890ccde5aaef521dc65/jetified-horizontalcalendar-1.3.4/res/drawable-xxxhdpi-v4/ic_circle_white_8dp.png"
     },
     {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/layout_recording_dialog.xml.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/layout/recording_dialog.xml"
+    },
+    {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-anydpi_ic_add.xml.flat",
         "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-anydpi/ic_add.xml"
     },
@@ -3596,6 +3628,10 @@
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8768143de92965b0618dfa62effb6a04/exoplayer-ui-2.10.8/res/drawable-xxhdpi-v4/exo_edit_mode_logo.png"
     },
     {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_mic_blue.png.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-mdpi/ic_mic_blue.png"
+    },
+    {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-anydpi-v21_exo_icon_previous.xml.flat",
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8768143de92965b0618dfa62effb6a04/exoplayer-ui-2.10.8/res/drawable-anydpi-v21/exo_icon_previous.xml"
     },
@@ -3806,6 +3842,10 @@
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable_tooltip_frame_dark.xml.flat",
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/b8565c52e8980457b24ee1ce6eaeed52/appcompat-1.1.0/res/drawable/tooltip_frame_dark.xml"
+    },
+    {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-xhdpi_ic_mic_black.png.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-xhdpi/ic_mic_black.png"
     },
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/layout_abc_tooltip.xml.flat",
@@ -4054,10 +4094,6 @@
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_abc_scrubber_control_to_pressed_mtrl_005.png.flat",
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/b8565c52e8980457b24ee1ce6eaeed52/appcompat-1.1.0/res/drawable-xhdpi-v4/abc_scrubber_control_to_pressed_mtrl_005.png"
-    },
-    {
-        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable_ic_mic.xml.flat",
-        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable/ic_mic.xml"
     },
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_common_google_signin_btn_icon_dark_normal_background.9.png.flat",
@@ -5272,6 +5308,10 @@
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/8768143de92965b0618dfa62effb6a04/exoplayer-ui-2.10.8/res/drawable-hdpi-v4/exo_controls_repeat_off.png"
     },
     {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_mic_blue.png.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-hdpi/ic_mic_blue.png"
+    },
+    {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_abc_list_divider_mtrl_alpha.9.png.flat",
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/b8565c52e8980457b24ee1ce6eaeed52/appcompat-1.1.0/res/drawable-hdpi-v4/abc_list_divider_mtrl_alpha.9.png"
     },
@@ -5310,6 +5350,10 @@
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_ic_circle_white_8dp.png.flat",
         "source": "/Users/ayomideajayi/.gradle/caches/transforms-2/files-2.1/1833aad677727890ccde5aaef521dc65/jetified-horizontalcalendar-1.3.4/res/drawable-xhdpi-v4/ic_circle_white_8dp.png"
+    },
+    {
+        "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_mic_black.png.flat",
+        "source": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/src/main/res/drawable-xxhdpi/ic_mic_black.png"
     },
     {
         "merged": "/Users/ayomideajayi/AndroidStudio3.5Projects/TheselProject/app/build/intermediates/res/merged/debug/layout_exo_player_control_view.xml.flat",
